@@ -1,0 +1,160 @@
+[
+    {
+      "imagePath": "assets/images/number.png",
+      "name": "Number",
+      "imageHeader": "assets/images/number.png",
+      "categories": [
+        {
+          "imageContent": "assets/numbers/0.png",
+          "titleContent": "Zero",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        },
+        {
+          "imageContent": "assets/numbers/1.png",
+          "titleContent": "One",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        },
+        {
+          "imageContent": "assets/numbers/2.png",
+          "titleContent": "Two",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        },
+        {
+          "imageContent": "assets/numbers/3.png",
+          "titleContent": "Three",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        },
+        {
+          "imageContent": "assets/numbers/4.png",
+          "titleContent": "Four",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        },
+        {
+          "imageContent": "assets/numbers/5.png",
+          "titleContent": "Five",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        },
+        {
+          "imageContent": "assets/numbers/6.png",
+          "titleContent": "Six",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        },
+        {
+          "imageContent": "assets/numbers/7.png",
+          "titleContent": "Seven",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        },
+        {
+          "imageContent": "assets/numbers/8.png",
+          "titleContent": "Eight",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        },
+        {
+          "imageContent": "assets/numbers/9.png",
+          "titleContent": "Nine",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        }
+      ]
+    },
+    {
+      "imagePath": "assets/letters.png",
+      "name": "Alphabet",
+      "imageHeader": "assets/images/number.png",
+      "categories": [
+        {
+          "imageContent": "assets/animals.png",
+          "titleContent": "Title Content",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        }
+      ]
+    },
+    {
+      "imagePath": "assets/letters.png",
+      "name": "Color",
+      "imageHeader": "assets/images/number.png",
+      "categories": [
+        {
+          "imageContent": "assets/animals.png",
+          "titleContent": "Title Content",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        }
+      ]
+    },
+    {
+      "imagePath": "assets/letters.png",
+      "name": "Hijaiyah",
+      "imageHeader": "assets/images/number.png",
+      "categories": [
+        {
+          "imageContent": "assets/animals.png",
+          "titleContent": "Title Content",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        }
+      ]
+    },
+    {
+      "imagePath": "assets/animals.png",
+      "name": "Animals",
+      "imageHeader": "assets/images/number.png",
+      "categories": [
+        {
+          "imageContent": "assets/animals.png",
+          "titleContent": "Title Content",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        }
+      ]
+    },
+    {
+      "imagePath": "assets/images/family.png",
+      "name": "Family",
+      "imageHeader": "assets/images/number.png",
+      "categories": [
+        {
+          "imageContent": "assets/animals.png",
+          "titleContent": "Title Content",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        }
+      ]
+    },
+    {
+      "imagePath": "assets/images/fruits.png",
+      "name": "Fruits",
+      "imageHeader": "assets/images/number.png",
+      "categories": [
+        {
+          "imageContent": "assets/animals.png",
+          "titleContent": "Title Content",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        }
+      ]
+    },
+    {
+      "imagePath": "assets/vegetables.png",
+      "name": "Vegetables",
+      "imageHeader": "assets/images/number.png",
+      "categories": [
+        {
+          "imageContent": "assets/animals.png",
+          "titleContent": "Title Content",
+          "subtitleContent": "Subtitle Content",
+          "audio": ""
+        }
+      ]
+    }
+  ]

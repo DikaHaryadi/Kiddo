@@ -39,14 +39,43 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   @override
   void initState() {
     super.initState();
-    showConfetti = false;
     game = Game(widget.gameLevel);
     duration = const Duration();
     startTimer();
     getBestTime();
-
+    checkGameStatus();
     audioPlayer = AudioPlayer();
     playBackgroundMusic();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    checkGameStatus();
+  }
+
+  void saveGameStatus(bool isGameFinished) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isGameFinished', isGameFinished);
+  }
+
+  void checkGameStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isGameFinished = prefs.getBool('isGameFinished') ?? false;
+
+    setState(() {
+      showConfetti = isGameFinished;
+    });
+
+    if (!isGameFinished) {
+      setState(() {
+        showConfetti = false;
+      });
+    } else {
+      setState(() {
+        showConfetti = true;
+      });
+    }
   }
 
   void playBackgroundMusic() async {
@@ -100,6 +129,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
       });
 
       if (game.isGameOver) {
+        print('Break Time');
         timer.cancel();
         SharedPreferences.getInstance().then((gameSP) {
           if (gameSP.getInt('${widget.gameLevel.toString()}BestTime') == null ||
@@ -110,13 +140,16 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
             setState(() {
               showConfetti = true;
               bestTime = duration.inSeconds;
+              print('conffeti nya disini');
             });
+            print('ini sharedPreferencesnya');
           }
         });
-
+        print('stop audio bg music');
         audioPlayer.stop();
 
         playClapSound();
+        print('mulai putar clap sound');
       }
     });
   }
@@ -141,7 +174,10 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
       timer.cancel();
       duration = const Duration();
       startTimer();
+      showConfetti = false;
     });
+
+    saveGameStatus(false);
   }
 
   @override
@@ -193,7 +229,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  showConfetti = false;
+                                  print('ini di exit $showConfetti');
                                   Get.offAllNamed('/');
                                 },
                                 child: Text(

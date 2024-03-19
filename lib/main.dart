@@ -16,15 +16,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      // getPages: [
-      //   GetPage(name: '/', page: () => const HomePage()),
-      //   GetPage(name: '/memo-game', page: () => const StartUpPage()),
-      //   GetPage(name: '/numbers-game', page: () => const NumbersGame()),
-      //   GetPage(name: '/categories', page: () => const CategoryCenter()),
-      // ]
-      home: OnboardingPage(),
-    );
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        getPages: [
+          GetPage(name: '/', page: () => const HomePage()),
+          GetPage(name: '/memo-game', page: () => const StartUpPage()),
+          GetPage(name: '/numbers-game', page: () => const NumbersGame()),
+          GetPage(name: '/categories', page: () => const CategoryCenter()),
+        ]
+        // home: OnboardingPage(),
+        );
   }
 }

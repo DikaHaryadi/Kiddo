@@ -6,6 +6,13 @@ import 'package:textspeech/util/widgets/card_item.dart';
 import 'package:textspeech/util/game%20property/icon_game.dart';
 
 class Game {
+  // final int gridSize;
+  // final VoidCallback
+  //     onGameFinish; // Callback untuk memberi tahu ketika permainan selesai
+
+  // Game(this.gridSize, {required this.onGameFinish}) {
+  //   generateCards();
+  // }
   Game(this.gridSize) {
     generateCards();
   }
@@ -54,6 +61,10 @@ class Game {
         card1.state = CardState.guessed;
         card2.state = CardState.guessed;
         isGameOver = _isGameOver();
+        // if (_isGameOver()) {
+        //   isGameOver = true;
+        //   onGameFinish(); // Panggil callback ketika permainan selesai
+        // }
       } else {
         Future.delayed(const Duration(milliseconds: 1000), () {
           card1.state = CardState.hidden;

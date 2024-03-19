@@ -72,8 +72,8 @@
       "imageHeader": "assets/images/number.png",
       "categories": [
         {
-          "imageContent": "assets/animals.png",
-          "titleContent": "Title Content",
+          "imageContent": "assets/numbers/0.png",
+          "titleContent": "Test Alphabet",
           "subtitleContent": "Subtitle Content",
           "audio": ""
         }
@@ -86,7 +86,7 @@
       "categories": [
         {
           "imageContent": "assets/animals.png",
-          "titleContent": "Title Content",
+          "titleContent": "Title Color",
           "subtitleContent": "Subtitle Content",
           "audio": ""
         }
@@ -99,7 +99,7 @@
       "categories": [
         {
           "imageContent": "assets/animals.png",
-          "titleContent": "Title Content",
+          "titleContent": "Title Hijaiyah",
           "subtitleContent": "Subtitle Content",
           "audio": ""
         }
@@ -111,10 +111,64 @@
       "imageHeader": "assets/images/number.png",
       "categories": [
         {
-          "imageContent": "assets/animals.png",
-          "titleContent": "Title Content",
+          "imageContent": "assets/animals/leo.png",
+          "titleContent": "Lion",
           "subtitleContent": "Subtitle Content",
-          "audio": ""
+          "audio": "voices/leo.mp3"
+        },
+        {
+          "imageContent": "assets/animals/duck.png",
+          "titleContent": "Duck",
+          "subtitleContent": "Subtitle Content",
+          "audio": "voices/duck.mp3"
+        },
+        {
+          "imageContent": "assets/animals/chicken.png",
+          "titleContent": "Chicken",
+          "subtitleContent": "Subtitle Content",
+          "audio": "voices/chicken.mp3"
+        },
+        {
+          "imageContent": "assets/animals/horse.png",
+          "titleContent": "Horse",
+          "subtitleContent": "Subtitle Content",
+          "audio": "voices/horse.mp3"
+        },
+        {
+          "imageContent": "assets/animals/goat.png",
+          "titleContent": "Goat",
+          "subtitleContent": "Subtitle Content",
+          "audio": "voices/goat.mp3"
+        },
+        {
+          "imageContent": "assets/animals/cat.png",
+          "titleContent": "Cat",
+          "subtitleContent": "Subtitle Content",
+          "audio": "voices/cat.mp3"
+        },
+        {
+          "imageContent": "assets/animals/cow.png",
+          "titleContent": "Cow",
+          "subtitleContent": "Subtitle Content",
+          "audio": "voices/cow.mp3"
+        },
+        {
+          "imageContent": "assets/animals/mouse.png",
+          "titleContent": "Mouse",
+          "subtitleContent": "Subtitle Content",
+          "audio": "voices/mouse.mp3"
+        },
+        {
+          "imageContent": "assets/animals/frog.png",
+          "titleContent": "Frog",
+          "subtitleContent": "Subtitle Content",
+          "audio": "voices/frog.mp3"
+        },
+        {
+          "imageContent": "assets/animals/dog.png",
+          "titleContent": "Dog",
+          "subtitleContent": "Subtitle Content",
+          "audio": "voices/dog.mp3"
         }
       ]
     },
@@ -125,8 +179,8 @@
       "categories": [
         {
           "imageContent": "assets/animals.png",
-          "titleContent": "Title Content",
-          "subtitleContent": "Subtitle Content",
+          "titleContent": "Title Family",
+          "subtitleContent": "Subtitle Family",
           "audio": ""
         }
       ]
@@ -138,8 +192,8 @@
       "categories": [
         {
           "imageContent": "assets/animals.png",
-          "titleContent": "Title Content",
-          "subtitleContent": "Subtitle Content",
+          "titleContent": "Title Fruits",
+          "subtitleContent": "Subtitle Fruits",
           "audio": ""
         }
       ]
@@ -151,8 +205,8 @@
       "categories": [
         {
           "imageContent": "assets/animals.png",
-          "titleContent": "Title Content",
-          "subtitleContent": "Subtitle Content",
+          "titleContent": "Title Vegetables",
+          "subtitleContent": "Subtitle Vegetables",
           "audio": ""
         }
       ]

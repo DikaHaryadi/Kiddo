@@ -150,6 +150,8 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
 
         playClapSound();
         print('mulai putar clap sound');
+
+        _showGameOverDialog();
       }
     });
   }
@@ -367,6 +369,26 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
           showConfetti ? const GameConfetti() : const SizedBox(),
         ],
       ),
+    );
+  }
+
+  void _showGameOverDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Game Over'),
+          content: Text('Congratulations! You have completed the game.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Get.offNamed('/');
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -49,9 +49,10 @@ class CategoryCenter extends StatelessWidget {
             aspectRatio: 18 / 9,
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15.0),
-                color: const Color(0xFF65d1ff),
-              ),
+                  borderRadius: BorderRadius.circular(15.0),
+                  color: const Color(0xFF65d1ff),
+                  image: DecorationImage(
+                      image: AssetImage(Get.arguments['imageContent']))),
             ),
           )
               .animate(delay: const Duration(milliseconds: 250))
@@ -101,7 +102,7 @@ class CategoryCenter extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Title',
+                              Get.arguments['titleContent'],
                               style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -109,7 +110,7 @@ class CategoryCenter extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              'Mulai',
+                              Get.arguments['subtitleContent'],
                               style: GoogleFonts.robotoSlab(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,

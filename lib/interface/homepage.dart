@@ -54,85 +54,6 @@ class _HomePageState extends State<HomePage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    Widget carouselSlider = (sliderKiddo.isNotEmpty)
-        ? CarouselSlider(
-            items: sliderKiddo.map((item) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.symmetric(vertical: 15.0),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 10.0, horizontal: 15.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15.0),
-                      color: const Color(0xFF65d1ff),
-                      image: DecorationImage(
-                        image: AssetImage(item['img']),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Bermain Angka',
-                          style: GoogleFonts.montserratAlternates(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.orange,
-                          ),
-                        ),
-                        Text(
-                          'Temukan Angka',
-                          style: GoogleFonts.roboto(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.red,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.toNamed(gamesRoutes[_current]['routePath']!);
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 20.0),
-                            margin: const EdgeInsets.only(top: 10.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(25.0),
-                            ),
-                            child: Text(
-                              'Mulai',
-                              style: GoogleFonts.robotoSlab(
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.orange,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              );
-            }).toList(),
-            options: CarouselOptions(
-              enlargeCenterPage: true,
-              viewportFraction: 1,
-              autoPlay: false,
-              aspectRatio: 19 / 15,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _current = index;
-                });
-              },
-            ),
-          )
-        : const SizedBox.shrink();
-
     return Scaffold(
       body: SafeArea(
         child: ListView(
@@ -205,7 +126,99 @@ class _HomePageState extends State<HomePage> {
                     milliseconds: 100,
                   ),
                 ),
-            carouselSlider,
+            CarouselSlider(
+              items: sliderKiddo.map((item) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(vertical: 15.0),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 10.0, horizontal: 15.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        color: const Color(0xFF65d1ff),
+                        image: DecorationImage(
+                          image: AssetImage(item['img']),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Bermain Angka',
+                            style: GoogleFonts.montserratAlternates(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.orange,
+                            ),
+                          ),
+                          Text(
+                            'Temukan Angka',
+                            style: GoogleFonts.roboto(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed(gamesRoutes[_current]['routePath']!);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 20.0),
+                              margin: const EdgeInsets.only(top: 10.0),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(25.0),
+                              ),
+                              child: Text(
+                                'Mulai',
+                                style: GoogleFonts.robotoSlab(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.orange,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+              options: CarouselOptions(
+                enlargeCenterPage: true,
+                viewportFraction: 1,
+                autoPlay: false,
+                aspectRatio: 19 / 15,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _current = index;
+                  });
+                },
+              ),
+            )
+                .animate(
+                  delay: const Duration(milliseconds: 100),
+                )
+                .fadeIn(delay: const Duration(milliseconds: 300))
+                .shimmer(
+                  duration: 200.ms,
+                )
+                .slide(
+                  begin: const Offset(0, 0.5),
+                  duration: const Duration(
+                    milliseconds: 600,
+                  ),
+                  curve: Curves.easeOut,
+                  delay: const Duration(
+                    milliseconds: 100,
+                  ),
+                ),
             Align(
               alignment: Alignment.centerRight,
               child: AnimatedSmoothIndicator(
@@ -276,10 +289,19 @@ class _HomePageState extends State<HomePage> {
                       closedBuilder: (context, action) {
                         return GestureDetector(
                           onTap: () {
-                            // Get.offNamed('/categories', arguments: {
-                            //   'titleContent': category['categories'][0]
-                            //       ['titleContent']
-                            // });
+                            Get.toNamed('/categories', arguments: {
+                              'imagePath': contentKiddo[index]['imagePath'],
+                              'name': contentKiddo[index]['name'],
+                              'imageHeader': contentKiddo[index]['imageHeader'],
+                              'imageContent': contentKiddo[index]['categories']
+                                  [0]['imageContent'],
+                              'titleContent': contentKiddo[index]['categories']
+                                  [0]['titleContent'],
+                              'subtitleContent': contentKiddo[index]
+                                  ['categories'][0]['subtitleContent'],
+                              'audio': contentKiddo[index]['categories'][0]
+                                  ['audio']
+                            });
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -288,7 +310,6 @@ class _HomePageState extends State<HomePage> {
                                   image: AssetImage(
                                       '${contentKiddo[index]['imagePath']}'),
                                   fit: BoxFit.contain),
-                              // borderRadius: BorderRadius.circular(20.0),
                             ),
                           )
                               .animate(

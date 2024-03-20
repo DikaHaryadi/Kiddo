@@ -1,13 +1,14 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:textspeech/interface/detail_category.dart';
+import 'package:textspeech/interface/detail%20content/detail_vegetables.dart';
 import 'package:textspeech/interface/homepage.dart';
 
-class CategoryCenter extends StatelessWidget {
-  const CategoryCenter({super.key});
+class VegetablesContent extends StatelessWidget {
+  const VegetablesContent({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class CategoryCenter extends StatelessWidget {
                   duration: const Duration(milliseconds: 300)),
         ),
         title: Text(
-          Get.arguments['name'],
+          'widget.name',
           style: GoogleFonts.montserratAlternates(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -51,8 +52,8 @@ class CategoryCenter extends StatelessWidget {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15.0),
                   color: const Color(0xFF65d1ff),
-                  image: DecorationImage(
-                      image: AssetImage(Get.arguments['imageContent']))),
+                  image:
+                      DecorationImage(image: AssetImage('assets/animals.png'))),
             ),
           )
               .animate(delay: const Duration(milliseconds: 250))
@@ -91,7 +92,8 @@ class CategoryCenter extends StatelessWidget {
                           color: Colors.red,
                         );
                       },
-                      openBuilder: (context, action) => const DetailCategory(),
+                      openBuilder: (context, action) =>
+                          const DetailVegetables(),
                     ),
                     Expanded(
                       child: Container(
@@ -102,7 +104,7 @@ class CategoryCenter extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              Get.arguments['titleContent'],
+                              'categories[index][]',
                               style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -110,7 +112,7 @@ class CategoryCenter extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              Get.arguments['subtitleContent'],
+                              ' categories[index][subtitleContent]',
                               style: GoogleFonts.robotoSlab(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -127,7 +129,7 @@ class CategoryCenter extends StatelessWidget {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const DetailCategory(),
+                                builder: (context) => const DetailVegetables(),
                               ));
                         });
                       },

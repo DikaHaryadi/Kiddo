@@ -7,7 +7,12 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:textspeech/interface/center_category.dart';
+import 'package:textspeech/interface/content/animal.dart';
+import 'package:textspeech/interface/content/family.dart';
+import 'package:textspeech/interface/content/fruits.dart';
+import 'package:textspeech/interface/content/letters.dart';
+import 'package:textspeech/interface/content/numbers.dart';
+import 'package:textspeech/interface/content/vegetables.dart';
 import 'package:textspeech/util/constants.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,18 +24,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int _current = 0;
-  List contentKiddo = [];
   List sliderKiddo = [];
 
-  _readDataContent() async {
-    await DefaultAssetBundle.of(context)
-        .loadString('assets/json/content.json')
-        .then((value) {
-      setState(() {
-        contentKiddo = jsonDecode(value);
-      });
-    });
-  }
+  List<Widget> openContent = const [
+    NumberContent(),
+    LettersContent(),
+    AnimalContent(),
+    FamilyContent(),
+    FruitsContent(),
+    VegetablesContent()
+  ];
 
   _readDataSlider() async {
     await DefaultAssetBundle.of(context)
@@ -44,7 +47,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    _readDataContent();
     _readDataSlider();
     super.initState();
   }
@@ -284,24 +286,12 @@ class _HomePageState extends State<HomePage> {
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
                       openBuilder: (context, action) {
-                        return const CategoryCenter();
+                        return openContent[index];
                       },
                       closedBuilder: (context, action) {
                         return GestureDetector(
                           onTap: () {
-                            Get.toNamed('/categories', arguments: {
-                              'imagePath': contentKiddo[index]['imagePath'],
-                              'name': contentKiddo[index]['name'],
-                              'imageHeader': contentKiddo[index]['imageHeader'],
-                              'imageContent': contentKiddo[index]['categories']
-                                  [0]['imageContent'],
-                              'titleContent': contentKiddo[index]['categories']
-                                  [0]['titleContent'],
-                              'subtitleContent': contentKiddo[index]
-                                  ['categories'][0]['subtitleContent'],
-                              'audio': contentKiddo[index]['categories'][0]
-                                  ['audio']
-                            });
+                            Get.toNamed(routesList[index]['routePath']!);
                           },
                           child: Container(
                             decoration: BoxDecoration(

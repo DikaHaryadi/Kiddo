@@ -191,18 +191,10 @@ const String gameTitle = 'MEMORY MATCH';
 // ];
 
 //CATEGORIES
-const CardsList = [
+const contentKiddo = [
   {
     'imagePath': 'assets/images/number.png',
     'name': 'Number',
-  },
-  {
-    'imagePath': 'assets/letters.png',
-    'name': 'Alphabet',
-  },
-  {
-    'imagePath': 'assets/letters.png',
-    'name': 'Color',
   },
   {
     'imagePath': 'assets/letters.png',
@@ -237,32 +229,26 @@ const contentSlider = [
 ];
 
 //ROUTES
-// const routesList = [
-//   {
-//     'routePath': '/Nums',
-//   },
-//   {
-//     'routePath': '/Letters',
-//   },
-//   {
-//     'routePath': '/Animals',
-//   },
-//   {
-//     'routePath': '/Family',
-//   },
-//   {
-//     'routePath': '/Animals',
-//   },
-//   {
-//     'routePath': '/Family',
-//   },
-//   {
-//     'routePath': '/Fruits',
-//   },
-//   {
-//     'routePath': '/Vegetables',
-//   },
-// ];
+const routesList = [
+  {
+    'routePath': '/number-content',
+  },
+  {
+    'routePath': '/letters-content',
+  },
+  {
+    'routePath': '/animals-content',
+  },
+  {
+    'routePath': '/family-content',
+  },
+  {
+    'routePath': '/fruits-content',
+  },
+  {
+    'routePath': '/vegetables-content',
+  },
+];
 
 // const GamesList = [
 //   {'GameName': 'Color Match', 'imagePath': 'assets/games/color.png'},
@@ -334,195 +320,299 @@ const animalsList = [
     'imagePath': 'assets/animals/leo.png',
     'voice': 'voices/leo.mp3',
     'name': 'Lion',
+    'kategori': 'Mamalia',
+    'jenis_makan': 'Karnivora',
+    'deskripsi':
+        'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
   },
   {
     'imagePath': 'assets/animals/duck.png',
     'voice': 'voices/duck.mp3',
     'name': 'Duck',
+    'kategori': 'Unggas',
+    'jenis_makan': 'Omnivora',
+    'deskripsi':
+        'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
   },
   {
     'imagePath': 'assets/animals/chicken.png',
     'voice': 'voices/chicken.mp3',
     'name': 'Chicken',
+    'kategori': 'Unggas',
+    'jenis_makan': 'Omnivora',
+    'deskripsi':
+        'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
   },
   {
     'imagePath': 'assets/animals/horse.png',
     'voice': 'voices/horse.mp3',
     'name': 'Horse',
+    'kategori': 'Mamalia',
+    'jenis_makan': 'Herbivora',
+    'deskripsi':
+        'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
   },
   {
     'imagePath': 'assets/animals/goat.png',
     'voice': 'voices/goat.mp3',
     'name': 'Goat',
+    'kategori': 'Mamalia',
+    'jenis_makan': 'Herbivora',
+    'deskripsi':
+        'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
   },
   {
     'imagePath': 'assets/animals/cat.png',
     'voice': 'voices/cat.mp3',
     'name': 'Cat',
+    'kategori': 'Mamalia',
+    'jenis_makan': 'Karnivora',
+    'deskripsi':
+        'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
   },
   {
     'imagePath': 'assets/animals/mouse.png',
     'voice': 'voices/mouse.mp3',
     'name': 'Mouse',
+    'kategori': 'Mamalia',
+    'jenis_makan': 'Omnivora',
+    'deskripsi':
+        'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
   },
   {
     'imagePath': 'assets/animals/frog.png',
     'voice': 'voices/frog.mp3',
     'name': 'Frog',
+    'kategori': 'Amphibia',
+    'jenis_makan': 'Omnivora',
+    'deskripsi':
+        'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
   },
   {
     'imagePath': 'assets/animals/dog.png',
     'voice': 'voices/dog.mp3',
     'name': 'Dog',
+    'kategori': 'Mamalia',
+    'jenis_makan': 'Karnivora',
+    'deskripsi':
+        'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
   },
   {
     'imagePath': 'assets/animals/cow.png',
     'voice': 'voices/cow.mp3',
     'name': 'Cow',
+    'kategori': 'Mamalia',
+    'jenis_makan': 'Herbivora',
+    'deskripsi':
+        'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
   },
 ];
+
+// Category Animals
+// const categoryAnimals = [
+//   {
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Karnivora',
+//     'deskripsi':
+//         'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
+//   },
+//   {
+//     'kategori': 'Unggas',
+//     'jenis_makan': 'Omnivora',
+//     'deskripsi':
+//         'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
+//   },
+//   {
+//     'kategori': 'Unggas',
+//     'jenis_makan': 'Omnivora',
+//     'deskripsi':
+//         'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
+//   },
+//   {
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Herbivora',
+//     'deskripsi':
+//         'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
+//   },
+//   {
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Herbivora',
+//     'deskripsi':
+//         'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
+//   },
+//   {
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Karnivora',
+//     'deskripsi':
+//         'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
+//   },
+//   {
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Omnivora',
+//     'deskripsi':
+//         'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
+//   },
+//   {
+//     'kategori': 'Amphibia',
+//     'jenis_makan': 'Omnivora',
+//     'deskripsi':
+//         'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
+//   },
+//   {
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Karnivora',
+//     'deskripsi':
+//         'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
+//   },
+//   {
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Herbivora',
+//     'deskripsi':
+//         'Mamalia tinggi dengan leher panjang yang memungkinkannya mencapai makanan di pohon-pohon tinggi'
+//   }
+// ];
 
 //LETTERS LIST
 const lettersList = [
   {
-    'imagePath': 'assets/letters/أ.png',
-    'subImage': 'assets/letters/avatars/أرنب.png',
-    'name': 'أ',
+    'imagePath': 'assets/letters/alif_hamza.png',
+    'subImage': 'assets/letters/samples/alif_hamza.png',
+    'name': 'Alif',
   },
   {
-    'imagePath': 'assets/letters/ب.png',
-    'subImage': 'assets/letters/avatars/بطة.png',
-    'name': 'ب',
+    'imagePath': 'assets/letters/ba.png',
+    'subImage': 'assets/letters/samples/ba.png',
+    'name': 'Ba'
   },
   {
-    'imagePath': 'assets/letters/ت.png',
-    'subImage': 'assets/letters/avatars/تفاح.png',
-    'name': 'ت',
+    'imagePath': 'assets/letters/ta.png',
+    'subImage': 'assets/letters/samples/ta.png',
+    'name': 'Ta',
   },
   {
-    'imagePath': 'assets/letters/ث.png',
-    'subImage': 'assets/letters/avatars/ثلج.png',
-    'name': 'ث',
+    'imagePath': 'assets/letters/tsa.png',
+    'subImage': 'assets/letters/samples/tsa.png',
+    'name': 'Tsa',
   },
   {
-    'imagePath': 'assets/letters/ج.png',
-    'subImage': 'assets/letters/avatars/جَزَر.png',
-    'name': 'ج',
+    'imagePath': 'assets/letters/jim.png',
+    'subImage': 'assets/letters/samples/jim.png',
+    'name': 'Jim',
   },
   {
-    'imagePath': 'assets/letters/ح.png',
-    'subImage': 'assets/letters/avatars/حصان.png',
-    'name': 'ح',
+    'imagePath': 'assets/letters/ha.png',
+    'subImage': 'assets/letters/samples/ha.png',
+    'name': 'Ha',
   },
   {
-    'imagePath': 'assets/letters/خ.png',
-    'subImage': 'assets/letters/avatars/خيمة.png',
-    'name': 'خ',
+    'imagePath': 'assets/letters/kho.png',
+    'subImage': 'assets/letters/samples/kho.png',
+    'name': 'Kho'
   },
   {
-    'imagePath': 'assets/letters/د.png',
-    'subImage': 'assets/letters/avatars/دولفين.png',
-    'name': 'د',
+    'imagePath': 'assets/letters/dal.png',
+    'subImage': 'assets/letters/samples/dal.png',
+    'name': 'Dal',
   },
   {
-    'imagePath': 'assets/letters/ذ.png',
-    'subImage': 'assets/letters/avatars/ذُره.png',
-    'name': 'ذ',
+    'imagePath': 'assets/letters/dzal.png',
+    'subImage': 'assets/letters/samples/dzal.png',
+    'name': 'Dzal',
   },
   {
-    'imagePath': 'assets/letters/ر.png',
-    'subImage': 'assets/letters/avatars/ريشة.png',
-    'name': 'ر',
+    'imagePath': 'assets/letters/ro.png',
+    'subImage': 'assets/letters/samples/ro.png',
+    'name': 'Ro',
   },
   {
-    'imagePath': 'assets/letters/ز.png',
-    'subImage': 'assets/letters/avatars/زرافة.png',
-    'name': 'ز',
+    'imagePath': 'assets/letters/za.png',
+    'subImage': 'assets/letters/samples/za.png',
+    'name': 'Zay',
   },
   {
-    'imagePath': 'assets/letters/س.png',
-    'subImage': 'assets/letters/avatars/سلحفاة.png',
-    'name': 'س',
+    'imagePath': 'assets/letters/sin.png',
+    'subImage': 'assets/letters/samples/sin.png',
+    'name': 'Sin',
   },
   {
-    'imagePath': 'assets/letters/ش.png',
-    'subImage': 'assets/letters/avatars/شمعة.png',
-    'name': 'ش',
+    'imagePath': 'assets/letters/syin.png',
+    'subImage': 'assets/letters/samples/syin.png',
+    'name': 'Syin',
   },
   {
-    'imagePath': 'assets/letters/ص.png',
-    'subImage': 'assets/letters/avatars/صقر.png',
-    'name': 'ص',
+    'imagePath': 'assets/letters/shod.png',
+    'subImage': 'assets/letters/samples/shod.png',
+    'name': 'Shod',
   },
   {
-    'imagePath': 'assets/letters/ض.png',
-    'subImage': 'assets/letters/avatars/ضفدع.png',
-    'name': 'ض',
+    'imagePath': 'assets/letters/dlod.png',
+    'subImage': 'assets/letters/samples/dlod.png',
+    'name': 'Dhod',
   },
   {
-    'imagePath': 'assets/letters/ط.png',
-    'subImage': 'assets/letters/avatars/طائرة.png',
-    'name': 'ط',
+    'imagePath': 'assets/letters/tho.png',
+    'subImage': 'assets/letters/samples/tho.png',
+    'name': 'Tho',
   },
   {
-    'imagePath': 'assets/letters/ظ.png',
-    'subImage': 'assets/letters/avatars/ظرف.png',
-    'name': 'ظ',
+    'imagePath': 'assets/letters/dzo.png',
+    'subImage': 'assets/letters/samples/dzo.png',
+    'name': 'Zho',
   },
   {
-    'imagePath': 'assets/letters/ع.png',
-    'subImage': 'assets/letters/avatars/عصفور.png',
-    'name': 'ع',
+    'imagePath': 'assets/letters/ain.png',
+    'subImage': 'assets/letters/samples/ain.png',
+    'name': 'Ain',
   },
   {
-    'imagePath': 'assets/letters/غ.png',
-    'subImage': 'assets/letters/avatars/غزالة.png',
-    'name': 'غ',
+    'imagePath': 'assets/letters/ghin.png',
+    'subImage': 'assets/letters/samples/ghin.png',
+    'name': 'Ghain'
   },
   {
-    'imagePath': 'assets/letters/ف.png',
-    'subImage': 'assets/letters/avatars/فراولة.png',
-    'name': 'ف',
+    'imagePath': 'assets/letters/fa.png',
+    'subImage': 'assets/letters/samples/fa.png',
+    'name': 'Fa',
   },
   {
-    'imagePath': 'assets/letters/ق.png',
-    'subImage': 'assets/letters/avatars/قلم.png',
-    'name': 'ق',
+    'imagePath': 'assets/letters/qof.png',
+    'subImage': 'assets/letters/samples/qof.png',
+    'name': 'Qof',
   },
   {
-    'imagePath': 'assets/letters/ك.png',
-    'subImage': 'assets/letters/avatars/كرة.png',
-    'name': 'ك',
+    'imagePath': 'assets/letters/kaf.png',
+    'subImage': 'assets/letters/samples/kaf.png',
+    'name': 'Kaf'
   },
   {
-    'imagePath': 'assets/letters/ل.png',
-    'subImage': 'assets/letters/avatars/لمبة.png',
-    'name': 'ل',
+    'imagePath': 'assets/letters/la.png',
+    'subImage': 'assets/letters/samples/la.png',
+    'name': 'Lam',
   },
   {
-    'imagePath': 'assets/letters/م.png',
-    'subImage': 'assets/letters/avatars/موز.png',
-    'name': 'م',
+    'imagePath': 'assets/letters/ma.png',
+    'subImage': 'assets/letters/samples/ma.png',
+    'name': 'Mim',
   },
   {
-    'imagePath': 'assets/letters/ن.png',
-    'subImage': 'assets/letters/avatars/نجمة.png',
-    'name': 'ن',
+    'imagePath': 'assets/letters/nun.png',
+    'subImage': 'assets/letters/samples/nun.png',
+    'name': 'Nun',
   },
   {
-    'imagePath': 'assets/letters/ه.png',
-    'subImage': 'assets/letters/avatars/هرم.png',
-    'name': 'ه',
+    'imagePath': 'assets/letters/wawu.png',
+    'subImage': 'assets/letters/samples/wawu.png',
+    'name': 'Waw',
   },
   {
-    'imagePath': 'assets/letters/و.png',
-    'subImage': 'assets/letters/avatars/وردة.png',
-    'name': 'و',
+    'imagePath': 'assets/letters/Hha.png',
+    'subImage': 'assets/letters/samples/Hha.png',
+    'name': 'Ha',
   },
   {
-    'imagePath': 'assets/letters/ي.png',
-    'subImage': 'assets/letters/avatars/يد.png',
-    'name': 'ي',
+    'imagePath': 'assets/letters/ya.png',
+    'subImage': 'assets/letters/samples/ya.png',
+    'name': 'Ya',
   },
 ];
 

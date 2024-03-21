@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/interface/homepage.dart';
 import 'package:textspeech/util/card.dart';
@@ -17,6 +18,15 @@ class LettersContent extends StatefulWidget {
 
 class _LettersContentState extends State<LettersContent> {
   final CardSwiperController controller = CardSwiperController();
+  FlutterTts flutterTts = FlutterTts();
+
+  void textToSpeech(String text) async {
+    await flutterTts.setLanguage("en-US");
+    await flutterTts.setVolume(1);
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setPitch(1);
+    await flutterTts.speak(text);
+  }
 
   @override
   void dispose() {
@@ -80,6 +90,7 @@ class _LettersContentState extends State<LettersContent> {
                     imagePath: numData['imagePath']!,
                     counterPath: numData['subImage']!,
                     name: numData['name']!,
+                    onTap: () => textToSpeech(numData['name']!),
                   );
                 },
               ),

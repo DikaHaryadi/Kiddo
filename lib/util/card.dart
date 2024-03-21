@@ -5,12 +5,14 @@ class CardContent extends StatelessWidget {
   final String imagePath;
   final String counterPath;
   final String name;
+  final VoidCallback onTap;
 
   const CardContent({
     super.key,
     required this.imagePath,
     required this.counterPath,
     required this.name,
+    required this.onTap,
   });
 
   @override
@@ -84,18 +86,21 @@ class CardContent extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  width: 50,
-                  height: 50,
-                  margin: const EdgeInsets.only(right: 15.0),
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      border: const Border.fromBorderSide(BorderSide(
-                          color: Colors.orange, strokeAlign: 1, width: 1))),
-                  child: const Icon(
-                    Icons.play_arrow,
-                    color: Colors.orange,
+                GestureDetector(
+                  onTap: onTap,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    margin: const EdgeInsets.only(right: 15.0),
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        border: const Border.fromBorderSide(BorderSide(
+                            color: Colors.orange, strokeAlign: 1, width: 1))),
+                    child: const Icon(
+                      Icons.play_arrow,
+                      color: Colors.orange,
+                    ),
                   ),
                 ),
               ],

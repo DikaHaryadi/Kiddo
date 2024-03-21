@@ -40,6 +40,7 @@ dependencies:
   flutter_tts: ^4.0.1
   get: ^4.6.6
   google_fonts: ^5.1.0
+  google_mobile_ads: ^5.0.0
   shared_preferences: ^2.2.2
   smooth_page_indicator: ^1.1.0
   unicons: ^2.1.1

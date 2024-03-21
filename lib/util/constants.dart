@@ -492,7 +492,7 @@ const lettersList = [
   {
     'imagePath': 'assets/letters/tsa.png',
     'subImage': 'assets/letters/samples/tsa.png',
-    'name': 'Tsa',
+    'name': "Tsa'",
   },
   {
     'imagePath': 'assets/letters/jim.png',

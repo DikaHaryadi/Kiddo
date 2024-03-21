@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:textspeech/util/game%20property/game.dart';
 import 'package:textspeech/util/game%20property/game_confetti.dart';
@@ -36,6 +37,31 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   bool isMusicPlaying = true;
   double _volume = 1.0;
 
+  // banner ads
+  late BannerAd _bannerAd;
+  bool _isLoaded = false;
+
+  /// Loads a banner ad.
+  inilizeBannerAd() async {
+    _bannerAd = BannerAd(
+        size: AdSize.banner,
+        adUnitId: 'ca-app-pub-3940256099942544/9214589741',
+        listener: BannerAdListener(
+          onAdLoaded: (ad) {
+            setState(() {
+              _isLoaded = true;
+            });
+          },
+          onAdFailedToLoad: (ad, error) {
+            ad.dispose();
+            _isLoaded = false;
+            print(error);
+          },
+        ),
+        request: AdRequest());
+    _bannerAd.load();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -46,6 +72,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     checkGameStatus();
     audioPlayer = AudioPlayer();
     playBackgroundMusic();
+    inilizeBannerAd();
   }
 
   @override
@@ -194,6 +221,57 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
 
     return Scaffold(
+      // bottomNavigationBar: Container(
+      //   padding: const EdgeInsets.symmetric(vertical: 5.0),
+      //   width: double.infinity,
+      //   decoration: BoxDecoration(
+      //       border: Border.all(
+      //           strokeAlign: BorderSide.strokeAlignOutside,
+      //           style: BorderStyle.solid,
+      //           color: Colors.black.withOpacity(.4))),
+      //   child: _isLoaded == true
+      //       ? AdWidget(ad: _bannerAd)
+      //       : const SizedBox.shrink(),
+      // ),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          // padding: const EdgeInsets.symmetric(vertical: 5.0),
+          width: double.infinity,
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 1.0,
+              style: BorderStyle.solid,
+              color: Colors.black.withOpacity(.4),
+            ),
+          ),
+          child: !_isLoaded
+              ? Row(
+                  children: [
+                    IconButton(
+                        onPressed: toggleMute,
+                        icon: isMusicPlaying
+                            ? const Icon(UniconsLine.volume)
+                            : const Icon(UniconsLine.volume_mute)),
+                    Slider(
+                      value: isMusicPlaying ? _volume : 0.0,
+                      min: 0.0,
+                      max: 1.0,
+                      onChanged: (newValue) {
+                        setVolume(newValue);
+                      },
+                      onChangeEnd: (newValue) {
+                        setVolume(newValue);
+                      },
+                    ),
+                    Text(
+                      '${calculateVolumePercentage(isMusicPlaying ? _volume : 0.0)}%',
+                      style: const TextStyle(fontSize: 16),
+                    ),
+                  ],
+                )
+              : Expanded(child: AdWidget(ad: _bannerAd)),
+        ),
+      ),
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         toolbarHeight: 45,
@@ -340,30 +418,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                   }),
                 ),
               ),
-              Row(
-                children: [
-                  IconButton(
-                      onPressed: toggleMute,
-                      icon: isMusicPlaying
-                          ? const Icon(UniconsLine.volume)
-                          : const Icon(UniconsLine.volume_mute)),
-                  Slider(
-                    value: isMusicPlaying ? _volume : 0.0,
-                    min: 0.0,
-                    max: 1.0,
-                    onChanged: (newValue) {
-                      setVolume(newValue);
-                    },
-                    onChangeEnd: (newValue) {
-                      setVolume(newValue);
-                    },
-                  ),
-                  Text(
-                    '${calculateVolumePercentage(isMusicPlaying ? _volume : 0.0)}%',
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
             ],
           ),
           showConfetti ? const GameConfetti() : const SizedBox(),
@@ -376,18 +430,20 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Game Over'),
-          content: Text('Congratulations! You have completed the game.'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Get.offNamed('/');
-              },
-              child: Text('OK'),
-            ),
-          ],
-        );
+        return !_isLoaded
+            ? AlertDialog(
+                title: Text('Game Over'),
+                content: Text('Congratulations! You have completed the game.'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Get.offNamed('/');
+                    },
+                    child: Text('OK'),
+                  ),
+                ],
+              )
+            : Expanded(child: AdWidget(ad: _bannerAd));
       },
     );
   }

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:textspeech/interface/content/animal.dart';
 import 'package:textspeech/interface/content/family.dart';
 import 'package:textspeech/interface/content/fruits.dart';
@@ -13,6 +16,8 @@ import 'package:textspeech/interface/numbers_game.dart';
 // import 'package:textspeech/interface/onboarding.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  unawaited(MobileAds.instance.initialize());
   runApp(const MyApp());
 }
 

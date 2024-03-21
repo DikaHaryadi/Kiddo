@@ -21,7 +21,7 @@ class _LettersContentState extends State<LettersContent> {
   FlutterTts flutterTts = FlutterTts();
 
   void textToSpeech(String text) async {
-    await flutterTts.setLanguage("en-US");
+    await flutterTts.setLanguage("ar-AE");
     await flutterTts.setVolume(1);
     await flutterTts.setSpeechRate(0.5);
     await flutterTts.setPitch(1);
@@ -57,7 +57,7 @@ class _LettersContentState extends State<LettersContent> {
                     duration: const Duration(milliseconds: 300)),
           ),
           title: Text(
-            'widget.name',
+            'Huruf Hijaiyah',
             style: GoogleFonts.montserratAlternates(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -101,23 +101,28 @@ class _LettersContentState extends State<LettersContent> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   FloatingActionButton(
+                    heroTag: 'undo_button',
                     onPressed: controller.undo,
                     child: const Icon(Icons.rotate_left),
                   ),
                   FloatingActionButton(
+                    heroTag: 'swipe_left_button',
                     onPressed: () => controller.swipe(CardSwiperDirection.left),
                     child: const Icon(Icons.keyboard_arrow_left),
                   ),
                   FloatingActionButton(
+                    heroTag: 'swipe_right_button',
                     onPressed: () =>
                         controller.swipe(CardSwiperDirection.right),
                     child: const Icon(Icons.keyboard_arrow_right),
                   ),
                   FloatingActionButton(
+                    heroTag: 'swipe_top_button',
                     onPressed: () => controller.swipe(CardSwiperDirection.top),
                     child: const Icon(Icons.keyboard_arrow_up),
                   ),
                   FloatingActionButton(
+                    heroTag: 'swipe_bottom_button',
                     onPressed: () =>
                         controller.swipe(CardSwiperDirection.bottom),
                     child: const Icon(Icons.keyboard_arrow_down),

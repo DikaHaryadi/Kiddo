@@ -58,8 +58,14 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
             print(error);
           },
         ),
-        request: AdRequest());
+        request: const AdRequest());
     _bannerAd.load();
+  }
+
+  void _closeBanner() {
+    setState(() {
+      _isLoaded = false;
+    });
   }
 
   @override
@@ -213,6 +219,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   void dispose() {
     audioPlayer.stop();
     audioPlayer.dispose();
+    _bannerAd.dispose();
     super.dispose();
   }
 
@@ -221,57 +228,49 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
 
     return Scaffold(
-      // bottomNavigationBar: Container(
-      //   padding: const EdgeInsets.symmetric(vertical: 5.0),
-      //   width: double.infinity,
-      //   decoration: BoxDecoration(
-      //       border: Border.all(
-      //           strokeAlign: BorderSide.strokeAlignOutside,
-      //           style: BorderStyle.solid,
-      //           color: Colors.black.withOpacity(.4))),
-      //   child: _isLoaded == true
-      //       ? AdWidget(ad: _bannerAd)
-      //       : const SizedBox.shrink(),
+      // bottomNavigationBar: BottomAppBar(
+      //   child: !_isLoaded
+      //       ? Row(
+      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //           children: [
+      //             IconButton(
+      //                 onPressed: toggleMute,
+      //                 icon: isMusicPlaying
+      //                     ? const Icon(UniconsLine.volume)
+      //                     : const Icon(UniconsLine.volume_mute)),
+      //             Slider(
+      //               value: isMusicPlaying ? _volume : 0.0,
+      //               min: 0.0,
+      //               max: 1.0,
+      //               onChanged: (newValue) {
+      //                 setVolume(newValue);
+      //               },
+      //               onChangeEnd: (newValue) {
+      //                 setVolume(newValue);
+      //               },
+      //             ),
+      //             Text(
+      //               '${calculateVolumePercentage(isMusicPlaying ? _volume : 0.0)}%',
+      //               style: const TextStyle(fontSize: 16),
+      //             ),
+      //           ],
+      //         )
+      //       : SizedBox(
+      //           width: double.infinity,
+      //           child: Row(
+      //             children: [
+      //               IconButton(
+      //                 icon: const Icon(UniconsLine.times_circle),
+      //                 onPressed: _closeBanner,
+      //               ),
+      //               const Expanded(
+      //                 child: SizedBox(), // Spacer widget for flexibility
+      //               ),
+      //               AdWidget(ad: _bannerAd)
+      //             ],
+      //           ),
+      //         ),
       // ),
-      bottomNavigationBar: BottomAppBar(
-        child: Container(
-          // padding: const EdgeInsets.symmetric(vertical: 5.0),
-          width: double.infinity,
-          decoration: BoxDecoration(
-            border: Border.all(
-              width: 1.0,
-              style: BorderStyle.solid,
-              color: Colors.black.withOpacity(.4),
-            ),
-          ),
-          child: !_isLoaded
-              ? Row(
-                  children: [
-                    IconButton(
-                        onPressed: toggleMute,
-                        icon: isMusicPlaying
-                            ? const Icon(UniconsLine.volume)
-                            : const Icon(UniconsLine.volume_mute)),
-                    Slider(
-                      value: isMusicPlaying ? _volume : 0.0,
-                      min: 0.0,
-                      max: 1.0,
-                      onChanged: (newValue) {
-                        setVolume(newValue);
-                      },
-                      onChangeEnd: (newValue) {
-                        setVolume(newValue);
-                      },
-                    ),
-                    Text(
-                      '${calculateVolumePercentage(isMusicPlaying ? _volume : 0.0)}%',
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                  ],
-                )
-              : Expanded(child: AdWidget(ad: _bannerAd)),
-        ),
-      ),
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         toolbarHeight: 45,
@@ -418,6 +417,62 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                   }),
                 ),
               ),
+              AspectRatio(
+                aspectRatio: 16 / 2.5,
+                child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1.0,
+                      style: BorderStyle.solid,
+                      color: Colors.black.withOpacity(.4),
+                    ),
+                  ),
+                  child: !_isLoaded
+                      ? Row(
+                          children: [
+                            IconButton(
+                                onPressed: toggleMute,
+                                icon: isMusicPlaying
+                                    ? const Icon(UniconsLine.volume)
+                                    : const Icon(UniconsLine.volume_mute)),
+                            Slider(
+                              value: isMusicPlaying ? _volume : 0.0,
+                              min: 0.0,
+                              max: 1.0,
+                              onChanged: (newValue) {
+                                setVolume(newValue);
+                              },
+                              onChangeEnd: (newValue) {
+                                setVolume(newValue);
+                              },
+                            ),
+                            Text(
+                              '${calculateVolumePercentage(isMusicPlaying ? _volume : 0.0)}%',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        )
+                      : Stack(
+                          children: [
+                            Positioned(
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                bottom: 0,
+                                child: AdWidget(ad: _bannerAd)),
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                              child: IconButton(
+                                icon: const Icon(UniconsLine.times_circle),
+                                onPressed: _closeBanner,
+                              ),
+                            ),
+                          ],
+                        ),
+                ),
+              ),
             ],
           ),
           showConfetti ? const GameConfetti() : const SizedBox(),
@@ -432,14 +487,15 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
       builder: (BuildContext context) {
         return !_isLoaded
             ? AlertDialog(
-                title: Text('Game Over'),
-                content: Text('Congratulations! You have completed the game.'),
+                title: const Text('Game Over'),
+                content:
+                    const Text('Congratulations! You have completed the game.'),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () {
                       Get.offNamed('/');
                     },
-                    child: Text('OK'),
+                    child: const Text('OK'),
                   ),
                 ],
               )

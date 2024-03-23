@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:textspeech/util/animal_info.dart';
+import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/curved_edges.dart';
 import 'package:unicons/unicons.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -98,7 +100,6 @@ class _DetailAnimalsState extends State<DetailAnimals> {
         //   style: GoogleFonts.montserratAlternates(
         //     fontSize: 20,
         //     fontWeight: FontWeight.bold,
-        //     color: Colors.black,
         //   ),
         // )
         //     .animate(delay: const Duration(milliseconds: 250))
@@ -304,6 +305,13 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           IconButton(
+                              onPressed: playPause,
+                              icon: const Icon(
+                                UniconsLine.repeat,
+                                color: Colors.white,
+                                size: 30,
+                              )),
+                          IconButton(
                             onPressed: _duration.inSeconds >= 10
                                 ? () {
                                     if (_position.inSeconds >= 10) {
@@ -326,8 +334,8 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                           GestureDetector(
                             onTap: playPause,
                             child: Container(
-                              width: 50,
-                              height: 50,
+                              width: 60,
+                              height: 60,
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Colors.white,
@@ -366,6 +374,145 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                               size: 40,
                             ),
                           ),
+                          IconButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  enableDrag: true,
+                                  useSafeArea: true,
+                                  clipBehavior: Clip.hardEdge,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                    ),
+                                  ),
+                                  context: context,
+                                  isScrollControlled: true,
+                                  builder: (context) {
+                                    return DraggableScrollableSheet(
+                                      expand: false,
+                                      initialChildSize: 0.5,
+                                      snap: true,
+                                      snapSizes: const [0.5, 1.0],
+                                      builder: (context, scrollController) {
+                                        return CustomScrollView(
+                                          controller: scrollController,
+                                          physics:
+                                              const ClampingScrollPhysics(),
+                                          slivers: [
+                                            SliverPersistentHeader(
+                                              delegate: AnimalInfoAppBar(),
+                                              pinned: true,
+                                            ),
+                                            SliverList(
+                                                delegate:
+                                                    SliverChildBuilderDelegate(
+                                                        (_, index) => ListTile(
+                                                              leading: Image.asset(
+                                                                  animalsList[
+                                                                          index]
+                                                                      [
+                                                                      'imagePath']!,
+                                                                  width: 50,
+                                                                  height: 50),
+                                                              title: Text(
+                                                                  animalsList[
+                                                                          index]
+                                                                      ['name']!,
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .left,
+                                                                  style: GoogleFonts.aBeeZee(
+                                                                      height:
+                                                                          1.3,
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .black)),
+                                                              subtitle: Row(
+                                                                children: [
+                                                                  Text(
+                                                                      animalsList[
+                                                                              index]
+                                                                          [
+                                                                          'kategori']!,
+                                                                      textAlign:
+                                                                          TextAlign
+                                                                              .left,
+                                                                      style: GoogleFonts.aBeeZee(
+                                                                          height:
+                                                                              1.3,
+                                                                          fontSize:
+                                                                              16,
+                                                                          fontWeight: FontWeight
+                                                                              .w400,
+                                                                          color:
+                                                                              Colors.black)),
+                                                                  const SizedBox(
+                                                                      width:
+                                                                          5.0),
+                                                                  Text(
+                                                                    '|',
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style: GoogleFonts
+                                                                        .aBeeZee(
+                                                                      height:
+                                                                          1.3,
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .black,
+                                                                    ),
+                                                                  ),
+                                                                  const SizedBox(
+                                                                      width:
+                                                                          5.0),
+                                                                  Text(
+                                                                    animalsList[
+                                                                            index]
+                                                                        [
+                                                                        'jenis_makan']!,
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .left,
+                                                                    style: GoogleFonts
+                                                                        .aBeeZee(
+                                                                      height:
+                                                                          1.3,
+                                                                      fontSize:
+                                                                          16,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .black,
+                                                                    ),
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            ),
+                                                        childCount:
+                                                            animalsList.length))
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                );
+                              },
+                              icon: const Icon(
+                                UniconsLine.list_ul,
+                                color: Colors.white,
+                                size: 35,
+                              ))
                         ],
                       )
                           .animate(delay: const Duration(milliseconds: 250))

@@ -35,6 +35,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
 
   Duration _duration = const Duration();
   Duration _position = const Duration();
+  late int currentIndex = -1;
 
   @override
   void initState() {
@@ -79,6 +80,22 @@ class _DetailAnimalsState extends State<DetailAnimals> {
     setState(() {});
   }
 
+  static Route<dynamic> _routeBuilder(
+      BuildContext context, List<Map<String, String>> animalsList, int index) {
+    return MaterialPageRoute(
+      builder: (_) {
+        return DetailAnimals(
+          imgAnimal: animalsList[index]['imagePath']!,
+          name: animalsList[index]['name']!,
+          deskripsi: animalsList[index]['deskripsi']!,
+          audio: animalsList[index]['voice']!,
+          kategori: animalsList[index]['kategori']!,
+          jenisMakanan: animalsList[index]['jenis_makan']!,
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -89,7 +106,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
         leading: IconButton(
             onPressed: () {
               Future.delayed(const Duration(milliseconds: 250), () {
-                Get.back();
+                Get.offAllNamed('/animals-content');
               });
             },
             icon: const Icon(Icons.arrow_back_ios)
@@ -401,20 +418,52 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                               const ClampingScrollPhysics(),
                                           slivers: [
                                             SliverPersistentHeader(
-                                              delegate: AnimalInfoAppBar(),
+                                              delegate: AnimalInfoAppBar(
+                                                  animalsList.length),
                                               pinned: true,
                                             ),
                                             SliverList(
                                                 delegate:
                                                     SliverChildBuilderDelegate(
                                                         (_, index) => ListTile(
-                                                              leading: Image.asset(
+                                                              onTap: () {
+                                                                if (index !=
+                                                                    currentIndex) {
+                                                                  // Set currentIndex to the clicked index
+                                                                  setState(() {
+                                                                    currentIndex =
+                                                                        index;
+                                                                    print(
+                                                                        'ini currentIndex ketika di klik : ${currentIndex.toString()}');
+                                                                  });
+                                                                  Navigator
+                                                                      .pushReplacement(
+                                                                    context,
+                                                                    _routeBuilder(
+                                                                        context,
+                                                                        animalsList,
+                                                                        index),
+                                                                  );
+                                                                }
+                                                              },
+                                                              leading:
+                                                                  ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            5.0),
+                                                                child:
+                                                                    Image.asset(
                                                                   animalsList[
                                                                           index]
                                                                       [
                                                                       'imagePath']!,
                                                                   width: 50,
-                                                                  height: 50),
+                                                                  height: 50,
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                              ),
                                                               title: Text(
                                                                   animalsList[
                                                                           index]

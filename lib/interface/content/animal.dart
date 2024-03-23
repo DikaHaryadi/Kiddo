@@ -126,14 +126,6 @@ class AnimalContent extends StatelessWidget {
                                 color: Colors.orangeAccent,
                               ),
                             ),
-                            // Text(
-                            //   'categories[index][]',
-                            //   style: GoogleFonts.robotoSlab(
-                            //     fontSize: 14,
-                            //     fontWeight: FontWeight.bold,
-                            //     color: Colors.orangeAccent,
-                            //   ),
-                            // ),
                             RichText(
                               text: TextSpan(
                                 text: '${animalsList[index]['kategori']} | ',

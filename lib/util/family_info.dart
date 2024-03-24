@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
 
-class AnimalInfoAppBar extends SliverPersistentHeaderDelegate {
+class FamilyInfoAppBar extends SliverPersistentHeaderDelegate {
   final int count;
 
-  AnimalInfoAppBar(this.count);
+  FamilyInfoAppBar(this.count);
 
   @override
   Widget build(

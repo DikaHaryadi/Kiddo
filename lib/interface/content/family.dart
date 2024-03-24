@@ -1,9 +1,11 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/interface/detail%20content/detail_family.dart';
 import 'package:textspeech/interface/homepage.dart';
+import 'package:textspeech/util/constants.dart';
 
 class FamilyContent extends StatelessWidget {
   const FamilyContent({
@@ -71,7 +73,7 @@ class FamilyContent extends StatelessWidget {
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
-            itemCount: 5,
+            itemCount: familyList.length,
             itemBuilder: (context, index) {
               return SizedBox(
                 width: double.infinity,
@@ -86,13 +88,19 @@ class FamilyContent extends StatelessWidget {
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                       ),
                       closedBuilder: (context, action) {
-                        return Container(
+                        return Image.asset(
+                          familyList[index]['imagePath']!,
                           width: 60,
                           height: 60,
-                          color: Colors.red,
+                          fit: BoxFit.cover,
                         );
                       },
-                      openBuilder: (context, action) => const DetailFamily(),
+                      openBuilder: (context, action) => DetailFamily(
+                        imgFamily: familyList[index]['imagePath']!,
+                        name: familyList[index]['name']!,
+                        deskripsi: familyList[index]['deskripsi']!,
+                        subtitle: familyList[index]['subtitle']!,
+                      ),
                     ),
                     Expanded(
                       child: Container(
@@ -103,7 +111,7 @@ class FamilyContent extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'categories[index][]',
+                              familyList[index]['name']!,
                               style: GoogleFonts.montserrat(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -111,7 +119,7 @@ class FamilyContent extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              ' categories[index][subtitleContent]',
+                              familyList[index]['subtitle']!,
                               style: GoogleFonts.robotoSlab(
                                 fontSize: 14,
                                 fontWeight: FontWeight.bold,
@@ -125,11 +133,14 @@ class FamilyContent extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Future.delayed(const Duration(milliseconds: 250), () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const DetailFamily(),
-                              ));
+                          Get.to(
+                            () => DetailFamily(
+                              imgFamily: familyList[index]['imagePath']!,
+                              name: familyList[index]['name']!,
+                              deskripsi: familyList[index]['deskripsi']!,
+                              subtitle: familyList[index]['subtitle']!,
+                            ),
+                          );
                         });
                       },
                       child: Container(

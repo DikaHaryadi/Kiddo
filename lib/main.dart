@@ -10,6 +10,7 @@ import 'package:textspeech/interface/content/letters.dart';
 import 'package:textspeech/interface/content/numbers.dart';
 import 'package:textspeech/interface/content/vegetables.dart';
 import 'package:textspeech/interface/detail%20content/detail_animal.dart';
+import 'package:textspeech/interface/detail%20content/detail_family.dart';
 import 'package:textspeech/interface/game_ui.dart';
 import 'package:textspeech/interface/homepage.dart';
 import 'package:textspeech/interface/numbers_game.dart';
@@ -43,16 +44,8 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: '/vegetables-content',
               page: () => const VegetablesContent()),
-          // Detail Content
-          GetPage(
-              name: '/detail-animal',
-              page: () {
-                DetailAnimals pickDetailAnimals = Get.arguments;
-                print('going to detail animals page');
-                return pickDetailAnimals;
-              }),
         ]
-        // home: OnboardingPage(),
+        // home: FamilyContent(),
         );
   }
 }

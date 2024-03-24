@@ -21,7 +21,7 @@ class _NumberContentState extends State<NumberContent> {
   FlutterTts flutterTts = FlutterTts();
 
   void textToSpeech(String text) async {
-    await flutterTts.setLanguage("en-US");
+    await flutterTts.setLanguage("ar-UAE");
     await flutterTts.setVolume(1);
     await flutterTts.setSpeechRate(0.5);
     await flutterTts.setPitch(1);

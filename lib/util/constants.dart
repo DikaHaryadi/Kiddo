@@ -557,38 +557,65 @@ const familyList = [
   {
     'imagePath': 'assets/family/0.png',
     'name': 'الجد',
+    'deskripsi':
+        'Kakek, sosok lelaki yang telah meniti usia panjang, dipandang sebagai pilar keluarga yang memberikan kebijaksanaan, pengalaman hidup, dan nasihat berharga kepada generasi berikutnya, sementara juga menyajikan cinta yang tak terhingga.',
+    'subtitle': 'Kakek / Eyang',
   },
   {
     'imagePath': 'assets/family/1.png',
     'name': 'الجدة',
+    'deskripsi':
+        'Nenek, wanita bijaksana dengan raut wajah yang dipenuhi oleh cerita masa lalu, menjadi tiang keluarga yang menyajikan kehangatan, kelembutan, serta kearifan bagi generasi berikutnya, sambil memberikan cinta yang tak terbatas.',
+    'subtitle': 'Nenek / Oma',
   },
   {
     'imagePath': 'assets/family/2.png',
     'name': 'الأب',
+    'deskripsi':
+        'Ayah, memberikan kehadiran yang tangguh dan kasih sayang yang tak terkalahkan. Dengan kebijaksanaan dan dukungan tak terbatasnya, ia menjadi penuntun dan teladan bagi keluarga, menyediakan pelajaran berharga dan ketenangan dalam setiap langkah keluarga.',
+    'subtitle': 'Ayah / Abi',
   },
   {
     'imagePath': 'assets/family/3.png',
     'name': 'الأم',
+    'deskripsi':
+        'Ibu, sosok yang penuh kasih dan ketabahan, adalah pilar kuat dalam keluarga. Dengan kelembutan dan pengorbanannya, ia memberikan cinta tak terhingga dan membimbing dengan bijaksana, memberikan inspirasi, dukungan, dan kehangatan yang tak tertandingi kepada setiap anggota keluarga.',
+    'subtitle': 'Bunda / Ummi',
   },
   {
     'imagePath': 'assets/family/4.png',
     'name': 'العم/الخال',
+    'deskripsi':
+        'Paman, figur yang ceria dan menyenangkan, hadir dalam keluarga sebagai sumber kecerdasan, humor, dan inspirasi. Dengan kehangatan dan dukungan tak terbatasnya, ia memberikan nasihat bijak dan petualangan yang tak terlupakan kepada generasi muda, menjadikannya panutan dan teman yang berharga',
+    'subtitle': 'Paman / Uncle',
   },
   {
     'imagePath': 'assets/family/5.png',
     'name': 'العمة/الخالة',
+    'deskripsi':
+        'Bibi, sebagai penjaga keceriaan dan kebijaksanaan dalam keluarga. Dengan senyumnya yang menyenangkan dan hati yang terbuka, ia memberikan dukungan tanpa syarat, cerita-cerita yang menginspirasi, dan bimbingan yang penuh cinta kepada keponakan-keponakannya, menjadikannya teladan yang menyenangkan dan perhatian.',
+    'subtitle': 'Bibi / Aunty',
   },
   {
     'imagePath': 'assets/family/6.png',
     'name': 'الابن',
+    'deskripsi':
+        'Anak laki-laki, penerus generasi yang penuh semangat dan keberanian, hadir dengan keceriaan dan keingintahuan yang tak terbatas. Dengan kecerdasan dan tekad, ia mengeksplorasi dunia dengan rasa ingin tahu yang tak terbendung, membawa harapan dan kebahagiaan bagi keluarga.',
+    'subtitle': 'Anak laki - laki',
   },
   {
     'imagePath': 'assets/family/7.png',
     'name': 'الابنة',
+    'deskripsi':
+        'Anak perempuan, cahaya yang membawa kebahagiaan dan kelembutan dalam keluarga. Dengan keanggunan dan kelembutan, ia memancarkan kecerdasan dan kebaikan, menjadi sumber kebanggaan dan cinta yang tak terbatas bagi orang tua dan keluarganya.',
+    'subtitle': 'Anak Perempuan',
   },
   {
     'imagePath': 'assets/family/8.png',
     'name': 'ابن/ابنة العم',
+    'deskripsi':
+        'Keponakan, cahaya yang membawa keceriaan dan kebahagiaan dalam keluarga. Dengan kepolosan dan kehangatan, mereka menjadi sumber kebanggaan dan kasih sayang yang tak terhingga bagi keluarga.',
+    'subtitle': 'Keponakan laki - laki / perempuan',
   },
 ];
 

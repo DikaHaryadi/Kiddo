@@ -12,10 +12,17 @@ import 'package:textspeech/util/curved_edges.dart';
 import 'package:textspeech/util/responsive.dart';
 import 'package:unicons/unicons.dart';
 
-class FamilyContent extends StatelessWidget {
+class FamilyContent extends StatefulWidget {
   const FamilyContent({
     super.key,
   });
+
+  @override
+  State<FamilyContent> createState() => _FamilyContentState();
+}
+
+class _FamilyContentState extends State<FamilyContent> {
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +35,10 @@ class FamilyContent extends StatelessWidget {
       await flutterTts.setPitch(1);
       await flutterTts.speak(text);
     }
+
+    String name = familyList[selectedIndex]['name']!;
+    String subtitle = familyList[selectedIndex]['subtitle']!;
+    String deskripsi = familyList[selectedIndex]['deskripsi']!;
 
     return Scaffold(
       appBar: isMobile(context)
@@ -219,116 +230,65 @@ class FamilyContent extends StatelessWidget {
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: familyList.length,
                               itemBuilder: (context, index) {
-                                // return ListTile(
-                                //   contentPadding: const EdgeInsets.symmetric(
-                                //       vertical: 15.0, horizontal: 15.0),
-                                //   leading: OpenContainer(
-                                //     openColor: Colors.pink,
-                                //     transitionDuration:
-                                //         const Duration(milliseconds: 500),
-                                //     transitionType:
-                                //         ContainerTransitionType.fade,
-                                //     closedShape: const RoundedRectangleBorder(
-                                //       borderRadius: BorderRadius.all(
-                                //           Radius.circular(10.0)),
-                                //     ),
-                                //     closedBuilder: (context, action) {
-                                //       return Image.asset(
-                                //         familyList[index]['imagePath']!,
-                                //         width: 60,
-                                //         height: 60,
-                                //         fit: BoxFit.cover,
-                                //       );
-                                //     },
-                                //     openBuilder: (context, action) =>
-                                //         DetailFamily(
-                                //       imgFamily: familyList[index]
-                                //           ['imagePath']!,
-                                //       name: familyList[index]['name']!,
-                                //       deskripsi: familyList[index]
-                                //           ['deskripsi']!,
-                                //       subtitle: familyList[index]['subtitle']!,
-                                //     ),
-                                //   ),
-                                //   title: Expanded(
-                                //     child: Column(
-                                //       crossAxisAlignment:
-                                //           CrossAxisAlignment.start,
-                                //       mainAxisAlignment:
-                                //           MainAxisAlignment.center,
-                                //       children: [
-                                //         Text(
-                                //           familyList[index]['name']!,
-                                //           style: GoogleFonts.montserrat(
-                                //             fontSize: 15,
-                                //             fontWeight: FontWeight.bold,
-                                //             color: Colors.white,
-                                //           ),
-                                //         ),
-                                //         Text(
-                                //           familyList[index]['subtitle']!,
-                                //           style: GoogleFonts.robotoSlab(
-                                //             fontSize: 15,
-                                //             fontWeight: FontWeight.bold,
-                                //             color: Colors.white,
-                                //           ),
-                                //         ),
-                                //       ],
-                                //     ),
-                                //   ),
-                                // )
-                                return Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 15.0, horizontal: 15.0),
-                                  child: Row(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(10.0)),
-                                        child: Image.asset(
-                                          familyList[index]['imagePath']!,
-                                          width: 60,
-                                          height: 60,
-                                          fit: BoxFit.cover,
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedIndex = index;
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15.0, horizontal: 15.0),
+                                    child: Row(
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(10.0)),
+                                          child: Image.asset(
+                                            familyList[index]['imagePath']!,
+                                            width: 60,
+                                            height: 60,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
-                                      ),
-                                      const SizedBox(width: 15.0),
-                                      Expanded(
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              familyList[index]['name']!,
-                                              style: GoogleFonts.montserrat(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
+                                        const SizedBox(width: 15.0),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                familyList[index]['name']!,
+                                                style: GoogleFonts.montserrat(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
                                               ),
-                                            ),
-                                            Text(
-                                              familyList[index]['subtitle']!,
-                                              style: GoogleFonts.robotoSlab(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
+                                              Text(
+                                                familyList[index]['subtitle']!,
+                                                style: GoogleFonts.robotoSlab(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.white,
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    ],
-                                  )
-                                      .animate(
-                                          delay:
-                                              const Duration(milliseconds: 250))
-                                      .slideY(
-                                          begin: 2.5,
-                                          end: 0,
-                                          duration: const Duration(
-                                              milliseconds: 700)),
+                                      ],
+                                    )
+                                        .animate(
+                                            delay: const Duration(
+                                                milliseconds: 250))
+                                        .slideY(
+                                            begin: 2.5,
+                                            end: 0,
+                                            duration: const Duration(
+                                                milliseconds: 700)),
+                                  ),
                                 );
                               },
                             ),
@@ -356,8 +316,10 @@ class FamilyContent extends StatelessWidget {
                                           color: Colors.yellow,
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(10.0))),
-                                      child: const IconButton(
-                                          onPressed: null,
+                                      child: IconButton(
+                                          onPressed: () {
+                                            Get.offNamed('/');
+                                          },
                                           icon: Icon(
                                             Icons.arrow_back_ios_new,
                                             color: Colors.black,
@@ -412,9 +374,9 @@ class FamilyContent extends StatelessWidget {
                           Positioned(
                             top: 400,
                             left: 30,
-                            child: Text('widget.name',
+                            child: Text(name,
                                     style: GoogleFonts.aBeeZee(
-                                        fontSize: 20,
+                                        fontSize: 35,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white))
                                 .animate(
@@ -427,12 +389,12 @@ class FamilyContent extends StatelessWidget {
                                     delay: const Duration(milliseconds: 100)),
                           ),
                           Positioned(
-                            top: 450,
+                            top: 460,
                             left: 30,
                             child: Text(
-                              'widget.subtitle',
+                              subtitle,
                               style: GoogleFonts.montserrat(
-                                  fontSize: 22,
+                                  fontSize: 40,
                                   fontWeight: FontWeight.bold,
                                   color: const Color(0xFFa35e3e)),
                             )
@@ -451,11 +413,11 @@ class FamilyContent extends StatelessWidget {
                             bottom: 150,
                             child: GestureDetector(
                               onTap: () {
-                                // textToSpeech(widget.subtitle);
+                                textToSpeech(subtitle);
                               },
                               child: Container(
-                                width: 70,
-                                height: 70,
+                                width: 85,
+                                height: 85,
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: Color(0xFFa35e3e),
@@ -484,23 +446,25 @@ class FamilyContent extends StatelessWidget {
                             right: 20,
                             left: 20,
                             child: Text(
-                              ' widget.deskripsi',
+                              deskripsi,
                               textAlign: TextAlign.left,
                               style: GoogleFonts.aBeeZee(
                                 height: 1.4,
-                                fontSize: 16,
+                                fontSize: 25,
                                 fontWeight: FontWeight.w400,
                                 color: Colors.black,
                               ),
                             )
                                 .animate(
-                                    delay: const Duration(milliseconds: 250))
+                                  delay: const Duration(milliseconds: 250),
+                                )
                                 .slideY(
-                                    begin: 3,
-                                    end: 0,
-                                    duration: const Duration(milliseconds: 600),
-                                    curve: Curves.easeInOutBack,
-                                    delay: const Duration(milliseconds: 100)),
+                                  begin: 3,
+                                  end: 0,
+                                  duration: const Duration(milliseconds: 600),
+                                  curve: Curves.easeInOutBack,
+                                  delay: const Duration(milliseconds: 100),
+                                ),
                           )
                         ],
                       ),

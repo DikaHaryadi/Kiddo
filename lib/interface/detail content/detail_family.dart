@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/util/constants.dart';
@@ -27,7 +28,7 @@ class _DetailFamilyState extends State<DetailFamily> {
   FlutterTts flutterTts = FlutterTts();
 
   void textToSpeech(String text) async {
-    await flutterTts.setLanguage("en-US");
+    await flutterTts.setLanguage("id-ID");
     await flutterTts.setVolume(1);
     await flutterTts.setSpeechRate(0.5);
     await flutterTts.setPitch(1);
@@ -55,92 +56,97 @@ class _DetailFamilyState extends State<DetailFamily> {
           elevation: 0,
           backgroundColor: const Color(0xFFfab800),
           leading: IconButton(
-              onPressed: () {
-                showModalBottomSheet(
-                  enableDrag: true,
-                  useSafeArea: true,
-                  clipBehavior: Clip.hardEdge,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    ),
-                  ),
-                  context: context,
-                  isScrollControlled: true,
-                  builder: (context) {
-                    return DraggableScrollableSheet(
-                      expand: false,
-                      initialChildSize: 0.5,
-                      snap: true,
-                      snapSizes: const [0.5, 1.0],
-                      builder: (context, scrollController) {
-                        return CustomScrollView(
-                          controller: scrollController,
-                          physics: const ClampingScrollPhysics(),
-                          slivers: [
-                            SliverPersistentHeader(
-                              delegate: FamilyInfoAppBar(familyList.length),
-                              pinned: true,
-                            ),
-                            SliverList(
-                                delegate: SliverChildBuilderDelegate(
-                                    (_, index) => ListTile(
-                                          onTap: () {
-                                            if (index != currentIndex) {
-                                              // Set currentIndex to the clicked index
-                                              setState(() {
-                                                currentIndex = index;
-                                                print(
-                                                    'ini currentIndex ketika di klik : ${currentIndex.toString()}');
-                                              });
-                                              Navigator.pushReplacement(
-                                                context,
-                                                _routeBuilder(
-                                                    context, familyList, index),
-                                              );
-                                            }
-                                          },
-                                          leading: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                            child: Image.asset(
-                                              familyList[index]['imagePath']!,
-                                              width: 50,
-                                              height: 50,
-                                              fit: BoxFit.cover,
+                  onPressed: () {
+                    showModalBottomSheet(
+                      enableDrag: true,
+                      useSafeArea: true,
+                      clipBehavior: Clip.hardEdge,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                      ),
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) {
+                        return DraggableScrollableSheet(
+                          expand: false,
+                          initialChildSize: 0.5,
+                          snap: true,
+                          snapSizes: const [0.5, 1.0],
+                          builder: (context, scrollController) {
+                            return CustomScrollView(
+                              controller: scrollController,
+                              physics: const ClampingScrollPhysics(),
+                              slivers: [
+                                SliverPersistentHeader(
+                                  delegate: FamilyInfoAppBar(familyList.length),
+                                  pinned: true,
+                                ),
+                                SliverList(
+                                    delegate: SliverChildBuilderDelegate(
+                                        (_, index) => ListTile(
+                                              onTap: () {
+                                                if (index != currentIndex) {
+                                                  setState(() {
+                                                    currentIndex = index;
+                                                  });
+                                                  Navigator.pushReplacement(
+                                                    context,
+                                                    _routeBuilder(context,
+                                                        familyList, index),
+                                                  );
+                                                }
+                                              },
+                                              leading: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0),
+                                                child: Image.asset(
+                                                  familyList[index]
+                                                      ['imagePath']!,
+                                                  width: 50,
+                                                  height: 50,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              ),
+                                              title: Text(
+                                                  familyList[index]['name']!,
+                                                  textAlign: TextAlign.left,
+                                                  style: GoogleFonts.aBeeZee(
+                                                      height: 1.3,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.black)),
+                                              subtitle: Text(
+                                                  familyList[index]
+                                                      ['subtitle']!,
+                                                  textAlign: TextAlign.left,
+                                                  style: GoogleFonts.aBeeZee(
+                                                      height: 1.3,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.w400,
+                                                      color: Colors.black)),
                                             ),
-                                          ),
-                                          title: Text(
-                                              familyList[index]['name']!,
-                                              textAlign: TextAlign.left,
-                                              style: GoogleFonts.aBeeZee(
-                                                  height: 1.3,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black)),
-                                          subtitle: Text(
-                                              familyList[index]['subtitle']!,
-                                              textAlign: TextAlign.left,
-                                              style: GoogleFonts.aBeeZee(
-                                                  height: 1.3,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black)),
-                                        ),
-                                    childCount: familyList.length))
-                          ],
+                                        childCount: familyList.length))
+                              ],
+                            );
+                          },
                         );
                       },
                     );
                   },
-                );
-              },
-              icon: const Icon(
-                UniconsLine.list_ul,
-                color: Colors.white,
-                size: 30,
-              )),
+                  icon: const Icon(
+                    UniconsLine.list_ul,
+                    color: Colors.white,
+                    size: 30,
+                  ))
+              .animate(delay: const Duration(milliseconds: 250))
+              .fadeIn(
+                  duration: const Duration(milliseconds: 500),
+                  curve: Curves.easeInOutCubic),
         ),
         body: Stack(
           fit: StackFit.passthrough,
@@ -154,11 +160,30 @@ class _DetailFamilyState extends State<DetailFamily> {
               ),
             ),
             Positioned(
+              top: 270,
+              bottom: 150,
+              left: 30,
+              child: Text(
+                widget.subtitle,
+                style: GoogleFonts.montserrat(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: const Color(0xFFa35e3e)),
+              ).animate(delay: const Duration(milliseconds: 250)).slideX(
+                  begin: -2,
+                  end: 0,
+                  duration: const Duration(milliseconds: 600),
+                  curve: Curves.easeInOutBack,
+                  delay: const Duration(milliseconds: 100)),
+            ),
+            Positioned(
               right: 40,
-              top: 175,
+              top: 180,
               bottom: 150,
               child: GestureDetector(
-                onTap: () => textToSpeech(widget.name),
+                onTap: () {
+                  textToSpeech(widget.subtitle);
+                },
                 child: Container(
                   width: 60,
                   height: 60,
@@ -170,33 +195,38 @@ class _DetailFamilyState extends State<DetailFamily> {
                     UniconsLine.play,
                     color: Colors.white,
                   ),
-                ),
+                ).animate(delay: const Duration(milliseconds: 250)).slideX(
+                    begin: 2,
+                    end: 0,
+                    duration: const Duration(milliseconds: 700),
+                    curve: Curves.fastEaseInToSlowEaseOut,
+                    delay: const Duration(milliseconds: 100)),
               ),
             ),
             Positioned(
-                top: 220,
-                left: 30,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(widget.name,
-                        style: GoogleFonts.aBeeZee(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)),
-                    Text(widget.subtitle,
-                        style: GoogleFonts.montserrat(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
-                            color: const Color(0xFFa35e3e)))
-                  ],
-                )),
+              top: 240,
+              bottom: 150,
+              left: 30,
+              child: Text(widget.name,
+                      style: GoogleFonts.aBeeZee(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white))
+                  .animate(delay: const Duration(milliseconds: 250))
+                  .slideX(
+                      begin: -2,
+                      end: 0,
+                      duration: const Duration(milliseconds: 600),
+                      curve: Curves.easeInOutBack,
+                      delay: const Duration(milliseconds: 100)),
+            ),
             Positioned(
-              bottom: 30,
+              top: 480,
+              bottom: 100,
               right: 20,
               left: 20,
               child: Text(
-                widget.deskripsi + 'GAK RESPONSIVE',
+                widget.deskripsi,
                 textAlign: TextAlign.left,
                 style: GoogleFonts.aBeeZee(
                   height: 1.4,
@@ -204,7 +234,12 @@ class _DetailFamilyState extends State<DetailFamily> {
                   fontWeight: FontWeight.w400,
                   color: Colors.black,
                 ),
-              ),
+              ).animate(delay: const Duration(milliseconds: 250)).slideY(
+                  begin: 3,
+                  end: 0,
+                  duration: const Duration(milliseconds: 600),
+                  curve: Curves.easeInOutBack,
+                  delay: const Duration(milliseconds: 100)),
             )
           ],
         ));

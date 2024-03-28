@@ -126,6 +126,7 @@ class _AnimalContentState extends State<AnimalContent> {
         children: [
           if (isMobile(context))
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AspectRatio(
                   aspectRatio: 18 / 9,

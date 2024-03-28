@@ -1,21 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
-// class AppColors {
-//   static const white = Color(0xffEEEEEE);
-//   static const black = Color(0xff1e212d);
-//   static const backGround = Color(0xfffcf4f1);
-//   static const secondary = Color(0xff5fffe0);
-//   static const crimson = Color(0xffff5f7e);
-//   static const yellow = Color(0xfffbe698);
-//   static const orange = Color(0xffff884b);
-//   static const lpink = Color(0xffffcce7);
-//   static const sage = Color(0xffdaf2dc);
-//   static const pale = Color(0xffeacfff);
-//   static const tale = Color(0xffdaf2dc);
-//   static const green = Color(0xffffffff);
-//   static const blue = Color.fromARGB(255, 0, 164, 252);
-//   static const cust1 = Color.fromARGB(255, 0, 255, 238);
-// }
 const Color continueBtnColor = Color.fromRGBO(235, 32, 93, 1);
 const Color restartBtnColor = Color.fromRGBO(243, 181, 45, 1);
 const Color quitBtnColor = Color.fromRGBO(39, 162, 149, 1);
@@ -27,168 +12,13 @@ const List<Map<String, dynamic>> gameLevels = [
 ];
 
 const String gameTitle = 'MEMORY MATCH';
+const int maxFailedLoadAttempts = 3;
 
-// INI CONTENT UNTUK APPLIKASI
-// const contentKiddo = [
-//   {
-//     'imagePath': 'assets/images/number.png',
-//     'name': 'Number',
-//     'imageHeader': 'assets/images/number.png',
-//     'categories': [
-//       {
-//         'imageContent': 'assets/numbers/0.png',
-//         'titleContent': 'Zero',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       },
-//       {
-//         'imageContent': 'assets/numbers/1.png',
-//         'titleContent': 'One',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       },
-//       {
-//         'imageContent': 'assets/numbers/2.png',
-//         'titleContent': 'Two',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       },
-//       {
-//         'imageContent': 'assets/numbers/3.png',
-//         'titleContent': 'Three',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       },
-//       {
-//         'imageContent': 'assets/numbers/4.png',
-//         'titleContent': 'Four',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       },
-//       {
-//         'imageContent': 'assets/numbers/5.png',
-//         'titleContent': 'Five',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       },
-//       {
-//         'imageContent': 'assets/numbers/6.png',
-//         'titleContent': 'Six',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       },
-//       {
-//         'imageContent': 'assets/numbers/7.png',
-//         'titleContent': 'Seven',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       },
-//       {
-//         'imageContent': 'assets/numbers/8.png',
-//         'titleContent': 'Eight',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       },
-//       {
-//         'imageContent': 'assets/numbers/9.png',
-//         'titleContent': 'Nine',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       },
-//     ]
-//   },
-//   {
-//     'imagePath': 'assets/letters.png',
-//     'name': 'Alphabet',
-//     'imageHeader': 'assets/images/number.png',
-//     'categories': [
-//       {
-//         'imageContent': 'assets/animals.png',
-//         'titleContent': 'Title Content',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       }
-//     ]
-//   },
-//   {
-//     'imagePath': 'assets/letters.png',
-//     'name': 'Color',
-//     'imageHeader': 'assets/images/number.png',
-//     'categories': [
-//       {
-//         'imageContent': 'assets/animals.png',
-//         'titleContent': 'Title Content',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       }
-//     ]
-//   },
-//   {
-//     'imagePath': 'assets/letters.png',
-//     'name': 'Hijaiyah',
-//     'imageHeader': 'assets/images/number.png',
-//     'categories': [
-//       {
-//         'imageContent': 'assets/animals.png',
-//         'titleContent': 'Title Content',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       }
-//     ]
-//   },
-//   {
-//     'imagePath': 'assets/animals.png',
-//     'name': 'Animals',
-//     'imageHeader': 'assets/images/number.png',
-//     'categories': [
-//       {
-//         'imageContent': 'assets/animals.png',
-//         'titleContent': 'Title Content',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       }
-//     ]
-//   },
-//   {
-//     'imagePath': 'assets/images/family.png',
-//     'name': 'Family',
-//     'imageHeader': 'assets/images/number.png',
-//     'categories': [
-//       {
-//         'imageContent': 'assets/animals.png',
-//         'titleContent': 'Title Content',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       }
-//     ]
-//   },
-//   {
-//     'imagePath': 'assets/images/fruits.png',
-//     'name': 'Fruits',
-//     'imageHeader': 'assets/images/number.png',
-//     'categories': [
-//       {
-//         'imageContent': 'assets/animals.png',
-//         'titleContent': 'Title Content',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       }
-//     ]
-//   },
-//   {
-//     'imagePath': 'assets/vegetables.png',
-//     'name': 'Vegetables',
-//     'imageHeader': 'assets/images/number.png',
-//     'categories': [
-//       {
-//         'imageContent': 'assets/animals.png',
-//         'titleContent': 'Title Content',
-//         'subtitleContent': 'Subtitle Content',
-//         'audio': ''
-//       }
-//     ]
-//   },
-// ];
+const AdRequest request = AdRequest(
+  keywords: <String>['foo', 'bar'],
+  contentUrl: 'http://foo.com/bar.html',
+  nonPersonalizedAds: true,
+);
 
 //CATEGORIES
 const contentKiddo = [
@@ -250,9 +80,17 @@ const routesList = [
   },
 ];
 
-// const GamesList = [
-//   {'GameName': 'Color Match', 'imagePath': 'assets/games/color.png'},
-//   {'GameName': 'Shape Match', 'imagePath': 'assets/games/memo.png'},
+// const gameList = [
+//   {
+//     'GameName': 'Memo Game',
+//     'imagePath': 'assets/games/color.png',
+//     'enum': 'memo'
+//   },
+//   {
+//     'GameName': 'Summation',
+//     'imagePath': 'assets/games/memo.png',
+//     'enum': 'numbers'
+//   },
 // ];
 
 const gamesRoutes = [

@@ -82,6 +82,7 @@ class _FamilyContentState extends State<FamilyContent> {
         children: [
           if (isMobile(context))
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AspectRatio(
                   aspectRatio: 18 / 9,
@@ -320,7 +321,7 @@ class _FamilyContentState extends State<FamilyContent> {
                                           onPressed: () {
                                             Get.offNamed('/');
                                           },
-                                          icon: Icon(
+                                          icon: const Icon(
                                             Icons.arrow_back_ios_new,
                                             color: Colors.black,
                                           )),

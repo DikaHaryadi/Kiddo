@@ -1,8 +1,4 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:textspeech/interface/homepage.dart';
 
 class VegetablesContent extends StatelessWidget {
   const VegetablesContent({super.key});
@@ -16,7 +12,7 @@ class VegetablesContent extends StatelessWidget {
             const Text('Trace And Match'),
             Row(
               children: [
-                Container(
+                SizedBox(
                   width: 150, // Menyesuaikan lebar Container
                   child: ListView(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),

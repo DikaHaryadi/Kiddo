@@ -5,7 +5,7 @@ import 'package:textspeech/interface/game_ui.dart';
 import 'package:textspeech/util/widgets/game_controls_bottomsheet.dart';
 import 'package:unicons/unicons.dart';
 
-class RestartGame extends StatelessWidget {
+class RestartGame extends StatefulWidget {
   const RestartGame({
     required this.isGameOver,
     required this.pauseGame,
@@ -21,8 +21,13 @@ class RestartGame extends StatelessWidget {
   final bool isGameOver;
   final Color color;
 
+  @override
+  State<RestartGame> createState() => _RestartGameState();
+}
+
+class _RestartGameState extends State<RestartGame> {
   Future<void> showGameControls(BuildContext context) async {
-    pauseGame();
+    widget.pauseGame();
 
     var value = await showDialog(
       barrierDismissible: false,
@@ -35,9 +40,9 @@ class RestartGame extends StatelessWidget {
     value ??= false;
 
     if (value) {
-      restartGame();
+      widget.restartGame();
     } else {
-      continueGame();
+      widget.continueGame();
     }
   }
 
@@ -52,12 +57,12 @@ class RestartGame extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () =>
-          isGameOver ? navigateback(context) : showGameControls(context),
+          widget.isGameOver ? navigateback(context) : showGameControls(context),
       child: CircleAvatar(
         minRadius: 15,
         maxRadius: 20,
         backgroundColor: const Color(0xFF8dbffa),
-        child: isGameOver
+        child: widget.isGameOver
             ? const Icon(UniconsLine.pause)
             : const Icon(UniconsLine.play),
       ),

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/game%20property/game.dart';
 import 'package:textspeech/util/game%20property/game_confetti.dart';
 import 'package:textspeech/util/game%20property/restart_game.dart';
@@ -38,34 +40,91 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   double _volume = 1.0;
 
   // banner ads
-  late BannerAd _bannerAd;
-  bool _isLoaded = false;
+  // late BannerAd _bannerAd;
+  // bool _isLoaded = false;
 
   /// Loads a banner ad.
-  inilizeBannerAd() async {
-    _bannerAd = BannerAd(
-        size: AdSize.banner,
-        adUnitId: 'ca-app-pub-3940256099942544/9214589741',
-        listener: BannerAdListener(
-          onAdLoaded: (ad) {
-            setState(() {
-              _isLoaded = true;
-            });
+  // inilizeBannerAd() async {
+  //   _bannerAd = BannerAd(
+  //       size: AdSize.banner,
+  //       adUnitId: 'ca-app-pub-3940256099942544/9214589741',
+  //       listener: BannerAdListener(
+  //         onAdLoaded: (ad) {
+  //           setState(() {
+  //             _isLoaded = true;
+  //           });
+  //         },
+  //         onAdFailedToLoad: (ad, error) {
+  //           ad.dispose();
+  //           _isLoaded = false;
+  //           print(error);
+  //         },
+  //       ),
+  //       request: const AdRequest());
+  //   _bannerAd.load();
+  // }
+
+  // void _closeBanner() {
+  //   setState(() {
+  //     _isLoaded = false;
+  //   });
+  // }
+
+  // show reward ads
+  RewardedAd? _rewardedAd;
+
+  int _numRewardedLoadAttempts = 0;
+
+  void _createRewardedAd() {
+    RewardedAd.load(
+        adUnitId: Platform.isAndroid
+            ? 'ca-app-pub-3940256099942544/5224354917'
+            : 'ca-app-pub-3940256099942544/1712485313',
+        request: request,
+        rewardedAdLoadCallback: RewardedAdLoadCallback(
+          onAdLoaded: (RewardedAd ad) {
+            print('$ad loaded.');
+            _rewardedAd = ad;
+            _numRewardedLoadAttempts = 0;
           },
-          onAdFailedToLoad: (ad, error) {
-            ad.dispose();
-            _isLoaded = false;
-            print(error);
+          onAdFailedToLoad: (LoadAdError error) {
+            print('RewardedAd failed to load: $error');
+            _rewardedAd = null;
+            _numRewardedLoadAttempts += 1;
+            if (_numRewardedLoadAttempts < maxFailedLoadAttempts) {
+              _createRewardedAd();
+            }
           },
-        ),
-        request: const AdRequest());
-    _bannerAd.load();
+        ));
   }
 
-  void _closeBanner() {
-    setState(() {
-      _isLoaded = false;
+  void _showRewardedAd() {
+    if (_rewardedAd == null) {
+      print('Warning: attempt to show rewarded before loaded.');
+      return;
+    }
+    _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
+      onAdShowedFullScreenContent: (RewardedAd ad) =>
+          print('ad onAdShowedFullScreenContent.'),
+      onAdDismissedFullScreenContent: (RewardedAd ad) {
+        print('$ad onAdDismissedFullScreenContent.');
+        ad.dispose();
+        _createRewardedAd();
+        Get.offNamed('/'); // Navigate back to '/'
+      },
+      onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+        print('$ad onAdFailedToShowFullScreenContent: $error');
+        ad.dispose();
+        _createRewardedAd();
+      },
+    );
+
+    _rewardedAd!.setImmersiveMode(true);
+    _rewardedAd!.show(
+        onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
     });
+    _rewardedAd = null;
   }
 
   @override
@@ -78,7 +137,8 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     checkGameStatus();
     audioPlayer = AudioPlayer();
     playBackgroundMusic();
-    inilizeBannerAd();
+    // inilizeBannerAd();
+    _createRewardedAd();
   }
 
   @override
@@ -219,7 +279,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   void dispose() {
     audioPlayer.stop();
     audioPlayer.dispose();
-    _bannerAd.dispose();
+    // _bannerAd.dispose();
     super.dispose();
   }
 
@@ -420,58 +480,60 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
               AspectRatio(
                 aspectRatio: 16 / 2.5,
                 child: Container(
-                  padding: const EdgeInsets.symmetric(vertical: 5.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 1.0,
-                      style: BorderStyle.solid,
-                      color: Colors.black.withOpacity(.4),
+                    padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1.0,
+                        style: BorderStyle.solid,
+                        color: Colors.black.withOpacity(.4),
+                      ),
                     ),
-                  ),
-                  child: !_isLoaded
-                      ? Row(
-                          children: [
-                            IconButton(
-                                onPressed: toggleMute,
-                                icon: isMusicPlaying
-                                    ? const Icon(UniconsLine.volume)
-                                    : const Icon(UniconsLine.volume_mute)),
-                            Slider(
-                              value: isMusicPlaying ? _volume : 0.0,
-                              min: 0.0,
-                              max: 1.0,
-                              onChanged: (newValue) {
-                                setVolume(newValue);
-                              },
-                              onChangeEnd: (newValue) {
-                                setVolume(newValue);
-                              },
-                            ),
-                            Text(
-                              '${calculateVolumePercentage(isMusicPlaying ? _volume : 0.0)}%',
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                          ],
-                        )
-                      : Stack(
-                          children: [
-                            Positioned(
-                                top: 0,
-                                left: 0,
-                                right: 0,
-                                bottom: 0,
-                                child: AdWidget(ad: _bannerAd)),
-                            Positioned(
-                              top: 0,
-                              left: 0,
-                              child: IconButton(
-                                icon: const Icon(UniconsLine.times_circle),
-                                onPressed: _closeBanner,
-                              ),
-                            ),
-                          ],
+                    child:
+                        // !_isLoaded
+                        //     ?
+                        Row(
+                      children: [
+                        IconButton(
+                            onPressed: toggleMute,
+                            icon: isMusicPlaying
+                                ? const Icon(UniconsLine.volume)
+                                : const Icon(UniconsLine.volume_mute)),
+                        Slider(
+                          value: isMusicPlaying ? _volume : 0.0,
+                          min: 0.0,
+                          max: 1.0,
+                          onChanged: (newValue) {
+                            setVolume(newValue);
+                          },
+                          onChangeEnd: (newValue) {
+                            setVolume(newValue);
+                          },
                         ),
-                ),
+                        Text(
+                          '${calculateVolumePercentage(isMusicPlaying ? _volume : 0.0)}%',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    )
+                    // : Stack(
+                    //     children: [
+                    //       Positioned(
+                    //           top: 0,
+                    //           left: 0,
+                    //           right: 0,
+                    //           bottom: 0,
+                    //           child: AdWidget(ad: _bannerAd)),
+                    //       Positioned(
+                    //         top: 0,
+                    //         left: 0,
+                    //         child: IconButton(
+                    //           icon: const Icon(UniconsLine.times_circle),
+                    //           onPressed: _closeBanner,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    ),
               ),
             ],
           ),
@@ -485,21 +547,19 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return !_isLoaded
-            ? AlertDialog(
-                title: const Text('Game Over'),
-                content:
-                    const Text('Congratulations! You have completed the game.'),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () {
-                      Get.offNamed('/');
-                    },
-                    child: const Text('OK'),
-                  ),
-                ],
-              )
-            : Expanded(child: AdWidget(ad: _bannerAd));
+        return AlertDialog(
+          title: const Text('Game Over'),
+          content: const Text('Congratulations! You have completed the game.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                _showRewardedAd();
+                // Tidak melakukan navigasi ke '/'. Menunggu sampai iklan selesai ditampilkan.
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
       },
     );
   }

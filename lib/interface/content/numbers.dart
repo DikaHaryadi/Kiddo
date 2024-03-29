@@ -220,7 +220,7 @@ class _NumberContentState extends State<NumberContent> {
                       Expanded(
                           flex: 2,
                           child: Container(
-                            color: Colors.white,
+                            color: const Color(0xFFfcf4f1),
                             padding: const EdgeInsets.only(
                                 top: 50.0, left: 35.0, right: 40.0),
                             child: Column(
@@ -276,7 +276,9 @@ class _NumberContentState extends State<NumberContent> {
                                   alignment: Alignment.center,
                                   child: Text(
                                     'click on the image to reveal the sound',
-                                    style: GoogleFonts.roboto(fontSize: 25),
+                                    style: GoogleFonts.roboto(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 )
                               ],
@@ -285,7 +287,7 @@ class _NumberContentState extends State<NumberContent> {
                       Expanded(
                           flex: 1,
                           child: Container(
-                            color: Colors.pink,
+                            color: Colors.white,
                             padding: const EdgeInsets.only(top: 20.0),
                             child: GridView.count(
                               crossAxisCount: 2,

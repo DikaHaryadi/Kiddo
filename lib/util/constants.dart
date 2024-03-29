@@ -488,23 +488,23 @@ const fruitsList = [
 
 const vegetablesList = [
   {
-    'imagePath': 'assets/vegetables/بطاطس.png',
+    'imagePath': 'assets/vegetables/potato.png',
     'name': 'بطاطس',
   },
   {
-    'imagePath': 'assets/vegetables/بازلاء.png',
+    'imagePath': 'assets/vegetables/polobeans.png',
     'name': 'بازلاء',
   },
   {
-    'imagePath': 'assets/vegetables/فلفل.png',
+    'imagePath': 'assets/vegetables/chili.png',
     'name': 'فلفل',
   },
   {
-    'imagePath': 'assets/vegetables/باذنجان.png',
+    'imagePath': 'assets/vegetables/eggplant.png',
     'name': 'باذنجان',
   },
   {
-    'imagePath': 'assets/vegetables/خيار.png',
+    'imagePath': 'assets/vegetables/cucumber.png',
     'name': 'خيار',
   },
 ];

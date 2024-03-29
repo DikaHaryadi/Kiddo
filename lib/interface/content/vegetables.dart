@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:textspeech/util/constants.dart';
+import 'package:textspeech/util/responsive.dart';
 
 class VegetablesContent extends StatelessWidget {
   const VegetablesContent({super.key});
@@ -7,94 +10,50 @@ class VegetablesContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            const Text('Trace And Match'),
-            Row(
-              children: [
-                SizedBox(
-                  width: 150, // Menyesuaikan lebar Container
-                  child: ListView(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: List.generate(5, (index) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 10.0),
-                        width: 50,
-                        height: 100,
-                        color: Colors.red,
-                      );
-                    }),
-                  ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 5,
-                    itemBuilder: (context, index) => const CircleAvatar(
-                      minRadius: 10,
-                      maxRadius: 15,
+        child: isMobile(context)
+            ? Container()
+            : Column(children: [
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 30.0),
+                    child: Text(
+                      'track and match'.toUpperCase(),
+                      style: GoogleFonts.roboto(
+                          fontSize: 50, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
-                SizedBox(
-                  width: 150, // Menyesuaikan lebar SizedBox
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: List.generate(5, (index) {
-                      return Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        decoration: BoxDecoration(
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(20.0)),
-                          border: Border.all(
-                            color: Colors.black,
-                            strokeAlign: BorderSide.strokeAlignOutside,
-                            style: BorderStyle.solid,
-                            width: 1.5,
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: vegetablesList.length,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      children: [
+                        Flexible(
+                          flex: 1,
+                          child: Image.asset(
+                            vegetablesList[index]['imagePath']!,
+                            height: 200,
                           ),
                         ),
-                      );
-                    }),
-                  ),
-                ),
-                SizedBox(
-                  width: 150, // Menyesuaikan lebar SizedBox
-                  child: ListView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: List.generate(5, (index) {
-                      return const CircleAvatar(
-                        minRadius: 10,
-                        maxRadius: 15,
-                      );
-                    }),
-                  ),
-                ),
-                Container(
-                  width: 150, // Menyesuaikan lebar Container
-                  child: ListView(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: List.generate(5, (index) {
-                      return Container(
-                        margin: const EdgeInsets.only(bottom: 10.0),
-                        width: 50,
-                        height: 100,
-                        color: Colors.red,
-                      );
-                    }),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
+                        Flexible(
+                          flex: 2,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 15.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(width: 1, color: Colors.black),
+                              color: Colors.white,
+                            ),
+                            child: Text(vegetablesList[index]['name']!),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                )
+              ]),
       ),
     );
   }

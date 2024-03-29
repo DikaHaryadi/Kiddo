@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     _anchoredAdaptiveAd = BannerAd(
-      adUnitId: 'ca-app-pub-3940256099942544/9214589741',
+      adUnitId: 'ca-app-pub-3048736622280674/6380402407',
       size: size,
       request: const AdRequest(),
       listener: BannerAdListener(
@@ -381,7 +381,6 @@ class _HomePageState extends State<HomePage> {
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
-                                          color: Colors.blue,
                                           image: DecorationImage(
                                               image: AssetImage(
                                                   '${contentKiddo[index]['imagePath']}'),

@@ -104,51 +104,61 @@ const numsList = [
     'imagePath': 'assets/numbers/0.png',
     'counterPath': 'assets/counters/hands0.png',
     'name': 'Zero',
+    'title': '(0 = Zero)'
   },
   {
     'imagePath': 'assets/numbers/1.png',
     'counterPath': 'assets/counters/hands1.png',
     'name': 'One',
+    'title': '(1 = One)'
   },
   {
     'imagePath': 'assets/numbers/2.png',
     'counterPath': 'assets/counters/hands2.png',
     'name': 'Two',
+    'title': '(2 = Two)'
   },
   {
     'imagePath': 'assets/numbers/3.png',
     'counterPath': 'assets/counters/hands3.png',
     'name': 'Three',
+    'title': '(3 = Three)'
   },
   {
     'imagePath': 'assets/numbers/4.png',
     'counterPath': 'assets/counters/hands4.png',
     'name': 'Four',
+    'title': '(4 = Four)'
   },
   {
     'imagePath': 'assets/numbers/5.png',
     'counterPath': 'assets/counters/hands5.png',
     'name': 'Five',
+    'title': '(5 = Five)'
   },
   {
     'imagePath': 'assets/numbers/6.png',
     'counterPath': 'assets/counters/hands6.png',
     'name': 'Six',
+    'title': '(6 = Six)'
   },
   {
     'imagePath': 'assets/numbers/7.png',
     'counterPath': 'assets/counters/hands7.png',
     'name': 'Seven',
+    'title': '(7 = Seven)'
   },
   {
     'imagePath': 'assets/numbers/8.png',
     'counterPath': 'assets/counters/hands8.png',
     'name': 'Eight',
+    'title': '(7 = Eight)'
   },
   {
     'imagePath': 'assets/numbers/9.png',
     'counterPath': 'assets/counters/hands9.png',
     'name': 'Nine',
+    'title': '(9 = Nine)'
   },
 ];
 

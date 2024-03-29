@@ -39,37 +39,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   bool isMusicPlaying = true;
   double _volume = 1.0;
 
-  // banner ads
-  // late BannerAd _bannerAd;
-  // bool _isLoaded = false;
-
-  /// Loads a banner ad.
-  // inilizeBannerAd() async {
-  //   _bannerAd = BannerAd(
-  //       size: AdSize.banner,
-  //       adUnitId: 'ca-app-pub-3940256099942544/9214589741',
-  //       listener: BannerAdListener(
-  //         onAdLoaded: (ad) {
-  //           setState(() {
-  //             _isLoaded = true;
-  //           });
-  //         },
-  //         onAdFailedToLoad: (ad, error) {
-  //           ad.dispose();
-  //           _isLoaded = false;
-  //           print(error);
-  //         },
-  //       ),
-  //       request: const AdRequest());
-  //   _bannerAd.load();
-  // }
-
-  // void _closeBanner() {
-  //   setState(() {
-  //     _isLoaded = false;
-  //   });
-  // }
-
   // show reward ads
   RewardedAd? _rewardedAd;
 
@@ -288,49 +257,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
 
     return Scaffold(
-      // bottomNavigationBar: BottomAppBar(
-      //   child: !_isLoaded
-      //       ? Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //           children: [
-      //             IconButton(
-      //                 onPressed: toggleMute,
-      //                 icon: isMusicPlaying
-      //                     ? const Icon(UniconsLine.volume)
-      //                     : const Icon(UniconsLine.volume_mute)),
-      //             Slider(
-      //               value: isMusicPlaying ? _volume : 0.0,
-      //               min: 0.0,
-      //               max: 1.0,
-      //               onChanged: (newValue) {
-      //                 setVolume(newValue);
-      //               },
-      //               onChangeEnd: (newValue) {
-      //                 setVolume(newValue);
-      //               },
-      //             ),
-      //             Text(
-      //               '${calculateVolumePercentage(isMusicPlaying ? _volume : 0.0)}%',
-      //               style: const TextStyle(fontSize: 16),
-      //             ),
-      //           ],
-      //         )
-      //       : SizedBox(
-      //           width: double.infinity,
-      //           child: Row(
-      //             children: [
-      //               IconButton(
-      //                 icon: const Icon(UniconsLine.times_circle),
-      //                 onPressed: _closeBanner,
-      //               ),
-      //               const Expanded(
-      //                 child: SizedBox(), // Spacer widget for flexibility
-      //               ),
-      //               AdWidget(ad: _bannerAd)
-      //             ],
-      //           ),
-      //         ),
-      // ),
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         toolbarHeight: 45,

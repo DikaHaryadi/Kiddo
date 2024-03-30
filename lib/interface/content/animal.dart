@@ -135,7 +135,8 @@ class _AnimalContentState extends State<AnimalContent> {
                         borderRadius: BorderRadius.circular(15.0),
                         color: const Color(0xFF65d1ff),
                         image: const DecorationImage(
-                            image: AssetImage('assets/animals.png'))),
+                            image: AssetImage('assets/animals.png'),
+                            fit: BoxFit.fitHeight)),
                   ),
                 ).animate(delay: const Duration(milliseconds: 250)).fadeIn(
                     delay: const Duration(milliseconds: 500),

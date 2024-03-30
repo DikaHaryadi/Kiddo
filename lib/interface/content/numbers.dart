@@ -227,11 +227,18 @@ class _NumberContentState extends State<NumberContent> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 IconButton(
-                                    onPressed: () => Get.back(),
-                                    icon: const Icon(
-                                      Icons.arrow_back_ios,
-                                      size: 50,
-                                    )),
+                                        onPressed: () => Get.back(),
+                                        icon: const Icon(
+                                          Icons.arrow_back_ios,
+                                          size: 50,
+                                        ))
+                                    .animate()
+                                    .slideX(
+                                        begin: -2,
+                                        end: 0,
+                                        duration:
+                                            const Duration(milliseconds: 500),
+                                        curve: Curves.easeIn),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10.0),
                                   child: Text(
@@ -239,7 +246,12 @@ class _NumberContentState extends State<NumberContent> {
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 50),
-                                  ),
+                                  ).animate().slideX(
+                                      begin: -2,
+                                      end: 0,
+                                      duration:
+                                          const Duration(milliseconds: 700),
+                                      curve: Curves.easeIn),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10.0),
@@ -249,16 +261,27 @@ class _NumberContentState extends State<NumberContent> {
                                         fontWeight: FontWeight.w400,
                                         color: Colors.grey.shade400,
                                         fontSize: 40),
-                                  ),
+                                  ).animate().slideX(
+                                      begin: -2,
+                                      end: 0,
+                                      duration:
+                                          const Duration(milliseconds: 900),
+                                      curve: Curves.easeIn),
                                 ),
                                 Center(
                                     child: Padding(
                                   padding: const EdgeInsets.only(top: 50.0),
                                   child: InkWell(
-                                      onTap: () {
-                                        textToSpeech(name);
-                                      },
-                                      child: Image.asset(counterPath)),
+                                    onTap: () {
+                                      textToSpeech(name);
+                                    },
+                                    child: Image.asset(counterPath)
+                                        .animate()
+                                        .fadeIn(
+                                            duration: const Duration(
+                                                milliseconds: 2000),
+                                            curve: Curves.easeIn),
+                                  ),
                                 )),
                                 Center(
                                     child: Padding(
@@ -268,7 +291,10 @@ class _NumberContentState extends State<NumberContent> {
                                     style: GoogleFonts.roboto(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 40),
-                                  ),
+                                  ).animate().fadeIn(
+                                      duration:
+                                          const Duration(milliseconds: 2000),
+                                      curve: Curves.easeIn),
                                 )),
                                 _getAdWidget(),
                                 const Spacer(),
@@ -279,7 +305,12 @@ class _NumberContentState extends State<NumberContent> {
                                     style: GoogleFonts.roboto(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold),
-                                  ),
+                                  ).animate().slideY(
+                                      begin: 1,
+                                      end: 0,
+                                      duration:
+                                          const Duration(milliseconds: 1100),
+                                      curve: Curves.bounceInOut),
                                 )
                               ],
                             ),
@@ -294,18 +325,24 @@ class _NumberContentState extends State<NumberContent> {
                               mainAxisSpacing: 35,
                               childAspectRatio:
                                   MediaQuery.of(context).size.aspectRatio,
-                              children: List.generate(
-                                  numsList.length,
-                                  (index) => GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            selectedIndex = index;
-                                          });
-                                        },
-                                        child: Image.asset(
-                                          numsList[index]['imagePath']!,
-                                        ),
-                                      )),
+                              children: List.generate(numsList.length, (index) {
+                                int durationMilliseconds = 500 + (index * 50);
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedIndex = index;
+                                    });
+                                  },
+                                  child: Image.asset(
+                                    numsList[index]['imagePath']!,
+                                  ).animate().slideX(
+                                      begin: 2,
+                                      end: 0,
+                                      duration: Duration(
+                                          milliseconds: durationMilliseconds),
+                                      curve: Curves.bounceInOut),
+                                );
+                              }),
                             ),
                           )),
                     ],

@@ -354,6 +354,11 @@ class _FamilyContentState extends State<FamilyContent> {
                             ],
                           ),
                         )
+                            .animate(delay: const Duration(milliseconds: 250))
+                            .slideY(
+                                begin: 2.5,
+                                end: 0,
+                                duration: const Duration(milliseconds: 700)),
                       ],
                     ),
                   ),

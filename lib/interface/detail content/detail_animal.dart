@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/util/animal_info.dart';
@@ -32,6 +33,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
   bool isPlaying = false;
   late final AudioPlayer player;
   late final AssetSource path;
+  FlutterTts flutterTts = FlutterTts();
 
   Duration _duration = const Duration();
   Duration _position = const Duration();
@@ -69,11 +71,20 @@ class _DetailAnimalsState extends State<DetailAnimals> {
     });
   }
 
+  void textToSpeech(String text) async {
+    await flutterTts.setLanguage('id-ID');
+    await flutterTts.setVolume(1);
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setPitch(1);
+    await flutterTts.speak(text);
+  }
+
   void playPause() async {
     if (isPlaying) {
       player.pause();
       isPlaying = false;
     } else {
+      flutterTts.stop();
       player.play(path);
       isPlaying = true;
     }
@@ -112,16 +123,6 @@ class _DetailAnimalsState extends State<DetailAnimals> {
             icon: const Icon(Icons.arrow_back_ios)
                 .animate(delay: const Duration(milliseconds: 250))
                 .slideX(begin: -2, end: 0)),
-        // title: Text(
-        //   'Detail Animals',
-        //   style: GoogleFonts.montserratAlternates(
-        //     fontSize: 20,
-        //     fontWeight: FontWeight.bold,
-        //   ),
-        // )
-        //     .animate(delay: const Duration(milliseconds: 250))
-        //     .fadeIn(duration: const Duration(milliseconds: 500)),
-        // centerTitle: true,
       ),
       body: Column(
         children: [
@@ -250,17 +251,53 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                     ),
                   ),
                   Expanded(
-                    child: Text(
-                      widget.deskripsi,
-                      textAlign: TextAlign.left,
-                      style: GoogleFonts.aBeeZee(
-                        height: 1.3,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                      ),
-                    ).animate(delay: const Duration(milliseconds: 250)).slideX(
-                        begin: -2,
+                    child: GestureDetector(
+                      onTap: () {
+                        if (isPlaying == true) {
+                          flutterTts.stop();
+                        } else {
+                          textToSpeech(widget.deskripsi);
+                        }
+                      },
+                      child: Text(
+                        widget.deskripsi,
+                        textAlign: TextAlign.left,
+                        style: GoogleFonts.aBeeZee(
+                          height: 1.3,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          color: Colors.white,
+                        ),
+                      )
+                          .animate(delay: const Duration(milliseconds: 250))
+                          .slideX(
+                              begin: -2,
+                              end: 0,
+                              duration: const Duration(
+                                milliseconds: 900,
+                              ),
+                              curve: Curves.easeOut,
+                              delay: const Duration(
+                                milliseconds: 100,
+                              )),
+                    ),
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                        thumbShape:
+                            const RoundSliderThumbShape(enabledThumbRadius: 0)),
+                    child: Slider(
+                      value: _position.inSeconds.toDouble(),
+                      onChanged: (double value) async {
+                        await player.seek(Duration(seconds: value.toInt()));
+                        setState(() {});
+                      },
+                      min: 0,
+                      max: _duration.inSeconds.toDouble(),
+                      // inactiveColor: Colors.grey,
+                      activeColor: Colors.green,
+                    ).animate(delay: const Duration(milliseconds: 250)).slideY(
+                        begin: 2,
                         end: 0,
                         duration: const Duration(
                           milliseconds: 900,
@@ -270,26 +307,6 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                           milliseconds: 100,
                         )),
                   ),
-                  Slider(
-                    value: _position.inSeconds.toDouble(),
-                    onChanged: (double value) async {
-                      await player.seek(Duration(seconds: value.toInt()));
-                      setState(() {});
-                    },
-                    min: 0,
-                    max: _duration.inSeconds.toDouble(),
-                    inactiveColor: Colors.grey,
-                    activeColor: Colors.red,
-                  ).animate(delay: const Duration(milliseconds: 250)).slideY(
-                      begin: 2,
-                      end: 0,
-                      duration: const Duration(
-                        milliseconds: 900,
-                      ),
-                      curve: Curves.easeOut,
-                      delay: const Duration(
-                        milliseconds: 100,
-                      )),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

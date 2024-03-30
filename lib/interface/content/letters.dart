@@ -47,7 +47,6 @@ class _LettersContentState extends State<LettersContent> {
       _isLoaded = false;
     });
 
-    // Get an inline adaptive size based on the available width.
     AdSize size = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(
         _adWidth.truncate());
 
@@ -91,6 +90,12 @@ class _LettersContentState extends State<LettersContent> {
       );
     }
     return const SizedBox.shrink();
+  }
+
+  @override
+  void initState() {
+    _loadAd();
+    super.initState();
   }
 
   @override
@@ -219,11 +224,18 @@ class _LettersContentState extends State<LettersContent> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 IconButton(
-                                    onPressed: () => Get.back(),
-                                    icon: const Icon(
-                                      Icons.arrow_back_ios,
-                                      size: 50,
-                                    )),
+                                        onPressed: () => Get.back(),
+                                        icon: const Icon(
+                                          Icons.arrow_back_ios,
+                                          size: 50,
+                                        ))
+                                    .animate()
+                                    .slideX(
+                                        begin: -2,
+                                        end: 0,
+                                        duration:
+                                            const Duration(milliseconds: 500),
+                                        curve: Curves.easeIn),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10.0),
                                   child: Text(
@@ -231,30 +243,44 @@ class _LettersContentState extends State<LettersContent> {
                                     style: GoogleFonts.montserrat(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 50),
-                                  ),
+                                  ).animate().slideX(
+                                      begin: -2,
+                                      end: 0,
+                                      duration:
+                                          const Duration(milliseconds: 700),
+                                      curve: Curves.easeIn),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10.0),
                                   child: Text(
-                                    'TToday, we will learn about the hijaiyah letters.',
+                                    'Today, we will learn about the hijaiyah letters.',
                                     style: GoogleFonts.roboto(
                                         fontWeight: FontWeight.w400,
                                         color: Colors.grey.shade400,
                                         fontSize: 40),
-                                  ),
+                                  ).animate().slideX(
+                                      begin: -2,
+                                      end: 0,
+                                      duration:
+                                          const Duration(milliseconds: 900),
+                                      curve: Curves.easeIn),
                                 ),
                                 Center(
                                     child: Padding(
                                   padding: const EdgeInsets.only(top: 50.0),
                                   child: InkWell(
-                                      onTap: () {
-                                        textToSpeech(name);
-                                      },
-                                      child: Image.asset(
-                                        subImage,
-                                        width: double.infinity,
-                                        height: 400,
-                                      )),
+                                    onTap: () {
+                                      textToSpeech(name);
+                                    },
+                                    child: Image.asset(
+                                      subImage,
+                                      width: double.infinity,
+                                      height: 400,
+                                    ).animate().fadeIn(
+                                        duration:
+                                            const Duration(milliseconds: 2000),
+                                        curve: Curves.easeIn),
+                                  ),
                                 )),
                                 Center(
                                     child: Padding(
@@ -264,7 +290,10 @@ class _LettersContentState extends State<LettersContent> {
                                     style: GoogleFonts.roboto(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 40),
-                                  ),
+                                  ).animate().fadeIn(
+                                      duration:
+                                          const Duration(milliseconds: 2000),
+                                      curve: Curves.easeIn),
                                 )),
                                 _getAdWidget(),
                                 const Spacer(),
@@ -275,7 +304,12 @@ class _LettersContentState extends State<LettersContent> {
                                     style: GoogleFonts.roboto(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold),
-                                  ),
+                                  ).animate().slideY(
+                                      begin: 1,
+                                      end: 0,
+                                      duration:
+                                          const Duration(milliseconds: 1100),
+                                      curve: Curves.bounceInOut),
                                 )
                               ],
                             ),
@@ -290,18 +324,25 @@ class _LettersContentState extends State<LettersContent> {
                               mainAxisSpacing: 35,
                               childAspectRatio:
                                   MediaQuery.of(context).size.aspectRatio,
-                              children: List.generate(
-                                  lettersList.length,
-                                  (index) => GestureDetector(
-                                        onTap: () {
-                                          setState(() {
-                                            selectedIndex = index;
-                                          });
-                                        },
-                                        child: Image.asset(
-                                          lettersList[index]['imagePath']!,
-                                        ),
-                                      )),
+                              children:
+                                  List.generate(lettersList.length, (index) {
+                                int durationMilliseconds = 500 + (index * 200);
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedIndex = index;
+                                    });
+                                  },
+                                  child: Image.asset(
+                                    lettersList[index]['imagePath']!,
+                                  ).animate().slideX(
+                                      begin: 2,
+                                      end: 0,
+                                      duration: Duration(
+                                          milliseconds: durationMilliseconds),
+                                      curve: Curves.bounceInOut),
+                                );
+                              }),
                             ),
                           )),
                     ],

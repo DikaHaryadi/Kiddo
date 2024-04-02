@@ -21,7 +21,6 @@ Kiddo is an innovative learning platform designed specifically to meet the educa
 
 - Can detect morning, afternoon, or night on the user's device
 - Animation that spoils the eyes of users, in this case children are more enthusiastic about smooth and relevant animation.
-- Import and save files from GitHub, Dropbox, Google Drive and One Drive
 - Simple design but not stiff and boring
 - There are two different views, one for Android devices with screens smaller than 600 and one larger than 600.
 - There are interactive features, such as text to speech, memory games and animal sounds.

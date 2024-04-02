@@ -340,7 +340,7 @@ class _FamilyContentState extends State<FamilyContent> {
                                 ),
                               ),
                               Text(
-                                DateFormat('EEEE, MMM d', 'id')
+                                DateFormat('EEEE, MMM d')
                                     .format(DateTime.now()),
                                 style: GoogleFonts.roboto(
                                     fontWeight: FontWeight.bold, fontSize: 25),
@@ -451,26 +451,31 @@ class _FamilyContentState extends State<FamilyContent> {
                             bottom: 100,
                             right: 20,
                             left: 20,
-                            child: Text(
-                              deskripsi,
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.aBeeZee(
-                                height: 1.4,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
-                              ),
-                            )
-                                .animate(
-                                  delay: const Duration(milliseconds: 250),
-                                )
-                                .slideY(
-                                  begin: 3,
-                                  end: 0,
-                                  duration: const Duration(milliseconds: 600),
-                                  curve: Curves.easeInOutBack,
-                                  delay: const Duration(milliseconds: 100),
+                            child: InkWell(
+                              onTap: () {
+                                textToSpeech(deskripsi);
+                              },
+                              child: Text(
+                                deskripsi,
+                                textAlign: TextAlign.left,
+                                style: GoogleFonts.aBeeZee(
+                                  height: 1.4,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
                                 ),
+                              )
+                                  .animate(
+                                    delay: const Duration(milliseconds: 250),
+                                  )
+                                  .slideY(
+                                    begin: 3,
+                                    end: 0,
+                                    duration: const Duration(milliseconds: 600),
+                                    curve: Curves.easeInOutBack,
+                                    delay: const Duration(milliseconds: 100),
+                                  ),
+                            ),
                           )
                         ],
                       ),

@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:unicons/unicons.dart';
 
 const Color continueBtnColor = Color.fromRGBO(235, 32, 93, 1);
 const Color restartBtnColor = Color.fromRGBO(243, 181, 45, 1);
 const Color quitBtnColor = Color.fromRGBO(39, 162, 149, 1);
+
+const Color kPrimary = Color(0xFF4212a3);
+const Color kStrongblue = Color(0xFFff3495);
+const Color kSoftblue = Color(0xFFffcd36);
+const Color kHighColor = Color(0xFF90B7E4);
+// const Color kMiddleColor = Color(0xFF66006f);
+const Color kLowColor = Color(0xFF3b003d);
+const Color kDark = Color(0xFF000000);
+const Color kAksenDark = Color(0xFF191414);
+const Color kGreen = Color(0xFF39ff34);
+const Color kText = Color(0xFFbded5c);
 
 const List<Map<String, dynamic>> gameLevels = [
   {'title': 'Easy', 'level': 4, 'color': Colors.amberAccent},
@@ -23,80 +35,161 @@ const AdRequest request = AdRequest(
 //CATEGORIES
 const contentKiddo = [
   {
-    'imagePath': 'assets/images/number.png',
-    'name': 'Number',
+    'imagePath': 'assets/banner_numbers.png',
+    'name': 'Numbers',
+    'routePath': '/number-content',
+    'subtitle': '(numerus)'
   },
   {
     'imagePath': 'assets/letters.png',
     'name': 'Hijaiyah',
+    'routePath': '/letters-content',
+    'subtitle': '(الحروف الهجائية)'
   },
   {
-    'imagePath': 'assets/animals.png',
+    'imagePath': 'assets/banner_animals.png',
     'name': 'Animals',
+    'routePath': '/animals-content',
+    'subtitle': '(animalia)'
   },
   {
-    'imagePath': 'assets/images/family.png',
+    'imagePath': 'assets/banner_family.png',
     'name': 'Family',
+    'routePath': '/family-content',
+    'subtitle': '(familia)'
   },
   {
     'imagePath': 'assets/images/fruits.png',
     'name': 'Fruits',
+    'routePath': '/fruits-content',
+    'subtitle': '(fructūs)'
   },
   {
     'imagePath': 'assets/vegetables.png',
     'name': 'Vegetables',
+    'routePath': '/vegetables-content',
+    'subtitle': '(leguminae)'
+  },
+  {
+    'imagePath': 'assets/images/fruits.png',
+    'name': 'Alphabets Eng',
+    'routePath': '/fruits-content',
+    'subtitle': '(alphabetum)'
+  },
+  {
+    'imagePath': 'assets/vegetables.png',
+    'name': 'Alphabets Urdu',
+    'routePath': '/vegetables-content',
+    'subtitle': '(alphabetum)'
+  },
+  {
+    'imagePath': 'assets/vegetables.png',
+    'name': 'Months',
+    'routePath': '/vegetables-content',
+    'subtitle': '(mēnsēs)'
+  },
+  {
+    'imagePath': 'assets/images/fruits.png',
+    'name': 'Islamic Months',
+    'routePath': '/fruits-content',
+    'subtitle': '(mēnsēs)'
   },
 ];
 
 // Content Slider
-const contentSlider = [
-  {
-    'img': 'assets/images/number.png',
-  },
-  {
-    'img': 'assets/animals.png',
-  },
-];
-
-//ROUTES
-const routesList = [
-  {
-    'routePath': '/number-content',
-  },
-  {
-    'routePath': '/letters-content',
-  },
-  {
-    'routePath': '/animals-content',
-  },
-  {
-    'routePath': '/family-content',
-  },
-  {
-    'routePath': '/fruits-content',
-  },
-  {
-    'routePath': '/vegetables-content',
-  },
-];
-
-// const gameList = [
+// const contentSlider = [
 //   {
-//     'GameName': 'Memo Game',
-//     'imagePath': 'assets/games/color.png',
-//     'enum': 'memo'
+//     'img': 'assets/images/number.png',
 //   },
 //   {
-//     'GameName': 'Summation',
-//     'imagePath': 'assets/games/memo.png',
-//     'enum': 'numbers'
+//     'img': 'assets/animals.png',
 //   },
 // ];
 
-const gamesRoutes = [
-  {'routePath': '/memo-game'},
-  {'routePath': '/numbers-game'},
+//ROUTES
+// const routesList = [
+//   {
+//     'routePath': '/number-content',
+//   },
+//   {
+//     'routePath': '/letters-content',
+//   },
+//   {
+//     'routePath': '/animals-content',
+//   },
+//   {
+//     'routePath': '/family-content',
+//   },
+//   {
+//     'routePath': '/fruits-content',
+//   },
+//   {
+//     'routePath': '/vegetables-content',
+//   },
+// ];
+
+// Navbar
+const navbarOpsion = [
+  {
+    'title': 'RateUs',
+    'routePath': '',
+  },
+  {
+    'title': 'ContactUs',
+    'routePath': '',
+  },
+  {
+    'title': 'About App',
+    'routePath': '',
+  },
+  {
+    'title': 'Share App',
+    'routePath': '',
+  },
 ];
+
+List<IconData> navicon = [
+  UniconsLine.star,
+  UniconsLine.phone,
+  UniconsLine.info_circle,
+  UniconsLine.share
+];
+
+const gameList = [
+  {
+    'GameName': 'Memo Game',
+    'subtitle': '(ludus memorialis)',
+    'imagePath': 'assets/games/color.png',
+    'enum': 'memo',
+    'routePath': '/memo-game'
+  },
+  {
+    'GameName': 'Summation',
+    'subtitle': '(summation)',
+    'imagePath': 'assets/games/memo.png',
+    'enum': 'numbers',
+    'routePath': '/numbers-game'
+  },
+  {
+    'GameName': 'Memo Game',
+    'subtitle': '(ludus memorialis)',
+    'imagePath': 'assets/games/color.png',
+    'enum': 'memo',
+    'routePath': '/memo-game'
+  },
+  {
+    'GameName': 'Summation',
+    'subtitle': '(summation)',
+    'imagePath': 'assets/games/memo.png',
+    'enum': 'numbers',
+    'routePath': '/numbers-game'
+  },
+];
+
+// const gamesRoutes = [
+//   {'routePath': '/memo-game'},
+//   {'routePath': '/numbers-game'},
+// ];
 
 //NUMS LIST
 const numsList = [

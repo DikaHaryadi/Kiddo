@@ -108,7 +108,6 @@ class _LettersContentState extends State<LettersContent> {
   Widget build(BuildContext context) {
     String subImage = lettersList[selectedIndex]['subImage']!;
     String name = lettersList[selectedIndex]['name']!;
-    // String title = lettersList[selectedIndex]['title']!;
     return Scaffold(
         appBar: isMobile(context)
             ? AppBar(
@@ -326,22 +325,15 @@ class _LettersContentState extends State<LettersContent> {
                                   MediaQuery.of(context).size.aspectRatio,
                               children:
                                   List.generate(lettersList.length, (index) {
-                                int durationMilliseconds = 500 + (index * 200);
                                 return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedIndex = index;
-                                    });
-                                  },
-                                  child: Image.asset(
-                                    lettersList[index]['imagePath']!,
-                                  ).animate().slideX(
-                                      begin: 2,
-                                      end: 0,
-                                      duration: Duration(
-                                          milliseconds: durationMilliseconds),
-                                      curve: Curves.bounceInOut),
-                                );
+                                    onTap: () {
+                                      setState(() {
+                                        selectedIndex = index;
+                                      });
+                                    },
+                                    child: Image.asset(
+                                      lettersList[index]['imagePath']!,
+                                    ));
                               }),
                             ),
                           )),

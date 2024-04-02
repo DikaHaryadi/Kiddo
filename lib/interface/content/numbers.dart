@@ -326,22 +326,15 @@ class _NumberContentState extends State<NumberContent> {
                               childAspectRatio:
                                   MediaQuery.of(context).size.aspectRatio,
                               children: List.generate(numsList.length, (index) {
-                                int durationMilliseconds = 500 + (index * 50);
                                 return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedIndex = index;
-                                    });
-                                  },
-                                  child: Image.asset(
-                                    numsList[index]['imagePath']!,
-                                  ).animate().slideX(
-                                      begin: 2,
-                                      end: 0,
-                                      duration: Duration(
-                                          milliseconds: durationMilliseconds),
-                                      curve: Curves.bounceInOut),
-                                );
+                                    onTap: () {
+                                      setState(() {
+                                        selectedIndex = index;
+                                      });
+                                    },
+                                    child: Image.asset(
+                                      numsList[index]['imagePath']!,
+                                    ));
                               }),
                             ),
                           )),

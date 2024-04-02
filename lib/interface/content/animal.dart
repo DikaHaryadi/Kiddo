@@ -296,72 +296,76 @@ class _AnimalContentState extends State<AnimalContent> {
                           child: Scrollbar(
                             scrollbarOrientation: ScrollbarOrientation.left,
                             thickness: 5,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              itemCount: animalsList.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedIndex = index;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15.0, horizontal: 15.0),
-                                    child: Row(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          child: Image.asset(
-                                            animalsList[index]['imagePath']!,
-                                            width: 60,
-                                            height: 60,
-                                            fit: BoxFit.cover,
+                            child: Container(
+                              color: Colors.red,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const AlwaysScrollableScrollPhysics(),
+                                itemCount: animalsList.length,
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        selectedIndex = index;
+                                      });
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15.0, horizontal: 15.0),
+                                      child: Row(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(10.0)),
+                                            child: Image.asset(
+                                              animalsList[index]['imagePath']!,
+                                              width: 60,
+                                              height: 60,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
-                                        ),
-                                        const SizedBox(width: 15.0),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                animalsList[index]['name']!,
-                                                style: GoogleFonts.montserrat(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
+                                          const SizedBox(width: 15.0),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  animalsList[index]['name']!,
+                                                  style: GoogleFonts.montserrat(
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
                                                 ),
-                                              ),
-                                              Text(
-                                                '${animalsList[index]['kategori']!}  |  ${animalsList[index]['jenis_makan']!}',
-                                                style: GoogleFonts.robotoSlab(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
+                                                Text(
+                                                  '${animalsList[index]['kategori']!}  |  ${animalsList[index]['jenis_makan']!}',
+                                                  style: GoogleFonts.robotoSlab(
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )
-                                        .animate(
-                                            delay: const Duration(
-                                                milliseconds: 250))
-                                        .slideY(
-                                            begin: 2.5,
-                                            end: 0,
-                                            duration: const Duration(
-                                                milliseconds: 700)),
-                                  ),
-                                );
-                              },
+                                        ],
+                                      )
+                                          .animate(
+                                              delay: const Duration(
+                                                  milliseconds: 250))
+                                          .slideY(
+                                              begin: 2.5,
+                                              end: 0,
+                                              duration: const Duration(
+                                                  milliseconds: 700)),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),
@@ -411,7 +415,7 @@ class _AnimalContentState extends State<AnimalContent> {
                                 ),
                               ),
                               Text(
-                                DateFormat('EEEE, MMM d', 'id')
+                                DateFormat('EEEE, MMM d')
                                     .format(DateTime.now()),
                                 style: GoogleFonts.roboto(
                                     fontWeight: FontWeight.bold, fontSize: 25),

@@ -14,9 +14,9 @@ import 'package:textspeech/interface/content/fruits.dart';
 import 'package:textspeech/interface/content/letters.dart';
 import 'package:textspeech/interface/content/numbers.dart';
 import 'package:textspeech/interface/content/vegetables.dart';
+import 'package:textspeech/util/category_list_mobile.dart';
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/curved_edges.dart';
-import 'package:textspeech/util/game_list.dart';
 import 'package:textspeech/util/responsive.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,10 +27,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GameListNotifier gameListNotifier = GameListNotifier();
-
-  int _current = 0;
-  List sliderKiddo = [];
+  bool showAll = false;
+  bool longPressPlay = false;
+  final CategoryListNotifier categoryListNotifier = CategoryListNotifier();
 
   List<Widget> openContent = const [
     NumberContent(),
@@ -40,16 +39,6 @@ class _HomePageState extends State<HomePage> {
     FruitsContent(),
     VegetablesContent()
   ];
-
-  _readDataSlider() async {
-    await DefaultAssetBundle.of(context)
-        .loadString('assets/json/slider.json')
-        .then((value) {
-      setState(() {
-        sliderKiddo = jsonDecode(value);
-      });
-    });
-  }
 
   // banner ads
   BannerAd? _anchoredAdaptiveAd;
@@ -102,20 +91,17 @@ class _HomePageState extends State<HomePage> {
     if (_anchoredAdaptiveAd != null && _isLoaded) {
       return Container(
         color: Colors.white,
-        margin: const EdgeInsets.only(top: 20),
         width: _anchoredAdaptiveAd!.size.width.toDouble(),
         height: _anchoredAdaptiveAd!.size.height.toDouble(),
         child: AdWidget(ad: _anchoredAdaptiveAd!),
       );
     } else {
-      return const SizedBox
-          .shrink(); // Return empty container if ad is not loaded
+      return const SizedBox.shrink();
     }
   }
 
   @override
   void initState() {
-    _readDataSlider();
     _loadAd();
     super.initState();
   }
@@ -128,586 +114,773 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-    double height = MediaQuery.of(context).size.height;
-
     return Scaffold(
+      backgroundColor: const Color(0xFFfcf4f1),
       body: SafeArea(
-        child: Stack(
-          children: [
-            CustomPaint(
-              size: Size(double.infinity, MediaQuery.of(context).size.height),
-              painter: HomeCurvesEdge(),
-            ),
-            if (isMobile(context))
-              ListView(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 10.0, horizontal: 15.0),
-                shrinkWrap: true,
+        child: isMobile(context)
+            ? Stack(
                 children: [
-                  Container(
-                    width: width,
-                    height: height / 13,
-                    padding: const EdgeInsets.only(right: 15.0),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50.0),
-                        color: const Color(0xFFedddd0)),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.all(5.0),
-                            padding: const EdgeInsets.symmetric(vertical: 5.0),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50.0),
-                                color: Colors.white),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                CircleAvatar(
-                                  backgroundImage: const AssetImage(
-                                      'assets/animals/cat.png'),
-                                  radius: width / 15,
-                                ),
-                                Padding(
-                                    padding: const EdgeInsets.only(left: 10.0),
-                                    child: Text(
-                                      'Melissa',
-                                      style: GoogleFonts.aBeeZee(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                      ),
-                                    ))
-                              ],
-                            ),
-                          ),
-                        ),
-                        Text(
-                          'Lv.4',
-                          style: GoogleFonts.aBeeZee(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                      .animate(
-                        delay: const Duration(milliseconds: 100),
-                      )
-                      .fadeIn(delay: const Duration(milliseconds: 200))
-                      .shimmer(
-                        duration: 200.ms,
-                      )
-                      .slide(
-                        begin: const Offset(0, 1),
-                        duration: const Duration(
-                          milliseconds: 500,
-                        ),
-                        curve: Curves.easeOut,
-                        delay: const Duration(
-                          milliseconds: 100,
+                  // CustomPaint(
+                  //   size: Size(
+                  //       double.infinity, MediaQuery.of(context).size.height),
+                  //   painter: HomeCurvesEdge(),
+                  // ),
+                  ListView(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 15.0),
+                    shrinkWrap: true,
+                    children: [
+                      Text(
+                        'Good Morning',
+                        style: GoogleFonts.aBeeZee(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
                       ),
-                  CarouselSlider(
-                    items: sliderKiddo.map((item) {
-                      return Builder(
-                        builder: (BuildContext context) {
-                          return Container(
-                            width: double.infinity,
-                            margin: const EdgeInsets.symmetric(vertical: 15.0),
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 10.0, horizontal: 15.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15.0),
-                              color: const Color(0xFF65d1ff),
-                              image: DecorationImage(
-                                image: AssetImage(item['img']),
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Bermain Angka',
-                                  style: GoogleFonts.montserratAlternates(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.orange,
-                                  ),
-                                ),
-                                Text(
-                                  'Temukan Angka',
-                                  style: GoogleFonts.roboto(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(
-                                        gamesRoutes[_current]['routePath']!);
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 10.0, horizontal: 20.0),
-                                    margin: const EdgeInsets.only(top: 10.0),
-                                    decoration: BoxDecoration(
+                      const SizedBox(height: 15.0),
+                      GridView.count(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        childAspectRatio: 18 / 8,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10,
+                        children: List.generate(
+                            gameList.length,
+                            (index) => Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
                                       color: Colors.white,
-                                      borderRadius: BorderRadius.circular(25.0),
-                                    ),
-                                    child: Text(
-                                      'Mulai',
-                                      style: GoogleFonts.robotoSlab(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.orange,
+                                      border: Border.all(
+                                          width: 2,
+                                          color: const Color(0xFFd1d1d1))),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Expanded(
+                                          flex: 2,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.only(
+                                                    topLeft:
+                                                        Radius.circular(20.0),
+                                                    bottomLeft:
+                                                        Radius.circular(20.0)),
+                                            child: Image.asset(
+                                              gameList[index]['imagePath']!,
+                                              fit: BoxFit.fitHeight,
+                                              height: MediaQuery.of(context)
+                                                  .size
+                                                  .height,
+                                            ),
+                                          )),
+                                      Expanded(
+                                          flex: 3,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                    gameList[index]
+                                                        ['GameName']!,
+                                                    style: GoogleFonts.aBeeZee(
+                                                        color: kDark,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                                Text(
+                                                    gameList[index]
+                                                        ['subtitle']!,
+                                                    style: GoogleFonts.aBeeZee(
+                                                      color: kDark,
+                                                      fontSize: 14,
+                                                    ))
+                                              ],
+                                            ),
+                                          ))
+                                    ],
+                                  ),
+                                )),
+                      ),
+                      const SizedBox(height: 15.0),
+                      ValueListenableBuilder<int?>(
+                        valueListenable: categoryListNotifier.selectedTab,
+                        builder: (context, selectedIndex, child) {
+                          final gameList = categoryListNotifier.categoryList;
+                          final displayCount = showAll ? gameList.length : 2;
+
+                          return SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: [
+                                ...gameList
+                                    .asMap()
+                                    .entries
+                                    .take(displayCount)
+                                    .map((entry) {
+                                  final int index = entry.key;
+                                  final Map<String, String> game = entry.value;
+
+                                  final bool isSelected =
+                                      selectedIndex == index;
+                                  return Padding(
+                                    padding: const EdgeInsets.only(right: 10.0),
+                                    child: ElevatedButton.icon(
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white,
+                                        side: BorderSide(
+                                            color: isSelected
+                                                ? Colors.black45
+                                                : Colors.white,
+                                            width: 2),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        categoryListNotifier.selectTab(index);
+                                      },
+                                      icon: const CircleAvatar(
+                                        minRadius: 10,
+                                        maxRadius: 15,
+                                        backgroundColor: Colors.pink,
+                                      ),
+                                      label: Text(
+                                        game['enum']!,
+                                        style: GoogleFonts.aBeeZee(
+                                            fontWeight: FontWeight.bold,
+                                            color: kDark),
                                       ),
                                     ),
+                                  )
+                                      .animate(
+                                        delay:
+                                            const Duration(milliseconds: 100),
+                                      )
+                                      .slideX(
+                                        begin: -2,
+                                        end: 0,
+                                        duration: const Duration(
+                                          milliseconds: 500,
+                                        ),
+                                        curve: Curves.easeOut,
+                                        delay: const Duration(
+                                          milliseconds: 100,
+                                        ),
+                                      );
+                                }).toList(),
+                                if (!showAll && gameList.length > 2)
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10.0),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          showAll = true;
+                                        });
+                                      },
+                                      child: const Icon(Icons.arrow_forward),
+                                    )
+                                        .animate(
+                                          delay:
+                                              const Duration(milliseconds: 100),
+                                        )
+                                        .slideX(
+                                          begin: 2,
+                                          end: 0,
+                                          duration: const Duration(
+                                            milliseconds: 500,
+                                          ),
+                                          curve: Curves.easeOut,
+                                          delay: const Duration(
+                                            milliseconds: 100,
+                                          ),
+                                        ),
                                   ),
-                                ),
+                                if (showAll)
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 10.0),
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          showAll = false;
+                                        });
+                                      },
+                                      child: const Icon(Icons.arrow_back),
+                                    ),
+                                  ),
                               ],
                             ),
                           );
                         },
-                      );
-                    }).toList(),
-                    options: CarouselOptions(
-                      enlargeCenterPage: true,
-                      viewportFraction: 1,
-                      autoPlay: false,
-                      aspectRatio: 19 / 15,
-                      onPageChanged: (index, reason) {
-                        setState(() {
-                          _current = index;
-                        });
-                      },
-                    ),
-                  )
-                      .animate(
-                        delay: const Duration(milliseconds: 100),
-                      )
-                      .fadeIn(delay: const Duration(milliseconds: 300))
-                      .shimmer(
-                        duration: 200.ms,
-                      )
-                      .slide(
-                        begin: const Offset(0, 0.5),
-                        duration: const Duration(
-                          milliseconds: 600,
-                        ),
-                        curve: Curves.easeOut,
-                        delay: const Duration(
-                          milliseconds: 100,
-                        ),
                       ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: AnimatedSmoothIndicator(
-                      activeIndex: _current,
-                      count: sliderKiddo.length,
-                      effect: const ExpandingDotsEffect(
-                          dotHeight: 8,
-                          dotWidth: 8,
-                          spacing: 5,
-                          activeDotColor: Colors.grey),
-                    ),
-                  ).animate(delay: const Duration(milliseconds: 100)).slideX(
-                      begin: 2,
-                      end: 0,
-                      duration: const Duration(milliseconds: 600),
-                      curve: Curves.easeIn),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 5.0, right: 5.0),
-                    child: Text(
-                      'Kategori Permainan',
-                      style: GoogleFonts.montserratAlternates(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    )
-                        .animate(
-                          delay: const Duration(milliseconds: 100),
-                        )
-                        .fadeIn(delay: const Duration(milliseconds: 400))
-                        .shimmer(
-                          duration: 200.ms,
-                        )
-                        .slide(
-                          begin: const Offset(0.5, 0),
-                          duration: const Duration(
-                            milliseconds: 700,
-                          ),
-                          curve: Curves.easeOut,
-                          delay: const Duration(
-                            milliseconds: 100,
-                          ),
-                        ),
-                  ),
-                  GridView.count(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    crossAxisCount: 3,
-                    childAspectRatio: .8,
-                    crossAxisSpacing: 20,
-                    mainAxisSpacing: 20,
-                    children: List.generate(
-                        contentKiddo.length,
-                        (index) => Column(
-                              children: [
-                                Expanded(
-                                    child: OpenContainer(
-                                  openColor: Colors.pink,
-                                  transitionDuration:
-                                      const Duration(milliseconds: 500),
-                                  transitionType: ContainerTransitionType.fade,
-                                  closedShape: const RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10.0)),
-                                  ),
-                                  openBuilder: (context, action) {
-                                    return openContent[index];
-                                  },
-                                  closedBuilder: (context, action) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(
-                                            routesList[index]['routePath']!);
+                      const SizedBox(height: 10.0),
+                      // GridView.count(
+                      //   shrinkWrap: true,
+                      //   physics: const NeverScrollableScrollPhysics(),
+                      //   childAspectRatio: 1,
+                      //   crossAxisCount: 2,
+                      //   mainAxisSpacing: 10,
+                      //   crossAxisSpacing: 10,
+                      //   children: List.generate(
+                      //       showAll ? contentKiddo.length : 4,
+                      //       (index) => GestureDetector(
+                      //             onLongPressStart: (_) {
+                      //               setState(() {
+                      //                 longPressPlay = true;
+                      //               });
+                      //             },
+                      //             onLongPressEnd: (_) {
+                      //               setState(() {
+                      //                 longPressPlay = false;
+                      //               });
+                      //             },
+                      //             onTap: () {
+                      //               setState(() {
+                      //                 longPressPlay = !longPressPlay;
+                      //               });
+                      //             },
+                      //             child: Container(
+                      //               margin: const EdgeInsets.only(bottom: 10.0),
+                      //               decoration: BoxDecoration(
+                      //                   borderRadius:
+                      //                       BorderRadius.circular(10.0),
+                      //                   color: const Color(0xFFeddcd2)),
+                      //               child: Column(
+                      //                 children: [
+                      //                   Expanded(
+                      //                     flex: 3,
+                      //                     child: Stack(
+                      //                       children: [
+                      //                         Padding(
+                      //                           padding:
+                      //                               const EdgeInsets.all(20.0),
+                      //                           child: ClipRRect(
+                      //                             borderRadius:
+                      //                                 BorderRadius.circular(
+                      //                                     5.0),
+                      //                             child: Image.asset(
+                      //                               contentKiddo[index]
+                      //                                   ['imagePath']!,
+                      //                               fit: BoxFit.fitHeight,
+                      //                               height:
+                      //                                   MediaQuery.of(context)
+                      //                                       .size
+                      //                                       .height,
+                      //                             ),
+                      //                           ),
+                      //                         ),
+                      //                         longPressPlay
+                      //                             ? Positioned(
+                      //                                 right: 30.0,
+                      //                                 bottom: 30.0,
+                      //                                 child: GestureDetector(
+                      //                                   onTap: () {
+                      //                                     Get.toNamed(
+                      //                                         contentKiddo[
+                      //                                                 index][
+                      //                                             'routePath']!);
+                      //                                   },
+                      //                                   child: Container(
+                      //                                     width: 55,
+                      //                                     height: 55,
+                      //                                     decoration: const BoxDecoration(
+                      //                                         shape: BoxShape
+                      //                                             .circle,
+                      //                                         color: kGreen,
+                      //                                         border: Border.fromBorderSide(
+                      //                                             BorderSide(
+                      //                                                 color: Color(
+                      //                                                     0xFF1db954),
+                      //                                                 strokeAlign:
+                      //                                                     1,
+                      //                                                 width:
+                      //                                                     1))),
+                      //                                     child: const Icon(
+                      //                                       Icons.play_arrow,
+                      //                                       color: Color(
+                      //                                           0xFF191414),
+                      //                                     ),
+                      //                                   ),
+                      //                                 ),
+                      //                               )
+                      //                             : const SizedBox.shrink()
+                      //                       ],
+                      //                     ),
+                      //                   ),
+                      //                   Align(
+                      //                     alignment: Alignment.center,
+                      //                     child: Text(
+                      //                         contentKiddo[index]['name']!,
+                      //                         style: const TextStyle(
+                      //                             color: Color(0xFF809bce),
+                      //                             fontSize: 16,
+                      //                             fontWeight: FontWeight.bold)),
+                      //                   ),
+                      //                 ],
+                      //               ),
+                      //             ),
+                      //           )),
+                      // ),
+                      GridView.count(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        crossAxisCount: 2,
+                        childAspectRatio: 1,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
+                        children: List.generate(
+                            contentKiddo.length,
+                            (index) => Column(
+                                  children: [
+                                    Expanded(
+                                        child: OpenContainer(
+                                      closedColor: const Color(0xFFfcf4f1),
+                                      closedElevation: 0,
+                                      transitionDuration:
+                                          const Duration(milliseconds: 500),
+                                      transitionType:
+                                          ContainerTransitionType.fade,
+                                      closedShape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(10.0)),
+                                      ),
+                                      openBuilder: (context, action) {
+                                        return openContent[index];
                                       },
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                              image: AssetImage(
-                                                  '${contentKiddo[index]['imagePath']}'),
-                                              fit: BoxFit.contain),
-                                        ),
-                                      )
-                                          .animate(
-                                            delay: const Duration(
-                                                milliseconds: 100),
-                                          )
-                                          .fadeIn(
-                                              delay: Duration(
-                                                  milliseconds: index * 200))
-                                          .shimmer(
-                                            duration: 200.ms,
-                                          )
-                                          .slide(
-                                            begin: const Offset(0.5, 0),
-                                            duration: const Duration(
-                                              milliseconds: 700,
+                                      closedBuilder: (context, action) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Get.toNamed(contentKiddo[index]
+                                                ['routePath']!);
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              image: DecorationImage(
+                                                  image: AssetImage(
+                                                      '${contentKiddo[index]['imagePath']}'),
+                                                  fit: BoxFit.fitHeight),
                                             ),
-                                            curve: Curves.easeOut,
+                                          )
+                                              .animate(
+                                                delay: const Duration(
+                                                    milliseconds: 100),
+                                              )
+                                              .fadeIn(
+                                                  delay: Duration(
+                                                      milliseconds:
+                                                          index * 200))
+                                              .shimmer(
+                                                duration: 200.ms,
+                                              )
+                                              .slide(
+                                                begin: const Offset(0.5, 0),
+                                                duration: const Duration(
+                                                  milliseconds: 700,
+                                                ),
+                                                curve: Curves.easeOut,
+                                                delay: Duration(
+                                                  milliseconds: index * 100,
+                                                ),
+                                              ),
+                                        );
+                                      },
+                                    )),
+                                    const SizedBox(height: 5.0),
+                                    Text(
+                                      '${contentKiddo[index]['name']}',
+                                      style: GoogleFonts.montserratAlternates(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                      ),
+                                    )
+                                        .animate(
+                                          delay:
+                                              const Duration(milliseconds: 100),
+                                        )
+                                        .fadeIn(
                                             delay: Duration(
-                                              milliseconds: index * 100,
-                                            ),
+                                                milliseconds: index * 100))
+                                        .shimmer(
+                                          duration: 200.ms,
+                                        )
+                                        .slide(
+                                          begin: const Offset(0.5, 0),
+                                          duration: const Duration(
+                                            milliseconds: 200,
                                           ),
-                                    );
-                                  },
+                                          curve: Curves.easeOut,
+                                          delay: Duration(
+                                            milliseconds: index * 100,
+                                          ),
+                                        ),
+                                  ],
                                 )),
-                                const SizedBox(height: 5.0),
-                                Text(
-                                  '${contentKiddo[index]['name']}',
-                                  style: GoogleFonts.montserratAlternates(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Colors.black,
-                                  ),
-                                )
-                                    .animate(
-                                      delay: const Duration(milliseconds: 100),
-                                    )
-                                    .fadeIn(
-                                        delay:
-                                            Duration(milliseconds: index * 100))
-                                    .shimmer(
-                                      duration: 200.ms,
-                                    )
-                                    .slide(
-                                      begin: const Offset(0.5, 0),
-                                      duration: const Duration(
-                                        milliseconds: 200,
-                                      ),
-                                      curve: Curves.easeOut,
-                                      delay: Duration(
-                                        milliseconds: index * 100,
-                                      ),
-                                    ),
-                              ],
-                            )),
-                  )
+                      )
+                    ],
+                  ),
+                  Positioned(
+                      bottom: 0, left: 10, right: 10, child: _getAdWidget())
                 ],
-              ),
-            if (isDesktop(context))
-              Container(
+              )
+            : SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                color: Colors.blue,
                 child: Row(
                   children: [
                     Expanded(
-                        flex: 2,
+                        flex: 1,
                         child: Container(
-                          color: Colors.white,
-                          padding: const EdgeInsets.only(
-                              right: 20, left: 20, top: 25),
+                          color: const Color(0xFFfaf5f1),
+                          margin: const EdgeInsets.only(left: 10.0),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  const CircleAvatar(
-                                    radius: 50,
-                                    backgroundColor: Colors.purple,
-                                  ),
-                                  const SizedBox(width: 15.0),
-                                  Text(
-                                    'Hi Melissa',
-                                    style: GoogleFonts.montserrat(
-                                        fontSize: 35,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                ],
-                              ),
                               Container(
-                                margin: const EdgeInsets.only(
-                                    top: 40.0, bottom: 20.0),
-                                width: double.infinity,
-                                height: 300,
-                                decoration: BoxDecoration(
-                                    image: const DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/banner_home.png'),
-                                        fit: BoxFit.fill),
-                                    color: Colors.orange,
-                                    borderRadius: BorderRadius.circular(20)),
-                              ),
-                              Text(
-                                'Game Category',
-                                style: GoogleFonts.montserrat(
-                                    fontSize: 25, fontWeight: FontWeight.bold),
-                              ),
-                              ValueListenableBuilder<int?>(
-                                valueListenable: gameListNotifier.selectedTab,
-                                builder: (context, selectedIndex, child) {
-                                  final gameList = gameListNotifier.gameList;
-                                  return SingleChildScrollView(
-                                    scrollDirection: Axis.horizontal,
-                                    child: Row(
-                                      children:
-                                          gameList.asMap().entries.map((entry) {
-                                        final int index = entry.key;
-                                        final Map<String, String> game =
-                                            entry.value;
-
-                                        final bool isSelected =
-                                            selectedIndex == index;
-
-                                        return InkWell(
-                                          onTap: () {
-                                            gameListNotifier.selectTab(index);
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 5.0,
-                                              horizontal: 25.0,
-                                            ),
-                                            margin: const EdgeInsets.only(
-                                              right: 20.0,
-                                              top: 15.0,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              border: Border.all(
-                                                color: isSelected
-                                                    ? Colors.blue
-                                                    : Colors.grey.shade300,
-                                                width: 2.0,
-                                              ),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                const CircleAvatar(
-                                                  radius: 18,
-                                                  backgroundColor: Colors.pink,
-                                                ),
-                                                const SizedBox(width: 10.0),
-                                                Text(game['enum']!)
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      }).toList(),
-                                    ),
-                                  );
-                                },
-                              ),
-                              ValueListenableBuilder<int?>(
-                                valueListenable: gameListNotifier.selectedTab,
-                                builder: (context, value, child) {
-                                  final gameList = gameListNotifier.gameList;
-                                  if (value != null &&
-                                      value >= 0 &&
-                                      value < gameList.length) {
-                                    final selectedGame = gameList[value];
-                                    return Container(
-                                      margin: const EdgeInsets.symmetric(
-                                          vertical: 20.0),
-                                      width: double.infinity,
-                                      height: 250,
-                                      decoration: BoxDecoration(
-                                        color: Colors.orange,
-                                        borderRadius: const BorderRadius.all(
-                                            Radius.circular(10.0)),
-                                        image: DecorationImage(
-                                          image: AssetImage(
-                                              selectedGame['imagePath']!),
-                                          fit: BoxFit.fill,
-                                        ),
+                                  width: double.infinity,
+                                  height: 200,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 15.0, vertical: 20.0),
+                                  decoration: const BoxDecoration(
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(15.0),
+                                          bottomRight: Radius.circular(15.0)),
+                                      color: kStrongblue),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/Logo_color1.png',
+                                        width: 200,
                                       ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Bermain Angka',
-                                            style: GoogleFonts
-                                                .montserratAlternates(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.orange,
-                                            ),
-                                          ),
-                                          Text(
-                                            'Temukan Angka',
-                                            style: GoogleFonts.roboto(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                          GestureDetector(
-                                            onTap: () {
-                                              Get.toNamed(gamesRoutes[_current]
-                                                  ['routePath']!);
-                                            },
-                                            child: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 10.0,
-                                                      horizontal: 20.0),
-                                              margin: const EdgeInsets.only(
-                                                  top: 10.0),
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(25.0),
-                                              ),
-                                              child: Text(
-                                                'Mulai',
-                                                style: GoogleFonts.robotoSlab(
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.orange,
+                                      Text(
+                                        'Learning App\nFor Kids',
+                                        textAlign: TextAlign.center,
+                                        style: GoogleFonts.roboto(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20.0,
+                                            color: Colors.white),
+                                      )
+                                    ],
+                                  )),
+                              Expanded(
+                                child: Container(
+                                    width: double.infinity,
+                                    margin: const EdgeInsets.only(top: 20.0),
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(15.0),
+                                            topRight: Radius.circular(15.0)),
+                                        color: kSoftblue),
+                                    child: Wrap(
+                                      children: List.generate(
+                                          navbarOpsion.length,
+                                          (index) => ListTile(
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        vertical: 20.0,
+                                                        horizontal: 30.0),
+                                                leading: Icon(navicon[index]),
+                                                title: Text(
+                                                  navbarOpsion[index]['title']!,
+                                                  style: GoogleFonts.aBeeZee(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20,
+                                                      color: Colors.white),
                                                 ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  } else {
-                                    return const SizedBox.shrink();
-                                  }
-                                },
+                                              )),
+                                    )),
                               ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        margin:
-                                            const EdgeInsets.only(right: 10.0),
-                                        height: 200,
-                                        color: Colors.black,
-                                      )),
-                                  Expanded(
-                                      flex: 2,
-                                      child: Container(
-                                        margin:
-                                            const EdgeInsets.only(left: 10.0),
-                                        height: 200,
-                                        decoration: BoxDecoration(
-                                            color: Colors.red,
-                                            borderRadius:
-                                                BorderRadius.circular(30)),
-                                      )),
-                                ],
-                              ),
-                              _getAdWidget(),
                             ],
                           ),
                         )),
                     Expanded(
-                        flex: 1,
+                        flex: 3,
                         child: Container(
-                          color: Colors.white,
+                          padding:
+                              const EdgeInsets.only(right: 10.0, left: 10.0),
+                          color: const Color(0xFFfaf5f1),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              Text(
+                                'Good Morning',
+                                style: GoogleFonts.aBeeZee(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 45,
+                                    color: Colors.black),
+                              ),
+                              const SizedBox(height: 20.0),
+                              GridView.count(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                childAspectRatio: 18 / 8,
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 30,
+                                crossAxisSpacing: 20,
+                                children: List.generate(
+                                    gameList.length,
+                                    (index) => Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                              color: Colors.white),
+                                          child: Row(
+                                            children: [
+                                              Expanded(
+                                                  flex: 2,
+                                                  child: ClipRRect(
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    20.0),
+                                                            bottomLeft:
+                                                                Radius.circular(
+                                                                    20.0)),
+                                                    child: Image.asset(
+                                                      gameList[index]
+                                                          ['imagePath']!,
+                                                      fit: BoxFit.fitHeight,
+                                                      height:
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .height,
+                                                    ),
+                                                  )),
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10.0),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                            gameList[index]
+                                                                ['GameName']!,
+                                                            style: GoogleFonts
+                                                                .aBeeZee(
+                                                                    fontSize:
+                                                                        25,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                        Text(
+                                                            gameList[index]
+                                                                ['subtitle']!,
+                                                            style: GoogleFonts
+                                                                .aBeeZee(
+                                                              fontSize: 16,
+                                                            )),
+                                                      ],
+                                                    ),
+                                                  ))
+                                            ],
+                                          ),
+                                        )),
+                              ),
+                              const SizedBox(height: 25.0),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15, top: 20, bottom: 10.0),
-                                child: Text(
-                                  'Course Learning',
-                                  style: GoogleFonts.aBeeZee(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                              Expanded(
-                                child: ListView.builder(
-                                  shrinkWrap: true,
-                                  itemCount: contentKiddo.length,
-                                  itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Get.toNamed(
-                                            routesList[index]['routePath']!);
+                                padding: const EdgeInsets.only(right: 5.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Categories',
+                                      style: GoogleFonts.aBeeZee(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 35,
+                                          color: Colors.black),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        Get.toNamed('/show-all-content');
                                       },
-                                      child: Container(
-                                        height: 200,
-                                        width: double.infinity,
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 12.0, horizontal: 15.0),
-                                        decoration: BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                    contentKiddo[index]
-                                                        ['imagePath']!),
-                                                fit: BoxFit.fill),
-                                            borderRadius:
-                                                BorderRadius.circular(15.0)),
+                                      child: Text(
+                                        showAll ? 'View Less' : 'Show all',
+                                        style: GoogleFonts.aBeeZee(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20,
+                                            color: kSoftblue),
                                       ),
-                                    );
-                                  },
+                                    ),
+                                  ],
                                 ),
                               ),
+                              const SizedBox(height: 15.0),
+                              GridView.count(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                childAspectRatio: 1,
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                                children: List.generate(
+                                    showAll ? contentKiddo.length : 4,
+                                    (index) => GestureDetector(
+                                          onLongPressStart: (_) {
+                                            setState(() {
+                                              longPressPlay = true;
+                                            });
+                                          },
+                                          onLongPressEnd: (_) {
+                                            setState(() {
+                                              longPressPlay = false;
+                                            });
+                                          },
+                                          onTap: () {
+                                            setState(() {
+                                              longPressPlay = !longPressPlay;
+                                            });
+                                          },
+                                          child: Container(
+                                            margin: const EdgeInsets.only(
+                                                bottom: 10.0),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                color: Colors.white),
+                                            child: Column(
+                                              children: [
+                                                Expanded(
+                                                  flex: 3,
+                                                  child: Stack(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(20.0),
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      5.0),
+                                                          child: Image.asset(
+                                                            contentKiddo[index]
+                                                                ['imagePath']!,
+                                                            fit: BoxFit
+                                                                .fitHeight,
+                                                            height:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      longPressPlay
+                                                          ? Positioned(
+                                                              right: 30.0,
+                                                              bottom: 30.0,
+                                                              child:
+                                                                  GestureDetector(
+                                                                onTap: () {
+                                                                  Get.toNamed(contentKiddo[
+                                                                          index]
+                                                                      [
+                                                                      'routePath']!);
+                                                                },
+                                                                child:
+                                                                    Container(
+                                                                  width: 55,
+                                                                  height: 55,
+                                                                  decoration: const BoxDecoration(
+                                                                      shape: BoxShape
+                                                                          .circle,
+                                                                      color: Color(
+                                                                          0xFF1ed760),
+                                                                      border: Border.fromBorderSide(BorderSide(
+                                                                          color: Color(
+                                                                              0xFF1db954),
+                                                                          strokeAlign:
+                                                                              1,
+                                                                          width:
+                                                                              1))),
+                                                                  child:
+                                                                      const Icon(
+                                                                    Icons
+                                                                        .play_arrow,
+                                                                    color: Color(
+                                                                        0xFF191414),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          : const SizedBox
+                                                              .shrink()
+                                                    ],
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                    flex: 1,
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                left: 20.0),
+                                                        child: Column(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Text(
+                                                                contentKiddo[
+                                                                        index]
+                                                                    ['name']!,
+                                                                style: const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        25,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold)),
+                                                            Text(
+                                                                contentKiddo[
+                                                                        index][
+                                                                    'subtitle']!,
+                                                                style: GoogleFonts
+                                                                    .aBeeZee(
+                                                                        fontSize:
+                                                                            18)),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )),
+                                              ],
+                                            ),
+                                          ),
+                                        )),
+                              ),
+                              _getAdWidget()
                             ],
                           ),
-                        ))
+                        )),
                   ],
                 ),
-              )
-          ],
-        ),
+              ),
       ),
     );
   }

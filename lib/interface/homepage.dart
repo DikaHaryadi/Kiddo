@@ -25,7 +25,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String? _timeOfDay;
   bool showAll = false;
-  bool longPressPlay = false;
+  List<bool> longPressStates = List.generate(contentKiddo.length, (_) => false);
+  int? selectedLongPressIndex;
+
   final CategoryListNotifier categoryListNotifier = CategoryListNotifier();
 
   List<Widget> openContent = const [
@@ -56,6 +58,7 @@ class _HomePageState extends State<HomePage> {
 
     final AnchoredAdaptiveBannerAdSize? size =
         await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
+            // ignore: use_build_context_synchronously
             MediaQuery.of(context).size.width.truncate());
 
     if (size == null) {
@@ -135,11 +138,6 @@ class _HomePageState extends State<HomePage> {
         child: isMobile(context)
             ? Stack(
                 children: [
-                  // CustomPaint(
-                  //   size: Size(
-                  //       double.infinity, MediaQuery.of(context).size.height),
-                  //   painter: HomeCurvesEdge(),
-                  // ),
                   ListView(
                     padding: const EdgeInsets.symmetric(
                         vertical: 10.0, horizontal: 15.0),
@@ -794,18 +792,38 @@ class _HomePageState extends State<HomePage> {
                                                 child: GestureDetector(
                                                   onLongPressStart: (_) {
                                                     setState(() {
-                                                      longPressPlay = true;
+                                                      longPressStates.fillRange(
+                                                          0,
+                                                          longPressStates
+                                                              .length,
+                                                          false);
+                                                      longPressStates[index] =
+                                                          true;
                                                     });
                                                   },
                                                   onLongPressEnd: (_) {
                                                     setState(() {
-                                                      longPressPlay = false;
+                                                      longPressStates[index] =
+                                                          false;
+                                                      selectedLongPressIndex =
+                                                          null;
                                                     });
                                                   },
                                                   onTap: () {
                                                     setState(() {
-                                                      longPressPlay =
-                                                          !longPressPlay;
+                                                      longPressStates[index] =
+                                                          !longPressStates[
+                                                              index];
+                                                      for (int i = 0;
+                                                          i <
+                                                              longPressStates
+                                                                  .length;
+                                                          i++) {
+                                                        if (i != index) {
+                                                          longPressStates[i] =
+                                                              false;
+                                                        }
+                                                      }
                                                     });
                                                   },
                                                   child: Container(
@@ -849,7 +867,8 @@ class _HomePageState extends State<HomePage> {
                                                                   ),
                                                                 ),
                                                               ),
-                                                              longPressPlay
+                                                              longPressStates[
+                                                                      index]
                                                                   ? Positioned(
                                                                       right:
                                                                           30.0,
@@ -869,10 +888,19 @@ class _HomePageState extends State<HomePage> {
                                                                               55,
                                                                           height:
                                                                               55,
-                                                                          decoration: const BoxDecoration(
-                                                                              shape: BoxShape.circle,
-                                                                              color: Color(0xFF1ed760),
-                                                                              border: Border.fromBorderSide(BorderSide(color: Color(0xFF1db954), strokeAlign: 1, width: 1))),
+                                                                          decoration:
+                                                                              const BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            color:
+                                                                                Color(0xFF1ed760),
+                                                                            border:
+                                                                                Border.fromBorderSide(BorderSide(
+                                                                              color: Color(0xFF1db954),
+                                                                              strokeAlign: 1,
+                                                                              width: 1,
+                                                                            )),
+                                                                          ),
                                                                           child:
                                                                               const Icon(
                                                                             Icons.play_arrow,
@@ -883,7 +911,7 @@ class _HomePageState extends State<HomePage> {
                                                                       ),
                                                                     )
                                                                   : const SizedBox
-                                                                      .shrink()
+                                                                      .shrink(),
                                                             ],
                                                           ),
                                                         ),

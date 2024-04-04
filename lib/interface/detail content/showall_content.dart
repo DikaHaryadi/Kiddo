@@ -14,7 +14,8 @@ class ShowAllContent extends StatefulWidget {
 }
 
 class _ShowAllContentState extends State<ShowAllContent> {
-  bool longPressPlay = false;
+  List<bool> longPressStates = List.generate(contentKiddo.length, (_) => false);
+  int? selectedLongPressIndex;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +100,7 @@ class _ShowAllContentState extends State<ShowAllContent> {
                           child: AnimationLimiter(
                               child: Column(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceAround,
                                   children:
                                       AnimationConfiguration.toStaggeredList(
                                           duration:
@@ -162,7 +163,7 @@ class _ShowAllContentState extends State<ShowAllContent> {
                                           style: GoogleFonts.roboto(
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 25),
+                                              fontSize: 24),
                                         ),
                                       ])))).animate().slideY(
                           begin: 3,
@@ -196,17 +197,28 @@ class _ShowAllContentState extends State<ShowAllContent> {
                                     child: GestureDetector(
                                       onLongPressStart: (_) {
                                         setState(() {
-                                          longPressPlay = true;
+                                          longPressStates.fillRange(
+                                              0, longPressStates.length, false);
+                                          longPressStates[index] = true;
                                         });
                                       },
                                       onLongPressEnd: (_) {
                                         setState(() {
-                                          longPressPlay = false;
+                                          longPressStates[index] = false;
+                                          selectedLongPressIndex = null;
                                         });
                                       },
                                       onTap: () {
                                         setState(() {
-                                          longPressPlay = !longPressPlay;
+                                          longPressStates[index] =
+                                              !longPressStates[index];
+                                          for (int i = 0;
+                                              i < longPressStates.length;
+                                              i++) {
+                                            if (i != index) {
+                                              longPressStates[i] = false;
+                                            }
+                                          }
                                         });
                                       },
                                       child: Container(
@@ -241,7 +253,7 @@ class _ShowAllContentState extends State<ShowAllContent> {
                                                       ),
                                                     ),
                                                   ),
-                                                  longPressPlay
+                                                  longPressStates[index]
                                                       ? Positioned(
                                                           right: 30.0,
                                                           bottom: 30.0,

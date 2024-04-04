@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: '/', page: () => const HomePage()),
           // Games
           GetPage(name: '/memo-game', page: () => const StartUpPage()),
-          GetPage(name: '/numbers-game', page: () => PuzzleGame()),
+          GetPage(name: '/numbers-game', page: () => WordGamePage()),
           // Content
           GetPage(name: '/number-content', page: () => const NumberContent()),
           GetPage(name: '/letters-content', page: () => const LettersContent()),

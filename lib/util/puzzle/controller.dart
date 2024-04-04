@@ -14,10 +14,16 @@ class Controller extends GetxController {
   var letterDropped = false.obs;
   var percentCompleted = 0.0.obs;
 
+  late String word;
+  late String dropWord; // Tambahkan properti dropWord
+  late List<String> words;
+
   setUp({required int total}) {
     lettersAnswered.value = 0;
     totalLetters.value = total;
   }
+
+  // Metode lainnya tetap sama
 
   incrementLetters({required BuildContext context}) {
     lettersAnswered++;

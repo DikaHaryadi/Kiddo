@@ -203,6 +203,70 @@ const gameList = [
 //NUMS LIST
 const numsList = [
   {
+    'imagePath': 'assets/number/0.png',
+    'counterPath': 'assets/counters/hands0.png',
+    'name': 'Zero',
+    'title': '(0 = Zero)'
+  },
+  {
+    'imagePath': 'assets/number/1.png',
+    'counterPath': 'assets/counters/hands1.png',
+    'name': 'One',
+    'title': '(1 = One)'
+  },
+  {
+    'imagePath': 'assets/number/2.png',
+    'counterPath': 'assets/counters/hands2.png',
+    'name': 'Two',
+    'title': '(2 = Two)'
+  },
+  {
+    'imagePath': 'assets/number/3.png',
+    'counterPath': 'assets/counters/hands3.png',
+    'name': 'Three',
+    'title': '(3 = Three)'
+  },
+  {
+    'imagePath': 'assets/number/4.png',
+    'counterPath': 'assets/counters/hands4.png',
+    'name': 'Four',
+    'title': '(4 = Four)'
+  },
+  {
+    'imagePath': 'assets/number/5.png',
+    'counterPath': 'assets/counters/hands5.png',
+    'name': 'Five',
+    'title': '(5 = Five)'
+  },
+  {
+    'imagePath': 'assets/number/6.png',
+    'counterPath': 'assets/counters/hands6.png',
+    'name': 'Six',
+    'title': '(6 = Six)'
+  },
+  {
+    'imagePath': 'assets/number/7.png',
+    'counterPath': 'assets/counters/hands7.png',
+    'name': 'Seven',
+    'title': '(7 = Seven)'
+  },
+  {
+    'imagePath': 'assets/number/8.png',
+    'counterPath': 'assets/counters/hands8.png',
+    'name': 'Eight',
+    'title': '(7 = Eight)'
+  },
+  {
+    'imagePath': 'assets/number/9.png',
+    'counterPath': 'assets/counters/hands9.png',
+    'name': 'Nine',
+    'title': '(9 = Nine)'
+  },
+];
+
+// number for mobile
+const numsListMobile = [
+  {
     'imagePath': 'assets/numbers/0.png',
     'counterPath': 'assets/counters/hands0.png',
     'name': 'Zero',

@@ -151,67 +151,97 @@ class _NumberContentState extends State<NumberContent> {
                 ? Column(
                     children: [
                       Flexible(
-                        child: CardSwiper(
-                          controller: controller,
-                          cardsCount: numsList.length,
-                          onSwipe: _onSwipe,
-                          onUndo: _onUndo,
-                          numberOfCardsDisplayed: 3,
-                          backCardOffset: const Offset(40, 40),
-                          padding: const EdgeInsets.all(24.0),
-                          cardBuilder: (
-                            context,
-                            index,
-                            horizontalThresholdPercentage,
-                            verticalThresholdPercentage,
-                          ) {
-                            final numData = numsList[index];
-                            return CardContent(
-                              imagePath: numData['imagePath']!,
-                              counterPath: numData['counterPath']!,
-                              name: numData['title']!,
-                              onTap: () {
-                                textToSpeech(numData['name']!);
-                              },
-                            );
-                          },
+                        child: AnimationLimiter(
+                          child: CardSwiper(
+                            controller: controller,
+                            cardsCount: numsList.length,
+                            onSwipe: _onSwipe,
+                            onUndo: _onUndo,
+                            numberOfCardsDisplayed: 3,
+                            backCardOffset: const Offset(40, 40),
+                            padding: const EdgeInsets.all(24.0),
+                            cardBuilder: (
+                              context,
+                              index,
+                              horizontalThresholdPercentage,
+                              verticalThresholdPercentage,
+                            ) {
+                              final numData = numsListMobile[index];
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                delay: const Duration(milliseconds: 200),
+                                duration: const Duration(milliseconds: 800),
+                                child: SlideAnimation(
+                                  verticalOffset: 100.0,
+                                  child: FadeInAnimation(
+                                    child: CardContent(
+                                      imagePath: numData['imagePath']!,
+                                      counterPath: numData['counterPath']!,
+                                      name: numData['title']!,
+                                      onTap: () {
+                                        textToSpeech(numData['name']!);
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            FloatingActionButton(
-                              heroTag: 'undo_button',
-                              onPressed: controller.undo,
-                              child: const Icon(Icons.rotate_left),
-                            ),
-                            FloatingActionButton(
-                              heroTag: 'swipe_left_button',
-                              onPressed: () =>
-                                  controller.swipe(CardSwiperDirection.left),
-                              child: const Icon(Icons.keyboard_arrow_left),
-                            ),
-                            FloatingActionButton(
-                              heroTag: 'swipe_right_button',
-                              onPressed: () =>
-                                  controller.swipe(CardSwiperDirection.right),
-                              child: const Icon(Icons.keyboard_arrow_right),
-                            ),
-                            FloatingActionButton(
-                              heroTag: 'swipe_top_button',
-                              onPressed: () =>
-                                  controller.swipe(CardSwiperDirection.top),
-                              child: const Icon(Icons.keyboard_arrow_up),
-                            ),
-                            FloatingActionButton(
-                              heroTag: 'swipe_bottom_button',
-                              onPressed: () =>
-                                  controller.swipe(CardSwiperDirection.bottom),
-                              child: const Icon(Icons.keyboard_arrow_down),
-                            ),
-                          ],
+                        child: AnimationLimiter(
+                          child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: AnimationConfiguration.toStaggeredList(
+                                  delay: const Duration(milliseconds: 200),
+                                  duration: const Duration(milliseconds: 800),
+                                  childAnimationBuilder: (widget) =>
+                                      SlideAnimation(
+                                          horizontalOffset:
+                                              MediaQuery.of(context)
+                                                      .size
+                                                      .width /
+                                                  2,
+                                          child: FadeInAnimation(
+                                            child: widget,
+                                          )),
+                                  children: [
+                                    FloatingActionButton(
+                                      heroTag: 'undo_button',
+                                      onPressed: controller.undo,
+                                      child: const Icon(Icons.rotate_left),
+                                    ),
+                                    FloatingActionButton(
+                                      heroTag: 'swipe_left_button',
+                                      onPressed: () => controller
+                                          .swipe(CardSwiperDirection.left),
+                                      child:
+                                          const Icon(Icons.keyboard_arrow_left),
+                                    ),
+                                    FloatingActionButton(
+                                      heroTag: 'swipe_right_button',
+                                      onPressed: () => controller
+                                          .swipe(CardSwiperDirection.right),
+                                      child: const Icon(
+                                          Icons.keyboard_arrow_right),
+                                    ),
+                                    FloatingActionButton(
+                                      heroTag: 'swipe_top_button',
+                                      onPressed: () => controller
+                                          .swipe(CardSwiperDirection.top),
+                                      child:
+                                          const Icon(Icons.keyboard_arrow_up),
+                                    ),
+                                    FloatingActionButton(
+                                      heroTag: 'swipe_bottom_button',
+                                      onPressed: () => controller
+                                          .swipe(CardSwiperDirection.bottom),
+                                      child:
+                                          const Icon(Icons.keyboard_arrow_down),
+                                    ),
+                                  ])),
                         ),
                       ),
                     ],
@@ -320,7 +350,8 @@ class _NumberContentState extends State<NumberContent> {
                           flex: 1,
                           child: Container(
                             color: Colors.white,
-                            padding: const EdgeInsets.only(top: 20.0),
+                            padding: const EdgeInsets.only(
+                                top: 50.0, left: 10.0, right: 10.0),
                             child: AnimationLimiter(
                               child: GridView.count(
                                 crossAxisCount: 2,
@@ -332,6 +363,7 @@ class _NumberContentState extends State<NumberContent> {
                                   return AnimationConfiguration.staggeredGrid(
                                     columnCount: 2,
                                     position: index,
+                                    delay: const Duration(milliseconds: 250),
                                     duration: const Duration(milliseconds: 500),
                                     child: ScaleAnimation(
                                       scale: 0.5,

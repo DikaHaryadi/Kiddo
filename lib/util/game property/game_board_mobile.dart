@@ -32,6 +32,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   late Duration duration;
   int bestTime = 0;
   bool showConfetti = false;
+  bool clapSoundPlayed = false;
   late AudioPlayer audioPlayer;
   late final AssetSource path;
   bool isMusicPlaying = true;
@@ -206,12 +207,30 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
         });
         print('stop audio bg music');
         audioPlayer.stop();
-
-        playClapSound();
-        print('mulai putar clap sound');
-
+        playCorrectSound(() {
+          print('mulai putar correct sound 2 ');
+          if (!clapSoundPlayed) {
+            playClapSound();
+            clapSoundPlayed = true;
+          }
+          print('mulai putar clap sound');
+        });
         _showGameOverDialog();
       }
+    });
+  }
+
+  void playCorrectSound(Function() onCompletion) async {
+    if (audioPlayer.state == PlayerState.playing) {
+      await audioPlayer.stop();
+    }
+
+    final path = AssetSource('voices/Correct_2.mp3');
+    await audioPlayer.play(path);
+    audioPlayer.setReleaseMode(ReleaseMode.stop);
+
+    audioPlayer.onPlayerComplete.listen((_) {
+      onCompletion();
     });
   }
 
@@ -243,6 +262,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
 
   @override
   void dispose() {
+    game.dispose();
     audioPlayer.stop();
     audioPlayer.dispose();
     super.dispose();

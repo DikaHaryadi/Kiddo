@@ -25,7 +25,9 @@ class _DragState extends State<Drag> {
     return GetBuilder<Controller>(
       builder: (controller) {
         if (controller.generateWord.value) {
-          _accepted = false;
+          setState(() {
+            _accepted = false;
+          });
         }
         return SizedBox(
           width: size.width * 0.15,

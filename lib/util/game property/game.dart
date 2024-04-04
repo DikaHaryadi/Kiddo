@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:textspeech/util/widgets/card_item.dart';
 import 'package:textspeech/util/game%20property/icon_game.dart';
@@ -8,12 +9,19 @@ import 'package:textspeech/util/game%20property/icon_game.dart';
 class Game {
   Game(this.gridSize) {
     generateCards();
+    player = AudioPlayer();
   }
+
   final int gridSize;
 
   List<CardItem> cards = [];
   bool isGameOver = false;
   Set<IconData> icons = {};
+  late AudioPlayer player;
+
+  void dispose() {
+    player.dispose();
+  }
 
   void generateCards() {
     generateIcons();
@@ -51,6 +59,8 @@ class Game {
       final CardItem card1 = cards[visibleCardIndexes[0]];
       final CardItem card2 = cards[visibleCardIndexes[1]];
       if (card1.value == card2.value) {
+        // masukin audio nya disini
+        player.play(AssetSource('voices/Correct_1.mp3'));
         card1.state = CardState.guessed;
         card2.state = CardState.guessed;
         isGameOver = _isGameOver();

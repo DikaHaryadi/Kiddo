@@ -233,72 +233,88 @@ class _FamilyContentState extends State<FamilyContent> {
                         Expanded(
                           child: Container(
                             color: Colors.red,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: familyList.length,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      selectedIndex = index;
-                                    });
-                                  },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15.0, horizontal: 15.0),
-                                    child: Row(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          child: Image.asset(
-                                            familyList[index]['imagePath']!,
-                                            width: 60,
-                                            height: 60,
-                                            fit: BoxFit.cover,
-                                          ),
+                            child: AnimationLimiter(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: familyList.length,
+                                itemBuilder: (context, index) {
+                                  return AnimationConfiguration.staggeredList(
+                                    position: index,
+                                    delay: const Duration(milliseconds: 250),
+                                    duration: const Duration(milliseconds: 500),
+                                    child: SlideAnimation(
+                                      verticalOffset: 44.0,
+                                      child: FadeInAnimation(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              selectedIndex = index;
+                                            });
+                                          },
+                                          child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 15.0,
+                                                      horizontal: 15.0),
+                                              child: Row(
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        const BorderRadius.all(
+                                                            Radius.circular(
+                                                                10.0)),
+                                                    child: Image.asset(
+                                                      familyList[index]
+                                                          ['imagePath']!,
+                                                      width: 60,
+                                                      height: 60,
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                  ),
+                                                  const SizedBox(width: 15.0),
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          familyList[index]
+                                                              ['name']!,
+                                                          style: GoogleFonts
+                                                              .montserrat(
+                                                            fontSize: 20,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          familyList[index]
+                                                              ['subtitle']!,
+                                                          style: GoogleFonts
+                                                              .robotoSlab(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              )),
                                         ),
-                                        const SizedBox(width: 15.0),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                familyList[index]['name']!,
-                                                style: GoogleFonts.montserrat(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              Text(
-                                                familyList[index]['subtitle']!,
-                                                style: GoogleFonts.robotoSlab(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                        .animate(
-                                            delay: const Duration(
-                                                milliseconds: 250))
-                                        .slideY(
-                                            begin: 2.5,
-                                            end: 0,
-                                            duration: const Duration(
-                                                milliseconds: 700)),
-                                  ),
-                                );
-                              },
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ),
@@ -394,9 +410,7 @@ class _FamilyContentState extends State<FamilyContent> {
                                         color: Colors.white))
                                 .animate(
                                     delay: const Duration(milliseconds: 250))
-                                .slideX(
-                                    begin: -2,
-                                    end: 0,
+                                .fadeIn(
                                     duration: const Duration(milliseconds: 600),
                                     curve: Curves.easeInOutBack,
                                     delay: const Duration(milliseconds: 100)),
@@ -413,9 +427,7 @@ class _FamilyContentState extends State<FamilyContent> {
                             )
                                 .animate(
                                     delay: const Duration(milliseconds: 250))
-                                .slideX(
-                                    begin: -2,
-                                    end: 0,
+                                .fadeIn(
                                     duration: const Duration(milliseconds: 600),
                                     curve: Curves.easeInOutBack,
                                     delay: const Duration(milliseconds: 100)),

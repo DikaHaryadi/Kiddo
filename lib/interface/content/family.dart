@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -41,8 +42,10 @@ class _FamilyContentState extends State<FamilyContent> {
     String deskripsi = familyList[selectedIndex]['deskripsi']!;
 
     return Scaffold(
+      backgroundColor: const Color(0xFFfcf4f1),
       appBar: isMobile(context)
           ? AppBar(
+              backgroundColor: const Color(0xFFfcf4f1),
               elevation: 0,
               leading: IconButton(
                 onPressed: () {
@@ -62,7 +65,7 @@ class _FamilyContentState extends State<FamilyContent> {
                         duration: const Duration(milliseconds: 300)),
               ),
               title: Text(
-                'widget.name',
+                'Family',
                 style: GoogleFonts.montserratAlternates(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
@@ -86,19 +89,25 @@ class _FamilyContentState extends State<FamilyContent> {
               children: [
                 AspectRatio(
                   aspectRatio: 18 / 9,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: const Color(0xFF65d1ff),
-                        image: const DecorationImage(
-                            image: AssetImage('assets/family/0.png'))),
+                  child: AnimationConfiguration.staggeredGrid(
+                    position: 0,
+                    delay: const Duration(milliseconds: 250),
+                    duration: const Duration(milliseconds: 900),
+                    columnCount: 1,
+                    child: FadeInAnimation(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Image.asset(
+                          'assets/banner_family.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                   ),
-                )
-                    .animate(delay: const Duration(milliseconds: 250))
-                    .fadeIn(duration: const Duration(milliseconds: 900)),
+                ),
                 const SizedBox(height: 25.0),
                 Text(
-                  'Text',
+                  'Categories',
                   style: GoogleFonts.aBeeZee(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -119,7 +128,7 @@ class _FamilyContentState extends State<FamilyContent> {
                       child: Row(
                         children: [
                           OpenContainer(
-                            openColor: Colors.pink,
+                            closedElevation: 0,
                             transitionDuration:
                                 const Duration(milliseconds: 500),
                             transitionType: ContainerTransitionType.fade,
@@ -144,7 +153,7 @@ class _FamilyContentState extends State<FamilyContent> {
                           ),
                           Expanded(
                             child: Container(
-                              color: Theme.of(context).scaffoldBackgroundColor,
+                              color: const Color(0xFFfcf4f1),
                               padding: const EdgeInsets.only(left: 20.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -187,18 +196,16 @@ class _FamilyContentState extends State<FamilyContent> {
                             child: Container(
                               width: 50,
                               height: 50,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  border: const Border.fromBorderSide(
-                                      BorderSide(
-                                          color: Colors.orange,
-                                          strokeAlign: 1,
-                                          width: 1))),
+                                  color: kGreen,
+                                  border: Border.fromBorderSide(BorderSide(
+                                      color: Colors.white,
+                                      strokeAlign: 1,
+                                      width: 2))),
                               child: const Icon(
                                 Icons.play_arrow,
-                                color: Colors.orange,
+                                color: kDark,
                               ),
                             ),
                           )

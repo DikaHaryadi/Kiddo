@@ -23,7 +23,16 @@ const List<Map<String, dynamic>> gameLevels = [
   {'title': 'Hard', 'level': 8, 'color': Colors.cyanAccent},
 ];
 
+const List<String> allWords = ['cat', 'pig', 'fox', 'lion'];
+
+// const List<Map<String, dynamic>> numberLevels = [
+//   {'title': 'Easy', 'digits': 1, 'color': Colors.orange},
+//   {'title': 'Medium', 'digits': 2, 'color': Colors.pink},
+//   {'title': 'Hard', 'digits': 3, 'color': Colors.green},
+// ];
+
 const String gameTitle = 'MEMORY MATCH';
+const String puzzleitle = 'Image Word Puzzle';
 const int maxFailedLoadAttempts = 3;
 
 const AdRequest request = AdRequest(

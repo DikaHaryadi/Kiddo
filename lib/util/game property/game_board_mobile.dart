@@ -32,8 +32,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   late Duration duration;
   int bestTime = 0;
   bool showConfetti = false;
-  final RxInt backPressCount = 0.obs;
-  final int maxBackPressCount = 2;
   late AudioPlayer audioPlayer;
   late final AssetSource path;
   bool isMusicPlaying = true;
@@ -106,7 +104,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     checkGameStatus();
     audioPlayer = AudioPlayer();
     playBackgroundMusic();
-    // inilizeBannerAd();
     _createRewardedAd();
   }
 
@@ -248,7 +245,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   void dispose() {
     audioPlayer.stop();
     audioPlayer.dispose();
-    // _bannerAd.dispose();
     super.dispose();
   }
 
@@ -414,10 +410,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                         color: Colors.black.withOpacity(.4),
                       ),
                     ),
-                    child:
-                        // !_isLoaded
-                        //     ?
-                        Row(
+                    child: Row(
                       children: [
                         IconButton(
                             onPressed: toggleMute,
@@ -440,26 +433,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                           style: const TextStyle(fontSize: 16),
                         ),
                       ],
-                    )
-                    // : Stack(
-                    //     children: [
-                    //       Positioned(
-                    //           top: 0,
-                    //           left: 0,
-                    //           right: 0,
-                    //           bottom: 0,
-                    //           child: AdWidget(ad: _bannerAd)),
-                    //       Positioned(
-                    //         top: 0,
-                    //         left: 0,
-                    //         child: IconButton(
-                    //           icon: const Icon(UniconsLine.times_circle),
-                    //           onPressed: _closeBanner,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    ),
+                    )),
               ),
             ],
           ),

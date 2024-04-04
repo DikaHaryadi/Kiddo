@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -223,7 +224,7 @@ class _LettersContentState extends State<LettersContent> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 IconButton(
-                                        onPressed: () => Get.back(),
+                                        onPressed: () => Get.offNamed('/'),
                                         icon: const Icon(
                                           Icons.arrow_back_ios,
                                           size: 50,
@@ -318,23 +319,35 @@ class _LettersContentState extends State<LettersContent> {
                           child: Container(
                             color: Colors.white,
                             padding: const EdgeInsets.only(top: 20.0),
-                            child: GridView.count(
-                              crossAxisCount: 2,
-                              mainAxisSpacing: 35,
-                              childAspectRatio:
-                                  MediaQuery.of(context).size.aspectRatio,
-                              children:
-                                  List.generate(lettersList.length, (index) {
-                                return GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedIndex = index;
-                                      });
-                                    },
-                                    child: Image.asset(
-                                      lettersList[index]['imagePath']!,
-                                    ));
-                              }),
+                            child: AnimationLimiter(
+                              child: GridView.count(
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 35,
+                                childAspectRatio:
+                                    MediaQuery.of(context).size.aspectRatio,
+                                children:
+                                    List.generate(lettersList.length, (index) {
+                                  return AnimationConfiguration.staggeredGrid(
+                                    columnCount: 2,
+                                    position: index,
+                                    duration: const Duration(milliseconds: 800),
+                                    child: ScaleAnimation(
+                                      scale: 0.5,
+                                      child: FadeInAnimation(
+                                        child: GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                selectedIndex = index;
+                                              });
+                                            },
+                                            child: Image.asset(
+                                              lettersList[index]['imagePath']!,
+                                            )),
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              ),
                             ),
                           )),
                     ],

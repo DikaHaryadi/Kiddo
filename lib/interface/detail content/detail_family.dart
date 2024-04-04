@@ -225,14 +225,19 @@ class _DetailFamilyState extends State<DetailFamily> {
               bottom: 100,
               right: 20,
               left: 20,
-              child: Text(
-                widget.deskripsi,
-                textAlign: TextAlign.left,
-                style: GoogleFonts.aBeeZee(
-                  height: 1.4,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black,
+              child: InkWell(
+                onTap: () {
+                  textToSpeech(widget.deskripsi);
+                },
+                child: Text(
+                  widget.deskripsi,
+                  textAlign: TextAlign.left,
+                  style: GoogleFonts.aBeeZee(
+                    height: 1.4,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black,
+                  ),
                 ),
               ).animate(delay: const Duration(milliseconds: 250)).slideY(
                   begin: 3,

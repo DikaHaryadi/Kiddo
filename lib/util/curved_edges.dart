@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:textspeech/util/constants.dart';
 
 class TCustomCurvedEdges extends CustomClipper<Path> {
   @override
@@ -33,67 +32,67 @@ class TCustomCurvedEdges extends CustomClipper<Path> {
   }
 }
 
-class HomeCurvesEdge extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    // Layer 1
+// class HomeCurvesEdge extends CustomPainter {
+//   @override
+//   void paint(Canvas canvas, Size size) {
+//     // Layer 1
 
-    Paint paintFill0 = Paint()
-      ..color = const Color(0xFFffee93)
-      ..style = PaintingStyle.fill
-      ..strokeWidth = size.width * 0.00
-      ..strokeCap = StrokeCap.butt
-      ..strokeJoin = StrokeJoin.miter;
+//     Paint paintFill0 = Paint()
+//       ..color = const Color(0xFFffee93)
+//       ..style = PaintingStyle.fill
+//       ..strokeWidth = size.width * 0.00
+//       ..strokeCap = StrokeCap.butt
+//       ..strokeJoin = StrokeJoin.miter;
 
-    Path path_0 = Path();
-    path_0.moveTo(size.width * 1.0000375, size.height * 0.6601750);
-    path_0.quadraticBezierTo(size.width * 0.9625750, size.height * 0.6745250,
-        size.width * 0.9500500, size.height * 0.6955417);
-    path_0.quadraticBezierTo(size.width * 0.9244875, size.height * 0.7671083,
-        size.width * 0.8532750, size.height * 0.8041167);
-    path_0.quadraticBezierTo(size.width * 0.7490625, size.height * 0.8561667,
-        size.width * 0.7080875, size.height * 0.8674167);
-    path_0.cubicTo(
-        size.width * 0.6863750,
-        size.height * 0.8727500,
-        size.width * 0.6391125,
-        size.height * 0.8784500,
-        size.width * 0.6161125,
-        size.height * 0.8828250);
-    path_0.quadraticBezierTo(size.width * 0.5916000, size.height * 0.8847667,
-        size.width * 0.5174625, size.height * 0.8957083);
-    path_0.lineTo(size.width * 0.3856125, size.height * 0.9108667);
-    path_0.quadraticBezierTo(size.width * 0.2703750, size.height * 0.9241583,
-        size.width * 0.2330500, size.height * 0.9318417);
-    path_0.quadraticBezierTo(size.width * 0.2106250, size.height * 0.9351250,
-        size.width * 0.1539625, size.height * 0.9561083);
-    path_0.lineTo(size.width * 0.1076000, size.height * 0.9703417);
-    path_0.quadraticBezierTo(size.width * 0.0618000, size.height * 0.9820250,
-        size.width * 0.0588625, size.height * 0.9971917);
-    path_0.quadraticBezierTo(size.width * 0.2935500, size.height * 0.9978917,
-        size.width * 0.9976750, size.height * 1.0000083);
-    path_0.lineTo(size.width * 1.0000375, size.height * 0.6601750);
-    path_0.close();
+//     Path path_0 = Path();
+//     path_0.moveTo(size.width * 1.0000375, size.height * 0.6601750);
+//     path_0.quadraticBezierTo(size.width * 0.9625750, size.height * 0.6745250,
+//         size.width * 0.9500500, size.height * 0.6955417);
+//     path_0.quadraticBezierTo(size.width * 0.9244875, size.height * 0.7671083,
+//         size.width * 0.8532750, size.height * 0.8041167);
+//     path_0.quadraticBezierTo(size.width * 0.7490625, size.height * 0.8561667,
+//         size.width * 0.7080875, size.height * 0.8674167);
+//     path_0.cubicTo(
+//         size.width * 0.6863750,
+//         size.height * 0.8727500,
+//         size.width * 0.6391125,
+//         size.height * 0.8784500,
+//         size.width * 0.6161125,
+//         size.height * 0.8828250);
+//     path_0.quadraticBezierTo(size.width * 0.5916000, size.height * 0.8847667,
+//         size.width * 0.5174625, size.height * 0.8957083);
+//     path_0.lineTo(size.width * 0.3856125, size.height * 0.9108667);
+//     path_0.quadraticBezierTo(size.width * 0.2703750, size.height * 0.9241583,
+//         size.width * 0.2330500, size.height * 0.9318417);
+//     path_0.quadraticBezierTo(size.width * 0.2106250, size.height * 0.9351250,
+//         size.width * 0.1539625, size.height * 0.9561083);
+//     path_0.lineTo(size.width * 0.1076000, size.height * 0.9703417);
+//     path_0.quadraticBezierTo(size.width * 0.0618000, size.height * 0.9820250,
+//         size.width * 0.0588625, size.height * 0.9971917);
+//     path_0.quadraticBezierTo(size.width * 0.2935500, size.height * 0.9978917,
+//         size.width * 0.9976750, size.height * 1.0000083);
+//     path_0.lineTo(size.width * 1.0000375, size.height * 0.6601750);
+//     path_0.close();
 
-    canvas.drawPath(path_0, paintFill0);
+//     canvas.drawPath(path_0, paintFill0);
 
-    // Layer 1
+//     // Layer 1
 
-    Paint paintStroke0 = Paint()
-      ..color = const Color.fromARGB(255, 33, 150, 243)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = size.width * 0.00
-      ..strokeCap = StrokeCap.butt
-      ..strokeJoin = StrokeJoin.bevel;
+//     Paint paintStroke0 = Paint()
+//       ..color = const Color.fromARGB(255, 33, 150, 243)
+//       ..style = PaintingStyle.stroke
+//       ..strokeWidth = size.width * 0.00
+//       ..strokeCap = StrokeCap.butt
+//       ..strokeJoin = StrokeJoin.bevel;
 
-    canvas.drawPath(path_0, paintStroke0);
-  }
+//     canvas.drawPath(path_0, paintStroke0);
+//   }
 
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return true;
-  }
-}
+//   @override
+//   bool shouldRepaint(covariant CustomPainter oldDelegate) {
+//     return true;
+//   }
+// }
 
 class FamilyCurvedEdges extends CustomClipper<Path> {
   @override

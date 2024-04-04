@@ -12,7 +12,7 @@ import 'package:textspeech/interface/content/vegetables.dart';
 import 'package:textspeech/interface/detail%20content/showall_content.dart';
 import 'package:textspeech/interface/game_ui.dart';
 import 'package:textspeech/interface/homepage.dart';
-import 'package:textspeech/interface/numbers_game.dart';
+import 'package:textspeech/interface/puzzle_image_word.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: '/', page: () => const HomePage()),
           // Games
           GetPage(name: '/memo-game', page: () => const StartUpPage()),
-          GetPage(name: '/numbers-game', page: () => const NumbersGame()),
+          GetPage(name: '/numbers-game', page: () => PuzzleGame()),
           // Content
           GetPage(name: '/number-content', page: () => const NumberContent()),
           GetPage(name: '/letters-content', page: () => const LettersContent()),
@@ -47,6 +47,8 @@ class MyApp extends StatelessWidget {
           // show all content
           GetPage(
               name: '/show-all-content', page: () => const ShowAllContent()),
-        ]);
+        ]
+        // home: PuzzleGame(),
+        );
   }
 }

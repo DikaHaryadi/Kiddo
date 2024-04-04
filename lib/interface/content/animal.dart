@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -80,14 +81,15 @@ class _AnimalContentState extends State<AnimalContent> {
   Widget build(BuildContext context) {
     String name = animalsList[selectedIndex]['name']!;
     String deskripsi = animalsList[selectedIndex]['deskripsi']!;
-    // String audio = animalsList[selectedIndex]['voice']!;
     String kategori = animalsList[selectedIndex]['kategori']!;
     String jenisMakanan = animalsList[selectedIndex]['jenis_makan']!;
 
     return Scaffold(
+      backgroundColor: const Color(0xFFfcf4f1),
       appBar: isMobile(context)
           ? AppBar(
               elevation: 0,
+              backgroundColor: const Color(0xFFfcf4f1),
               leading: IconButton(
                 onPressed: () {
                   Future.delayed(const Duration(milliseconds: 250), () {
@@ -130,17 +132,22 @@ class _AnimalContentState extends State<AnimalContent> {
               children: [
                 AspectRatio(
                   aspectRatio: 18 / 9,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15.0),
-                        color: const Color(0xFF65d1ff),
-                        image: const DecorationImage(
-                            image: AssetImage('assets/animals.png'),
-                            fit: BoxFit.fitHeight)),
+                  child: AnimationConfiguration.staggeredGrid(
+                    position: 0,
+                    delay: const Duration(milliseconds: 250),
+                    duration: const Duration(milliseconds: 900),
+                    columnCount: 1,
+                    child: FadeInAnimation(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10.0),
+                        child: Image.asset(
+                          'assets/banner_animals.png',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
                   ),
-                ).animate(delay: const Duration(milliseconds: 250)).fadeIn(
-                    delay: const Duration(milliseconds: 500),
-                    duration: const Duration(milliseconds: 900)),
+                ),
                 const SizedBox(height: 25.0),
                 Text(
                   'Text',
@@ -164,7 +171,7 @@ class _AnimalContentState extends State<AnimalContent> {
                       child: Row(
                         children: [
                           OpenContainer(
-                            openColor: Colors.pink,
+                            closedElevation: 0,
                             transitionDuration:
                                 const Duration(milliseconds: 500),
                             transitionType: ContainerTransitionType.fade,
@@ -191,7 +198,7 @@ class _AnimalContentState extends State<AnimalContent> {
                           ),
                           Expanded(
                             child: Container(
-                              color: Theme.of(context).scaffoldBackgroundColor,
+                              color: const Color(0xFFfcf4f1),
                               padding: const EdgeInsets.only(left: 20.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -256,18 +263,16 @@ class _AnimalContentState extends State<AnimalContent> {
                             child: Container(
                               width: 50,
                               height: 50,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color:
-                                      Theme.of(context).scaffoldBackgroundColor,
-                                  border: const Border.fromBorderSide(
-                                      BorderSide(
-                                          color: Colors.orange,
-                                          strokeAlign: 1,
-                                          width: 1))),
+                                  color: kGreen,
+                                  border: Border.fromBorderSide(BorderSide(
+                                      color: Colors.white,
+                                      strokeAlign: 1,
+                                      width: 2))),
                               child: const Icon(
                                 Icons.play_arrow,
-                                color: Colors.orange,
+                                color: kDark,
                               ),
                             ),
                           )

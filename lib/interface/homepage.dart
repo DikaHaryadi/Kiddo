@@ -1,13 +1,10 @@
-import 'dart:convert';
-
 import 'package:animations/animations.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:textspeech/interface/content/animal.dart';
 import 'package:textspeech/interface/content/family.dart';
 import 'package:textspeech/interface/content/fruits.dart';
@@ -16,7 +13,6 @@ import 'package:textspeech/interface/content/numbers.dart';
 import 'package:textspeech/interface/content/vegetables.dart';
 import 'package:textspeech/util/category_list_mobile.dart';
 import 'package:textspeech/util/constants.dart';
-import 'package:textspeech/util/curved_edges.dart';
 import 'package:textspeech/util/responsive.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,6 +23,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  String? _timeOfDay;
   bool showAll = false;
   bool longPressPlay = false;
   final CategoryListNotifier categoryListNotifier = CategoryListNotifier();
@@ -100,9 +97,27 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  void _getTimeOfDay() {
+    final currentTime = DateTime.now();
+    final hour = currentTime.hour;
+
+    setState(() {
+      if (hour >= 4 && hour < 12) {
+        _timeOfDay = 'Morning';
+      } else if (hour >= 12 && hour < 17) {
+        _timeOfDay = 'Afternoon';
+      } else if (hour >= 17 && hour < 20) {
+        _timeOfDay = 'Evening';
+      } else {
+        _timeOfDay = 'Night';
+      }
+    });
+  }
+
   @override
   void initState() {
     _loadAd();
+    _getTimeOfDay();
     super.initState();
   }
 
@@ -131,83 +146,99 @@ class _HomePageState extends State<HomePage> {
                     shrinkWrap: true,
                     children: [
                       Text(
-                        'Good Morning',
+                        'Good $_timeOfDay',
                         style: GoogleFonts.aBeeZee(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
-                      ),
+                      ).animate().slideY(
+                          begin: -2,
+                          end: 0,
+                          curve: Curves.bounceIn,
+                          duration: const Duration(milliseconds: 400)),
                       const SizedBox(height: 15.0),
-                      GridView.count(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        crossAxisCount: 2,
-                        childAspectRatio: 18 / 8,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        children: List.generate(
-                            gameList.length,
-                            (index) => Container(
+                      AnimationLimiter(
+                        child: GridView.count(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          crossAxisCount: 2,
+                          childAspectRatio: 18 / 8,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          children: AnimationConfiguration.toStaggeredList(
+                            duration: const Duration(milliseconds: 500),
+                            childAnimationBuilder: (widget) => SlideAnimation(
+                              horizontalOffset:
+                                  MediaQuery.of(context).size.width,
+                              child: widget,
+                            ),
+                            children: gameList.map((game) {
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(game['routePath']!);
+                                },
+                                child: Container(
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: Colors.white,
-                                      border: Border.all(
-                                          width: 2,
-                                          color: const Color(0xFFd1d1d1))),
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    color: Colors.white,
+                                    border: Border.all(
+                                        width: 2,
+                                        color: const Color(0xFFd1d1d1)),
+                                  ),
                                   child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
                                       Expanded(
-                                          flex: 2,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(20.0),
-                                                    bottomLeft:
-                                                        Radius.circular(20.0)),
-                                            child: Image.asset(
-                                              gameList[index]['imagePath']!,
-                                              fit: BoxFit.fitHeight,
-                                              height: MediaQuery.of(context)
-                                                  .size
-                                                  .height,
-                                            ),
-                                          )),
+                                        flex: 2,
+                                        child: ClipRRect(
+                                          borderRadius: const BorderRadius.only(
+                                            topLeft: Radius.circular(20.0),
+                                            bottomLeft: Radius.circular(20.0),
+                                          ),
+                                          child: Image.asset(
+                                            game['imagePath']!,
+                                            fit: BoxFit.fitHeight,
+                                            height: MediaQuery.of(context)
+                                                .size
+                                                .height,
+                                          ),
+                                        ),
+                                      ),
                                       Expanded(
-                                          flex: 3,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 5.0),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                    gameList[index]
-                                                        ['GameName']!,
-                                                    style: GoogleFonts.aBeeZee(
-                                                        color: kDark,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
-                                                Text(
-                                                    gameList[index]
-                                                        ['subtitle']!,
-                                                    style: GoogleFonts.aBeeZee(
+                                        flex: 3,
+                                        child: Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 5.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(game['GameName']!,
+                                                  style: GoogleFonts.aBeeZee(
                                                       color: kDark,
-                                                      fontSize: 14,
-                                                    ))
-                                              ],
-                                            ),
-                                          ))
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold)),
+                                              Text(game['subtitle']!,
+                                                  style: GoogleFonts.aBeeZee(
+                                                    color: kDark,
+                                                    fontSize: 14,
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
-                                )),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
                       ),
                       const SizedBox(height: 15.0),
                       ValueListenableBuilder<int?>(
@@ -322,113 +353,6 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                       const SizedBox(height: 10.0),
-                      // GridView.count(
-                      //   shrinkWrap: true,
-                      //   physics: const NeverScrollableScrollPhysics(),
-                      //   childAspectRatio: 1,
-                      //   crossAxisCount: 2,
-                      //   mainAxisSpacing: 10,
-                      //   crossAxisSpacing: 10,
-                      //   children: List.generate(
-                      //       showAll ? contentKiddo.length : 4,
-                      //       (index) => GestureDetector(
-                      //             onLongPressStart: (_) {
-                      //               setState(() {
-                      //                 longPressPlay = true;
-                      //               });
-                      //             },
-                      //             onLongPressEnd: (_) {
-                      //               setState(() {
-                      //                 longPressPlay = false;
-                      //               });
-                      //             },
-                      //             onTap: () {
-                      //               setState(() {
-                      //                 longPressPlay = !longPressPlay;
-                      //               });
-                      //             },
-                      //             child: Container(
-                      //               margin: const EdgeInsets.only(bottom: 10.0),
-                      //               decoration: BoxDecoration(
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(10.0),
-                      //                   color: const Color(0xFFeddcd2)),
-                      //               child: Column(
-                      //                 children: [
-                      //                   Expanded(
-                      //                     flex: 3,
-                      //                     child: Stack(
-                      //                       children: [
-                      //                         Padding(
-                      //                           padding:
-                      //                               const EdgeInsets.all(20.0),
-                      //                           child: ClipRRect(
-                      //                             borderRadius:
-                      //                                 BorderRadius.circular(
-                      //                                     5.0),
-                      //                             child: Image.asset(
-                      //                               contentKiddo[index]
-                      //                                   ['imagePath']!,
-                      //                               fit: BoxFit.fitHeight,
-                      //                               height:
-                      //                                   MediaQuery.of(context)
-                      //                                       .size
-                      //                                       .height,
-                      //                             ),
-                      //                           ),
-                      //                         ),
-                      //                         longPressPlay
-                      //                             ? Positioned(
-                      //                                 right: 30.0,
-                      //                                 bottom: 30.0,
-                      //                                 child: GestureDetector(
-                      //                                   onTap: () {
-                      //                                     Get.toNamed(
-                      //                                         contentKiddo[
-                      //                                                 index][
-                      //                                             'routePath']!);
-                      //                                   },
-                      //                                   child: Container(
-                      //                                     width: 55,
-                      //                                     height: 55,
-                      //                                     decoration: const BoxDecoration(
-                      //                                         shape: BoxShape
-                      //                                             .circle,
-                      //                                         color: kGreen,
-                      //                                         border: Border.fromBorderSide(
-                      //                                             BorderSide(
-                      //                                                 color: Color(
-                      //                                                     0xFF1db954),
-                      //                                                 strokeAlign:
-                      //                                                     1,
-                      //                                                 width:
-                      //                                                     1))),
-                      //                                     child: const Icon(
-                      //                                       Icons.play_arrow,
-                      //                                       color: Color(
-                      //                                           0xFF191414),
-                      //                                     ),
-                      //                                   ),
-                      //                                 ),
-                      //                               )
-                      //                             : const SizedBox.shrink()
-                      //                       ],
-                      //                     ),
-                      //                   ),
-                      //                   Align(
-                      //                     alignment: Alignment.center,
-                      //                     child: Text(
-                      //                         contentKiddo[index]['name']!,
-                      //                         style: const TextStyle(
-                      //                             color: Color(0xFF809bce),
-                      //                             fontSize: 16,
-                      //                             fontWeight: FontWeight.bold)),
-                      //                   ),
-                      //                 ],
-                      //               ),
-                      //             ),
-                      //           )),
-                      // ),
                       GridView.count(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
@@ -438,91 +362,100 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSpacing: 20,
                         children: List.generate(
                             contentKiddo.length,
-                            (index) => Column(
-                                  children: [
-                                    Expanded(
-                                        child: OpenContainer(
-                                      closedColor: const Color(0xFFfcf4f1),
-                                      closedElevation: 0,
-                                      transitionDuration:
-                                          const Duration(milliseconds: 500),
-                                      transitionType:
-                                          ContainerTransitionType.fade,
-                                      closedShape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.0)),
-                                      ),
-                                      openBuilder: (context, action) {
-                                        return openContent[index];
-                                      },
-                                      closedBuilder: (context, action) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            Get.toNamed(contentKiddo[index]
-                                                ['routePath']!);
-                                          },
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                      '${contentKiddo[index]['imagePath']}'),
-                                                  fit: BoxFit.fitHeight),
-                                            ),
-                                          )
-                                              .animate(
-                                                delay: const Duration(
-                                                    milliseconds: 100),
-                                              )
-                                              .fadeIn(
-                                                  delay: Duration(
-                                                      milliseconds:
-                                                          index * 200))
-                                              .shimmer(
-                                                duration: 200.ms,
-                                              )
-                                              .slide(
-                                                begin: const Offset(0.5, 0),
-                                                duration: const Duration(
-                                                  milliseconds: 700,
-                                                ),
-                                                curve: Curves.easeOut,
-                                                delay: Duration(
-                                                  milliseconds: index * 100,
-                                                ),
-                                              ),
-                                        );
-                                      },
-                                    )),
-                                    const SizedBox(height: 5.0),
-                                    Text(
-                                      '${contentKiddo[index]['name']}',
-                                      style: GoogleFonts.montserratAlternates(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.black,
-                                      ),
-                                    )
-                                        .animate(
-                                          delay:
-                                              const Duration(milliseconds: 100),
-                                        )
-                                        .fadeIn(
-                                            delay: Duration(
-                                                milliseconds: index * 100))
-                                        .shimmer(
-                                          duration: 200.ms,
-                                        )
-                                        .slide(
-                                          begin: const Offset(0.5, 0),
-                                          duration: const Duration(
-                                            milliseconds: 200,
-                                          ),
-                                          curve: Curves.easeOut,
-                                          delay: Duration(
-                                            milliseconds: index * 100,
-                                          ),
+                            (index) => Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      color: Colors.white,
+                                      border: Border.all(
+                                          width: 2,
+                                          color: const Color(0xFFd1d1d1))),
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                          child: OpenContainer(
+                                        closedColor: const Color(0xFFfcf4f1),
+                                        closedElevation: 0,
+                                        transitionDuration:
+                                            const Duration(milliseconds: 500),
+                                        transitionType:
+                                            ContainerTransitionType.fade,
+                                        closedShape:
+                                            const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(10.0)),
                                         ),
-                                  ],
+                                        openBuilder: (context, action) {
+                                          return openContent[index];
+                                        },
+                                        closedBuilder: (context, action) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              Get.toNamed(contentKiddo[index]
+                                                  ['routePath']!);
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                image: DecorationImage(
+                                                    image: AssetImage(
+                                                        '${contentKiddo[index]['imagePath']}'),
+                                                    fit: BoxFit.fitHeight),
+                                              ),
+                                            )
+                                                .animate(
+                                                  delay: const Duration(
+                                                      milliseconds: 100),
+                                                )
+                                                .fadeIn(
+                                                    delay: Duration(
+                                                        milliseconds:
+                                                            index * 200))
+                                                .shimmer(
+                                                  duration: 200.ms,
+                                                )
+                                                .slide(
+                                                  begin: const Offset(0.5, 0),
+                                                  duration: const Duration(
+                                                    milliseconds: 700,
+                                                  ),
+                                                  curve: Curves.easeOut,
+                                                  delay: Duration(
+                                                    milliseconds: index * 100,
+                                                  ),
+                                                ),
+                                          );
+                                        },
+                                      )),
+                                      const SizedBox(height: 5.0),
+                                      Text(
+                                        '${contentKiddo[index]['name']}',
+                                        style: GoogleFonts.montserratAlternates(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black,
+                                        ),
+                                      )
+                                          .animate(
+                                            delay: const Duration(
+                                                milliseconds: 100),
+                                          )
+                                          .fadeIn(
+                                              delay: Duration(
+                                                  milliseconds: index * 100))
+                                          .shimmer(
+                                            duration: 200.ms,
+                                          )
+                                          .slide(
+                                            begin: const Offset(0.5, 0),
+                                            duration: const Duration(
+                                              milliseconds: 200,
+                                            ),
+                                            curve: Curves.easeOut,
+                                            delay: Duration(
+                                              milliseconds: index * 100,
+                                            ),
+                                          ),
+                                    ],
+                                  ),
                                 )),
                       )
                     ],
@@ -545,33 +478,69 @@ class _HomePageState extends State<HomePage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                  width: double.infinity,
-                                  height: 200,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 15.0, vertical: 20.0),
-                                  decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(15.0),
-                                          bottomRight: Radius.circular(15.0)),
-                                      color: kStrongblue),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/Logo_color1.png',
-                                        width: 200,
-                                      ),
-                                      Text(
-                                        'Learning App\nFor Kids',
-                                        textAlign: TextAlign.center,
-                                        style: GoogleFonts.roboto(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20.0,
-                                            color: Colors.white),
-                                      )
-                                    ],
-                                  )),
+                                      width: double.infinity,
+                                      height: 200,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 15.0, vertical: 20.0),
+                                      decoration: const BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius
+                                                  .only(
+                                                      bottomLeft: Radius
+                                                          .circular(15.0),
+                                                      bottomRight: Radius
+                                                          .circular(15.0)),
+                                          color: kStrongblue),
+                                      child: AnimationLimiter(
+                                          child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children:
+                                                  AnimationConfiguration
+                                                      .toStaggeredList(
+                                                          delay:
+                                                              const Duration(
+                                                                  milliseconds:
+                                                                      600),
+                                                          duration:
+                                                              const Duration(
+                                                                  milliseconds:
+                                                                      500),
+                                                          childAnimationBuilder:
+                                                              (widget) =>
+                                                                  SlideAnimation(
+                                                                    horizontalOffset:
+                                                                        MediaQuery.of(context).size.width /
+                                                                            2,
+                                                                    child: FadeInAnimation(
+                                                                        child:
+                                                                            widget),
+                                                                  ),
+                                                          children: [
+                                                    Image.asset(
+                                                      'assets/images/Logo_color1.png',
+                                                      width: 200,
+                                                    ),
+                                                    const SizedBox(height: 20),
+                                                    Text(
+                                                      'Learning App\nFor Kids',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: GoogleFonts.roboto(
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          fontSize: 20.0,
+                                                          color: Colors.white),
+                                                    )
+                                                  ]))))
+                                  .animate(
+                                      delay: const Duration(milliseconds: 200))
+                                  .slideY(
+                                      begin: -3,
+                                      end: 0,
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      curve: Curves.bounceIn),
                               Expanded(
                                 child: Container(
                                     width: double.infinity,
@@ -581,26 +550,56 @@ class _HomePageState extends State<HomePage> {
                                             topLeft: Radius.circular(15.0),
                                             topRight: Radius.circular(15.0)),
                                         color: kSoftblue),
-                                    child: Wrap(
-                                      children: List.generate(
-                                          navbarOpsion.length,
-                                          (index) => ListTile(
-                                                contentPadding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 20.0,
-                                                        horizontal: 30.0),
-                                                leading: Icon(navicon[index]),
-                                                title: Text(
-                                                  navbarOpsion[index]['title']!,
-                                                  style: GoogleFonts.aBeeZee(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20,
-                                                      color: Colors.white),
-                                                ),
-                                              )),
+                                    child: AnimationLimiter(
+                                      child: Wrap(
+                                        children: List.generate(
+                                            navbarOpsion.length,
+                                            (index) => AnimationConfiguration
+                                                    .staggeredList(
+                                                  position: index,
+                                                  delay: const Duration(
+                                                      milliseconds: 600),
+                                                  duration: const Duration(
+                                                      milliseconds: 500),
+                                                  child: SlideAnimation(
+                                                    verticalOffset: 44.0,
+                                                    child: FadeInAnimation(
+                                                      child: ListTile(
+                                                        contentPadding:
+                                                            const EdgeInsets
+                                                                .symmetric(
+                                                                vertical: 20.0,
+                                                                horizontal:
+                                                                    30.0),
+                                                        leading: Icon(
+                                                            navicon[index]),
+                                                        title: Text(
+                                                          navbarOpsion[index]
+                                                              ['title']!,
+                                                          style: GoogleFonts
+                                                              .aBeeZee(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize: 20,
+                                                                  color: Colors
+                                                                      .white),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                )),
+                                      ),
                                     )),
-                              ),
+                              )
+                                  .animate(
+                                      delay: const Duration(milliseconds: 200))
+                                  .slideY(
+                                      begin: 3,
+                                      end: 0,
+                                      duration:
+                                          const Duration(milliseconds: 500),
+                                      curve: Curves.bounceIn),
                             ],
                           ),
                         )),
@@ -613,92 +612,128 @@ class _HomePageState extends State<HomePage> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Good Morning',
-                                style: GoogleFonts.aBeeZee(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 45,
-                                    color: Colors.black),
-                              ),
+                              Padding(
+                                  padding: const EdgeInsets.only(left: 10.0),
+                                  child: Text(
+                                    'Good $_timeOfDay',
+                                    style: GoogleFonts.aBeeZee(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 45,
+                                        color: Colors.black),
+                                  ).animate().fadeIn(
+                                      curve: Curves.easeIn,
+                                      duration:
+                                          const Duration(milliseconds: 700))),
                               const SizedBox(height: 20.0),
-                              GridView.count(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                childAspectRatio: 18 / 8,
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 30,
-                                crossAxisSpacing: 20,
-                                children: List.generate(
-                                    gameList.length,
-                                    (index) => Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                              color: Colors.white),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                  flex: 2,
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    20.0),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    20.0)),
-                                                    child: Image.asset(
-                                                      gameList[index]
-                                                          ['imagePath']!,
-                                                      fit: BoxFit.fitHeight,
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .height,
-                                                    ),
-                                                  )),
-                                              Expanded(
-                                                  flex: 3,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10.0),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
+                              AnimationLimiter(
+                                child: GridView.count(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  childAspectRatio: 18 / 8,
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 30,
+                                  crossAxisSpacing: 20,
+                                  children: List.generate(
+                                      gameList.length,
+                                      (index) =>
+                                          AnimationConfiguration.staggeredGrid(
+                                            columnCount: 2,
+                                            position: index,
+                                            delay: const Duration(
+                                                milliseconds: 250),
+                                            duration: const Duration(
+                                                milliseconds: 500),
+                                            child: ScaleAnimation(
+                                              scale: 0.5,
+                                              child: FadeInAnimation(
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    Get.toNamed(gameList[index]
+                                                        ['routePath']!);
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20.0),
+                                                        color: Colors.white),
+                                                    child: Row(
                                                       children: [
-                                                        Text(
-                                                            gameList[index]
-                                                                ['GameName']!,
-                                                            style: GoogleFonts
-                                                                .aBeeZee(
-                                                                    fontSize:
-                                                                        25,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold)),
-                                                        Text(
-                                                            gameList[index]
-                                                                ['subtitle']!,
-                                                            style: GoogleFonts
-                                                                .aBeeZee(
-                                                              fontSize: 16,
+                                                        Expanded(
+                                                            flex: 2,
+                                                            child: ClipRRect(
+                                                              borderRadius: const BorderRadius
+                                                                  .only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          20.0),
+                                                                  bottomLeft: Radius
+                                                                      .circular(
+                                                                          20.0)),
+                                                              child:
+                                                                  Image.asset(
+                                                                gameList[index][
+                                                                    'imagePath']!,
+                                                                fit: BoxFit
+                                                                    .fitHeight,
+                                                                height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .height,
+                                                              ),
                                                             )),
+                                                        Expanded(
+                                                            flex: 3,
+                                                            child: Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      left:
+                                                                          10.0),
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .center,
+                                                                children: [
+                                                                  Text(
+                                                                      gameList[
+                                                                              index]
+                                                                          [
+                                                                          'GameName']!,
+                                                                      style: GoogleFonts.aBeeZee(
+                                                                          fontSize:
+                                                                              25,
+                                                                          fontWeight:
+                                                                              FontWeight.bold)),
+                                                                  Text(
+                                                                      gameList[
+                                                                              index]
+                                                                          [
+                                                                          'subtitle']!,
+                                                                      style: GoogleFonts
+                                                                          .aBeeZee(
+                                                                        fontSize:
+                                                                            16,
+                                                                      )),
+                                                                ],
+                                                              ),
+                                                            ))
                                                       ],
                                                     ),
-                                                  ))
-                                            ],
-                                          ),
-                                        )),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          )),
+                                ),
                               ),
                               const SizedBox(height: 25.0),
                               Padding(
-                                padding: const EdgeInsets.only(right: 5.0),
+                                padding: const EdgeInsets.only(
+                                    right: 5.0, left: 10.0),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -710,7 +745,10 @@ class _HomePageState extends State<HomePage> {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 35,
                                           color: Colors.black),
-                                    ),
+                                    ).animate().fadeIn(
+                                        curve: Curves.easeIn,
+                                        duration:
+                                            const Duration(milliseconds: 700)),
                                     TextButton(
                                       onPressed: () {
                                         Get.toNamed('/show-all-content');
@@ -722,157 +760,179 @@ class _HomePageState extends State<HomePage> {
                                             fontSize: 20,
                                             color: kSoftblue),
                                       ),
-                                    ),
+                                    ).animate().slideX(
+                                        begin: 3,
+                                        end: 0,
+                                        curve: Curves.bounceIn,
+                                        duration:
+                                            const Duration(milliseconds: 500)),
                                   ],
                                 ),
                               ),
                               const SizedBox(height: 15.0),
-                              GridView.count(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                childAspectRatio: 1,
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 10,
-                                crossAxisSpacing: 10,
-                                children: List.generate(
-                                    showAll ? contentKiddo.length : 4,
-                                    (index) => GestureDetector(
-                                          onLongPressStart: (_) {
-                                            setState(() {
-                                              longPressPlay = true;
-                                            });
-                                          },
-                                          onLongPressEnd: (_) {
-                                            setState(() {
-                                              longPressPlay = false;
-                                            });
-                                          },
-                                          onTap: () {
-                                            setState(() {
-                                              longPressPlay = !longPressPlay;
-                                            });
-                                          },
-                                          child: Container(
-                                            margin: const EdgeInsets.only(
-                                                bottom: 10.0),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                                color: Colors.white),
-                                            child: Column(
-                                              children: [
-                                                Expanded(
-                                                  flex: 3,
-                                                  child: Stack(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(20.0),
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      5.0),
-                                                          child: Image.asset(
-                                                            contentKiddo[index]
-                                                                ['imagePath']!,
-                                                            fit: BoxFit
-                                                                .fitHeight,
-                                                            height:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .height,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      longPressPlay
-                                                          ? Positioned(
-                                                              right: 30.0,
-                                                              bottom: 30.0,
-                                                              child:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  Get.toNamed(contentKiddo[
-                                                                          index]
-                                                                      [
-                                                                      'routePath']!);
-                                                                },
+                              AnimationLimiter(
+                                child: GridView.count(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  childAspectRatio: 1,
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 10,
+                                  crossAxisSpacing: 10,
+                                  children: List.generate(
+                                      showAll ? contentKiddo.length : 4,
+                                      (index) =>
+                                          AnimationConfiguration.staggeredGrid(
+                                            columnCount: 2,
+                                            delay: const Duration(
+                                                milliseconds: 250),
+                                            position: index,
+                                            duration: const Duration(
+                                                milliseconds: 500),
+                                            child: ScaleAnimation(
+                                              scale: 0.5,
+                                              child: FadeInAnimation(
+                                                child: GestureDetector(
+                                                  onLongPressStart: (_) {
+                                                    setState(() {
+                                                      longPressPlay = true;
+                                                    });
+                                                  },
+                                                  onLongPressEnd: (_) {
+                                                    setState(() {
+                                                      longPressPlay = false;
+                                                    });
+                                                  },
+                                                  onTap: () {
+                                                    setState(() {
+                                                      longPressPlay =
+                                                          !longPressPlay;
+                                                    });
+                                                  },
+                                                  child: Container(
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            bottom: 10.0),
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        color: Colors.white),
+                                                    child: Column(
+                                                      children: [
+                                                        Expanded(
+                                                          flex: 3,
+                                                          child: Stack(
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .all(
+                                                                        20.0),
                                                                 child:
-                                                                    Container(
-                                                                  width: 55,
-                                                                  height: 55,
-                                                                  decoration: const BoxDecoration(
-                                                                      shape: BoxShape
-                                                                          .circle,
-                                                                      color: Color(
-                                                                          0xFF1ed760),
-                                                                      border: Border.fromBorderSide(BorderSide(
-                                                                          color: Color(
-                                                                              0xFF1db954),
-                                                                          strokeAlign:
-                                                                              1,
-                                                                          width:
-                                                                              1))),
-                                                                  child:
-                                                                      const Icon(
-                                                                    Icons
-                                                                        .play_arrow,
-                                                                    color: Color(
-                                                                        0xFF191414),
+                                                                    ClipRRect(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              5.0),
+                                                                  child: Image
+                                                                      .asset(
+                                                                    contentKiddo[
+                                                                            index]
+                                                                        [
+                                                                        'imagePath']!,
+                                                                    fit: BoxFit
+                                                                        .fitHeight,
+                                                                    height: MediaQuery.of(
+                                                                            context)
+                                                                        .size
+                                                                        .height,
                                                                   ),
                                                                 ),
                                                               ),
-                                                            )
-                                                          : const SizedBox
-                                                              .shrink()
-                                                    ],
+                                                              longPressPlay
+                                                                  ? Positioned(
+                                                                      right:
+                                                                          30.0,
+                                                                      bottom:
+                                                                          30.0,
+                                                                      child:
+                                                                          GestureDetector(
+                                                                        onTap:
+                                                                            () {
+                                                                          Get.offNamed(contentKiddo[index]
+                                                                              [
+                                                                              'routePath']!);
+                                                                        },
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              55,
+                                                                          height:
+                                                                              55,
+                                                                          decoration: const BoxDecoration(
+                                                                              shape: BoxShape.circle,
+                                                                              color: Color(0xFF1ed760),
+                                                                              border: Border.fromBorderSide(BorderSide(color: Color(0xFF1db954), strokeAlign: 1, width: 1))),
+                                                                          child:
+                                                                              const Icon(
+                                                                            Icons.play_arrow,
+                                                                            color:
+                                                                                Color(0xFF191414),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  : const SizedBox
+                                                                      .shrink()
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Expanded(
+                                                            flex: 1,
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                        left:
+                                                                            20.0),
+                                                                child: Column(
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                        contentKiddo[index]
+                                                                            [
+                                                                            'name']!,
+                                                                        style: const TextStyle(
+                                                                            color: Colors
+                                                                                .black,
+                                                                            fontSize:
+                                                                                25,
+                                                                            fontWeight:
+                                                                                FontWeight.bold)),
+                                                                    Text(
+                                                                        contentKiddo[index]
+                                                                            [
+                                                                            'subtitle']!,
+                                                                        style: GoogleFonts.aBeeZee(
+                                                                            fontSize:
+                                                                                18)),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            )),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                                Expanded(
-                                                    flex: 1,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                                left: 20.0),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Text(
-                                                                contentKiddo[
-                                                                        index]
-                                                                    ['name']!,
-                                                                style: const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                    fontSize:
-                                                                        25,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold)),
-                                                            Text(
-                                                                contentKiddo[
-                                                                        index][
-                                                                    'subtitle']!,
-                                                                style: GoogleFonts
-                                                                    .aBeeZee(
-                                                                        fontSize:
-                                                                            18)),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    )),
-                                              ],
+                                              ),
                                             ),
-                                          ),
-                                        )),
+                                          )),
+                                ),
                               ),
                               _getAdWidget()
                             ],

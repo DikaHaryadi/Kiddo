@@ -10,30 +10,29 @@ class Question {
       required this.options});
 }
 
-const List sample_data = [
+const List sampleData = [
   {
     "id": 1,
-    "question":
-        "Flutter is an open-source UI software development kit created by ______",
-    "options": ['Apple', 'Google', 'Facebook', 'Microsoft'],
-    "answer_index": 1,
+    "question": "1 + 1",
+    "options": ['1', '3', '5', '2'],
+    "answer_index": 3,
   },
   {
     "id": 2,
-    "question": "When google release Flutter.",
-    "options": ['Jun 2017', 'Jun 2017', 'May 2017', 'May 2018'],
-    "answer_index": 2,
+    "question": "4 + 2",
+    "options": ['3', '6', '8', '9'],
+    "answer_index": 1,
   },
   {
     "id": 3,
-    "question": "A memory location that holds a single letter or number.",
-    "options": ['Double', 'Int', 'Char', 'Word'],
-    "answer_index": 2,
+    "question": "2 + 5",
+    "options": ['7', '8', '6', '9'],
+    "answer_index": 0,
   },
   {
     "id": 4,
-    "question": "What command do you use to output data to the screen?",
-    "options": ['Cin', 'Count>>', 'Cout', 'Output>>'],
-    "answer_index": 2,
+    "question": "1 + 4",
+    "options": ['3', '5', '6', '7'],
+    "answer_index": 1,
   },
 ];

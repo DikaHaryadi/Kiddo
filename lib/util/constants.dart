@@ -177,7 +177,7 @@ const gameList = [
     'subtitle': '(summation)',
     'imagePath': 'assets/games/memo.png',
     'enum': 'numbers',
-    'routePath': '/numbers-game'
+    'routePath': '/main-menu-quiz'
   },
   {
     'GameName': 'Memo Game',
@@ -191,13 +191,13 @@ const gameList = [
     'subtitle': '(summation)',
     'imagePath': 'assets/games/memo.png',
     'enum': 'numbers',
-    'routePath': '/numbers-game'
+    'routePath': '/main-menu-quiz'
   },
 ];
 
 // const gamesRoutes = [
 //   {'routePath': '/memo-game'},
-//   {'routePath': '/numbers-game'},
+//   {'routePath': '/main-menu-quiz'},
 // ];
 
 //NUMS LIST

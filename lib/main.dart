@@ -12,7 +12,9 @@ import 'package:textspeech/interface/content/vegetables.dart';
 import 'package:textspeech/interface/detail%20content/showall_content.dart';
 import 'package:textspeech/interface/game_ui.dart';
 import 'package:textspeech/interface/homepage.dart';
-import 'package:textspeech/interface/puzzle_image_word.dart';
+import 'package:textspeech/interface/main_menu.dart';
+import 'package:textspeech/util/quizzez_util/quiz/quiz_screen.dart';
+import 'package:textspeech/util/quizzez_util/score_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
           GetPage(name: '/', page: () => const HomePage()),
           // Games
           GetPage(name: '/memo-game', page: () => const StartUpPage()),
-          GetPage(name: '/numbers-game', page: () => WordGamePage()),
+          GetPage(name: '/main-menu-quiz', page: () => const MainMenu()),
           // Content
           GetPage(name: '/number-content', page: () => const NumberContent()),
           GetPage(name: '/letters-content', page: () => const LettersContent()),
@@ -44,6 +46,9 @@ class MyApp extends StatelessWidget {
           GetPage(
               name: '/vegetables-content',
               page: () => const VegetablesContent()),
+          // Quizez Component Route
+          GetPage(name: '/quiz-screen', page: () => QuizScreen()),
+          GetPage(name: '/score', page: () => ScoreScreen()),
           // show all content
           GetPage(
               name: '/show-all-content', page: () => const ShowAllContent()),

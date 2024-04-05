@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/util/constants.dart';
@@ -84,53 +85,81 @@ class _DetailFamilyState extends State<DetailFamily> {
                                   delegate: FamilyInfoAppBar(familyList.length),
                                   pinned: true,
                                 ),
-                                SliverList(
-                                    delegate: SliverChildBuilderDelegate(
-                                        (_, index) => ListTile(
-                                              onTap: () {
-                                                if (index != currentIndex) {
-                                                  setState(() {
-                                                    currentIndex = index;
-                                                  });
-                                                  Navigator.pushReplacement(
-                                                    context,
-                                                    _routeBuilder(context,
-                                                        familyList, index),
-                                                  );
-                                                }
-                                              },
-                                              leading: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(5.0),
-                                                child: Image.asset(
-                                                  familyList[index]
-                                                      ['imagePath']!,
-                                                  width: 50,
-                                                  height: 50,
-                                                  fit: BoxFit.cover,
+                                AnimationLimiter(
+                                  child: SliverList(
+                                      delegate: SliverChildBuilderDelegate(
+                                          (_, index) => AnimationConfiguration
+                                                  .staggeredList(
+                                                position: index,
+                                                duration: const Duration(
+                                                    milliseconds: 800),
+                                                child: SlideAnimation(
+                                                  verticalOffset: 100.0,
+                                                  child: FadeInAnimation(
+                                                    child: ListTile(
+                                                      onTap: () {
+                                                        if (index !=
+                                                            currentIndex) {
+                                                          setState(() {
+                                                            currentIndex =
+                                                                index;
+                                                          });
+                                                          Navigator
+                                                              .pushReplacement(
+                                                            context,
+                                                            _routeBuilder(
+                                                                context,
+                                                                familyList,
+                                                                index),
+                                                          );
+                                                        }
+                                                      },
+                                                      leading: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0),
+                                                        child: Image.asset(
+                                                          familyList[index]
+                                                              ['imagePath']!,
+                                                          width: 50,
+                                                          height: 50,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      title: Text(
+                                                          familyList[index]
+                                                              ['name']!,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: GoogleFonts
+                                                              .aBeeZee(
+                                                                  height: 1.3,
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Colors
+                                                                      .black)),
+                                                      subtitle: Text(
+                                                          familyList[index]
+                                                              ['subtitle']!,
+                                                          textAlign:
+                                                              TextAlign.left,
+                                                          style: GoogleFonts
+                                                              .aBeeZee(
+                                                                  height: 1.3,
+                                                                  fontSize: 16,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Colors
+                                                                      .black)),
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
-                                              title: Text(
-                                                  familyList[index]['name']!,
-                                                  textAlign: TextAlign.left,
-                                                  style: GoogleFonts.aBeeZee(
-                                                      height: 1.3,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Colors.black)),
-                                              subtitle: Text(
-                                                  familyList[index]
-                                                      ['subtitle']!,
-                                                  textAlign: TextAlign.left,
-                                                  style: GoogleFonts.aBeeZee(
-                                                      height: 1.3,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      color: Colors.black)),
-                                            ),
-                                        childCount: familyList.length))
+                                          childCount: familyList.length)),
+                                )
                               ],
                             );
                           },

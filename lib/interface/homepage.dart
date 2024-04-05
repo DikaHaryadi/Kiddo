@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   List<bool> longPressStates = List.generate(contentKiddo.length, (_) => false);
   int? selectedLongPressIndex;
 
-  final CategoryListNotifier categoryListNotifier = CategoryListNotifier();
+  CategoryListNotifier categoryListNotifier = CategoryListNotifier();
 
   List<Widget> openContent = const [
     NumberContent(),
@@ -245,6 +245,10 @@ class _HomePageState extends State<HomePage> {
                           final gameList = categoryListNotifier.categoryList;
                           final displayCount = showAll ? gameList.length : 2;
 
+                          // Inisialisasi selectedIndex dengan nilai default dari selectedTab
+                          selectedIndex ??=
+                              categoryListNotifier.selectedTab.value;
+
                           return SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
@@ -351,111 +355,113 @@ class _HomePageState extends State<HomePage> {
                         },
                       ),
                       const SizedBox(height: 10.0),
-                      GridView.count(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        crossAxisCount: 2,
-                        childAspectRatio: 1,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                        children: List.generate(
-                            contentKiddo.length,
-                            (index) => Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      color: Colors.white,
-                                      border: Border.all(
+                      AnimationLimiter(
+                        child: ValueListenableBuilder<int?>(
+                          valueListenable: categoryListNotifier.selectedTab,
+                          builder: (context, value, child) {
+                            final gameList = categoryListNotifier.categoryList;
+                            if (value != null &&
+                                value >= 0 &&
+                                value < gameList.length) {
+                              final selectedEnum = gameList[value]['enum'];
+                              final filteredContent = contentKiddo
+                                  .where((item) => item['enum'] == selectedEnum)
+                                  .toList();
+
+                              return GridView.count(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                crossAxisCount: 2,
+                                childAspectRatio: 1,
+                                crossAxisSpacing: 20,
+                                mainAxisSpacing: 20,
+                                children:
+                                    AnimationConfiguration.toStaggeredList(
+                                  duration: const Duration(milliseconds: 800),
+                                  childAnimationBuilder: (widget) =>
+                                      SlideAnimation(
+                                    verticalOffset:
+                                        MediaQuery.of(context).size.width / 2,
+                                    child: FadeInAnimation(
+                                      child: widget,
+                                    ),
+                                  ),
+                                  children: List.generate(
+                                      filteredContent.length, (index) {
+                                    final content = filteredContent[index];
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        color: Colors.white,
+                                        border: Border.all(
                                           width: 2,
-                                          color: const Color(0xFFd1d1d1))),
-                                  child: Column(
-                                    children: [
-                                      Expanded(
-                                          child: OpenContainer(
-                                        closedColor: const Color(0xFFfcf4f1),
-                                        closedElevation: 0,
-                                        transitionDuration:
-                                            const Duration(milliseconds: 500),
-                                        transitionType:
-                                            ContainerTransitionType.fade,
-                                        closedShape:
-                                            const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0)),
+                                          color: const Color(0xFFd1d1d1),
                                         ),
-                                        openBuilder: (context, action) {
-                                          return openContent[index];
-                                        },
-                                        closedBuilder: (context, action) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              Get.toNamed(contentKiddo[index]
-                                                  ['routePath']!);
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                    image: AssetImage(
-                                                        '${contentKiddo[index]['imagePath']}'),
-                                                    fit: BoxFit.fitHeight),
-                                              ),
-                                            )
-                                                .animate(
-                                                  delay: const Duration(
-                                                      milliseconds: 100),
-                                                )
-                                                .fadeIn(
-                                                    delay: Duration(
-                                                        milliseconds:
-                                                            index * 200))
-                                                .shimmer(
-                                                  duration: 200.ms,
-                                                )
-                                                .slide(
-                                                  begin: const Offset(0.5, 0),
-                                                  duration: const Duration(
-                                                    milliseconds: 700,
-                                                  ),
-                                                  curve: Curves.easeOut,
-                                                  delay: Duration(
-                                                    milliseconds: index * 100,
-                                                  ),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Expanded(
+                                            child: OpenContainer(
+                                              closedColor:
+                                                  const Color(0xFFfcf4f1),
+                                              closedElevation: 0,
+                                              transitionDuration:
+                                                  const Duration(
+                                                      milliseconds: 500),
+                                              transitionType:
+                                                  ContainerTransitionType.fade,
+                                              closedShape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(10.0),
                                                 ),
-                                          );
-                                        },
-                                      )),
-                                      const SizedBox(height: 5.0),
-                                      Text(
-                                        '${contentKiddo[index]['name']}',
-                                        style: GoogleFonts.montserratAlternates(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w400,
-                                          color: Colors.black,
-                                        ),
-                                      )
-                                          .animate(
-                                            delay: const Duration(
-                                                milliseconds: 100),
-                                          )
-                                          .fadeIn(
-                                              delay: Duration(
-                                                  milliseconds: index * 100))
-                                          .shimmer(
-                                            duration: 200.ms,
-                                          )
-                                          .slide(
-                                            begin: const Offset(0.5, 0),
-                                            duration: const Duration(
-                                              milliseconds: 200,
-                                            ),
-                                            curve: Curves.easeOut,
-                                            delay: Duration(
-                                              milliseconds: index * 100,
+                                              ),
+                                              openBuilder: (context, action) {
+                                                return openContent[index];
+                                              },
+                                              closedBuilder: (context, action) {
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    Get.toNamed(
+                                                        content['routePath']!);
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        image: AssetImage(
+                                                            content[
+                                                                'imagePath']!),
+                                                        fit: BoxFit.fitHeight,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
                                             ),
                                           ),
-                                    ],
-                                  ),
-                                )),
-                      )
+                                          const SizedBox(height: 5.0),
+                                          Text(
+                                            '${content['name']}',
+                                            style: GoogleFonts
+                                                .montserratAlternates(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              );
+                            } else {
+                              return const SizedBox.shrink();
+                            }
+                          },
+                        ),
+                      ),
                     ],
                   ),
                   Positioned(

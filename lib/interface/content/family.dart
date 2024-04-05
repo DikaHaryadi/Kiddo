@@ -60,7 +60,7 @@ class _FamilyContentState extends State<FamilyContent> {
                 icon: const Icon(Icons.arrow_back_ios)
                     .animate(delay: const Duration(milliseconds: 250))
                     .slideX(
-                        begin: 2,
+                        begin: -2,
                         end: 0,
                         duration: const Duration(milliseconds: 300)),
               ),
@@ -71,10 +71,9 @@ class _FamilyContentState extends State<FamilyContent> {
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
-              ).animate(delay: const Duration(milliseconds: 250)).slideX(
-                  begin: 1,
-                  end: 0,
-                  duration: const Duration(milliseconds: 400)),
+              )
+                  .animate(delay: const Duration(milliseconds: 250))
+                  .fadeIn(duration: const Duration(milliseconds: 800)),
               centerTitle: true,
             )
           : null,
@@ -114,108 +113,128 @@ class _FamilyContentState extends State<FamilyContent> {
                     color: Colors.black,
                   ),
                 ).animate(delay: const Duration(milliseconds: 250)).slideX(
-                    begin: 2.5,
+                    begin: -2.5,
                     end: 0,
                     duration: const Duration(milliseconds: 550)),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: familyList.length,
-                  itemBuilder: (context, index) {
-                    return SizedBox(
-                      width: double.infinity,
-                      height: 100,
-                      child: Row(
-                        children: [
-                          OpenContainer(
-                            closedElevation: 0,
-                            transitionDuration:
-                                const Duration(milliseconds: 500),
-                            transitionType: ContainerTransitionType.fade,
-                            closedShape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            closedBuilder: (context, action) {
-                              return Image.asset(
-                                familyList[index]['imagePath']!,
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.cover,
-                              );
-                            },
-                            openBuilder: (context, action) => DetailFamily(
-                              imgFamily: familyList[index]['imagePath']!,
-                              name: familyList[index]['name']!,
-                              deskripsi: familyList[index]['deskripsi']!,
-                              subtitle: familyList[index]['subtitle']!,
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              color: const Color(0xFFfcf4f1),
-                              padding: const EdgeInsets.only(left: 20.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
+                AnimationLimiter(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: familyList.length,
+                    itemBuilder: (context, index) {
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        duration: const Duration(milliseconds: 800),
+                        child: SlideAnimation(
+                          verticalOffset: 100.0,
+                          child: FadeInAnimation(
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: 100,
+                              child: Row(
                                 children: [
-                                  Text(
-                                    familyList[index]['name']!,
-                                    style: GoogleFonts.montserrat(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.orangeAccent,
+                                  OpenContainer(
+                                    closedElevation: 0,
+                                    transitionDuration:
+                                        const Duration(milliseconds: 500),
+                                    transitionType:
+                                        ContainerTransitionType.fade,
+                                    closedShape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                    ),
+                                    closedBuilder: (context, action) {
+                                      return Image.asset(
+                                        familyList[index]['imagePath']!,
+                                        width: 60,
+                                        height: 60,
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                    openBuilder: (context, action) =>
+                                        DetailFamily(
+                                      imgFamily: familyList[index]
+                                          ['imagePath']!,
+                                      name: familyList[index]['name']!,
+                                      deskripsi: familyList[index]
+                                          ['deskripsi']!,
+                                      subtitle: familyList[index]['subtitle']!,
                                     ),
                                   ),
-                                  Text(
-                                    familyList[index]['subtitle']!,
-                                    style: GoogleFonts.robotoSlab(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.orangeAccent,
+                                  Expanded(
+                                    child: Container(
+                                      color: const Color(0xFFfcf4f1),
+                                      padding:
+                                          const EdgeInsets.only(left: 20.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            familyList[index]['name']!,
+                                            style: GoogleFonts.montserrat(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.orangeAccent,
+                                            ),
+                                          ),
+                                          Text(
+                                            familyList[index]['subtitle']!,
+                                            style: GoogleFonts.robotoSlab(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.orangeAccent,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Future.delayed(
+                                          const Duration(milliseconds: 250),
+                                          () {
+                                        Get.to(
+                                          () => DetailFamily(
+                                            imgFamily: familyList[index]
+                                                ['imagePath']!,
+                                            name: familyList[index]['name']!,
+                                            deskripsi: familyList[index]
+                                                ['deskripsi']!,
+                                            subtitle: familyList[index]
+                                                ['subtitle']!,
+                                          ),
+                                        );
+                                      });
+                                    },
+                                    child: Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: kGreen,
+                                          border: Border.fromBorderSide(
+                                              BorderSide(
+                                                  color: Colors.white,
+                                                  strokeAlign: 1,
+                                                  width: 2))),
+                                      child: const Icon(
+                                        Icons.play_arrow,
+                                        color: kDark,
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Future.delayed(const Duration(milliseconds: 250),
-                                  () {
-                                Get.to(
-                                  () => DetailFamily(
-                                    imgFamily: familyList[index]['imagePath']!,
-                                    name: familyList[index]['name']!,
-                                    deskripsi: familyList[index]['deskripsi']!,
-                                    subtitle: familyList[index]['subtitle']!,
-                                  ),
-                                );
-                              });
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: kGreen,
-                                  border: Border.fromBorderSide(BorderSide(
-                                      color: Colors.white,
-                                      strokeAlign: 1,
-                                      width: 2))),
-                              child: const Icon(
-                                Icons.play_arrow,
-                                color: kDark,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ).animate(delay: const Duration(milliseconds: 250)).slideY(
-                        begin: 2.5,
-                        end: 0,
-                        duration: const Duration(milliseconds: 700));
-                  },
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

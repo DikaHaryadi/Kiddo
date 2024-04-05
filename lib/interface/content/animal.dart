@@ -71,7 +71,6 @@ class _AnimalContentState extends State<AnimalContent> {
     } else {
       path = AssetSource(animalsList[selectedIndex]['voice']!);
       player.play(path);
-      print('ini path nya : $path');
       isPlaying = true;
     }
     setState(() {});
@@ -103,7 +102,7 @@ class _AnimalContentState extends State<AnimalContent> {
                 icon: const Icon(Icons.arrow_back_ios)
                     .animate(delay: const Duration(milliseconds: 250))
                     .slideX(
-                        begin: 2,
+                        begin: -2,
                         end: 0,
                         duration: const Duration(milliseconds: 300)),
               ),
@@ -114,10 +113,9 @@ class _AnimalContentState extends State<AnimalContent> {
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
-              ).animate(delay: const Duration(milliseconds: 250)).slideX(
-                  begin: 1,
-                  end: 0,
-                  duration: const Duration(milliseconds: 400)),
+              )
+                  .animate(delay: const Duration(milliseconds: 250))
+                  .fadeIn(duration: const Duration(milliseconds: 800)),
               centerTitle: true,
             )
           : null,
@@ -157,132 +155,154 @@ class _AnimalContentState extends State<AnimalContent> {
                     color: Colors.black,
                   ),
                 ).animate(delay: const Duration(milliseconds: 250)).slideX(
-                    begin: 2.5,
+                    begin: -2.5,
                     end: 0,
                     duration: const Duration(milliseconds: 550)),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: animalsList.length,
-                  itemBuilder: (context, index) {
-                    return SizedBox(
-                      width: double.infinity,
-                      height: 100,
-                      child: Row(
-                        children: [
-                          OpenContainer(
-                            closedElevation: 0,
-                            transitionDuration:
-                                const Duration(milliseconds: 500),
-                            transitionType: ContainerTransitionType.fade,
-                            closedShape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            closedBuilder: (context, action) {
-                              return Image.asset(
-                                animalsList[index]['imagePath']!,
-                                width: 60,
-                                height: 60,
-                                fit: BoxFit.cover,
-                              );
-                            },
-                            openBuilder: (context, action) => DetailAnimals(
-                              imgAnimal: animalsList[index]['imagePath']!,
-                              name: animalsList[index]['name']!,
-                              deskripsi: animalsList[index]['deskripsi']!,
-                              audio: animalsList[index]['voice']!,
-                              kategori: animalsList[index]['kategori']!,
-                              jenisMakanan: animalsList[index]['jenis_makan']!,
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              color: const Color(0xFFfcf4f1),
-                              padding: const EdgeInsets.only(left: 20.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
+                AnimationLimiter(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: animalsList.length,
+                    itemBuilder: (context, index) {
+                      return AnimationConfiguration.staggeredList(
+                        position: index,
+                        delay: const Duration(milliseconds: 250),
+                        duration: const Duration(milliseconds: 800),
+                        child: SlideAnimation(
+                          verticalOffset: 100.0,
+                          child: FadeInAnimation(
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: 100,
+                              child: Row(
                                 children: [
-                                  Text(
-                                    animalsList[index]['name']!,
-                                    style: GoogleFonts.montserrat(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.orangeAccent,
+                                  OpenContainer(
+                                    closedElevation: 0,
+                                    transitionDuration:
+                                        const Duration(milliseconds: 500),
+                                    transitionType:
+                                        ContainerTransitionType.fade,
+                                    closedShape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10.0)),
+                                    ),
+                                    closedBuilder: (context, action) {
+                                      return Image.asset(
+                                        animalsList[index]['imagePath']!,
+                                        width: 60,
+                                        height: 60,
+                                        fit: BoxFit.cover,
+                                      );
+                                    },
+                                    openBuilder: (context, action) =>
+                                        DetailAnimals(
+                                      imgAnimal: animalsList[index]
+                                          ['imagePath']!,
+                                      name: animalsList[index]['name']!,
+                                      deskripsi: animalsList[index]
+                                          ['deskripsi']!,
+                                      audio: animalsList[index]['voice']!,
+                                      kategori: animalsList[index]['kategori']!,
+                                      jenisMakanan: animalsList[index]
+                                          ['jenis_makan']!,
                                     ),
                                   ),
-                                  RichText(
-                                    text: TextSpan(
-                                      text:
-                                          '${animalsList[index]['kategori']} | ',
-                                      style: GoogleFonts.robotoSlab(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.orangeAccent,
-                                      ),
-                                      children: <TextSpan>[
-                                        TextSpan(
-                                          text:
-                                              '${animalsList[index]['jenis_makan']}',
-                                          style: GoogleFonts.robotoSlab(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.orangeAccent,
+                                  Expanded(
+                                    child: Container(
+                                      color: const Color(0xFFfcf4f1),
+                                      padding:
+                                          const EdgeInsets.only(left: 20.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            animalsList[index]['name']!,
+                                            style: GoogleFonts.montserrat(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.orangeAccent,
+                                            ),
                                           ),
-                                        )
-                                      ],
+                                          RichText(
+                                            text: TextSpan(
+                                              text:
+                                                  '${animalsList[index]['kategori']} | ',
+                                              style: GoogleFonts.robotoSlab(
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.orangeAccent,
+                                              ),
+                                              children: <TextSpan>[
+                                                TextSpan(
+                                                  text:
+                                                      '${animalsList[index]['jenis_makan']}',
+                                                  style: GoogleFonts.robotoSlab(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.orangeAccent,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Future.delayed(
+                                          const Duration(milliseconds: 250),
+                                          () {
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  DetailAnimals(
+                                                imgAnimal: animalsList[index]
+                                                    ['imagePath']!,
+                                                name: animalsList[index]
+                                                    ['name']!,
+                                                deskripsi: animalsList[index]
+                                                    ['deskripsi']!,
+                                                audio: animalsList[index]
+                                                    ['voice']!,
+                                                kategori: animalsList[index]
+                                                    ['kategori']!,
+                                                jenisMakanan: animalsList[index]
+                                                    ['jenis_makan']!,
+                                              ),
+                                            ));
+                                      });
+                                    },
+                                    child: Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: kGreen,
+                                          border: Border.fromBorderSide(
+                                              BorderSide(
+                                                  color: Colors.white,
+                                                  strokeAlign: 1,
+                                                  width: 2))),
+                                      child: const Icon(
+                                        Icons.play_arrow,
+                                        color: kDark,
+                                      ),
+                                    ),
+                                  )
                                 ],
                               ),
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              Future.delayed(const Duration(milliseconds: 250),
-                                  () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => DetailAnimals(
-                                        imgAnimal: animalsList[index]
-                                            ['imagePath']!,
-                                        name: animalsList[index]['name']!,
-                                        deskripsi: animalsList[index]
-                                            ['deskripsi']!,
-                                        audio: animalsList[index]['voice']!,
-                                        kategori: animalsList[index]
-                                            ['kategori']!,
-                                        jenisMakanan: animalsList[index]
-                                            ['jenis_makan']!,
-                                      ),
-                                    ));
-                              });
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: kGreen,
-                                  border: Border.fromBorderSide(BorderSide(
-                                      color: Colors.white,
-                                      strokeAlign: 1,
-                                      width: 2))),
-                              child: const Icon(
-                                Icons.play_arrow,
-                                color: kDark,
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ).animate(delay: const Duration(milliseconds: 250)).slideY(
-                        begin: 2.5,
-                        end: 0,
-                        duration: const Duration(milliseconds: 700));
-                  },
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

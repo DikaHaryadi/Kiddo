@@ -47,8 +47,8 @@ class MyApp extends StatelessWidget {
               name: '/vegetables-content',
               page: () => const VegetablesContent()),
           // Quizez Component Route
-          GetPage(name: '/quiz-screen', page: () => QuizScreen()),
-          GetPage(name: '/score', page: () => ScoreScreen()),
+          GetPage(name: '/quiz-screen', page: () => const QuizScreen()),
+          GetPage(name: '/score', page: () => const ScoreScreen()),
           // show all content
           GetPage(
               name: '/show-all-content', page: () => const ShowAllContent()),

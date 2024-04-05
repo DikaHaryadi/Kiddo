@@ -47,61 +47,71 @@ const contentKiddo = [
     'imagePath': 'assets/banner_numbers.png',
     'name': 'Numbers',
     'routePath': '/number-content',
-    'subtitle': '(numerus)'
+    'subtitle': '(numerus)',
+    'enum': 'Numbers'
   },
   {
     'imagePath': 'assets/letters.png',
     'name': 'Hijaiyah',
     'routePath': '/letters-content',
-    'subtitle': '(الحروف الهجائية)'
+    'subtitle': '(الحروف الهجائية)',
+    'enum': 'Days'
   },
   {
     'imagePath': 'assets/banner_animals.png',
     'name': 'Animals',
     'routePath': '/animals-content',
-    'subtitle': '(animalia)'
+    'subtitle': '(animalia)',
+    'enum': "etc"
   },
   {
     'imagePath': 'assets/banner_family.png',
     'name': 'Family',
     'routePath': '/family-content',
-    'subtitle': '(familia)'
+    'subtitle': '(familia)',
+    'enum': "etc"
   },
   {
     'imagePath': 'assets/images/fruits.png',
     'name': 'Fruits',
     'routePath': '/fruits-content',
-    'subtitle': '(fructūs)'
+    'subtitle': '(fructūs)',
+    'enum': "etc"
   },
   {
     'imagePath': 'assets/vegetables.png',
     'name': 'Vegetables',
     'routePath': '/vegetables-content',
-    'subtitle': '(leguminae)'
+    'subtitle': '(leguminae)',
+    'enum': "etc"
   },
   {
     'imagePath': 'assets/images/fruits.png',
     'name': 'Alphabets Eng',
     'routePath': '/fruits-content',
-    'subtitle': '(alphabetum)'
+    'subtitle': '(alphabetum)',
+    'enum': 'Alphabet'
   },
   {
     'imagePath': 'assets/vegetables.png',
     'name': 'Alphabets Urdu',
     'routePath': '/vegetables-content',
-    'subtitle': '(alphabetum)'
+    'subtitle': '(alphabetum)',
+    'enum': 'Alphabet'
   },
   {
     'imagePath': 'assets/vegetables.png',
     'name': 'Months',
     'routePath': '/vegetables-content',
-    'subtitle': '(mēnsēs)'
+    'subtitle': '(mēnsēs)',
+    'enum': 'Months',
   },
   {
     'imagePath': 'assets/images/fruits.png',
     'name': 'Islamic Months',
     'routePath': '/fruits-content',
-    'subtitle': '(mēnsēs)'
+    'subtitle': '(mēnsēs)',
+    'enum': 'Months',
   },
 ];
 

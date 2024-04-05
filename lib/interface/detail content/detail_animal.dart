@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -439,134 +440,120 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                                   animalsList.length),
                                               pinned: true,
                                             ),
-                                            SliverList(
-                                                delegate:
-                                                    SliverChildBuilderDelegate(
-                                                        (_, index) => ListTile(
-                                                              onTap: () {
-                                                                if (index !=
-                                                                    currentIndex) {
-                                                                  // Set currentIndex to the clicked index
-                                                                  setState(() {
-                                                                    currentIndex =
-                                                                        index;
-                                                                    print(
-                                                                        'ini currentIndex ketika di klik : ${currentIndex.toString()}');
-                                                                  });
-                                                                  Navigator
-                                                                      .pushReplacement(
-                                                                    context,
-                                                                    _routeBuilder(
-                                                                        context,
-                                                                        animalsList,
-                                                                        index),
-                                                                  );
-                                                                }
-                                                              },
-                                                              leading:
-                                                                  ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5.0),
+                                            AnimationLimiter(
+                                              child: SliverList(
+                                                  delegate:
+                                                      SliverChildBuilderDelegate(
+                                                          (_, index) =>
+                                                              AnimationConfiguration
+                                                                  .staggeredList(
+                                                                position: index,
+                                                                duration:
+                                                                    const Duration(
+                                                                        milliseconds:
+                                                                            800),
                                                                 child:
-                                                                    Image.asset(
-                                                                  animalsList[
-                                                                          index]
-                                                                      [
-                                                                      'imagePath']!,
-                                                                  width: 50,
-                                                                  height: 50,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
-                                                              title: Text(
-                                                                  animalsList[
-                                                                          index]
-                                                                      ['name']!,
-                                                                  textAlign:
-                                                                      TextAlign
-                                                                          .left,
-                                                                  style: GoogleFonts.aBeeZee(
-                                                                      height:
-                                                                          1.3,
-                                                                      fontSize:
-                                                                          16,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      color: Colors
-                                                                          .black)),
-                                                              subtitle: Row(
-                                                                children: [
-                                                                  Text(
-                                                                      animalsList[
-                                                                              index]
-                                                                          [
-                                                                          'kategori']!,
-                                                                      textAlign:
-                                                                          TextAlign
-                                                                              .left,
-                                                                      style: GoogleFonts.aBeeZee(
+                                                                    SlideAnimation(
+                                                                  verticalOffset:
+                                                                      100.0,
+                                                                  child:
+                                                                      FadeInAnimation(
+                                                                    child:
+                                                                        ListTile(
+                                                                      onTap:
+                                                                          () {
+                                                                        if (index !=
+                                                                            currentIndex) {
+                                                                          // Set currentIndex to the clicked index
+                                                                          setState(
+                                                                              () {
+                                                                            currentIndex =
+                                                                                index;
+                                                                            print('ini currentIndex ketika di klik : ${currentIndex.toString()}');
+                                                                          });
+                                                                          Navigator
+                                                                              .pushReplacement(
+                                                                            context,
+                                                                            _routeBuilder(
+                                                                                context,
+                                                                                animalsList,
+                                                                                index),
+                                                                          );
+                                                                        }
+                                                                      },
+                                                                      leading:
+                                                                          ClipRRect(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(5.0),
+                                                                        child: Image
+                                                                            .asset(
+                                                                          animalsList[index]
+                                                                              [
+                                                                              'imagePath']!,
+                                                                          width:
+                                                                              50,
                                                                           height:
-                                                                              1.3,
-                                                                          fontSize:
-                                                                              16,
-                                                                          fontWeight: FontWeight
-                                                                              .w400,
-                                                                          color:
-                                                                              Colors.black)),
-                                                                  const SizedBox(
-                                                                      width:
-                                                                          5.0),
-                                                                  Text(
-                                                                    '|',
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    style: GoogleFonts
-                                                                        .aBeeZee(
-                                                                      height:
-                                                                          1.3,
-                                                                      fontSize:
-                                                                          16,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      color: Colors
-                                                                          .black,
+                                                                              50,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
+                                                                      ),
+                                                                      title: Text(
+                                                                          animalsList[index]
+                                                                              [
+                                                                              'name']!,
+                                                                          textAlign: TextAlign
+                                                                              .left,
+                                                                          style: GoogleFonts.aBeeZee(
+                                                                              height: 1.3,
+                                                                              fontSize: 16,
+                                                                              fontWeight: FontWeight.w400,
+                                                                              color: Colors.black)),
+                                                                      subtitle:
+                                                                          Row(
+                                                                        children: [
+                                                                          Text(
+                                                                              animalsList[index]['kategori']!,
+                                                                              textAlign: TextAlign.left,
+                                                                              style: GoogleFonts.aBeeZee(height: 1.3, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black)),
+                                                                          const SizedBox(
+                                                                              width: 5.0),
+                                                                          Text(
+                                                                            '|',
+                                                                            textAlign:
+                                                                                TextAlign.left,
+                                                                            style:
+                                                                                GoogleFonts.aBeeZee(
+                                                                              height: 1.3,
+                                                                              fontSize: 16,
+                                                                              fontWeight: FontWeight.w400,
+                                                                              color: Colors.black,
+                                                                            ),
+                                                                          ),
+                                                                          const SizedBox(
+                                                                              width: 5.0),
+                                                                          Text(
+                                                                            animalsList[index]['jenis_makan']!,
+                                                                            textAlign:
+                                                                                TextAlign.left,
+                                                                            style:
+                                                                                GoogleFonts.aBeeZee(
+                                                                              height: 1.3,
+                                                                              fontSize: 16,
+                                                                              fontWeight: FontWeight.w400,
+                                                                              color: Colors.black,
+                                                                            ),
+                                                                          )
+                                                                        ],
+                                                                      ),
                                                                     ),
                                                                   ),
-                                                                  const SizedBox(
-                                                                      width:
-                                                                          5.0),
-                                                                  Text(
-                                                                    animalsList[
-                                                                            index]
-                                                                        [
-                                                                        'jenis_makan']!,
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .left,
-                                                                    style: GoogleFonts
-                                                                        .aBeeZee(
-                                                                      height:
-                                                                          1.3,
-                                                                      fontSize:
-                                                                          16,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      color: Colors
-                                                                          .black,
-                                                                    ),
-                                                                  )
-                                                                ],
+                                                                ),
                                                               ),
-                                                            ),
-                                                        childCount:
-                                                            animalsList.length))
+                                                          childCount:
+                                                              animalsList
+                                                                  .length)),
+                                            )
                                           ],
                                         );
                                       },

@@ -235,6 +235,7 @@ class _DetailFamilyState extends State<DetailFamily> {
             ),
             Positioned(
               top: height * 0.3,
+              bottom: 10,
               left: 30,
               child: AutoSizeText(widget.name,
                       maxFontSize: 26,
@@ -251,6 +252,7 @@ class _DetailFamilyState extends State<DetailFamily> {
             ),
             Positioned(
               top: height * 0.55,
+              bottom: 10,
               right: 20,
               left: 20,
               child: InkWell(

@@ -84,6 +84,8 @@ class _AnimalContentState extends State<AnimalContent> {
     String kategori = animalsList[selectedIndex]['kategori']!;
     String jenisMakanan = animalsList[selectedIndex]['jenis_makan']!;
 
+    double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: const Color(0xFFfcf4f1),
       appBar: isMobile(context)
@@ -368,12 +370,13 @@ class _AnimalContentState extends State<AnimalContent> {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text(
+                                                          AutoSizeText(
                                                             animalsList[index]
                                                                 ['name']!,
+                                                            maxFontSize: 25,
+                                                            minFontSize: 22,
                                                             style: GoogleFonts
                                                                 .montserrat(
-                                                              fontSize: 20,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
@@ -381,11 +384,12 @@ class _AnimalContentState extends State<AnimalContent> {
                                                                   Colors.white,
                                                             ),
                                                           ),
-                                                          Text(
+                                                          AutoSizeText(
                                                             '${animalsList[index]['kategori']!}  |  ${animalsList[index]['jenis_makan']!}',
+                                                            minFontSize: 16,
+                                                            maxFontSize: 20,
                                                             style: GoogleFonts
                                                                 .robotoSlab(
-                                                              fontSize: 15,
                                                               fontWeight:
                                                                   FontWeight
                                                                       .bold,
@@ -443,21 +447,24 @@ class _AnimalContentState extends State<AnimalContent> {
                                     Padding(
                                       padding:
                                           const EdgeInsets.only(left: 35.0),
-                                      child: Text(
+                                      child: AutoSizeText(
                                         'Today',
+                                        minFontSize: 22,
+                                        maxFontSize: 25,
                                         style: GoogleFonts.montserrat(
-                                            fontSize: 20,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              Text(
+                              AutoSizeText(
                                 DateFormat('EEEE, MMM d')
                                     .format(DateTime.now()),
+                                maxFontSize: 30,
+                                minFontSize: 25,
                                 style: GoogleFonts.roboto(
-                                    fontWeight: FontWeight.bold, fontSize: 25),
+                                    fontWeight: FontWeight.bold, color: kDark),
                               ),
                               Expanded(
                                 child: Image.asset(
@@ -492,7 +499,7 @@ class _AnimalContentState extends State<AnimalContent> {
                             ),
                           ),
                           Positioned(
-                            top: 400,
+                            top: height * 0.35,
                             left: 30,
                             child: Text(name,
                                     style: GoogleFonts.aBeeZee(
@@ -507,8 +514,8 @@ class _AnimalContentState extends State<AnimalContent> {
                                     delay: const Duration(milliseconds: 100)),
                           ),
                           Positioned(
-                            top: 460,
-                            left: 30,
+                            top: height * 0.4,
+                            left: 30.0,
                             child: Text(
                               '$kategori | $jenisMakanan',
                               style: GoogleFonts.montserrat(
@@ -556,17 +563,21 @@ class _AnimalContentState extends State<AnimalContent> {
                             ),
                           ),
                           Positioned(
-                            bottom: 100,
+                            top: height * 0.6,
+                            bottom: 10,
                             right: 20,
                             left: 20,
-                            child: Text(
-                              deskripsi,
-                              textAlign: TextAlign.left,
-                              style: GoogleFonts.aBeeZee(
-                                height: 1.4,
-                                fontSize: 25,
-                                fontWeight: FontWeight.w400,
-                                color: Colors.black,
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: AutoSizeText(
+                                deskripsi,
+                                maxFontSize: 25,
+                                minFontSize: 22,
+                                textAlign: TextAlign.justify,
+                                style: GoogleFonts.aBeeZee(
+                                  fontWeight: FontWeight.w400,
+                                  color: Colors.black,
+                                ),
                               ),
                             )
                                 .animate(

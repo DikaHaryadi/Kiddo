@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -132,10 +133,11 @@ class _NumberContentState extends State<NumberContent> {
                           end: 0,
                           duration: const Duration(milliseconds: 300)),
                 ),
-                title: Text(
+                title: AutoSizeText(
                   'Bilangan Angka',
+                  maxFontSize: 20,
+                  minFontSize: 18,
                   style: GoogleFonts.montserratAlternates(
-                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),

@@ -548,14 +548,15 @@ class _HomePageState extends State<HomePage> {
                                                       width: 200,
                                                     ),
                                                     const SizedBox(height: 20),
-                                                    Text(
+                                                    AutoSizeText(
                                                       'Learning App\nFor Kids',
+                                                      maxFontSize: 20.0,
+                                                      minFontSize: 18.0,
                                                       textAlign:
                                                           TextAlign.center,
                                                       style: GoogleFonts.roboto(
                                                           fontWeight:
                                                               FontWeight.bold,
-                                                          fontSize: 20.0,
                                                           color: Colors.white),
                                                     )
                                                   ]))))
@@ -599,15 +600,16 @@ class _HomePageState extends State<HomePage> {
                                                                     30.0),
                                                         leading: Icon(
                                                             navicon[index]),
-                                                        title: Text(
+                                                        title: AutoSizeText(
                                                           navbarOpsion[index]
                                                               ['title']!,
+                                                          maxFontSize: 20.0,
+                                                          minFontSize: 18.0,
                                                           style: GoogleFonts
                                                               .aBeeZee(
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
-                                                                  fontSize: 20,
                                                                   color: Colors
                                                                       .white),
                                                         ),
@@ -640,11 +642,12 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Padding(
                                   padding: const EdgeInsets.only(left: 10.0),
-                                  child: Text(
+                                  child: AutoSizeText(
                                     'Good $_timeOfDay',
+                                    maxFontSize: 45,
+                                    minFontSize: 40,
                                     style: GoogleFonts.aBeeZee(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 45,
                                         color: Colors.black),
                                   ).animate().fadeIn(
                                       curve: Curves.easeIn,
@@ -724,26 +727,30 @@ class _HomePageState extends State<HomePage> {
                                                                     MainAxisAlignment
                                                                         .center,
                                                                 children: [
-                                                                  Text(
+                                                                  AutoSizeText(
                                                                       gameList[
                                                                               index]
                                                                           [
                                                                           'GameName']!,
+                                                                      maxFontSize:
+                                                                          25,
+                                                                      minFontSize:
+                                                                          22,
                                                                       style: GoogleFonts.aBeeZee(
-                                                                          fontSize:
-                                                                              25,
                                                                           fontWeight:
                                                                               FontWeight.bold)),
-                                                                  Text(
+                                                                  AutoSizeText(
                                                                       gameList[
                                                                               index]
                                                                           [
                                                                           'subtitle']!,
-                                                                      style: GoogleFonts
-                                                                          .aBeeZee(
-                                                                        fontSize:
-                                                                            16,
-                                                                      )),
+                                                                      maxFontSize:
+                                                                          25,
+                                                                      minFontSize:
+                                                                          20,
+                                                                      style: GoogleFonts.aBeeZee(
+                                                                          fontWeight:
+                                                                              FontWeight.w400)),
                                                                 ],
                                                               ),
                                                             ))
@@ -759,17 +766,18 @@ class _HomePageState extends State<HomePage> {
                               const SizedBox(height: 25.0),
                               Padding(
                                 padding: const EdgeInsets.only(
-                                    right: 5.0, left: 10.0),
+                                    right: 5.0, left: 15.0),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text(
+                                    AutoSizeText(
                                       'Categories',
+                                      maxFontSize: 35,
+                                      minFontSize: 30,
                                       style: GoogleFonts.aBeeZee(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 35,
                                           color: Colors.black),
                                     ).animate().fadeIn(
                                         curve: Curves.easeIn,
@@ -779,11 +787,12 @@ class _HomePageState extends State<HomePage> {
                                       onPressed: () {
                                         Get.toNamed('/show-all-content');
                                       },
-                                      child: Text(
-                                        showAll ? 'View Less' : 'Show all',
+                                      child: AutoSizeText(
+                                        'Show all',
+                                        maxFontSize: 20,
+                                        minFontSize: 18,
                                         style: GoogleFonts.aBeeZee(
                                             fontWeight: FontWeight.bold,
-                                            fontSize: 20,
                                             color: kSoftblue),
                                       ),
                                     ).animate().slideX(
@@ -959,24 +968,29 @@ class _HomePageState extends State<HomePage> {
                                                                       CrossAxisAlignment
                                                                           .start,
                                                                   children: [
-                                                                    Text(
+                                                                    AutoSizeText(
                                                                         contentKiddo[index]
                                                                             [
                                                                             'name']!,
+                                                                        maxFontSize:
+                                                                            25,
+                                                                        minFontSize:
+                                                                            22,
                                                                         style: const TextStyle(
-                                                                            color: Colors
-                                                                                .black,
-                                                                            fontSize:
-                                                                                25,
-                                                                            fontWeight:
-                                                                                FontWeight.bold)),
-                                                                    Text(
+                                                                            color:
+                                                                                Colors.black,
+                                                                            fontWeight: FontWeight.bold)),
+                                                                    AutoSizeText(
                                                                         contentKiddo[index]
                                                                             [
                                                                             'subtitle']!,
+                                                                        maxFontSize:
+                                                                            18,
+                                                                        minFontSize:
+                                                                            16,
                                                                         style: GoogleFonts.aBeeZee(
-                                                                            fontSize:
-                                                                                18)),
+                                                                            fontWeight:
+                                                                                FontWeight.w400)),
                                                                   ],
                                                                 ),
                                                               ),

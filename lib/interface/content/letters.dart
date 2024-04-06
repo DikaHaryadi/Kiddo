@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
@@ -269,11 +270,13 @@ class _LettersContentState extends State<LettersContent> {
                                         curve: Curves.easeIn),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10.0),
-                                  child: Text(
+                                  child: AutoSizeText(
                                     'Hijaiyah',
+                                    maxFontSize: 50,
+                                    minFontSize: 45,
                                     style: GoogleFonts.montserrat(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 50),
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ).animate().slideX(
                                       begin: -2,
                                       end: 0,
@@ -283,12 +286,14 @@ class _LettersContentState extends State<LettersContent> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(top: 10.0),
-                                  child: Text(
+                                  child: AutoSizeText(
                                     'Today, we will learn about the hijaiyah letters.',
+                                    maxFontSize: 40,
+                                    minFontSize: 35,
                                     style: GoogleFonts.roboto(
-                                        fontWeight: FontWeight.w400,
-                                        color: Colors.grey.shade400,
-                                        fontSize: 40),
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.grey.shade400,
+                                    ),
                                   ).animate().slideX(
                                       begin: -2,
                                       end: 0,
@@ -316,11 +321,13 @@ class _LettersContentState extends State<LettersContent> {
                                 Center(
                                     child: Padding(
                                   padding: const EdgeInsets.only(top: 30.0),
-                                  child: Text(
+                                  child: AutoSizeText(
                                     name,
+                                    maxFontSize: 40,
+                                    minFontSize: 35,
                                     style: GoogleFonts.roboto(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 40),
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ).animate().fadeIn(
                                       duration:
                                           const Duration(milliseconds: 2000),
@@ -330,10 +337,11 @@ class _LettersContentState extends State<LettersContent> {
                                 const Spacer(),
                                 Align(
                                   alignment: Alignment.center,
-                                  child: Text(
+                                  child: AutoSizeText(
                                     'click on the image to reveal the sound',
+                                    maxFontSize: 25,
+                                    minFontSize: 22,
                                     style: GoogleFonts.roboto(
-                                        fontSize: 25,
                                         fontWeight: FontWeight.bold),
                                   ).animate().slideY(
                                       begin: 1,

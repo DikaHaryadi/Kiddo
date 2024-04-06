@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -77,10 +78,11 @@ class CardContent extends StatelessWidget {
                 ),
                 const SizedBox(width: 10.0),
                 Expanded(
-                  child: Text(
+                  child: AutoSizeText(
                     name,
+                    maxFontSize: 20,
+                    minFontSize: 18,
                     style: GoogleFonts.montserrat(
-                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),

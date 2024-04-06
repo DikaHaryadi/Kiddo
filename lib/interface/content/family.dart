@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -64,10 +65,11 @@ class _FamilyContentState extends State<FamilyContent> {
                         end: 0,
                         duration: const Duration(milliseconds: 300)),
               ),
-              title: Text(
+              title: AutoSizeText(
                 'Family',
+                maxFontSize: 20,
+                minFontSize: 18,
                 style: GoogleFonts.montserratAlternates(
-                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -105,10 +107,11 @@ class _FamilyContentState extends State<FamilyContent> {
                   ),
                 ),
                 const SizedBox(height: 25.0),
-                Text(
+                AutoSizeText(
                   'Categories',
+                  maxFontSize: 20,
+                  minFontSize: 18,
                   style: GoogleFonts.aBeeZee(
-                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
@@ -172,18 +175,20 @@ class _FamilyContentState extends State<FamilyContent> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
+                                          AutoSizeText(
                                             familyList[index]['name']!,
+                                            maxFontSize: 14,
+                                            minFontSize: 12,
                                             style: GoogleFonts.montserrat(
-                                              fontSize: 14,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.orangeAccent,
                                             ),
                                           ),
-                                          Text(
+                                          AutoSizeText(
                                             familyList[index]['subtitle']!,
-                                            style: GoogleFonts.robotoSlab(
-                                              fontSize: 14,
+                                            maxFontSize: 14,
+                                            minFontSize: 12,
+                                            style: GoogleFonts.montserrat(
                                               fontWeight: FontWeight.bold,
                                               color: Colors.orangeAccent,
                                             ),

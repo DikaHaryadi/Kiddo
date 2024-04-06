@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -52,6 +53,7 @@ class _DetailFamilyState extends State<DetailFamily> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -126,29 +128,29 @@ class _DetailFamilyState extends State<DetailFamily> {
                                                           fit: BoxFit.cover,
                                                         ),
                                                       ),
-                                                      title: Text(
+                                                      title: AutoSizeText(
                                                           familyList[index]
                                                               ['name']!,
+                                                          maxFontSize: 16,
+                                                          minFontSize: 14,
                                                           textAlign:
                                                               TextAlign.left,
                                                           style: GoogleFonts
                                                               .aBeeZee(
-                                                                  height: 1.3,
-                                                                  fontSize: 16,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w400,
                                                                   color: Colors
                                                                       .black)),
-                                                      subtitle: Text(
+                                                      subtitle: AutoSizeText(
                                                           familyList[index]
                                                               ['subtitle']!,
+                                                          maxFontSize: 16,
+                                                          minFontSize: 14,
                                                           textAlign:
                                                               TextAlign.left,
                                                           style: GoogleFonts
                                                               .aBeeZee(
-                                                                  height: 1.3,
-                                                                  fontSize: 16,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w400,
@@ -189,8 +191,7 @@ class _DetailFamilyState extends State<DetailFamily> {
               ),
             ),
             Positioned(
-              top: 270,
-              bottom: 150,
+              top: height * 0.35,
               left: 30,
               child: Text(
                 widget.subtitle,
@@ -233,14 +234,13 @@ class _DetailFamilyState extends State<DetailFamily> {
               ),
             ),
             Positioned(
-              top: 240,
-              bottom: 150,
+              top: height * 0.3,
               left: 30,
-              child: Text(widget.name,
+              child: AutoSizeText(widget.name,
+                      maxFontSize: 26,
+                      minFontSize: 22,
                       style: GoogleFonts.aBeeZee(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white))
+                          fontWeight: FontWeight.bold, color: Colors.white))
                   .animate(delay: const Duration(milliseconds: 250))
                   .slideX(
                       begin: -2,
@@ -250,22 +250,24 @@ class _DetailFamilyState extends State<DetailFamily> {
                       delay: const Duration(milliseconds: 100)),
             ),
             Positioned(
-              top: 480,
-              bottom: 100,
+              top: height * 0.55,
               right: 20,
               left: 20,
               child: InkWell(
                 onTap: () {
                   textToSpeech(widget.deskripsi);
                 },
-                child: Text(
-                  widget.deskripsi,
-                  textAlign: TextAlign.left,
-                  style: GoogleFonts.aBeeZee(
-                    height: 1.4,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: AutoSizeText(
+                    widget.deskripsi,
+                    maxFontSize: 18,
+                    minFontSize: 16,
+                    textAlign: TextAlign.justify,
+                    style: GoogleFonts.aBeeZee(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ).animate(delay: const Duration(milliseconds: 250)).slideY(

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -161,10 +162,11 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
-                    child: Text(
+                    child: AutoSizeText(
                       widget.name,
+                      maxFontSize: 22,
+                      minFontSize: 20,
                       style: GoogleFonts.aBeeZee(
-                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                       ),
@@ -183,12 +185,13 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: Row(
                       children: [
-                        Text(
+                        AutoSizeText(
                           widget.kategori,
+                          maxFontSize: 16,
+                          minFontSize: 14,
                           textAlign: TextAlign.left,
                           style: GoogleFonts.aBeeZee(
                             height: 1.3,
-                            fontSize: 16,
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
                           ),
@@ -205,12 +208,13 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                   milliseconds: 100,
                                 )),
                         const SizedBox(width: 5.0),
-                        Text(
-                          '|',
+                        AutoSizeText(
+                          ' | ',
+                          maxFontSize: 16,
+                          minFontSize: 14,
                           textAlign: TextAlign.left,
                           style: GoogleFonts.aBeeZee(
                             height: 1.3,
-                            fontSize: 16,
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
                           ),
@@ -227,12 +231,13 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                   milliseconds: 100,
                                 )),
                         const SizedBox(width: 5.0),
-                        Text(
+                        AutoSizeText(
                           widget.jenisMakanan,
+                          maxFontSize: 16,
+                          minFontSize: 14,
                           textAlign: TextAlign.left,
                           style: GoogleFonts.aBeeZee(
                             height: 1.3,
-                            fontSize: 16,
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
                           ),
@@ -252,37 +257,39 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                     ),
                   ),
                   Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        if (isPlaying == true) {
-                          flutterTts.stop();
-                        } else {
-                          textToSpeech(widget.deskripsi);
-                        }
-                      },
-                      child: Text(
-                        widget.deskripsi,
-                        textAlign: TextAlign.left,
-                        style: GoogleFonts.aBeeZee(
-                          height: 1.3,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.white,
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: InkWell(
+                        onTap: () {
+                          if (isPlaying == true) {
+                            flutterTts.stop();
+                          } else {
+                            textToSpeech(widget.deskripsi);
+                          }
+                        },
+                        child: AutoSizeText(
+                          widget.deskripsi,
+                          maxFontSize: 16,
+                          minFontSize: 12,
+                          textAlign: TextAlign.left,
+                          style: GoogleFonts.aBeeZee(
+                            height: 1.3,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
                         ),
-                      )
-                          .animate(delay: const Duration(milliseconds: 250))
-                          .slideX(
-                              begin: -2,
-                              end: 0,
-                              duration: const Duration(
-                                milliseconds: 900,
-                              ),
-                              curve: Curves.easeOut,
-                              delay: const Duration(
-                                milliseconds: 100,
-                              )),
+                      ),
                     ),
-                  ),
+                  ).animate(delay: const Duration(milliseconds: 250)).slideX(
+                      begin: -2,
+                      end: 0,
+                      duration: const Duration(
+                        milliseconds: 900,
+                      ),
+                      curve: Curves.easeOut,
+                      delay: const Duration(
+                        milliseconds: 100,
+                      )),
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
                         thumbShape:

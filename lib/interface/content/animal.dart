@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -106,10 +107,11 @@ class _AnimalContentState extends State<AnimalContent> {
                         end: 0,
                         duration: const Duration(milliseconds: 300)),
               ),
-              title: Text(
+              title: AutoSizeText(
                 'Animals',
+                maxFontSize: 20,
+                minFontSize: 18,
                 style: GoogleFonts.montserratAlternates(
-                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
                 ),
@@ -147,10 +149,11 @@ class _AnimalContentState extends State<AnimalContent> {
                   ),
                 ),
                 const SizedBox(height: 25.0),
-                Text(
-                  'Text',
+                AutoSizeText(
+                  'Categories',
+                  maxFontSize: 20,
+                  minFontSize: 18,
                   style: GoogleFonts.aBeeZee(
-                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
@@ -218,36 +221,26 @@ class _AnimalContentState extends State<AnimalContent> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text(
+                                          AutoSizeText(
                                             animalsList[index]['name']!,
+                                            maxFontSize: 14,
+                                            minFontSize: 12,
                                             style: GoogleFonts.montserrat(
-                                              fontSize: 14,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.orangeAccent,
                                             ),
                                           ),
-                                          RichText(
-                                            text: TextSpan(
-                                              text:
-                                                  '${animalsList[index]['kategori']} | ',
-                                              style: GoogleFonts.robotoSlab(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.orangeAccent,
-                                              ),
-                                              children: <TextSpan>[
-                                                TextSpan(
-                                                  text:
-                                                      '${animalsList[index]['jenis_makan']}',
-                                                  style: GoogleFonts.robotoSlab(
-                                                    fontSize: 14,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: Colors.orangeAccent,
-                                                  ),
-                                                )
-                                              ],
+                                          AutoSizeText.rich(
+                                            maxFontSize: 14,
+                                            minFontSize: 12,
+                                            TextSpan(
+                                                text:
+                                                    '${animalsList[index]['kategori']} | ${animalsList[index]['jenis_makan']}'),
+                                            style: GoogleFonts.robotoSlab(
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.orangeAccent,
                                             ),
-                                          ),
+                                          )
                                         ],
                                       ),
                                     ),

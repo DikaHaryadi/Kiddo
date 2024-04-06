@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:unicons/unicons.dart';
@@ -10,7 +11,8 @@ class AnimalInfoAppBar extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return Column(
+    return Stack(
+      fit: StackFit.loose,
       children: [
         Align(
           alignment: Alignment.topCenter,
@@ -36,26 +38,15 @@ class AnimalInfoAppBar extends SliverPersistentHeaderDelegate {
                   size: 25,
                 ),
                 const SizedBox(width: 5.0),
-                RichText(
-                  text: TextSpan(
-                    text: 'Single Replay |',
-                    style: GoogleFonts.montserrat(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black,
-                    ),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: ' $count categories',
-                        style: GoogleFonts.robotoSlab(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey,
-                        ),
-                      )
-                    ],
+                AutoSizeText.rich(
+                  maxFontSize: 14,
+                  minFontSize: 12,
+                  TextSpan(text: 'Single Replay | $count categories'),
+                  style: GoogleFonts.robotoSlab(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey,
                   ),
-                ),
+                )
               ],
             ),
           ),

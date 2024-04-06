@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -143,10 +144,11 @@ class _HomePageState extends State<HomePage> {
                         vertical: 10.0, horizontal: 15.0),
                     shrinkWrap: true,
                     children: [
-                      Text(
+                      AutoSizeText(
                         'Good $_timeOfDay',
+                        maxFontSize: 24,
+                        minFontSize: 20,
                         style: GoogleFonts.aBeeZee(
-                          fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         ),
@@ -207,25 +209,38 @@ class _HomePageState extends State<HomePage> {
                                       Expanded(
                                         flex: 3,
                                         child: Padding(
-                                          padding:
-                                              const EdgeInsets.only(left: 5.0),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5.0),
                                           child: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             children: [
-                                              Text(game['GameName']!,
-                                                  style: GoogleFonts.aBeeZee(
-                                                      color: kDark,
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold)),
-                                              Text(game['subtitle']!,
-                                                  style: GoogleFonts.aBeeZee(
-                                                    color: kDark,
-                                                    fontSize: 14,
-                                                  ))
+                                              FittedBox(
+                                                fit: BoxFit.contain,
+                                                child: Text(game['GameName']!,
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: GoogleFonts.aBeeZee(
+                                                        color: kDark,
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold)),
+                                              ),
+                                              FittedBox(
+                                                fit: BoxFit.contain,
+                                                child: Text(game['subtitle']!,
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: GoogleFonts.aBeeZee(
+                                                        color: kDark,
+                                                        fontSize: 14,
+                                                        fontWeight:
+                                                            FontWeight.w400)),
+                                              )
                                             ],
                                           ),
                                         ),
@@ -286,10 +301,12 @@ class _HomePageState extends State<HomePage> {
                                         maxRadius: 15,
                                         backgroundColor: Colors.pink,
                                       ),
-                                      label: Text(
+                                      label: AutoSizeText(
                                         game['enum']!,
+                                        maxFontSize: 14,
+                                        minFontSize: 12,
                                         style: GoogleFonts.aBeeZee(
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: FontWeight.w600,
                                             color: kDark),
                                       ),
                                     ),
@@ -375,86 +392,91 @@ class _HomePageState extends State<HomePage> {
                                 childAspectRatio: 1,
                                 crossAxisSpacing: 20,
                                 mainAxisSpacing: 20,
-                                children:
-                                    AnimationConfiguration.toStaggeredList(
-                                  duration: const Duration(milliseconds: 800),
-                                  childAnimationBuilder: (widget) =>
-                                      SlideAnimation(
-                                    verticalOffset:
-                                        MediaQuery.of(context).size.width / 2,
-                                    child: FadeInAnimation(
-                                      child: widget,
-                                    ),
-                                  ),
-                                  children: List.generate(
-                                      filteredContent.length, (index) {
-                                    final content = filteredContent[index];
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        color: Colors.white,
-                                        border: Border.all(
-                                          width: 2,
-                                          color: const Color(0xFFd1d1d1),
-                                        ),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Expanded(
-                                            child: OpenContainer(
-                                              closedColor:
-                                                  const Color(0xFFfcf4f1),
-                                              closedElevation: 0,
-                                              transitionDuration:
-                                                  const Duration(
-                                                      milliseconds: 500),
-                                              transitionType:
-                                                  ContainerTransitionType.fade,
-                                              closedShape:
-                                                  const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(10.0),
-                                                ),
-                                              ),
-                                              openBuilder: (context, action) {
-                                                return openContent[index];
-                                              },
-                                              closedBuilder: (context, action) {
-                                                return GestureDetector(
-                                                  onTap: () {
-                                                    Get.toNamed(
-                                                        content['routePath']!);
-                                                  },
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      image: DecorationImage(
-                                                        image: AssetImage(
-                                                            content[
-                                                                'imagePath']!),
-                                                        fit: BoxFit.fitHeight,
-                                                      ),
+                                children: List.generate(filteredContent.length,
+                                    (index) {
+                                  final content = filteredContent[index];
+                                  return AnimationConfiguration.staggeredGrid(
+                                    columnCount: 2,
+                                    position: index,
+                                    duration: const Duration(milliseconds: 800),
+                                    child: ScaleAnimation(
+                                      scale: 0.5,
+                                      child: FadeInAnimation(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                            color: Colors.white,
+                                            border: Border.all(
+                                              width: 2,
+                                              color: const Color(0xFFd1d1d1),
+                                            ),
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                child: OpenContainer(
+                                                  closedColor:
+                                                      const Color(0xFFfcf4f1),
+                                                  closedElevation: 0,
+                                                  transitionDuration:
+                                                      const Duration(
+                                                          milliseconds: 500),
+                                                  transitionType:
+                                                      ContainerTransitionType
+                                                          .fade,
+                                                  closedShape:
+                                                      const RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                      Radius.circular(10.0),
                                                     ),
                                                   ),
-                                                );
-                                              },
-                                            ),
+                                                  openBuilder:
+                                                      (context, action) {
+                                                    return openContent[index];
+                                                  },
+                                                  closedBuilder:
+                                                      (context, action) {
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        Get.toNamed(content[
+                                                            'routePath']!);
+                                                      },
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          image:
+                                                              DecorationImage(
+                                                            image: AssetImage(
+                                                                content[
+                                                                    'imagePath']!),
+                                                            fit: BoxFit
+                                                                .fitHeight,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                              AutoSizeText(
+                                                '${content['name']}',
+                                                maxFontSize: 16,
+                                                minFontSize: 14,
+                                                style: GoogleFonts
+                                                    .montserratAlternates(
+                                                  fontWeight: FontWeight.w400,
+                                                  color: Colors.black,
+                                                ),
+                                              )
+                                            ],
                                           ),
-                                          const SizedBox(height: 5.0),
-                                          Text(
-                                            '${content['name']}',
-                                            style: GoogleFonts
-                                                .montserratAlternates(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
-                                    );
-                                  }),
-                                ),
+                                    ),
+                                  );
+                                }),
                               );
                             } else {
                               return const SizedBox.shrink();

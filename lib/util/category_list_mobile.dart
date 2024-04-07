@@ -3,11 +3,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CategoryListNotifier with ChangeNotifier {
   final List<Map<String, String>> categoryList = [
+    {'enum': "All"},
     {'enum': 'Alphabet'},
     {'enum': 'Months'},
     {'enum': 'Numbers'},
     {'enum': 'Days'},
-    {'enum': "etc"},
   ];
 
   late SharedPreferences _prefs;

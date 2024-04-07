@@ -8,7 +8,7 @@ import 'package:textspeech/util/quizzez_util/question_controller.dart';
 import 'package:unicons/unicons.dart';
 
 class ScoreScreen extends StatefulWidget {
-  const ScoreScreen({super.key});
+  const ScoreScreen({Key? key});
 
   @override
   State<ScoreScreen> createState() => _ScoreScreenState();
@@ -22,25 +22,26 @@ class _ScoreScreenState extends State<ScoreScreen> {
 
   void _createRewardedAd() {
     RewardedAd.load(
-        adUnitId: Platform.isAndroid
-            ? 'ca-app-pub-3940256099942544/5224354917'
-            : 'ca-app-pub-3940256099942544/1712485313',
-        request: request,
-        rewardedAdLoadCallback: RewardedAdLoadCallback(
-          onAdLoaded: (RewardedAd ad) {
-            print('$ad loaded.');
-            _rewardedAd = ad;
-            _numRewardedLoadAttempts = 0;
-          },
-          onAdFailedToLoad: (LoadAdError error) {
-            print('RewardedAd failed to load: $error');
-            _rewardedAd = null;
-            _numRewardedLoadAttempts += 1;
-            if (_numRewardedLoadAttempts < maxFailedLoadAttempts) {
-              _createRewardedAd();
-            }
-          },
-        ));
+      adUnitId: Platform.isAndroid
+          ? 'ca-app-pub-3940256099942544/5224354917'
+          : 'ca-app-pub-3940256099942544/1712485313',
+      request: AdRequest(),
+      rewardedAdLoadCallback: RewardedAdLoadCallback(
+        onAdLoaded: (RewardedAd ad) {
+          print('$ad loaded.');
+          _rewardedAd = ad;
+          _numRewardedLoadAttempts = 0;
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          print('RewardedAd failed to load: $error');
+          _rewardedAd = null;
+          _numRewardedLoadAttempts += 1;
+          if (_numRewardedLoadAttempts < maxFailedLoadAttempts) {
+            _createRewardedAd();
+          }
+        },
+      ),
+    );
   }
 
   void _showRewardedAd() {
@@ -66,9 +67,10 @@ class _ScoreScreenState extends State<ScoreScreen> {
 
     _rewardedAd!.setImmersiveMode(true);
     _rewardedAd!.show(
-        onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
-      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
-    });
+      onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+        print('$ad with reward ${reward.amount}, ${reward.type}');
+      },
+    );
     _rewardedAd = null;
   }
 
@@ -94,15 +96,15 @@ class _ScoreScreenState extends State<ScoreScreen> {
                   Theme.of(context).textTheme.headline3!.copyWith(color: kDark),
             ),
             const SizedBox(height: 20.0),
+            // Menggunakan currentQuestionSet untuk mengakses jumlah pertanyaan yang benar dan total pertanyaan yang sesuai dengan kumpulan pertanyaan saat ini
             Text(
-              "${qnController.numOfCorrectAns * 10}/${qnController.questions.length * 10}",
+              "${qnController.numOfCorrectAns * 10}/${qnController.currentQuestionSet.length * 10}",
               style:
                   Theme.of(context).textTheme.headline4!.copyWith(color: kDark),
             ),
             const SizedBox(height: 40.0),
             ElevatedButton.icon(
               onPressed: () {
-                // Get.offAllNamed('/');
                 _showRewardedAd();
               },
               icon: const Icon(UniconsLine.home),

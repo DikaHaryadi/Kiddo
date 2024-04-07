@@ -153,7 +153,7 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.black,
                         ),
                       ).animate().slideY(
-                          begin: -2,
+                          begin: -4,
                           end: 0,
                           curve: Curves.bounceIn,
                           duration: const Duration(milliseconds: 400)),
@@ -381,9 +381,16 @@ class _HomePageState extends State<HomePage> {
                                 value >= 0 &&
                                 value < gameList.length) {
                               final selectedEnum = gameList[value]['enum'];
-                              final filteredContent = contentKiddo
-                                  .where((item) => item['enum'] == selectedEnum)
-                                  .toList();
+                              List<Map<String, String>> filteredContent;
+
+                              if (selectedEnum == 'All') {
+                                filteredContent = contentKiddo;
+                              } else {
+                                filteredContent = contentKiddo
+                                    .where(
+                                        (item) => item['enum'] == selectedEnum)
+                                    .toList();
+                              }
 
                               return GridView.count(
                                 shrinkWrap: true,

@@ -62,28 +62,28 @@ const contentKiddo = [
     'name': 'Animals',
     'routePath': '/animals-content',
     'subtitle': '(animalia)',
-    'enum': "etc"
+    'enum': "All"
   },
   {
     'imagePath': 'assets/banner_family.png',
     'name': 'Family',
     'routePath': '/family-content',
     'subtitle': '(familia)',
-    'enum': "etc"
+    'enum': "All"
   },
   {
     'imagePath': 'assets/images/fruits.png',
     'name': 'Fruits',
     'routePath': '/fruits-content',
     'subtitle': '(fructūs)',
-    'enum': "etc"
+    'enum': "All"
   },
   {
     'imagePath': 'assets/vegetables.png',
     'name': 'Vegetables',
     'routePath': '/vegetables-content',
     'subtitle': '(leguminae)',
-    'enum': "etc"
+    'enum': "All"
   },
   {
     'imagePath': 'assets/images/fruits.png',

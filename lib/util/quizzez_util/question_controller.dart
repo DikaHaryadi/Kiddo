@@ -2,30 +2,67 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:textspeech/util/quizzez_util/question_model.dart';
 
-// We use get package for our state management
-
 class QuestionController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  // Lets animated our progress bar
-
   late AnimationController _animationController;
   late Animation _animation;
-  // so that we can access our animation outside
   Animation get animation => _animation;
 
   late PageController _pageController;
   PageController get pageController => _pageController;
 
-  final List<Question> _questions = sampleData
-      .map(
-        (question) => Question(
-            id: question['id'],
-            question: question['question'],
-            options: question['options'],
-            answer: question['answer_index']),
-      )
-      .toList();
-  List<Question> get questions => _questions;
+  late int _totalQuestions;
+
+  int _currentQuestionNumber = 0;
+  RxInt get currentQuestionNumber => _currentQuestionNumber.obs;
+  List<Question> get currentQuestionSet =>
+      _questionSets[_questionNumber.value - 1];
+
+  final List<List<Question>> _questionSets = [
+    sampleData1
+        .map((question) => Question(
+              id: question['id'] as int,
+              question: question['question'] as String,
+              options: (question['options'] as List).cast<String>(),
+              answer: question['answer_index'] as int,
+            ))
+        .toList(),
+    sampleData2
+        .map((question) => Question(
+              id: question['id'] as int,
+              question: question['question'] as String,
+              options: (question['options'] as List).cast<String>(),
+              answer: question['answer_index'] as int,
+            ))
+        .toList(),
+    sampleData3
+        .map((question) => Question(
+              id: question['id'] as int,
+              question: question['question'] as String,
+              options: (question['options'] as List).cast<String>(),
+              answer: question['answer_index'] as int,
+            ))
+        .toList(),
+    sampleData4
+        .map((question) => Question(
+              id: question['id'] as int,
+              question: question['question'] as String,
+              options: (question['options'] as List).cast<String>(),
+              answer: question['answer_index'] as int,
+            ))
+        .toList(),
+    sampleData5
+        .map((question) => Question(
+              id: question['id'] as int,
+              question: question['question'] as String,
+              options: (question['options'] as List).cast<String>(),
+              answer: question['answer_index'] as int,
+            ))
+        .toList(),
+    // Tambahkan sampleData2, sampleData3, dst. sesuai kebutuhan
+  ];
+
+  List<List<Question>> get questionSets => _questionSets;
 
   bool _isAnswered = false;
   bool get isAnswered => _isAnswered;
@@ -36,34 +73,30 @@ class QuestionController extends GetxController
   late int _selectedAns;
   int get selectedAns => _selectedAns;
 
-  // for more about obs please check documentation
   final RxInt _questionNumber = 1.obs;
   RxInt get questionNumber => _questionNumber;
 
   int _numOfCorrectAns = 0;
   int get numOfCorrectAns => _numOfCorrectAns;
 
-  // called immediately after the widget is allocated memory
+  void init(int totalQuestions) {
+    _totalQuestions = totalQuestions;
+  }
+
   @override
   void onInit() {
-    // Our animation duration is 60 s
-    // so our plan is to fill the progress bar within 60s
     _animationController =
         AnimationController(duration: const Duration(seconds: 60), vsync: this);
     _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
       ..addListener(() {
-        // update like setState
         update();
       });
 
-    // start our animation
-    // Once 60s is completed go to the next qn
     _animationController.forward().whenComplete(nextQuestion);
     _pageController = PageController();
     super.onInit();
   }
 
-  // // called just before the Controller is deleted from memory
   @override
   void onClose() {
     super.onClose();
@@ -72,42 +105,46 @@ class QuestionController extends GetxController
   }
 
   void checkAns(Question question, int selectedIndex) {
-    // because once user press any option then it will run
     _isAnswered = true;
     _correctAns = question.answer;
     _selectedAns = selectedIndex;
 
     if (_correctAns == _selectedAns) _numOfCorrectAns++;
 
-    // It will stop the counter
     _animationController.stop();
     update();
 
-    // Once user select an ans after 3s it will go to the next qn
     Future.delayed(const Duration(seconds: 3), () {
       nextQuestion();
     });
   }
 
   void nextQuestion() {
-    if (_questionNumber.value != _questions.length) {
+    int nextQuestionNumber = _questionNumber.value + 1;
+    print('asdad1');
+    if (nextQuestionNumber <= _totalQuestions) {
+      print('asdad2');
       _isAnswered = false;
+      print('asdad3');
+      updateTheQnNum(nextQuestionNumber);
+      print('asdad4');
       _pageController.nextPage(
           duration: const Duration(milliseconds: 250), curve: Curves.ease);
-
-      // Reset the counter
+      print('asdad5');
       _animationController.reset();
-
-      // Then start it again
-      // Once timer is finish go to the next qn
-      _animationController.forward().whenComplete(nextQuestion);
+      print('asdad6');
+      _animationController.forward().catchError((error) {
+        print('Error in animation forward: $error');
+      });
     } else {
-      // Get package provide us simple way to naviigate another page
+      print('asdad10');
       Get.toNamed('/score');
+      print('asdad11');
     }
   }
 
-  void updateTheQnNum(int index) {
-    _questionNumber.value = index + 1;
+  void updateTheQnNum(int questionNumber) {
+    _currentQuestionNumber = questionNumber;
+    update();
   }
 }

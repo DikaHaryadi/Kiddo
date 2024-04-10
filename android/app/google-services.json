@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "647339687851",
+    "project_id": "kiddielearn-c19c1",
+    "storage_bucket": "kiddielearn-c19c1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647339687851:android:6b899a2a8f3988c8551cee",
+        "android_client_info": {
+          "package_name": "com.example.textspeech"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKgs8jk2ybRROh0EZhvyY-De1gwqF2u3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,125 @@
+{
+    "id": "ppr001",
+    "title": "Reduction",
+    "image_url": "",
+    "Description": "Basic Reduction Multiple Choice Questions (MCQ) to practice basic Reduction quiz answers",
+    "time_seconds": 900,
+    
+    "questions": [
+        {
+            "id": "ppr001q001",
+            "question": "How much is 10 minus 8?",
+            "answers": [
+                {
+                    "identifier": "A",
+                    "Answer": "2"
+                },
+                {
+                    "identifier": "B",
+                    "Answer": "18"
+                },
+                {
+                    "identifier": "C",
+                    "Answer": "4"
+                },
+                {
+                    "identifier": "D",
+                    "Answer": "6"
+                }
+            ],
+            "correct_answer": "A"
+        },
+        {
+            "id": "ppr001q002",
+            "question": "Which one of the following has maximum energy?",
+            "answers": [
+                {
+                    "identifier": "A",
+                    "Answer": "Yellow light"
+                },
+                {
+                    "identifier": "B",
+                    "Answer": "Green light"
+                },
+                {
+                    "identifier": "C",
+                    "Answer": "Violet light"
+                },
+                {
+                    "identifier": "D",
+                    "Answer": "Red light"
+                }
+            ],
+            "correct_answer": "C"
+        },
+        {
+            "id": "ppr001q003",
+            "question": "Which law is involved in the act of cleaning a carpet by beating it with a stick?",
+            "answers": [
+                {
+                    "identifier": "A",
+                    "Answer": "First law of motion"
+                },
+                {
+                    "identifier": "B",
+                    "Answer": "Second law of motion"
+                },
+                {
+                    "identifier": "C",
+                    "Answer": "Law of conservation of mass"
+                },
+                {
+                    "identifier": "D",
+                    "Answer": "Law of conservation of energy"
+                }
+            ],
+            "correct_answer": "C"
+        },
+        {
+            "id": "ppr001q004",
+            "question": "which of the following is a unit of eletric current:",
+            "answers": [
+                {
+                    "identifier": "A",
+                    "Answer": "ohm"
+                },
+                {
+                    "identifier": "B",
+                    "Answer": "volt"
+                },
+                {
+                    "identifier": "C",
+                    "Answer": "watt"
+                },
+                {
+                    "identifier": "D",
+                    "Answer": "amp"
+                }
+            ],
+            "correct_answer": "D"
+        },
+        {
+            "id": "ppr001q005",
+            "question": "When an object is in motion, it's ................... must change.?",
+            "answers": [
+                {
+                    "identifier": "A",
+                    "Answer": "Shapen"
+                },
+                {
+                    "identifier": "B",
+                    "Answer": "Size"
+                },
+                {
+                    "identifier": "C",
+                    "Answer": "Acceleration"
+                },
+                {
+                    "identifier": "D",
+                    "Answer": "Position"
+                }
+            ],
+            "correct_answer": "D"
+        }
+    ]
+}

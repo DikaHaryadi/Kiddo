@@ -1,0 +1,124 @@
+{
+  "id": "ppr002",
+  "title": "Chemistry",
+  "image_url": "",
+  "Description": "Basic Maths Multiple Choice Questions (MCQ) to practice basic Maths quiz answers",
+  "time_seconds": 900,
+  "questions": [
+    {
+      "id": "ppr002q001",
+      "question": "Andi has 5 apples, then Sandi ate 3 apples, how many apples do andi have now?",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "2"
+        },
+        {
+          "identifier": "B",
+          "Answer": "8"
+        },
+        {
+          "identifier": "C",
+          "Answer": "Still 5"
+        },
+        {
+          "identifier": "D",
+          "Answer": "3"
+        }
+      ],
+      "correct_answer": "A"
+    },
+    {
+      "id": "ppr002q002",
+      "question": "Dad is repairing the chicken coop, and he has 4 nails, then he buys 3 more nails. how many nails does he have in total?",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "1 Nails"
+        },
+        {
+          "identifier": "B",
+          "Answer": "8 Nails"
+        },
+        {
+          "identifier": "C",
+          "Answer": "7 Nails"
+        },
+        {
+          "identifier": "D",
+          "Answer": "10 Nails"
+        }
+      ],
+      "correct_answer": "C"
+    },
+    {
+      "id": "ppr002q003",
+      "question": "Mom needs eggs for cooking, now she doesn't have any eggs. then she buys 5 eggs from the store. how many eggs does mom have now?",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "She didn't cook the eggs"
+        },
+        {
+          "identifier": "B",
+          "Answer": "She have only 2 eggs"
+        },
+        {
+          "identifier": "C",
+          "Answer": "The mother does not have any eggs "
+        },
+        {
+          "identifier": "D",
+          "Answer": "She have 5 eggs"
+        }
+      ],
+      "correct_answer": "D"
+    },
+    {
+      "id": "ppr002q004",
+      "question": "Marco works in the garden from 10:00 am to 17:00 am. The length of time marco worked is?",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "2 Hours"
+        },
+        {
+          "identifier": "B",
+          "Answer": "4 Hours"
+        },
+        {
+          "identifier": "C",
+          "Answer": "7 Hours"
+        },
+        {
+          "identifier": "D",
+          "Answer": "3 Hours"
+        }
+      ],
+      "correct_answer": "C"
+    },
+    {
+      "id": "ppr002q005",
+      "question": "A car has 4 wheels. If there are 9 cars, how many wheels are there in total? ",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "32 Wheels"
+        },
+        {
+          "identifier": "B",
+          "Answer": "36 Wheels"
+        },
+        {
+          "identifier": "C",
+          "Answer": "13 Wheels"
+        },
+        {
+          "identifier": "D",
+          "Answer": "5 Wheels"
+        }
+      ],
+      "correct_answer": "B"
+    }
+  ]
+}

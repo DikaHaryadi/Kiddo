@@ -1,0 +1,239 @@
+{
+  "id": "ppr004",
+  "title": "Biology",
+  "image_url": "",
+  "Description": "Basic Biology Multiple Choice Questions (MCQ) to practice basic Biology quiz answers",
+  "time_seconds": 900,
+  "questions": [
+    {
+      "id": "ppr004q001",
+      "question": "Plants have leaves that are green in color. The green color in plant leaves is called",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "Xyloem"
+        },
+        {
+          "identifier": "B",
+          "Answer": "Chlorophyll"
+        },
+        {
+          "identifier": "C",
+          "Answer": "Phloem"
+        },
+        {
+          "identifier": "D",
+          "Answer": "Pigment Green"
+        }
+      ],
+      "correct_answer": "B"
+    },
+    {
+      "id": "ppr004q002",
+      "question": "What the lion eats",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "Meat"
+        },
+        {
+          "identifier": "B",
+          "Answer": "Leaf"
+        },
+        {
+          "identifier": "C",
+          "Answer": "Insects"
+        },
+        {
+          "identifier": "D",
+          "Answer": "Broccoli"
+        }
+      ],
+      "correct_answer": "A"
+    },
+    {
+      "id": "ppr004q003",
+      "question": "A close relationship between two different species of organisms living together.",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "Mutualism"
+        },
+        {
+          "identifier": "B",
+          "Answer": "Symbiosis"
+        },
+        {
+          "identifier": "C",
+          "Answer": "Competition"
+        },
+        {
+          "identifier": "D",
+          "Answer": "Commensialism"
+        }
+      ],
+      "correct_answer": "B"
+    },
+    {
+      "id": "ppr004q004",
+      "question": "A symbiotic relationship in which both species benefit.",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "Mutualism"
+        },
+        {
+          "identifier": "B",
+          "Answer": "Commensialism"
+        },
+        {
+          "identifier": "C",
+          "Answer": "Parasitism"
+        },
+        {
+          "identifier": "D",
+          "Answer": "Predation"
+        }
+      ],
+      "correct_answer": "A"
+    },
+    {
+      "id": "ppr004q005",
+      "question": "Which organelle is found in most plants, some bacteria and some protists?",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "ribosomes"
+        },
+        {
+          "identifier": "B",
+          "Answer": "mitochondria"
+        },
+        {
+          "identifier": "C",
+          "Answer": "endoplasmic reticulum"
+        },
+        {
+          "identifier": "D",
+          "Answer": "chloroplasts"
+        }
+      ],
+      "correct_answer": "D"
+    },
+    {
+      "id": "ppr004q006",
+      "question": "Interaction between two living things that benefits one of the organisms, while the other organism is neither harmed nor benefited?",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "Mutualism"
+        },
+        {
+          "identifier": "B",
+          "Answer": "Communityism"
+        },
+        {
+          "identifier": "C",
+          "Answer": "Commensialism"
+        },
+        {
+          "identifier": "D",
+          "Answer": "Parasitism"
+        }
+      ],
+      "correct_answer": "C"
+    },
+    {
+      "id": "ppr004q007",
+      "question": "Antibiotic symbiosis that occurs between two living things when one of them secretes an antibiotic substance?",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "Amensalism"
+        },
+        {
+          "identifier": "B",
+          "Answer": "Netralism"
+        },
+        {
+          "identifier": "C",
+          "Answer": "Parasitism"
+        },
+        {
+          "identifier": "D",
+          "Answer": "Commensialism"
+        }
+      ],
+      "correct_answer": "A"
+    },
+    {
+      "id": "ppr004q008",
+      "question": "What is symbiotic parasitism?",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "A relationship between two living beings that offers neither benefit nor harm."
+        },
+        {
+          "identifier": "B",
+          "Answer": "A relationship between two living beings that only benefits one party."
+        },
+        {
+          "identifier": "C",
+          "Answer": "Two living things that benefit each other."
+        },
+        {
+          "identifier": "D",
+          "Answer": "Occurs between two living things when one of them secretes an antibiotic substance."
+        }
+      ],
+      "correct_answer": "B"
+    },
+    {
+      "id": "ppr004q009",
+      "question": "What is symbiotic mutualism?",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "A relationship between two living beings that offers neither benefit nor harm."
+        },
+        {
+          "identifier": "B",
+          "Answer": "A relationship between two living beings that only benefits one party."
+        },
+        {
+          "identifier": "C",
+          "Answer": "Two living things that benefit each other."
+        },
+        {
+          "identifier": "D",
+          "Answer": "Occurs between two living things when one of them secretes an antibiotic substance."
+        }
+      ],
+      "correct_answer": "C"
+    },
+    {
+      "id": "ppr004q0010",
+      "question": "What is symbiotic netralism?",
+      "answers": [
+        {
+          "identifier": "A",
+          "Answer": "A relationship between two living beings that offers neither benefit nor harm."
+        },
+        {
+          "identifier": "B",
+          "Answer": "A relationship between two living beings that only benefits one party."
+        },
+        {
+          "identifier": "C",
+          "Answer": "Two living things that benefit each other."
+        },
+        {
+          "identifier": "D",
+          "Answer": "Occurs between two living things when one of them secretes an antibiotic substance."
+        }
+      ],
+      "correct_answer": "A"
+    }
+  ]
+}

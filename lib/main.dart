@@ -31,27 +31,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      // debugShowCheckedModeBanner: false,
-      // initialRoute: '/',
-      // getPages: [
-      //   GetPage(name: '/', page: () => const HomePage()),
-      //   // Games
-      //   GetPage(name: '/memo-game', page: () => const StartUpPage()),
-      //   // Content
-      //   GetPage(name: '/number-content', page: () => const NumberContent()),
-      //   GetPage(name: '/letters-content', page: () => const LettersContent()),
-      //   GetPage(name: '/animals-content', page: () => const AnimalContent()),
-      //   GetPage(name: '/family-content', page: () => const FamilyContent()),
-      //   GetPage(name: '/fruits-content', page: () => const FruitsContent()),
-      //   GetPage(
-      //       name: '/vegetables-content',
-      //       page: () => const VegetablesContent()),
-      //   // Quizez Component Route
-      //   // show all content
-      //   GetPage(
-      //       name: '/show-all-content', page: () => const ShowAllContent()),
-      // ]
-      home: DataUploaderScreen(),
-    );
+        debugShowCheckedModeBanner: false,
+        initialRoute: '/',
+        getPages: [
+          GetPage(name: '/', page: () => const HomePage()),
+          // Games
+          GetPage(name: '/memo-game', page: () => const StartUpPage()),
+          // Content
+          GetPage(name: '/number-content', page: () => const NumberContent()),
+          GetPage(name: '/letters-content', page: () => const LettersContent()),
+          GetPage(name: '/animals-content', page: () => const AnimalContent()),
+          GetPage(name: '/family-content', page: () => const FamilyContent()),
+          GetPage(name: '/fruits-content', page: () => const FruitsContent()),
+          GetPage(
+              name: '/vegetables-content',
+              page: () => const VegetablesContent()),
+          // Quizez Component Route
+          // show all content
+          GetPage(
+              name: '/show-all-content', page: () => const ShowAllContent()),
+        ]
+        // home: DataUploaderScreen(),
+        );
   }
 }

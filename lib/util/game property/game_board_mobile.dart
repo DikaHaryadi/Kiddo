@@ -51,12 +51,10 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
         request: request,
         rewardedAdLoadCallback: RewardedAdLoadCallback(
           onAdLoaded: (RewardedAd ad) {
-            print('$ad loaded.');
             _rewardedAd = ad;
             _numRewardedLoadAttempts = 0;
           },
           onAdFailedToLoad: (LoadAdError error) {
-            print('RewardedAd failed to load: $error');
             _rewardedAd = null;
             _numRewardedLoadAttempts += 1;
             if (_numRewardedLoadAttempts < maxFailedLoadAttempts) {
@@ -68,30 +66,27 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
 
   void _showRewardedAd() {
     if (_rewardedAd == null) {
-      print('Warning: attempt to show rewarded before loaded.');
       return;
     }
     _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (RewardedAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
+      // onAdShowedFullScreenContent: (RewardedAd ad) =>
+      //     print('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (RewardedAd ad) {
-        print('$ad onAdDismissedFullScreenContent.');
         ad.dispose();
         _createRewardedAd();
-        Get.offNamed('/'); // Navigate back to '/'
+        Get.offNamed('/home');
       },
       onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
-        print('$ad onAdFailedToShowFullScreenContent: $error');
         ad.dispose();
         _createRewardedAd();
       },
     );
 
     _rewardedAd!.setImmersiveMode(true);
-    _rewardedAd!.show(
-        onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
-      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
-    });
+    // _rewardedAd!.show(
+    //     onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+    //   print('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
+    // });
     _rewardedAd = null;
   }
 
@@ -189,7 +184,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
       });
 
       if (game.isGameOver) {
-        print('Break Time');
         timer.cancel();
         SharedPreferences.getInstance().then((gameSP) {
           if (gameSP.getInt('${widget.gameLevel.toString()}BestTime') == null ||
@@ -200,20 +194,15 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
             setState(() {
               showConfetti = true;
               bestTime = duration.inSeconds;
-              print('conffeti nya disini');
             });
-            print('ini sharedPreferencesnya');
           }
         });
-        print('stop audio bg music');
         audioPlayer.stop();
         playCorrectSound(() {
-          print('mulai putar correct sound 2 ');
           if (!clapSoundPlayed) {
             playClapSound();
             clapSoundPlayed = true;
           }
-          print('mulai putar clap sound');
         });
         _showGameOverDialog();
       }
@@ -310,7 +299,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  print('ini di exit $showConfetti');
                                   Get.offAllNamed('/');
                                 },
                                 child: Text(

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:textspeech/firebase/loading_status.dart';
 import 'package:textspeech/firebase/references.dart';
 import 'package:textspeech/quiz/question_model.dart';
 
@@ -13,7 +14,10 @@ class DataUploader extends GetxController {
     super.onReady();
   }
 
+  final loadingStatus = LoadingStatus.loading.obs;
   void uploadData() async {
+    loadingStatus.value = LoadingStatus.loading;
+
     final fireStore = FirebaseFirestore.instance;
     final manifestContent = await rootBundle.loadString("AssetManifest.json");
     final Map<String, dynamic> manifestMap = json.decode(manifestContent);
@@ -26,6 +30,7 @@ class DataUploader extends GetxController {
     for (var paper in papersInAssets) {
       String stringPaperContent = await rootBundle.loadString(paper);
       questionModel.add(QuestionModel.fromJson(jsonDecode(stringPaperContent)));
+      print(stringPaperContent);
     }
     var batch = fireStore.batch();
 
@@ -54,5 +59,6 @@ class DataUploader extends GetxController {
     }
 
     await batch.commit();
+    loadingStatus.value = LoadingStatus.completed;
   }
 }

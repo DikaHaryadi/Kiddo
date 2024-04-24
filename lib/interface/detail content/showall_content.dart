@@ -4,6 +4,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:textspeech/util/config/themes/app_colors.dart';
 import 'package:textspeech/util/constants.dart';
 
 class ShowAllContent extends StatefulWidget {
@@ -135,7 +136,7 @@ class _ShowAllContentState extends State<ShowAllContent> {
                                                               10.0))),
                                               child: IconButton(
                                                   onPressed: () {
-                                                    Get.offNamed('/');
+                                                    Get.offNamed('/home');
                                                   },
                                                   icon: const Icon(
                                                     Icons.arrow_back_ios_new,

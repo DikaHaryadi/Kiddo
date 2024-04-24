@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:textspeech/interface/detail%20content/detail_animal.dart';
 import 'package:textspeech/interface/homepage.dart';
+import 'package:textspeech/util/config/themes/app_colors.dart';
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/curved_edges.dart';
 import 'package:textspeech/util/responsive.dart';
@@ -436,7 +437,7 @@ class _AnimalContentState extends State<AnimalContent> {
                                               Radius.circular(10.0))),
                                       child: IconButton(
                                           onPressed: () {
-                                            Get.offNamed('/');
+                                            Get.offNamed('/home');
                                           },
                                           // ignore: prefer_const_constructors
                                           icon: Icon(

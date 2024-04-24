@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:textspeech/interface/detail%20content/detail_family.dart';
 import 'package:textspeech/interface/homepage.dart';
+import 'package:textspeech/util/config/themes/app_colors.dart';
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/curved_edges.dart';
 import 'package:textspeech/util/responsive.dart';
@@ -366,7 +367,7 @@ class _FamilyContentState extends State<FamilyContent> {
                                               Radius.circular(10.0))),
                                       child: IconButton(
                                           onPressed: () {
-                                            Get.offNamed('/');
+                                            Get.offNamed('/home');
                                           },
                                           icon: const Icon(
                                             Icons.arrow_back_ios_new,

@@ -260,7 +260,7 @@ class _NumberContentState extends State<NumberContent> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 IconButton(
-                                        onPressed: () => Get.offNamed('/'),
+                                        onPressed: () => Get.offNamed('/home'),
                                         icon: const Icon(
                                           Icons.arrow_back_ios,
                                           size: 50,

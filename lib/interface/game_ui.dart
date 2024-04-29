@@ -3,8 +3,8 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/util/game%20property/game_option.dart';
 
-class StartUpPage extends StatelessWidget {
-  const StartUpPage({super.key});
+class MemoryGameHome extends StatelessWidget {
+  const MemoryGameHome({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,10 +4,10 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/curved_edges.dart';
 import 'package:textspeech/util/family_info.dart';
-import 'package:unicons/unicons.dart';
 
 class DetailFamily extends StatefulWidget {
   final String imgFamily;
@@ -170,7 +170,7 @@ class _DetailFamilyState extends State<DetailFamily> {
                     );
                   },
                   icon: const Icon(
-                    UniconsLine.list_ul,
+                    Iconsax.firstline,
                     color: Colors.white,
                     size: 30,
                   ))
@@ -222,7 +222,7 @@ class _DetailFamilyState extends State<DetailFamily> {
                     color: Color(0xFFa35e3e),
                   ),
                   child: const Icon(
-                    UniconsLine.play,
+                    Iconsax.play_circle,
                     color: Colors.white,
                   ),
                 ).animate(delay: const Duration(milliseconds: 250)).slideX(

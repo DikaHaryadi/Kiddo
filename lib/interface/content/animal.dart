@@ -6,14 +6,14 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:textspeech/interface/detail%20content/detail_animal.dart';
 import 'package:textspeech/interface/homepage.dart';
-import 'package:textspeech/util/config/themes/app_colors.dart';
+import 'package:textspeech/util/app_colors.dart';
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/curved_edges.dart';
 import 'package:textspeech/util/responsive.dart';
-import 'package:unicons/unicons.dart';
 
 class AnimalContent extends StatefulWidget {
   const AnimalContent({
@@ -546,7 +546,7 @@ class _AnimalContentState extends State<AnimalContent> {
                                 ),
                                 child: const Center(
                                   child: Icon(
-                                    UniconsLine.play,
+                                    Iconsax.play_circle,
                                     color: Colors.white,
                                     size: 25,
                                   ),

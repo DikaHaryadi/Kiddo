@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/interface/game_ui.dart';
 import 'package:textspeech/util/widgets/game_controls_bottomsheet.dart';
-import 'package:unicons/unicons.dart';
 
 class RestartGame extends StatefulWidget {
   const RestartGame({
@@ -49,7 +49,7 @@ class _RestartGameState extends State<RestartGame> {
   void navigateback(BuildContext context) {
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (BuildContext context) {
-      return const StartUpPage();
+      return const MemoryGameHome();
     }), (Route<dynamic> route) => false);
   }
 
@@ -63,8 +63,8 @@ class _RestartGameState extends State<RestartGame> {
         maxRadius: 20,
         backgroundColor: const Color(0xFF8dbffa),
         child: widget.isGameOver
-            ? const Icon(UniconsLine.pause)
-            : const Icon(UniconsLine.play),
+            ? const Icon(Iconsax.pause)
+            : const Icon(Iconsax.play_circle),
       ),
     );
   }

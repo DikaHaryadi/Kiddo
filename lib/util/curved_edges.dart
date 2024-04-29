@@ -40,7 +40,7 @@ class TCustomCurvedEdges extends CustomClipper<Path> {
 //     Paint paintFill0 = Paint()
 //       ..color = const Color(0xFFffee93)
 //       ..style = PaintingStyle.fill
-//       ..strokeWidth = size.width * 0.00
+//  ..strokeWidth = size.width * 0.00
 //       ..strokeCap = StrokeCap.butt
 //       ..strokeJoin = StrokeJoin.miter;
 

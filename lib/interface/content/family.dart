@@ -6,14 +6,14 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:textspeech/interface/detail%20content/detail_family.dart';
 import 'package:textspeech/interface/homepage.dart';
-import 'package:textspeech/util/config/themes/app_colors.dart';
+import 'package:textspeech/util/app_colors.dart';
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/curved_edges.dart';
 import 'package:textspeech/util/responsive.dart';
-import 'package:unicons/unicons.dart';
 
 class FamilyContent extends StatefulWidget {
   const FamilyContent({
@@ -474,7 +474,7 @@ class _FamilyContentState extends State<FamilyContent> {
                                 ),
                                 child: const Center(
                                   child: Icon(
-                                    UniconsLine.play,
+                                    Iconsax.play_circle,
                                     color: Colors.white,
                                     size: 25,
                                   ),

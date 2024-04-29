@@ -5,10 +5,10 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/util/animal_info.dart';
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/curved_edges.dart';
-import 'package:unicons/unicons.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 class DetailAnimals extends StatefulWidget {
@@ -349,7 +349,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                           IconButton(
                               onPressed: playPause,
                               icon: const Icon(
-                                UniconsLine.repeat,
+                                Iconsax.repeat,
                                 color: Colors.white,
                                 size: 30,
                               )),
@@ -366,7 +366,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                   }
                                 : null,
                             icon: Icon(
-                              UniconsLine.angle_double_left,
+                              Iconsax.backward,
                               color: _duration.inSeconds >= 10
                                   ? Colors.white
                                   : Colors.grey,
@@ -388,9 +388,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                       width: 2,
                                       strokeAlign: 1))),
                               child: Icon(
-                                isPlaying
-                                    ? UniconsLine.pause
-                                    : UniconsLine.play,
+                                isPlaying ? Iconsax.pause : Iconsax.play,
                                 color: isPlaying ? Colors.green : Colors.grey,
                               ),
                             ),
@@ -409,7 +407,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                   }
                                 : null,
                             icon: Icon(
-                              UniconsLine.angle_double_right,
+                              Iconsax.forward,
                               color: _duration.inSeconds >= 10
                                   ? Colors.white
                                   : Colors.grey,
@@ -569,7 +567,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                 );
                               },
                               icon: const Icon(
-                                UniconsLine.list_ul,
+                                Iconsax.firstline,
                                 color: Colors.white,
                                 size: 35,
                               ))

@@ -12,9 +12,8 @@ import 'package:textspeech/interface/content/fruits.dart';
 import 'package:textspeech/interface/content/letters.dart';
 import 'package:textspeech/interface/content/numbers.dart';
 import 'package:textspeech/interface/content/vegetables.dart';
-import 'package:textspeech/quiz/question_paper_controller.dart';
 import 'package:textspeech/util/category_list_mobile.dart';
-import 'package:textspeech/util/config/themes/app_colors.dart';
+import 'package:textspeech/util/app_colors.dart';
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/responsive.dart';
 

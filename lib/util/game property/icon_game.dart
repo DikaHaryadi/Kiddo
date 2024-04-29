@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:unicons/unicons.dart';
+import 'package:iconsax/iconsax.dart';
 
 const List<IconData> cardIcons = <IconData>[
-  UniconsLine.circle,
-  UniconsLine.heart,
-  UniconsLine.square,
-  UniconsLine.star,
-  UniconsLine.triangle,
-  UniconsLine.atom,
-  UniconsLine.brain,
-  UniconsLine.dna,
+  Iconsax.headphone,
+  Iconsax.heart,
+  Iconsax.square,
+  Iconsax.star,
+  Iconsax.triangle,
+  Iconsax.airplane_square,
+  Iconsax.archive,
+  Iconsax.printer,
   Icons.celebration,
   Icons.directions_car_filled,
   Icons.directions_bike,

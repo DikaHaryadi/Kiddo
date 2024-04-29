@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:unicons/unicons.dart';
+import 'package:iconsax/iconsax.dart';
 
 const List<Map<String, dynamic>> gameLevels = [
   {'title': 'Easy', 'level': 4, 'color': Colors.amberAccent},
@@ -145,10 +145,10 @@ const navbarOpsion = [
 ];
 
 List<IconData> navicon = [
-  UniconsLine.star,
-  UniconsLine.phone,
-  UniconsLine.info_circle,
-  UniconsLine.share
+  Iconsax.star,
+  Iconsax.mobile,
+  Iconsax.info_circle,
+  Iconsax.share
 ];
 
 const gameList = [

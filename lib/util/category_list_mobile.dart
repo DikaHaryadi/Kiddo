@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:get_storage/get_storage.dart';
 
 class CategoryListNotifier with ChangeNotifier {
   final List<Map<String, String>> categoryList = [
@@ -10,8 +10,8 @@ class CategoryListNotifier with ChangeNotifier {
     {'enum': 'Days'},
   ];
 
-  late SharedPreferences _prefs;
-  late ValueNotifier<int?> _selectedTab;
+  late final GetStorage _prefs;
+  late final ValueNotifier<int?> _selectedTab;
 
   CategoryListNotifier() {
     _selectedTab = ValueNotifier<int?>(
@@ -22,9 +22,10 @@ class CategoryListNotifier with ChangeNotifier {
   ValueNotifier<int?> get selectedTab => _selectedTab;
 
   Future<void> initPreferences() async {
-    _prefs = await SharedPreferences.getInstance();
+    await GetStorage.init();
+    _prefs = GetStorage();
     final savedTab =
-        _prefs.getInt('selectedTab') ?? 0; // Gunakan nilai default jika null
+        _prefs.read('selectedTab') ?? 0; // Gunakan nilai default jika null
     _selectedTab.value =
         savedTab; // Set nilai _selectedTab setelah inisialisasi
     notifyListeners();
@@ -32,7 +33,7 @@ class CategoryListNotifier with ChangeNotifier {
 
   void selectTab(int index) {
     _selectedTab.value = index;
-    _prefs.setInt('selectedTab', index);
+    _prefs.write('selectedTab', index);
     notifyListeners();
   }
 }

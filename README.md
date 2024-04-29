@@ -67,7 +67,7 @@ Instructions on how to use it in your own app are linked below :
 | google_mobile_ads | ^5.0.0 | https://pub.dev/packages/google_mobile_ads |
 | intl | ^0.19.0 | https://pub.dev/packages/intl |
 | shared_preferences | ^2.2.2 | https://pub.dev/packages/shared_preferences |
-| unicons | ^2.1.1 | https://pub.dev/packages/unicons |
+| iconsax | ^0.0.8 | https://pub.dev/packages/iconsax |
 
 ## Credit
 > Muhammad Dika Haryadi

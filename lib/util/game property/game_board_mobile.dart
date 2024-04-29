@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:get_storage/get_storage.dart'; // Perubahan impor di sini
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/game%20property/game.dart';
 import 'package:textspeech/util/game%20property/game_confetti.dart';
 import 'package:textspeech/util/game%20property/restart_game.dart';
 import 'package:textspeech/util/widgets/memory_card.dart';
-import 'package:unicons/unicons.dart';
 
 class GameBoardMobile extends StatefulWidget {
   const GameBoardMobile({
@@ -110,13 +110,13 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   }
 
   void saveGameStatus(bool isGameFinished) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isGameFinished', isGameFinished);
+    final box = GetStorage(); // Perubahan di sini
+    await box.write('isGameFinished', isGameFinished.toString());
   }
 
   void checkGameStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool isGameFinished = prefs.getBool('isGameFinished') ?? false;
+    final box = GetStorage(); // Perubahan di sini
+    bool isGameFinished = box.read('isGameFinished') == 'true';
 
     setState(() {
       showConfetti = isGameFinished;
@@ -169,9 +169,9 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
   }
 
   void getBestTime() async {
-    SharedPreferences gameSP = await SharedPreferences.getInstance();
-    if (gameSP.getInt('${widget.gameLevel.toString()}BestTime') != null) {
-      bestTime = gameSP.getInt('${widget.gameLevel.toString()}BestTime')!;
+    final box = GetStorage(); // Perubahan di sini
+    if (box.read('${widget.gameLevel.toString()}BestTime') != null) {
+      bestTime = box.read('${widget.gameLevel.toString()}BestTime');
     }
     setState(() {});
   }
@@ -185,18 +185,17 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
 
       if (game.isGameOver) {
         timer.cancel();
-        SharedPreferences.getInstance().then((gameSP) {
-          if (gameSP.getInt('${widget.gameLevel.toString()}BestTime') == null ||
-              gameSP.getInt('${widget.gameLevel.toString()}BestTime')! >
-                  duration.inSeconds) {
-            gameSP.setInt(
-                '${widget.gameLevel.toString()}BestTime', duration.inSeconds);
-            setState(() {
-              showConfetti = true;
-              bestTime = duration.inSeconds;
-            });
-          }
-        });
+        final box = GetStorage(); // Mengambil instance GetStorage langsung
+        if (box.read('${widget.gameLevel.toString()}BestTime') == null ||
+            box.read('${widget.gameLevel.toString()}BestTime') >
+                duration.inSeconds) {
+          box.write(
+              '${widget.gameLevel.toString()}BestTime', duration.inSeconds);
+          setState(() {
+            showConfetti = true;
+            bestTime = duration.inSeconds;
+          });
+        }
         audioPlayer.stop();
         playCorrectSound(() {
           if (!clapSoundPlayed) {
@@ -423,8 +422,8 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                         IconButton(
                             onPressed: toggleMute,
                             icon: isMusicPlaying
-                                ? const Icon(UniconsLine.volume)
-                                : const Icon(UniconsLine.volume_mute)),
+                                ? const Icon(Iconsax.volume)
+                                : const Icon(Iconsax.volume_mute)),
                         Slider(
                           value: isMusicPlaying ? _volume : 0.0,
                           min: 0.0,

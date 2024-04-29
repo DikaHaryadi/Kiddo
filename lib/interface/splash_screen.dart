@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:textspeech/util/config/themes/app_colors.dart';
+import 'package:get/get.dart';
+import 'package:textspeech/util/auth_controller.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Dapatkan instance dari AuthController
+    AuthController authController = Get.find();
+
     return Scaffold(
-        body: Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(gradient: mainGradient(context)),
-      child: Image.asset(
-        "assets/images/Logo_color1.png",
-        width: 200,
-        height: 200,
+      body: Container(
+        alignment: Alignment.center,
+        child: Image.asset(
+          "assets/images/Logo_color1.png",
+          width: 200,
+          height: 200,
+        ),
       ),
-    ));
+    );
   }
 }

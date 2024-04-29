@@ -23,7 +23,7 @@ class QuestionModel {
       : id = json['id'] as String,
         title = json['title'] as String,
         imageUrl = json['image_url'] as String,
-        description = json['Description'] as String,
+        description = json['description'] as String,
         timeSeconds = json['time_seconds'],
         questionCount = 0,
         questions = (json['questions'] as List)
@@ -34,9 +34,9 @@ class QuestionModel {
       : id = json.id,
         title = json['title'],
         imageUrl = json['image_url'],
-        description = json['Description'],
+        description = json['description'],
         timeSeconds = json['time_seconds'],
-        questionCount = json['question_count'] as int,
+        questionCount = json['questions_count'] as int,
         questions = [];
 }
 

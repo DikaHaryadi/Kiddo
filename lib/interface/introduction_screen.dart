@@ -44,7 +44,7 @@ class IntroductionScreen extends StatelessWidget {
                       ],
                     ),
                     Form(
-                        key: controller.loginFormKey,
+                        key: controller.loginFromKey,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(vertical: 30),
                           child: Column(
@@ -223,7 +223,7 @@ class IntroductionScreen extends StatelessWidget {
                               border: Border.all(color: kGrey),
                               borderRadius: BorderRadius.circular(100)),
                           child: IconButton(
-                            onPressed: () {},
+                            onPressed: () => controller.googleSignIn(),
                             icon: const Image(
                                 width: 24,
                                 height: 24,

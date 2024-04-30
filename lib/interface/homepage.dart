@@ -6,12 +6,14 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/interface/content/animal.dart';
 import 'package:textspeech/interface/content/family.dart';
 import 'package:textspeech/interface/content/fruits.dart';
 import 'package:textspeech/interface/content/letters.dart';
 import 'package:textspeech/interface/content/numbers.dart';
 import 'package:textspeech/interface/content/vegetables.dart';
+import 'package:textspeech/util/auth_controller.dart';
 import 'package:textspeech/util/category_list_mobile.dart';
 import 'package:textspeech/util/app_colors.dart';
 import 'package:textspeech/util/constants.dart';
@@ -145,19 +147,28 @@ class _HomePageState extends State<HomePage> {
                         vertical: 10.0, horizontal: 15.0),
                     shrinkWrap: true,
                     children: [
-                      AutoSizeText(
-                        'Good $_timeOfDay',
-                        maxFontSize: 24,
-                        minFontSize: 20,
-                        style: GoogleFonts.aBeeZee(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                      ).animate().slideY(
-                          begin: -4,
-                          end: 0,
-                          curve: Curves.bounceIn,
-                          duration: const Duration(milliseconds: 400)),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          AutoSizeText(
+                            'Good $_timeOfDay',
+                            maxFontSize: 24,
+                            minFontSize: 20,
+                            style: GoogleFonts.aBeeZee(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ).animate().slideY(
+                              begin: -4,
+                              end: 0,
+                              curve: Curves.bounceIn,
+                              duration: const Duration(milliseconds: 400)),
+                          IconButton(
+                              onPressed: () =>
+                                  Get.find<AuthController>().logOut(),
+                              icon: Icon(Iconsax.logout))
+                        ],
+                      ),
                       const SizedBox(height: 15.0),
                       AnimationLimiter(
                         child: GridView.count(

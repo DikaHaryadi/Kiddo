@@ -1,4 +1,4 @@
-# Learning App for Kids (Kiddo)
+# Learning App for Kids (KiddieLearn)
 #### Text to speech application using Flutter framework
 
 
@@ -12,7 +12,7 @@
 
 
 
-Kiddo is an innovative learning platform designed specifically to meet the educational needs of children. Carefully designed, the app presents a wide array of exciting memory games, engaging text-to-speech modules, and various other features intuitively designed to stimulate children's cognitive and linguistic development. With the presence of Latin, Arabic and English, Kiddo provides a multicultural learning environment, opening the door for children to expand their understanding of the world from an early age. Developed specifically for children ages 6 and under, Kiddo blends a fun-oriented approach to learning and interactive experiences, helping children acquire knowledge while playing in a fun and entertaining way.
+KiddieLearn is an innovative learning platform designed specifically to meet the educational needs of children. Carefully designed, the app presents a wide array of exciting memory games, engaging text-to-speech modules, and various other features intuitively designed to stimulate children's cognitive and linguistic development. With the presence of Latin, Arabic and English, KiddieLearn provides a multicultural learning environment, opening the door for children to expand their understanding of the world from an early age. Developed specifically for children ages 6 and under, KiddieLearn blends a fun-oriented approach to learning and interactive experiences, helping children acquire knowledge while playing in a fun and entertaining way.
 ## Available for
 - Android
 - Tablet
@@ -29,7 +29,7 @@ Kiddo is an innovative learning platform designed specifically to meet the educa
 
 This application is built using:
 
-- [Flutter](https://flutter.dev/) - Kiddo is built using 100% Flutter Framework!
+- [Flutter](https://flutter.dev/) - KiddieLearn is built using 100% Flutter Framework!
 
 ## Requirement
 - Flutter 3.16.9
@@ -50,7 +50,7 @@ please wait untill all dependencies finished to install
 ```
 
 ## Dependencies
-Kiddo is currently extended with the following dependencies.
+KiddieLearn is currently extended with the following dependencies.
 Instructions on how to use it in your own app are linked below :
 
 | Dependencies | Version | README |

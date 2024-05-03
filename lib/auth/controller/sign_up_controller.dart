@@ -12,6 +12,8 @@ import 'package:textspeech/util/app_colors.dart';
 import 'package:textspeech/util/auth_controller.dart';
 
 class SignupController extends GetxController {
+  static SignupController get instance => Get.find();
+
   final privacyPolicy = true.obs;
   final hidePassword = true.obs;
   final email = TextEditingController();
@@ -26,62 +28,71 @@ class SignupController extends GetxController {
       showDialog(
         context: Get.overlayContext!,
         barrierDismissible: false,
-        builder: (context) => const PopScope(
-            canPop: false,
-            child: AnimationLoader(
-                text: 'We are proccessing your information..',
-                animation: 'assets/animations/141594-animation-of-docer.json',
-                actionText: 'asdadasd',
-                showAction: true)),
+        builder: (_) => const PopScope(
+          canPop: false,
+          child: AnimationLoader(
+            text: 'We are processing your information..',
+            animation: 'assets/animations/141594-animation-of-docer.json',
+            showAction: false,
+          ),
+        ),
       );
-      // Check connectivity internet
+
+      // Check internet connectivity
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         Navigator.of(Get.overlayContext!).pop();
         return;
       }
-      // form validation
-      if (signupFormKey.currentState!.validate()) {
+
+      // Form validation
+      if (!signupFormKey.currentState!.validate()) {
         Navigator.of(Get.overlayContext!).pop();
         return;
       }
-      // privacy policy check
+
+      // Privacy policy check
       if (!privacyPolicy.value) {
-        Get.snackbar('Accept Privacy Policy',
-            'In order to create account, you must have to read and accept the Privacy Policy & Terms of Use',
-            isDismissible: true,
-            shouldIconPulse: true,
-            colorText: Colors.white,
-            backgroundColor: kSoftblue,
-            snackPosition: SnackPosition.BOTTOM,
-            duration: const Duration(seconds: 3),
-            margin: const EdgeInsets.all(20),
-            icon: const Icon(
-              Iconsax.warning_2,
-              color: Colors.white,
-            ));
+        Get.snackbar(
+          'Accept Privacy Policy',
+          'In order to create an account, you must read and accept the Privacy Policy & Terms of Use',
+          isDismissible: true,
+          shouldIconPulse: true,
+          colorText: Colors.white,
+          backgroundColor: kSoftblue,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 3),
+          margin: const EdgeInsets.all(20),
+          icon: const Icon(
+            Iconsax.warning_2,
+            color: Colors.white,
+          ),
+        );
+        Navigator.of(Get.overlayContext!).pop();
         return;
       }
-      // Register user in the firebase auth && save user data in the firebase
-      final userCredential = await Get.find<AuthController>()
+
+      // Register user in Firebase Auth and save user data in Firebase Firestore
+      final userCredential = await AuthenticationRepository.instance
           .registerWithEmailAndPassword(
               email.text.trim(), password.text.trim());
-      // Save Auth user data in firebase firestore
+
+      // Save Auth user data in Firebase Firestore
       final newUser = UserModel(
-          id: userCredential.user!.uid,
-          firstName: firstName.text.trim(),
-          lastName: lastName.text.trim(),
-          username: userName.text.trim(),
-          email: email.text.trim(),
-          profilePicture: '');
+        id: userCredential.user!.uid,
+        firstName: firstName.text.trim(),
+        lastName: lastName.text.trim(),
+        username: userName.text.trim(),
+        email: email.text.trim(),
+        profilePicture: '',
+      );
 
-      final userRepository = Get.find<UserRepository>();
-      await userRepository.savaeUserRecord(newUser);
+      final userRepository = Get.put(UserRepository());
+      await userRepository.saveUserRecord(newUser);
 
-      // remove loadeer
+      // Remove loader
       Navigator.of(Get.overlayContext!).pop();
 
-      // show success message
       Get.snackbar(
         'Congratulations',
         'Your account has been created! Verify email to continue.',
@@ -101,20 +112,23 @@ class SignupController extends GetxController {
             email: email.text.trim(),
           ));
     } catch (e) {
-      Get.snackbar('Something went wrong from code', e.toString(),
-          isDismissible: true,
-          shouldIconPulse: true,
-          colorText: Colors.white,
-          backgroundColor: Colors.red.shade600,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 3),
-          margin: const EdgeInsets.all(20),
-          icon: const Icon(
-            Iconsax.warning_2,
-            color: Colors.white,
-          ));
-    } finally {
       Navigator.of(Get.overlayContext!).pop();
+      Get.snackbar(
+        'Oh Snap!',
+        e.toString(),
+        isDismissible: true,
+        shouldIconPulse: true,
+        colorText: Colors.white,
+        backgroundColor: Colors.red.shade600,
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.all(20),
+        icon: const Icon(
+          Iconsax.warning_2,
+          color: Colors.white,
+        ),
+      );
+      print('error$e');
     }
   }
 }

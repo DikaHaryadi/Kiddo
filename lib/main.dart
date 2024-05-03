@@ -36,10 +36,9 @@ void main() async {
 
   // Inisialisasi Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-      .then((FirebaseApp value) => Get.put(AuthController()));
-
+      .then((FirebaseApp value) => Get.put(AuthenticationRepository()));
   // Inisialisasi Dependency Injection
-  InitialBindings().dependencies();
+  // InitialBindings().dependencies();
 
   // Inisialisasi lainnya
   MobileAds.instance.initialize();
@@ -58,6 +57,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       getPages: AppRoutes.routes(),
+      initialBinding: InitialBindings(),
     );
   }
 }

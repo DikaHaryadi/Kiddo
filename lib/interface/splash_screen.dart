@@ -49,7 +49,7 @@ class SplashScreen extends StatelessWidget {
               child: const AutoSizeText('Skip'),
             )),
         Positioned(
-            bottom: kBottomNavigationBarHeight + 25,
+            bottom: kBottomNavigationBarHeight - 20,
             left: 24.0,
             child: SmoothPageIndicator(
                 controller: controller.pageController,
@@ -59,13 +59,13 @@ class SplashScreen extends StatelessWidget {
                 count: 3)),
         Positioned(
             right: 24.0,
-            bottom: kBottomNavigationBarHeight,
+            bottom: kBottomNavigationBarHeight - 40,
             child: ElevatedButton(
                 onPressed: controller.nextPage,
                 style: ElevatedButton.styleFrom(
                     shape: const CircleBorder(), backgroundColor: kDark),
                 child: const Icon(
-                  Iconsax.arrow_right3,
+                  Iconsax.next,
                   color: Colors.white,
                 )))
       ],
@@ -140,6 +140,6 @@ class OnBoardingController extends GetxController {
 
   void skipPage() {
     currentPageIndex.value = 2;
-    pageController.jumpTo(2);
+    pageController.jumpToPage(2);
   }
 }

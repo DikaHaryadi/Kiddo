@@ -12,7 +12,7 @@ class IntroductionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<IntroductionController>();
+    final controller = Get.put(IntroductionController());
     return Scaffold(
         body: SingleChildScrollView(
       child: SafeArea(

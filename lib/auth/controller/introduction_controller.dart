@@ -52,12 +52,12 @@ class IntroductionController extends GetxController {
 
       // login user using email and pw authentification
       // final userCredential =
-      await Get.find<AuthController>()
+      await AuthenticationRepository.instance
           .loginWithEmailAndPassword(email.text.trim(), password.text.trim());
       // remove loadder
       Navigator.of(Get.overlayContext!).pop();
       //navigate
-      Get.find<AuthController>().navigateToIntroduction();
+      AuthenticationRepository.instance.navigateToIntroduction();
     } catch (e) {
       Navigator.of(Get.overlayContext!).pop();
       Get.snackbar(
@@ -98,13 +98,14 @@ class IntroductionController extends GetxController {
       }
       // google authentification
       final userCredentials =
-          await Get.find<AuthController>().signInWithGoogle();
+          await AuthenticationRepository.instance.signInWithGoogle();
 
       // save user data
       await userController.saveUserRecord(userCredentials);
+      print('user credential$userCredentials');
       Navigator.of(Get.overlayContext!).pop();
       // navigate
-      Get.find<AuthController>().navigateToIntroduction();
+      AuthenticationRepository.instance.navigateToIntroduction();
     } catch (e) {
       Navigator.of(Get.overlayContext!).pop();
       Get.snackbar(

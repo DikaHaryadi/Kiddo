@@ -3,7 +3,6 @@ import 'package:textspeech/auth/controller/sign_up_controller.dart';
 import 'package:textspeech/auth/controller/verify_email_controller.dart';
 import 'package:textspeech/auth/forget_pw.dart';
 import 'package:textspeech/auth/reset_password.dart';
-import 'package:textspeech/auth/success_verify.dart';
 import 'package:textspeech/interface/content/animal.dart';
 import 'package:textspeech/interface/content/family.dart';
 import 'package:textspeech/interface/content/fruits.dart';

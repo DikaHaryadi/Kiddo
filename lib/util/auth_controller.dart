@@ -13,7 +13,9 @@ import 'package:textspeech/util/exceptions/firebase_exceptions.dart';
 import 'package:textspeech/util/exceptions/format_exceptions.dart';
 import 'package:textspeech/util/exceptions/platform_exceptions.dart';
 
-class AuthController extends GetxController {
+class AuthenticationRepository extends GetxController {
+  static AuthenticationRepository get instance => Get.find();
+
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
 

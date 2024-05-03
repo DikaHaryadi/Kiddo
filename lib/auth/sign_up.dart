@@ -12,7 +12,7 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<SignupController>();
+    final controller = Get.put(SignupController());
     return Scaffold(
         body: SingleChildScrollView(
       child: SafeArea(
@@ -270,9 +270,7 @@ class SignUpScreen extends StatelessWidget {
                               SizedBox(
                                 width: double.infinity,
                                 child: ElevatedButton(
-                                    onPressed: () {
-                                      controller.signup();
-                                    },
+                                    onPressed: () => controller.signup(),
                                     style: const ButtonStyle(
                                         backgroundColor:
                                             MaterialStatePropertyAll(

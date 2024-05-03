@@ -8,7 +8,7 @@ class QuizScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    QuestionPaperController _questionPaperController = Get.find();
+    final controller = Get.put(QuestionPaperController());
 
     return Scaffold(
       body: Obx(
@@ -19,7 +19,7 @@ class QuizScreen extends StatelessWidget {
                 height: 200,
                 width: 200,
                 child: CachedNetworkImage(
-                  imageUrl: _questionPaperController.allPapers[index].imageUrl,
+                  imageUrl: controller.allPapers[index].imageUrl,
                   placeholder: (context, url) => Container(
                     alignment: Alignment.center,
                     child: const CircularProgressIndicator(),
@@ -33,7 +33,7 @@ class QuizScreen extends StatelessWidget {
           separatorBuilder: (context, index) {
             return const SizedBox(height: 20);
           },
-          itemCount: _questionPaperController.allPapers.length,
+          itemCount: controller.allPapers.length,
         ),
       ),
     );

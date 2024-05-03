@@ -13,13 +13,13 @@ class VerifyEmailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<VerifyEmailController>();
+    final controller = Get.put(VerifyEmailController());
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         actions: [
           IconButton(
-              onPressed: () => Get.find<AuthController>().logOut(),
+              onPressed: () => AuthenticationRepository.instance.logOut(),
               icon: const Icon(Icons.close))
         ],
       ),

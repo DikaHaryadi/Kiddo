@@ -165,8 +165,8 @@ class _HomePageState extends State<HomePage> {
                               duration: const Duration(milliseconds: 400)),
                           IconButton(
                               onPressed: () =>
-                                  Get.find<AuthController>().logOut(),
-                              icon: Icon(Iconsax.logout))
+                                  AuthenticationRepository.instance.logOut(),
+                              icon: const Icon(Iconsax.logout))
                         ],
                       ),
                       const SizedBox(height: 15.0),

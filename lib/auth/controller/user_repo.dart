@@ -7,10 +7,12 @@ import 'package:textspeech/util/exceptions/format_exceptions.dart';
 import 'package:textspeech/util/exceptions/platform_exceptions.dart';
 
 class UserRepository extends GetxController {
+  static UserRepository get instance => Get.find();
+
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
   // function to save user data to firestore
-  Future<void> savaeUserRecord(UserModel user) async {
+  Future<void> saveUserRecord(UserModel user) async {
     try {
       await _db.collection('Users').doc(user.id).set(user.toJson());
     } on FirebaseException catch (e) {

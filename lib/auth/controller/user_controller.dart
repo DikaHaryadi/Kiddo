@@ -28,7 +28,7 @@ class UserController extends GetxController {
             email: userCredential.user!.email ?? '',
             profilePicture: userCredential.user!.photoURL ?? '');
         // save user data
-        await userRepo.savaeUserRecord(user);
+        await userRepo.saveUserRecord(user);
       }
     } catch (e) {
       Get.snackbar(
@@ -44,6 +44,7 @@ class UserController extends GetxController {
         margin: const EdgeInsets.all(20),
         icon: const Icon(Iconsax.warning_2, color: Colors.white),
       );
+      print('google acc error$e');
     }
   }
 }

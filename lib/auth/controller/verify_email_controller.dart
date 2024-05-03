@@ -8,6 +8,7 @@ import 'package:textspeech/auth/success_verify.dart';
 import 'package:textspeech/util/auth_controller.dart';
 
 class VerifyEmailController extends GetxController {
+  static VerifyEmailController get instance => Get.find();
   @override
   void onInit() {
     sendEmailVerification();
@@ -17,7 +18,7 @@ class VerifyEmailController extends GetxController {
 
   sendEmailVerification() async {
     try {
-      await Get.find<AuthController>().sendEmailVerification();
+      await AuthenticationRepository.instance.sendEmailVerification();
       Get.snackbar(
         'Email Sent',
         'Please check your inbox and verify your email.',
@@ -60,7 +61,7 @@ class VerifyEmailController extends GetxController {
             subTitle:
                 "Yeay! Welcome to the fun place to learn! Let's explore the world of learning together. Hopefully we can all become shining five stars on the Play Store with your support! 🌟",
             onPressed: () =>
-                Get.find<AuthController>().navigateToIntroduction()));
+                AuthenticationRepository.instance.navigateToIntroduction()));
       }
     });
   }
@@ -70,13 +71,12 @@ class VerifyEmailController extends GetxController {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null && currentUser.emailVerified) {
       Get.off(() => SuccessVerify(
-            image: 'assets/animations/72462-check-register.json',
-            title: 'Your account successfully created!',
-            subTitle:
-                "Yeay! Welcome to the fun place to learn! Let's explore the world of learning together. Hopefully we can all become shining five stars on the Play Store with your support!",
-            onPressed: () =>
-                Get.find<AuthController>().navigateToIntroduction(),
-          ));
+          image: 'assets/animations/72462-check-register.json',
+          title: 'Your account successfully created!',
+          subTitle:
+              "Yeay! Welcome to the fun place to learn! Let's explore the world of learning together. Hopefully we can all become shining five stars on the Play Store with your support!",
+          onPressed: () =>
+              AuthenticationRepository.instance.navigateToIntroduction()));
     }
   }
 }

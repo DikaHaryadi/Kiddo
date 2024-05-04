@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/auth/controller/introduction_controller.dart';
+import 'package:textspeech/auth/forget_pw.dart';
 import 'package:textspeech/util/app_colors.dart';
 import 'package:textspeech/util/responsive.dart';
 
@@ -156,7 +157,7 @@ class IntroductionScreen extends StatelessWidget {
                                   // Forgot password
                                   TextButton(
                                       onPressed: () =>
-                                          Get.toNamed('/forgot-password'),
+                                          Get.to(() => const ForgetPassword()),
                                       child: const AutoSizeText(
                                           'Forgot Password?'))
                                 ],

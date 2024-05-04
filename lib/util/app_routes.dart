@@ -39,8 +39,6 @@ class AppRoutes {
             binding: BindingsBuilder(() {
               Get.put(VerifyEmailController());
             })),
-        GetPage(name: '/forgot-password', page: () => const ForgetPassword()),
-        GetPage(name: '/reset-password', page: () => const ResetPassword()),
         // Games
         GetPage(name: '/memo-game', page: () => const MemoryGameHome()),
         GetPage(

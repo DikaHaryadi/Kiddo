@@ -19,6 +19,8 @@ class AuthenticationRepository extends GetxController {
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
 
+  User? get authUser => _auth.currentUser;
+
   @override
   void onReady() {
     FlutterNativeSplash.remove();
@@ -32,7 +34,7 @@ class AuthenticationRepository extends GetxController {
       if (user.emailVerified) {
         Get.offAll(() => const HomePage());
       } else {
-        Get.offAll(() => VerifyEmailScreen(email: user.email));
+        Get.offAll(() => const VerifyEmailScreen());
       }
     } else {
       deviceStorage.writeIfNull('IsFirstTime', true);
@@ -97,13 +99,12 @@ class AuthenticationRepository extends GetxController {
     }
   }
 
-  // logOut user for any authentication
-  Future<void> logOut() async {
+  // forgot email auth
+  Future<void> sendPasswordResetEmail(String email) async {
     try {
-      await FirebaseAuth.instance.signOut();
-      Get.offAllNamed('/introduction');
+      await _auth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
-      throw TFirebaseAuthException(e.code);
+      throw TFirebaseAuthException(e.code).message;
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {
@@ -131,6 +132,24 @@ class AuthenticationRepository extends GetxController {
       return await _auth.signInWithCredential(credentials);
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code).message;
+    } on FirebaseException catch (e) {
+      throw TFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const TFormatException();
+    } on PlatformException catch (e) {
+      throw TPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong. Please try again';
+    }
+  }
+
+  // logOut user for any authentication
+  Future<void> logOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      Get.offAllNamed('/introduction');
+    } on FirebaseAuthException catch (e) {
+      throw TFirebaseAuthException(e.code);
     } on FirebaseException catch (e) {
       throw TFirebaseException(e.code).message;
     } on FormatException catch (_) {

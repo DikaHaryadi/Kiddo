@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:textspeech/auth/controller/forget_pw_controller.dart';
 import 'package:textspeech/util/app_colors.dart';
 
 class ForgetPassword extends StatelessWidget {
@@ -10,6 +11,7 @@ class ForgetPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(ForgetPasswordController());
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -36,18 +38,37 @@ class ForgetPassword extends StatelessWidget {
                 style: GoogleFonts.aBeeZee(
                     color: kGrey, fontWeight: FontWeight.w400)),
             const SizedBox(height: 16.0),
-            TextFormField(
-              decoration: InputDecoration(
-                  prefixIcon: const Icon(Iconsax.direct),
-                  focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(width: 1, color: kGrey)),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(width: 1, color: kGrey)),
-                  labelText: 'E-Mail',
-                  labelStyle: GoogleFonts.aBeeZee(
-                      color: kGrey, fontSize: 14, fontWeight: FontWeight.w400)),
+            Form(
+              key: controller.forgetPasswordKey,
+              child: TextFormField(
+                controller: controller.email,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Email is required.';
+                  }
+
+                  final emailRegExp =
+                      RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+                  if (!emailRegExp.hasMatch(value)) {
+                    return 'Invalid email address.';
+                  }
+                  return null;
+                },
+                decoration: InputDecoration(
+                    prefixIcon: const Icon(Iconsax.direct),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(width: 1, color: kGrey)),
+                    enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(width: 1, color: kGrey)),
+                    labelText: 'E-Mail',
+                    labelStyle: GoogleFonts.aBeeZee(
+                        color: kGrey,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400)),
+              ),
             ),
             const SizedBox(height: 30.0),
             SizedBox(
@@ -56,9 +77,7 @@ class ForgetPassword extends StatelessWidget {
                 style: const ButtonStyle(
                     backgroundColor:
                         MaterialStatePropertyAll(Colors.blueAccent)),
-                onPressed: () {
-                  Get.toNamed('/reset-password');
-                },
+                onPressed: () => controller.sendPasswordResetEmail(),
                 child: AutoSizeText(
                   'Submit',
                   style: GoogleFonts.archivoBlack(color: Colors.white),

@@ -58,14 +58,18 @@ class UserModel {
   // Factory method to create a UserModel from a Firebase document snapshot
   factory UserModel.fromSnapshot(
       DocumentSnapshot<Map<String, dynamic>> document) {
-    final data = document.data();
-    return UserModel(
-      id: document.id,
-      firstName: data?['FirstName'] ?? '',
-      lastName: data?['LastName'] ?? '',
-      username: data?['Username'] ?? '',
-      email: data?['Email'] ?? '',
-      profilePicture: data?['ProfilePicture'] ?? '',
-    );
+    if (document.data() != null) {
+      final data = document.data();
+      return UserModel(
+        id: document.id,
+        firstName: data?['FirstName'] ?? '',
+        lastName: data?['LastName'] ?? '',
+        username: data?['Username'] ?? '',
+        email: data?['Email'] ?? '',
+        profilePicture: data?['ProfilePicture'] ?? '',
+      );
+    } else {
+      return UserModel.empty();
+    }
   }
 }

@@ -77,7 +77,7 @@ class EditProfileScreen extends StatelessWidget {
                 const SizedBox(height: 16.0),
                 Center(
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () => controller.deleteAccountWarningPopUp(),
                     child: const AutoSizeText('Clear Account'),
                   ),
                 )

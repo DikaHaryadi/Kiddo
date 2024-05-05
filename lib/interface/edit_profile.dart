@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/auth/controller/user_controller.dart';
+import 'package:textspeech/util/shimmer.dart';
 import 'package:textspeech/util/widgets/change_name.dart';
 
 class EditProfileScreen extends StatelessWidget {
@@ -24,18 +26,36 @@ class EditProfileScreen extends StatelessWidget {
                   width: double.infinity,
                   child: Column(
                     children: [
-                      ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                              shape: const CircleBorder()),
-                          child: Image.asset(
-                            'assets/images/cat.png',
-                            width: 80,
-                            fit: BoxFit.fitHeight,
-                          )),
+                      Obx(() {
+                        final networkImage =
+                            controller.user.value.profilePicture;
+                        final image = networkImage.isNotEmpty
+                            ? networkImage
+                            : 'assets/images/cat.png';
+                        return controller.imageUploading.value
+                            ? const DShimmerEffect(
+                                width: 80, height: 80, radius: 80)
+                            : CircularImage(
+                                image: image,
+                                widht: 80,
+                                height: 80,
+                                isNetworkImage: networkImage.isNotEmpty,
+                              );
+                      }),
+                      // ElevatedButton(
+                      //     onPressed: () =>
+                      //         controller.uploadUserProfilePicture(),
+                      //     style: ElevatedButton.styleFrom(
+                      //         shape: const CircleBorder()),
+                      //     child: Image.asset(
+                      //       'assets/images/cat.png',
+                      //       width: 80,
+                      //       fit: BoxFit.fitHeight,
+                      //     )),
                       const SizedBox(height: 8.0),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () =>
+                              controller.uploadUserProfilePicture(),
                           child: const AutoSizeText('Change Profile Picture',
                               minFontSize: 12, maxFontSize: 14)),
                     ],
@@ -109,6 +129,58 @@ class EditProfileScreen extends StatelessWidget {
         IconButton(
             onPressed: ontap, icon: Icon(iconData ?? Iconsax.arrow_right))
       ],
+    );
+  }
+}
+
+class CircularImage extends StatelessWidget {
+  const CircularImage(
+      {super.key,
+      this.fit,
+      required this.image,
+      required this.isNetworkImage,
+      this.overlayColor,
+      required this.widht,
+      required this.height,
+      this.padding = 8.0});
+
+  final BoxFit? fit;
+  final String image;
+  final bool isNetworkImage;
+  final Color? overlayColor;
+  final double widht, height, padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: widht,
+      height: height,
+      padding: EdgeInsets.all(padding),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(100)),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        child: Center(
+          child: isNetworkImage
+              ? CachedNetworkImage(
+                  imageUrl: image,
+                  fit: fit,
+                  color: overlayColor,
+                  progressIndicatorBuilder: (context, url, progress) =>
+                      const DShimmerEffect(
+                    width: 55,
+                    height: 55,
+                    radius: 55,
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                )
+              : Image(
+                  image: AssetImage(image),
+                  fit: fit,
+                  color: overlayColor,
+                ),
+        ),
+      ),
     );
   }
 }

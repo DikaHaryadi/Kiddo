@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:textspeech/auth/controller/network_manager.dart';
 import 'package:textspeech/auth/controller/sign_up_controller.dart';
 import 'package:textspeech/auth/controller/user_repo.dart';
@@ -18,6 +19,7 @@ class UserController extends GetxController {
   final userRepo = Get.put(UserRepository());
 
   final hidePassword = false.obs;
+  final imageUploading = false.obs;
   final verifyEmail = TextEditingController();
   final verifyPassword = TextEditingController();
   GlobalKey<FormState> reAuthFormKey = GlobalKey<FormState>();
@@ -42,23 +44,28 @@ class UserController extends GetxController {
 
   Future<void> saveUserRecord(UserCredential? userCredential) async {
     try {
-      if (userCredential != null) {
-        final nameParts =
-            UserModel.nameParts(userCredential.user!.displayName ?? '');
-        final username =
-            UserModel.generateUsername(userCredential.user!.displayName ?? '');
+      // First update Rx User and then check if user data is already stored. If not store new data
+      await fetchUserRecord();
 
-        // Map Data
-        final user = UserModel(
-            id: userCredential.user!.uid,
-            firstName: nameParts[0],
-            lastName:
-                nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
-            username: username,
-            email: userCredential.user!.email ?? '',
-            profilePicture: userCredential.user!.photoURL ?? '');
-        // save user data
-        await userRepo.saveUserRecord(user);
+      if (user.value.id.isEmpty) {
+        if (userCredential != null) {
+          final nameParts =
+              UserModel.nameParts(userCredential.user!.displayName ?? '');
+          final username = UserModel.generateUsername(
+              userCredential.user!.displayName ?? '');
+
+          // Map Data
+          final user = UserModel(
+              id: userCredential.user!.uid,
+              firstName: nameParts[0],
+              lastName:
+                  nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
+              username: username,
+              email: userCredential.user!.email ?? '',
+              profilePicture: userCredential.user!.photoURL ?? '');
+          // save user data
+          await userRepo.saveUserRecord(user);
+        }
       }
     } catch (e) {
       Get.snackbar(
@@ -203,6 +210,60 @@ class UserController extends GetxController {
           color: Colors.white,
         ),
       );
+    }
+  }
+
+  // Upload profile image
+  uploadUserProfilePicture() async {
+    try {
+      final image = await ImagePicker().pickImage(
+          source: ImageSource.gallery,
+          imageQuality: 70,
+          maxHeight: 512,
+          maxWidth: 512);
+      if (image != null) {
+        imageUploading.value = true;
+        final imageUrl =
+            await userRepo.uploadImage('Users/Images/Profile/', image);
+        // update User Image Record
+        Map<String, dynamic> json = {'ProfilePicture': imageUrl};
+        await userRepo.updateSingleField(json);
+
+        user.value.profilePicture = imageUrl;
+        user.refresh();
+
+        Get.snackbar(
+          'Congratulations',
+          'Your Profile Image has been updated!',
+          maxWidth: 600,
+          isDismissible: true,
+          shouldIconPulse: true,
+          colorText: Colors.white,
+          backgroundColor: Colors.blueAccent,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: const Duration(seconds: 3),
+          margin: const EdgeInsets.all(10),
+          icon: const Icon(Iconsax.check, color: Colors.white),
+        );
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Oh Snap!',
+        e.toString(),
+        isDismissible: true,
+        shouldIconPulse: true,
+        colorText: Colors.white,
+        backgroundColor: Colors.red.shade600,
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.all(20),
+        icon: const Icon(
+          Iconsax.warning_2,
+          color: Colors.white,
+        ),
+      );
+    } finally {
+      imageUploading.value = false;
     }
   }
 }

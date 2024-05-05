@@ -119,7 +119,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
         leading: IconButton(
             onPressed: () {
               Future.delayed(const Duration(milliseconds: 250), () {
-                Get.offAllNamed('/animals-content');
+                Get.offNamed('/animals-content');
               });
             },
             icon: const Icon(Icons.arrow_back_ios)
@@ -155,10 +155,8 @@ class _DetailAnimalsState extends State<DetailAnimals> {
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
-              // color: Colors.amber,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
-                // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),

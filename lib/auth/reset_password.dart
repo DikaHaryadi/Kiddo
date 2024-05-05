@@ -70,9 +70,10 @@ class ResetPassword extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  style: const ButtonStyle(
-                      backgroundColor:
-                          MaterialStatePropertyAll(Colors.blueAccent)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    side: const BorderSide(color: Colors.blueAccent, width: 1),
+                  ),
                   onPressed: () => ForgetPasswordController.instance
                       .resendPasswordResetEmail(email),
                   child: AutoSizeText(

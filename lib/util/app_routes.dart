@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:textspeech/auth/controller/sign_up_controller.dart';
 import 'package:textspeech/auth/controller/verify_email_controller.dart';
-import 'package:textspeech/auth/forget_pw.dart';
-import 'package:textspeech/auth/reset_password.dart';
 import 'package:textspeech/interface/content/animal.dart';
 import 'package:textspeech/interface/content/family.dart';
 import 'package:textspeech/interface/content/fruits.dart';
@@ -10,10 +8,12 @@ import 'package:textspeech/interface/content/letters.dart';
 import 'package:textspeech/interface/content/numbers.dart';
 import 'package:textspeech/interface/content/vegetables.dart';
 import 'package:textspeech/interface/detail%20content/showall_content.dart';
+import 'package:textspeech/interface/edit_profile.dart';
 import 'package:textspeech/interface/game_ui.dart';
 import 'package:textspeech/interface/homepage.dart';
 import 'package:textspeech/interface/introduction_screen.dart';
 import 'package:textspeech/auth/sign_up.dart';
+import 'package:textspeech/interface/profile.dart';
 import 'package:textspeech/interface/splash_screen.dart';
 import 'package:textspeech/auth/verify_email.dart';
 import 'package:textspeech/quiz/question_paper_controller.dart';
@@ -57,5 +57,9 @@ class AppRoutes {
             name: '/vegetables-content', page: () => const VegetablesContent()),
         // show all content
         GetPage(name: '/show-all-content', page: () => const ShowAllContent()),
+        // profile
+        GetPage(name: '/profile', page: () => const ProfileScreen()),
+        // edit profile
+        GetPage(name: '/edit-profile', page: () => const EditProfileScreen()),
       ];
 }

@@ -6,14 +6,13 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:textspeech/auth/controller/user_controller.dart';
 import 'package:textspeech/interface/content/animal.dart';
 import 'package:textspeech/interface/content/family.dart';
 import 'package:textspeech/interface/content/fruits.dart';
 import 'package:textspeech/interface/content/letters.dart';
 import 'package:textspeech/interface/content/numbers.dart';
 import 'package:textspeech/interface/content/vegetables.dart';
-import 'package:textspeech/util/auth_controller.dart';
 import 'package:textspeech/util/category_list_mobile.dart';
 import 'package:textspeech/util/app_colors.dart';
 import 'package:textspeech/util/constants.dart';
@@ -136,6 +135,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(UserController());
     return Scaffold(
       backgroundColor: const Color(0xFFfcf4f1),
       body: SafeArea(
@@ -149,24 +149,60 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          AutoSizeText(
-                            'Good $_timeOfDay',
-                            maxFontSize: 24,
-                            minFontSize: 20,
-                            style: GoogleFonts.aBeeZee(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AutoSizeText(
+                                'Good $_timeOfDay',
+                                maxFontSize: 24,
+                                minFontSize: 20,
+                                style: GoogleFonts.aBeeZee(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ).animate().slideY(
+                                  begin: -4,
+                                  end: 0,
+                                  curve: Curves.bounceIn,
+                                  duration: const Duration(milliseconds: 400)),
+                              Obx(() => AutoSizeText(
+                                    controller.user.value.username,
+                                    maxFontSize: 18,
+                                    minFontSize: 16,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: GoogleFonts.aBeeZee(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                  ))
+                            ],
+                          ),
+                          InkWell(
+                            onTap: () => Get.toNamed('/profile'),
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                      color: kDark,
+                                      style: BorderStyle.solid,
+                                      width: 1),
+                                  image: const DecorationImage(
+                                      image:
+                                          AssetImage('assets/images/cat.png'),
+                                      fit: BoxFit.fitHeight)),
                             ),
-                          ).animate().slideY(
-                              begin: -4,
-                              end: 0,
-                              curve: Curves.bounceIn,
-                              duration: const Duration(milliseconds: 400)),
-                          IconButton(
-                              onPressed: () =>
-                                  AuthenticationRepository.instance.logOut(),
-                              icon: const Icon(Iconsax.logout))
+                          )
+                          // ElevatedButton(
+                          //     onPressed: () => Get.toNamed('/profile'),
+                          //     style: ElevatedButton.styleFrom(
+                          //         shape: const CircleBorder(),
+                          //         backgroundColor: kDark),
+                          //     child: const Image.a)
                         ],
                       ),
                       const SizedBox(height: 15.0),

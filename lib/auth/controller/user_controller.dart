@@ -133,10 +133,23 @@ class UserController extends GetxController {
           await auth.deleteAccount();
           Navigator.of(Get.overlayContext!).pop();
           Get.offAll(() => const IntroductionScreen());
+          Get.snackbar(
+            'Atention',
+            'Your account has been deleted',
+            maxWidth: 600,
+            isDismissible: true,
+            shouldIconPulse: true,
+            colorText: Colors.white,
+            backgroundColor: Colors.blueAccent,
+            snackPosition: SnackPosition.BOTTOM,
+            duration: const Duration(seconds: 3),
+            margin: const EdgeInsets.all(10),
+            icon: const Icon(Iconsax.check, color: Colors.white),
+          );
+        } else if (provider == 'password') {
+          Navigator.of(Get.overlayContext!).pop();
+          Get.to(() => const ReAuthForm());
         }
-      } else if (provider == 'password') {
-        Navigator.of(Get.overlayContext!).pop();
-        Get.to(() => const ReAuthForm());
       }
     } catch (e) {
       Navigator.of(Get.overlayContext!).pop();
@@ -193,6 +206,19 @@ class UserController extends GetxController {
       await AuthenticationRepository.instance.deleteAccount();
       Navigator.of(Get.overlayContext!).pop();
       Get.offAll(() => const IntroductionScreen());
+      Get.snackbar(
+        'Atention',
+        'Your account has been deleted',
+        maxWidth: 600,
+        isDismissible: true,
+        shouldIconPulse: true,
+        colorText: Colors.white,
+        backgroundColor: Colors.blueAccent,
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.all(10),
+        icon: const Icon(Iconsax.check, color: Colors.white),
+      );
     } catch (e) {
       Navigator.of(Get.overlayContext!).pop();
       Get.snackbar(
@@ -222,13 +248,15 @@ class UserController extends GetxController {
           maxHeight: 512,
           maxWidth: 512);
       if (image != null) {
+        print('scv');
         imageUploading.value = true;
         final imageUrl =
             await userRepo.uploadImage('Users/Images/Profile/', image);
         // update User Image Record
         Map<String, dynamic> json = {'ProfilePicture': imageUrl};
+        print('rqs');
         await userRepo.updateSingleField(json);
-
+        print('ppq');
         user.value.profilePicture = imageUrl;
         user.refresh();
 
@@ -262,6 +290,7 @@ class UserController extends GetxController {
           color: Colors.white,
         ),
       );
+      print('error to store image ' + e.toString());
     } finally {
       imageUploading.value = false;
     }

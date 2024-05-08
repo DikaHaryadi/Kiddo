@@ -11,6 +11,7 @@ import 'package:textspeech/firebase_options.dart';
 import 'package:textspeech/util/app_routes.dart';
 import 'package:textspeech/util/auth_controller.dart';
 import 'package:textspeech/util/bindings/initial_bindings.dart';
+import 'package:textspeech/util/theme.dart';
 
 // void main() async {
 //   final WidgetsBinding widgetsBinding =
@@ -55,6 +56,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      themeMode: ThemeMode.light,
+      theme: AppTheme.lightTheme,
       debugShowCheckedModeBanner: false,
       getPages: AppRoutes.routes(),
       initialBinding: InitialBindings(),

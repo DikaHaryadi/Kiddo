@@ -13,10 +13,12 @@ import 'package:textspeech/interface/content/fruits.dart';
 import 'package:textspeech/interface/content/letters.dart';
 import 'package:textspeech/interface/content/numbers.dart';
 import 'package:textspeech/interface/content/vegetables.dart';
+import 'package:textspeech/interface/edit_profile.dart';
 import 'package:textspeech/util/category_list_mobile.dart';
 import 'package:textspeech/util/app_colors.dart';
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/responsive.dart';
+import 'package:textspeech/util/shimmer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -135,7 +137,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(UserController());
+    final controller = UserController.instance;
     return Scaffold(
       backgroundColor: const Color(0xFFfcf4f1),
       body: SafeArea(
@@ -156,47 +158,55 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               AutoSizeText(
                                 'Good $_timeOfDay',
-                                maxFontSize: 24,
-                                minFontSize: 20,
-                                style: GoogleFonts.aBeeZee(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ).animate().slideY(
+                                // style: GoogleFonts.aBeeZee(
+                                //   fontWeight: FontWeight.bold,
+                                //   color: Colors.black,
+                                // ),
+                                style:
+                                    Theme.of(context).textTheme.headlineLarge,
+                              ).animate().slideX(
                                   begin: -4,
                                   end: 0,
                                   curve: Curves.bounceIn,
                                   duration: const Duration(milliseconds: 400)),
                               Obx(() => AutoSizeText(
-                                    controller.user.value.username,
-                                    maxFontSize: 18,
-                                    minFontSize: 16,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: GoogleFonts.aBeeZee(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                    ),
-                                  ))
+                                        controller.user.value.username,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineMedium,
+                                      ))
+                                  .animate()
+                                  .slideX(
+                                      begin: -4,
+                                      end: 0,
+                                      curve: Curves.bounceIn,
+                                      duration:
+                                          const Duration(milliseconds: 400)),
                             ],
                           ),
-                          InkWell(
-                            onTap: () => Get.toNamed('/profile'),
-                            child: Container(
-                              width: 40,
-                              height: 40,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      color: kDark,
-                                      style: BorderStyle.solid,
-                                      width: 1),
-                                  image: const DecorationImage(
-                                      image:
-                                          AssetImage('assets/images/cat.png'),
-                                      fit: BoxFit.fitHeight)),
-                            ),
-                          )
+                          Obx(() {
+                            final networkImage =
+                                controller.user.value.profilePicture;
+                            final image = networkImage.isNotEmpty
+                                ? networkImage
+                                : 'assets/images/cat.png';
+                            return controller.imageUploading.value
+                                ? const DShimmerEffect(
+                                    width: 80, height: 80, radius: 80)
+                                : CircularImage(
+                                    image: image,
+                                    widht: 65,
+                                    height: 65,
+                                    isNetworkImage: networkImage.isNotEmpty,
+                                    onTap: () => Get.toNamed('/profile'),
+                                  );
+                          }).animate().slideX(
+                              begin: 4,
+                              end: 0,
+                              curve: Curves.bounceIn,
+                              duration: const Duration(milliseconds: 400)),
                           // ElevatedButton(
                           //     onPressed: () => Get.toNamed('/profile'),
                           //     style: ElevatedButton.styleFrom(
@@ -242,8 +252,8 @@ class _HomePageState extends State<HomePage> {
                                         flex: 2,
                                         child: ClipRRect(
                                           borderRadius: const BorderRadius.only(
-                                            topLeft: Radius.circular(20.0),
-                                            bottomLeft: Radius.circular(20.0),
+                                            topLeft: Radius.circular(8.0),
+                                            bottomLeft: Radius.circular(8.0),
                                           ),
                                           child: Image.asset(
                                             game['imagePath']!,
@@ -267,27 +277,35 @@ class _HomePageState extends State<HomePage> {
                                             children: [
                                               FittedBox(
                                                 fit: BoxFit.contain,
-                                                child: Text(game['GameName']!,
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: GoogleFonts.aBeeZee(
-                                                        color: kDark,
-                                                        fontSize: 16,
-                                                        fontWeight:
-                                                            FontWeight.bold)),
+                                                child: Text(
+                                                  game['GameName']!,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headlineMedium,
+                                                  // style: GoogleFonts.aBeeZee(
+                                                  //     color: kDark,
+                                                  //     fontSize: 16,
+                                                  //     fontWeight:
+                                                  //         FontWeight.bold)
+                                                ),
                                               ),
                                               FittedBox(
                                                 fit: BoxFit.contain,
-                                                child: Text(game['subtitle']!,
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: GoogleFonts.aBeeZee(
-                                                        color: kDark,
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.w400)),
+                                                child: Text(
+                                                  game['subtitle']!,
+                                                  maxLines: 1,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headlineSmall
+                                                      ?.copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                ),
                                               )
                                             ],
                                           ),
@@ -330,12 +348,15 @@ class _HomePageState extends State<HomePage> {
                                     padding: const EdgeInsets.only(right: 10.0),
                                     child: ElevatedButton.icon(
                                       style: ElevatedButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5.0),
                                         backgroundColor: Colors.white,
                                         side: BorderSide(
-                                            color: isSelected
-                                                ? Colors.black45
-                                                : Colors.white,
-                                            width: 2),
+                                          color: isSelected
+                                              ? Colors.black45
+                                              : Colors.white,
+                                          width: 2,
+                                        ),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(8.0),
@@ -354,64 +375,81 @@ class _HomePageState extends State<HomePage> {
                                         maxFontSize: 14,
                                         minFontSize: 12,
                                         style: GoogleFonts.aBeeZee(
-                                            fontWeight: FontWeight.w600,
-                                            color: kDark),
+                                          fontWeight: FontWeight.w600,
+                                          color: kDark,
+                                        ),
                                       ),
                                     ),
-                                  )
-                                      .animate(
-                                        delay:
-                                            const Duration(milliseconds: 100),
-                                      )
-                                      .slideX(
-                                        begin: -2,
-                                        end: 0,
-                                        duration: const Duration(
-                                          milliseconds: 500,
-                                        ),
-                                        curve: Curves.easeOut,
-                                        delay: const Duration(
-                                          milliseconds: 100,
-                                        ),
-                                      );
+                                  );
                                 }).toList(),
                                 if (!showAll && gameList.length > 2)
                                   Padding(
                                     padding: const EdgeInsets.only(right: 10.0),
-                                    child: ElevatedButton(
+                                    child: ElevatedButton.icon(
+                                      style: ElevatedButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5.0),
+                                        backgroundColor: Colors.white,
+                                        side: const BorderSide(
+                                            color: Colors.white),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
                                       onPressed: () {
                                         setState(() {
                                           showAll = true;
                                         });
                                       },
-                                      child: const Icon(Icons.arrow_forward),
-                                    )
-                                        .animate(
-                                          delay:
-                                              const Duration(milliseconds: 100),
-                                        )
-                                        .slideX(
-                                          begin: 2,
-                                          end: 0,
-                                          duration: const Duration(
-                                            milliseconds: 500,
-                                          ),
-                                          curve: Curves.easeOut,
-                                          delay: const Duration(
-                                            milliseconds: 100,
-                                          ),
-                                        ),
+                                      icon: const CircleAvatar(
+                                        minRadius: 10,
+                                        maxRadius: 15,
+                                        backgroundColor: Colors.pink,
+                                      ),
+                                      label: Text(
+                                        "Show All",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                                fontWeight: FontWeight.bold),
+                                      ), // Ganti teks sesuai kebutuhan
+                                    ),
                                   ),
                                 if (showAll)
                                   Padding(
                                     padding: const EdgeInsets.only(right: 10.0),
-                                    child: ElevatedButton(
+                                    child: ElevatedButton.icon(
+                                      style: ElevatedButton.styleFrom(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5.0),
+                                        backgroundColor: Colors.white,
+                                        side: const BorderSide(
+                                            color: Colors.white),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
                                       onPressed: () {
                                         setState(() {
                                           showAll = false;
                                         });
                                       },
-                                      child: const Icon(Icons.arrow_back),
+                                      icon: const CircleAvatar(
+                                        minRadius: 10,
+                                        maxRadius: 15,
+                                        backgroundColor: Colors.pink,
+                                      ),
+                                      label: Text(
+                                        "Show Less",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                                fontWeight: FontWeight.bold),
+                                      ), // Ganti teks sesuai kebutuhan
                                     ),
                                   ),
                               ],
@@ -484,7 +522,7 @@ class _HomePageState extends State<HomePage> {
                                                       const RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.all(
-                                                      Radius.circular(10.0),
+                                                      Radius.circular(8.0),
                                                     ),
                                                   ),
                                                   openBuilder:
@@ -515,16 +553,13 @@ class _HomePageState extends State<HomePage> {
                                                   },
                                                 ),
                                               ),
-                                              AutoSizeText(
-                                                '${content['name']}',
-                                                maxFontSize: 16,
-                                                minFontSize: 14,
-                                                style: GoogleFonts
-                                                    .montserratAlternates(
-                                                  fontWeight: FontWeight.w400,
-                                                  color: Colors.black,
-                                                ),
-                                              )
+                                              AutoSizeText('${content['name']}',
+                                                  textAlign: TextAlign.center,
+                                                  // maxFontSize: 16,
+                                                  // minFontSize: 14,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyLarge)
                                             ],
                                           ),
                                         ),

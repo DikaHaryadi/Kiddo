@@ -243,23 +243,20 @@ class UserController extends GetxController {
   uploadUserProfilePicture() async {
     try {
       final image = await ImagePicker().pickImage(
-          source: ImageSource.gallery,
-          imageQuality: 70,
-          maxHeight: 512,
-          maxWidth: 512);
+        source: ImageSource.gallery,
+      );
       if (image != null) {
-        print('scv');
         imageUploading.value = true;
-        final imageUrl =
-            await userRepo.uploadImage('Users/Images/Profile/', image);
-        // update User Image Record
-        Map<String, dynamic> json = {'ProfilePicture': imageUrl};
-        print('rqs');
-        await userRepo.updateSingleField(json);
-        print('ppq');
+        final imageUrl = await userRepo.uploadImage('Users/Image/', image);
+
+        // Store the image URL in Firebase Firestore or Realtime Database
+        await userRepo.updateSingleField({'ProfilePicture': imageUrl});
+
+        // Update User Image Record locally
         user.value.profilePicture = imageUrl;
         user.refresh();
 
+        // Show success message
         Get.snackbar(
           'Congratulations',
           'Your Profile Image has been updated!',
@@ -275,6 +272,7 @@ class UserController extends GetxController {
         );
       }
     } catch (e) {
+      // Show error message
       Get.snackbar(
         'Oh Snap!',
         e.toString(),
@@ -290,7 +288,7 @@ class UserController extends GetxController {
           color: Colors.white,
         ),
       );
-      print('error to store image ' + e.toString());
+      print('Error storing image: $e');
     } finally {
       imageUploading.value = false;
     }

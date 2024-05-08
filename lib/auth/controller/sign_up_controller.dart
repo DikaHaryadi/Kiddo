@@ -160,9 +160,8 @@ class AnimationLoader extends StatelessWidget {
             const SizedBox(height: 16.0),
             AutoSizeText(
               text,
-              minFontSize: 22,
-              maxFontSize: 24,
-              style: GoogleFonts.archivoBlack(),
+              textAlign: TextAlign.center,
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             const SizedBox(height: 16.0),
             showAction
@@ -170,11 +169,11 @@ class AnimationLoader extends StatelessWidget {
                     width: 250,
                     child: OutlinedButton(
                         onPressed: onActionPressed,
-                        child: AutoSizeText(
-                          actionText ?? '',
-                          style: GoogleFonts.aBeeZee(
-                              color: kDark, fontWeight: FontWeight.w400),
-                        )),
+                        child: AutoSizeText(actionText ?? '',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .apply(color: kWhite))),
                   )
                 : const SizedBox.shrink()
           ],

@@ -110,15 +110,8 @@ class _AnimalContentState extends State<AnimalContent> {
                         end: 0,
                         duration: const Duration(milliseconds: 300)),
               ),
-              title: AutoSizeText(
-                'Animals',
-                maxFontSize: 20,
-                minFontSize: 18,
-                style: GoogleFonts.montserratAlternates(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              )
+              title: AutoSizeText('Animals',
+                      style: Theme.of(context).textTheme.headlineMedium)
                   .animate(delay: const Duration(milliseconds: 250))
                   .fadeIn(duration: const Duration(milliseconds: 800)),
               centerTitle: true,
@@ -137,7 +130,6 @@ class _AnimalContentState extends State<AnimalContent> {
                   aspectRatio: 18 / 9,
                   child: AnimationConfiguration.staggeredGrid(
                     position: 0,
-                    delay: const Duration(milliseconds: 250),
                     duration: const Duration(milliseconds: 900),
                     columnCount: 1,
                     child: FadeInAnimation(
@@ -152,18 +144,13 @@ class _AnimalContentState extends State<AnimalContent> {
                   ),
                 ),
                 const SizedBox(height: 25.0),
-                AutoSizeText(
-                  'Categories',
-                  maxFontSize: 20,
-                  minFontSize: 18,
-                  style: GoogleFonts.aBeeZee(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ).animate(delay: const Duration(milliseconds: 250)).slideX(
-                    begin: -2.5,
-                    end: 0,
-                    duration: const Duration(milliseconds: 550)),
+                AutoSizeText('Categories',
+                        style: Theme.of(context).textTheme.headlineMedium)
+                    .animate(delay: const Duration(milliseconds: 250))
+                    .slideX(
+                        begin: -2.5,
+                        end: 0,
+                        duration: const Duration(milliseconds: 550)),
                 AnimationLimiter(
                   child: ListView.builder(
                     shrinkWrap: true,

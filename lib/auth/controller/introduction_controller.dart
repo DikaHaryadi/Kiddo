@@ -32,7 +32,7 @@ class IntroductionController extends GetxController {
         builder: (context) => const PopScope(
             canPop: false,
             child: AnimationLoader(
-                text: 'Logging you in..',
+                text: 'Logging you in...',
                 animation: 'assets/animations/141594-animation-of-docer.json',
                 showAction: false)),
       );
@@ -85,7 +85,7 @@ class IntroductionController extends GetxController {
         builder: (context) => const PopScope(
             canPop: false,
             child: AnimationLoader(
-                text: 'Logging you in..',
+                text: 'Logging you in...',
                 animation: 'assets/animations/141594-animation-of-docer.json',
                 showAction: false)),
       );

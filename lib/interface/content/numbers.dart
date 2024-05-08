@@ -115,7 +115,6 @@ class _NumberContentState extends State<NumberContent> {
     return Scaffold(
         appBar: isMobile(context)
             ? AppBar(
-                elevation: 0,
                 leading: IconButton(
                   onPressed: () {
                     Future.delayed(const Duration(milliseconds: 250), () {
@@ -133,18 +132,13 @@ class _NumberContentState extends State<NumberContent> {
                           end: 0,
                           duration: const Duration(milliseconds: 300)),
                 ),
-                title: AutoSizeText(
-                  'Bilangan Angka',
-                  maxFontSize: 20,
-                  minFontSize: 18,
-                  style: GoogleFonts.montserratAlternates(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ).animate(delay: const Duration(milliseconds: 250)).slideX(
-                    begin: 1,
-                    end: 0,
-                    duration: const Duration(milliseconds: 400)),
+                title: AutoSizeText('Bilangan Angka',
+                        style: Theme.of(context).textTheme.headlineMedium)
+                    .animate(delay: const Duration(milliseconds: 250))
+                    .slideX(
+                        begin: 1,
+                        end: 0,
+                        duration: const Duration(milliseconds: 400)),
                 centerTitle: true,
               )
             : null,

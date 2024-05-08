@@ -142,12 +142,14 @@ class CircularImage extends StatelessWidget {
       this.overlayColor,
       required this.widht,
       required this.height,
-      this.padding = 8.0});
+      this.padding = 8.0,
+      this.onTap});
 
   final BoxFit? fit;
   final String image;
   final bool isNetworkImage;
   final Color? overlayColor;
+  final void Function()? onTap;
   final double widht, height, padding;
 
   @override
@@ -162,17 +164,21 @@ class CircularImage extends StatelessWidget {
         borderRadius: BorderRadius.circular(100),
         child: Center(
           child: isNetworkImage
-              ? CachedNetworkImage(
-                  imageUrl: image,
-                  fit: fit,
-                  color: overlayColor,
-                  progressIndicatorBuilder: (context, url, progress) =>
-                      const DShimmerEffect(
-                    width: 55,
-                    height: 55,
-                    radius: 55,
+              ? InkWell(
+                  onTap: onTap,
+                  child: CachedNetworkImage(
+                    imageUrl: image,
+                    fit: fit,
+                    color: overlayColor,
+                    progressIndicatorBuilder: (context, url, progress) =>
+                        const DShimmerEffect(
+                      width: 55,
+                      height: 55,
+                      radius: 55,
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
                   ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 )
               : Image(
                   image: AssetImage(image),

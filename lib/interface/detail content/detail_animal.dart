@@ -119,7 +119,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
         leading: IconButton(
             onPressed: () {
               Future.delayed(const Duration(milliseconds: 250), () {
-                Get.offNamed('/animals-content');
+                Get.offAllNamed('/animals-content');
               });
             },
             icon: const Icon(Icons.arrow_back_ios)

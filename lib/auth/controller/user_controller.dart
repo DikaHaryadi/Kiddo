@@ -247,29 +247,56 @@ class UserController extends GetxController {
       );
       if (image != null) {
         imageUploading.value = true;
-        final imageUrl = await userRepo.uploadImage('Users/Image/', image);
 
-        // Store the image URL in Firebase Firestore or Realtime Database
-        await userRepo.updateSingleField({'ProfilePicture': imageUrl});
+        // Check if last profile picture update is available
+        final lastUpdateTimestamp =
+            await userRepo.getLastProfileUpdateTimestamp();
 
-        // Update User Image Record locally
-        user.value.profilePicture = imageUrl;
+        if (lastUpdateTimestamp == null ||
+            DateTime.now().difference(lastUpdateTimestamp).inDays >= 7) {
+          // If there is no last update timestamp or it's been more than 7 days, allow the update
+          final imageUrl =
+              await userRepo.uploadImage('Users/${user.value.id}/', image);
+
+          // Store the image URL in Firebase Firestore or Realtime Database
+          await userRepo.updateSingleField({'ProfilePicture': imageUrl});
+
+          // Update User Image Record locally
+          user.value.profilePicture = imageUrl;
+          await userRepo.setLastProfileUpdateTimestamp(DateTime.now());
+          Get.snackbar(
+            'Congratulations',
+            'Your Profile Image has been updated!',
+            maxWidth: 600,
+            isDismissible: true,
+            shouldIconPulse: true,
+            colorText: Colors.white,
+            backgroundColor: Colors.blueAccent,
+            snackPosition: SnackPosition.BOTTOM,
+            duration: const Duration(seconds: 3),
+            margin: const EdgeInsets.all(10),
+            icon: const Icon(Iconsax.check, color: Colors.white),
+          );
+        } else {
+          // If it's within 7 days, show a message indicating when the next update can be done
+          final daysRemaining =
+              7 - DateTime.now().difference(lastUpdateTimestamp).inDays;
+          Get.snackbar(
+            'Oops!',
+            'You can only update your profile picture in $daysRemaining days.',
+            maxWidth: 600,
+            isDismissible: true,
+            shouldIconPulse: true,
+            colorText: Colors.white,
+            backgroundColor: Colors.red,
+            snackPosition: SnackPosition.BOTTOM,
+            duration: const Duration(seconds: 3),
+            margin: const EdgeInsets.all(10),
+            icon: const Icon(Iconsax.warning_2, color: Colors.white),
+          );
+        }
+
         user.refresh();
-
-        // Show success message
-        Get.snackbar(
-          'Congratulations',
-          'Your Profile Image has been updated!',
-          maxWidth: 600,
-          isDismissible: true,
-          shouldIconPulse: true,
-          colorText: Colors.white,
-          backgroundColor: Colors.blueAccent,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 3),
-          margin: const EdgeInsets.all(10),
-          icon: const Icon(Iconsax.check, color: Colors.white),
-        );
       }
     } catch (e) {
       // Show error message

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:textspeech/auth/user_model.dart';
 import 'package:textspeech/util/auth_controller.dart';
@@ -103,6 +104,17 @@ class UserRepository extends GetxController {
     } catch (e) {
       throw 'Something went wrong. Please try again';
     }
+  }
+
+  Future<DateTime?> getLastProfileUpdateTimestamp() async {
+    final box = GetStorage();
+    final timestamp = box.read('lastProfileUpdateTimestamp');
+    return timestamp != null ? DateTime.parse(timestamp) : null;
+  }
+
+  Future<void> setLastProfileUpdateTimestamp(DateTime timestamp) async {
+    final box = GetStorage();
+    await box.write('lastProfileUpdateTimestamp', timestamp.toString());
   }
 
   // Upload any image

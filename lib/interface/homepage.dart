@@ -137,7 +137,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = UserController.instance;
+    final controller = Get.put(UserController());
     return Scaffold(
       backgroundColor: const Color(0xFFfcf4f1),
       body: SafeArea(

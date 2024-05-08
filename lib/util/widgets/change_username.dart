@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:textspeech/auth/controller/user/update_name_controller.dart';
+import 'package:textspeech/auth/controller/user/update_username_controller.dart';
 import 'package:textspeech/util/app_colors.dart';
 
-class ChangeName extends StatelessWidget {
-  const ChangeName({super.key});
+class ChangeUserName extends StatelessWidget {
+  const ChangeUserName({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(UpdateNameController());
+    final controller = Get.put(UpdateUsernameController());
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -18,7 +18,7 @@ class ChangeName extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios),
         ),
         title: Text(
-          'Change Name',
+          'Change Username',
           style: Theme.of(context).textTheme.headlineMedium,
         ),
       ),
@@ -27,8 +27,8 @@ class ChangeName extends StatelessWidget {
         child: Column(
           children: [
             Text(
-              'Use real name for easy verification. This name will appear on several pages.',
-              style: Theme.of(context).textTheme.labelMedium,
+              'Use real name for easy verification. This username will appear on several pages.',
+              style: Theme.of(context).textTheme.labelLarge,
             ),
             const SizedBox(height: 16.0),
             Form(
@@ -36,10 +36,10 @@ class ChangeName extends StatelessWidget {
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: controller.firstName,
+                      controller: controller.userName,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'First Name is required';
+                          return 'Username is required';
                         }
                         return null;
                       },
@@ -53,32 +53,7 @@ class ChangeName extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.0),
                               borderSide:
                                   const BorderSide(width: 1, color: kGrey)),
-                          labelText: 'First Name',
-                          labelStyle: GoogleFonts.aBeeZee(
-                              color: kGrey,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400)),
-                    ),
-                    const SizedBox(height: 16.0),
-                    TextFormField(
-                      controller: controller.lastName,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Last Name is required';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                          prefixIcon: const Icon(Iconsax.user),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide:
-                                  const BorderSide(width: 1, color: kGrey)),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide:
-                                  const BorderSide(width: 1, color: kGrey)),
-                          labelText: 'Last Name',
+                          labelText: 'Username',
                           labelStyle: GoogleFonts.aBeeZee(
                               color: kGrey,
                               fontSize: 14,

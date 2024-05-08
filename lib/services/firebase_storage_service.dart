@@ -11,6 +11,7 @@ class FirebaseStorageService extends GetxController {
           .child('question_paper_images')
           .child('${imgName.toLowerCase()}.jpg');
       var imgUrl = await urlRef.getDownloadURL();
+      print('ini image question paper model: ' + imgUrl.toString());
       return imgUrl;
     } catch (e) {
       return null;

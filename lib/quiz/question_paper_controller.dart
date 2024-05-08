@@ -5,8 +5,8 @@ import 'package:textspeech/quiz/question_model.dart';
 import 'package:textspeech/services/firebase_storage_service.dart';
 
 class QuestionPaperController extends GetxController {
-  final allPaperImages = <String>[].obs;
   final allPapers = <QuestionModel>[].obs;
+
   @override
   void onReady() {
     getAllpapers();
@@ -14,19 +14,20 @@ class QuestionPaperController extends GetxController {
   }
 
   Future<void> getAllpapers() async {
-    QuerySnapshot<Map<String, dynamic>> data = await questionPaperRF.get();
-    final paperList =
-        data.docs.map((paper) => QuestionModel.fromSnapshot(paper)).toList();
-    allPapers.assignAll(paperList);
     try {
+      QuerySnapshot<Map<String, dynamic>> data = await questionPaperRF.get();
+      final paperList =
+          data.docs.map((paper) => QuestionModel.fromSnapshot(paper)).toList();
+
       for (var paper in paperList) {
         final imgUrl =
-            await Get.find<FirebaseStorageService>().getImage(paper.title);
+            await Get.find<FirebaseStorageService>().getImage(paper.imageUrl);
         paper.imageUrl = imgUrl!;
       }
+
       allPapers.assignAll(paperList);
     } catch (e) {
-      print(e);
+      print('question_paper_controller error :' + e.toString());
     }
   }
 }

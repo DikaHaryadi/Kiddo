@@ -25,3 +25,5 @@ const Color kBorderPrimary = Color(0xFFD9D9D9);
 const Color kBorderSecondary = Color(0xFF313131);
 const Color kBlack = Color(0xFF232323);
 const Color kError = Color(0xFFD32F2F);
+
+const Color kButtonPrimary = Color(0xFF4b68ff);

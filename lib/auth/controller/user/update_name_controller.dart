@@ -36,7 +36,7 @@ class UpdateNameController extends GetxController {
         builder: (_) => const PopScope(
           canPop: false,
           child: AnimationLoader(
-            text: 'We are processing your information..',
+            text: 'Proccessing...',
             animation: 'assets/animations/141594-animation-of-docer.json',
             showAction: false,
           ),
@@ -71,7 +71,7 @@ class UpdateNameController extends GetxController {
 
       Get.snackbar(
         'Congratulations',
-        'Your account has been created! Verify email to continue.',
+        'Your name has been updated!',
         maxWidth: 600,
         isDismissible: true,
         shouldIconPulse: true,

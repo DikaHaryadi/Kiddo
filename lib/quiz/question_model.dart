@@ -22,7 +22,7 @@ class QuestionModel {
   QuestionModel.fromJson(Map<String, dynamic> json)
       : id = json['id'] as String,
         title = json['title'] as String,
-        imageUrl = json['image_url'] as String,
+        imageUrl = json['image_url'] ?? '',
         description = json['description'] as String,
         timeSeconds = json['time_seconds'],
         questionCount = 0,

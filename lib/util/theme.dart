@@ -224,9 +224,9 @@ class TElevatedButtonTheme {
     style: ElevatedButton.styleFrom(
       elevation: 0,
       foregroundColor: kLight,
-      backgroundColor: kPrimary,
+      backgroundColor: kButtonPrimary,
       disabledForegroundColor: const Color(0xFF272727),
-      side: const BorderSide(color: kPrimary),
+      side: const BorderSide(color: kBlack),
       padding: const EdgeInsets.symmetric(vertical: 18.0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
       textStyle: const TextStyle(

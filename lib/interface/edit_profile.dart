@@ -42,16 +42,6 @@ class EditProfileScreen extends StatelessWidget {
                                 isNetworkImage: networkImage.isNotEmpty,
                               );
                       }),
-                      // ElevatedButton(
-                      //     onPressed: () =>
-                      //         controller.uploadUserProfilePicture(),
-                      //     style: ElevatedButton.styleFrom(
-                      //         shape: const CircleBorder()),
-                      //     child: Image.asset(
-                      //       'assets/images/cat.png',
-                      //       width: 80,
-                      //       fit: BoxFit.fitHeight,
-                      //     )),
                       const SizedBox(height: 8.0),
                       TextButton(
                           onPressed: () =>

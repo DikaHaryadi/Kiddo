@@ -67,7 +67,7 @@ class UpdateUsernameController extends GetxController {
 
       Get.snackbar(
         'Congratulations',
-        'Your account has been created! Verify email to continue.',
+        'Your username has been updated!',
         maxWidth: 600,
         isDismissible: true,
         shouldIconPulse: true,

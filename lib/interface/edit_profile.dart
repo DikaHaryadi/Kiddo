@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/auth/controller/user_controller.dart';
+import 'package:textspeech/util/app_colors.dart';
 import 'package:textspeech/util/shimmer.dart';
-import 'package:textspeech/util/widgets/change_name.dart';
 
 class EditProfileScreen extends StatelessWidget {
   const EditProfileScreen({super.key});
@@ -37,8 +37,8 @@ class EditProfileScreen extends StatelessWidget {
                                 width: 80, height: 80, radius: 80)
                             : CircularImage(
                                 image: image,
-                                widht: 80,
-                                height: 80,
+                                widht: 160,
+                                height: 160,
                                 isNetworkImage: networkImage.isNotEmpty,
                               );
                       }),
@@ -46,8 +46,9 @@ class EditProfileScreen extends StatelessWidget {
                       TextButton(
                           onPressed: () =>
                               controller.uploadUserProfilePicture(),
-                          child: const AutoSizeText('Change Profile Picture',
-                              minFontSize: 12, maxFontSize: 14)),
+                          child: const AutoSizeText(
+                            'Change Profile Picture',
+                          )),
                     ],
                   ),
                 ),
@@ -62,8 +63,9 @@ class EditProfileScreen extends StatelessWidget {
                       ?.copyWith(fontWeight: FontWeight.bold),
                 ),
                 _profileMenu('Name', controller.user.value.fullName,
-                    () => Get.to(() => const ChangeName())),
-                _profileMenu('Username', controller.user.value.username, () {}),
+                    () => Get.toNamed('/edit-name')),
+                _profileMenu('Username', controller.user.value.username,
+                    () => Get.toNamed('/edit-username')),
                 const SizedBox(height: 8.0),
                 const Divider(),
                 const SizedBox(height: 16.0),
@@ -88,7 +90,13 @@ class EditProfileScreen extends StatelessWidget {
                 Center(
                   child: TextButton(
                     onPressed: () => controller.deleteAccountWarningPopUp(),
-                    child: const AutoSizeText('Clear Account'),
+                    child: AutoSizeText(
+                      'Clear Account',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.apply(color: kError),
+                    ),
                   ),
                 )
               ],
@@ -128,10 +136,10 @@ class CircularImage extends StatelessWidget {
       {super.key,
       this.fit,
       required this.image,
-      required this.isNetworkImage,
+      this.isNetworkImage = true,
       this.overlayColor,
-      required this.widht,
-      required this.height,
+      this.widht = 56,
+      this.height = 56,
       this.padding = 8.0,
       this.onTap});
 
@@ -170,13 +178,10 @@ class CircularImage extends StatelessWidget {
                         const Icon(Icons.error),
                   ),
                 )
-              : InkWell(
-                  onTap: onTap,
-                  child: Image(
-                    image: AssetImage(image),
-                    fit: fit,
-                    color: overlayColor,
-                  ),
+              : Image(
+                  image: AssetImage(image),
+                  fit: fit,
+                  color: overlayColor,
                 ),
         ),
       ),

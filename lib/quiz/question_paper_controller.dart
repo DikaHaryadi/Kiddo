@@ -20,8 +20,8 @@ class QuestionPaperController extends GetxController {
           data.docs.map((paper) => QuestionModel.fromSnapshot(paper)).toList();
 
       for (var paper in paperList) {
-        final imgUrl =
-            await Get.find<FirebaseStorageService>().getImage(paper.imageUrl);
+        final imgUrl = await Get.find<FirebaseStorageService>()
+            .getImage('question_paper_images', paper.imageUrl);
         paper.imageUrl = imgUrl!;
       }
 

@@ -91,7 +91,7 @@ class ChangeName extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                   onPressed: () => controller.updateUserName(),
-                  child: Text('Save')),
+                  child: const Text('Save')),
             )
           ],
         ),

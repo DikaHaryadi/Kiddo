@@ -50,21 +50,7 @@ class SignUpScreen extends StatelessWidget {
                                   },
                                   decoration: const InputDecoration(
                                     prefixIcon: Icon(Iconsax.user),
-                                    // focusedBorder: OutlineInputBorder(
-                                    //     borderRadius:
-                                    //         BorderRadius.circular(10.0),
-                                    //     borderSide: const BorderSide(
-                                    //         width: 1, color: kGrey)),
-                                    // enabledBorder: OutlineInputBorder(
-                                    //     borderRadius:
-                                    //         BorderRadius.circular(10.0),
-                                    //     borderSide: const BorderSide(
-                                    //         width: 1, color: kGrey)),
                                     labelText: 'First Name',
-                                    // labelStyle: GoogleFonts.aBeeZee(
-                                    //     color: kGrey,
-                                    //     fontSize: 14,
-                                    //     fontWeight: FontWeight.w400)
                                   ),
                                 ),
                               ),
@@ -81,21 +67,7 @@ class SignUpScreen extends StatelessWidget {
                                   },
                                   decoration: const InputDecoration(
                                     prefixIcon: Icon(Iconsax.user),
-                                    // focusedBorder: OutlineInputBorder(
-                                    //     borderRadius:
-                                    //         BorderRadius.circular(10.0),
-                                    //     borderSide: const BorderSide(
-                                    //         width: 1, color: kGrey)),
-                                    // enabledBorder: OutlineInputBorder(
-                                    //     borderRadius:
-                                    //         BorderRadius.circular(10.0),
-                                    //     borderSide: const BorderSide(
-                                    //         width: 1, color: kGrey)),
                                     labelText: 'Last Name',
-                                    // labelStyle: GoogleFonts.aBeeZee(
-                                    //     color: kGrey,
-                                    //     fontSize: 14,
-                                    //     fontWeight: FontWeight.w400)
                                   ),
                                 ),
                               )
@@ -112,21 +84,7 @@ class SignUpScreen extends StatelessWidget {
                             },
                             decoration: const InputDecoration(
                               prefixIcon: Icon(Iconsax.user_edit),
-                              // focusedBorder: OutlineInputBorder(
-                              //     borderRadius:
-                              //         BorderRadius.circular(10.0),
-                              //     borderSide: const BorderSide(
-                              //         width: 1, color: kGrey)),
-                              // enabledBorder: OutlineInputBorder(
-                              //     borderRadius:
-                              //         BorderRadius.circular(10.0),
-                              //     borderSide: const BorderSide(
-                              //         width: 1, color: kGrey)),
                               labelText: 'Username',
-                              // labelStyle: GoogleFonts.aBeeZee(
-                              //     color: kGrey,
-                              //     fontSize: 14,
-                              //     fontWeight: FontWeight.w400)
                             ),
                           ),
                           const SizedBox(height: 16.0),
@@ -147,21 +105,7 @@ class SignUpScreen extends StatelessWidget {
                             },
                             decoration: const InputDecoration(
                               prefixIcon: Icon(Iconsax.direct),
-                              // focusedBorder: OutlineInputBorder(
-                              //     borderRadius:
-                              //         BorderRadius.circular(10.0),
-                              //     borderSide: const BorderSide(
-                              //         width: 1, color: kGrey)),
-                              // enabledBorder: OutlineInputBorder(
-                              //     borderRadius:
-                              //         BorderRadius.circular(10.0),
-                              //     borderSide: const BorderSide(
-                              //         width: 1, color: kGrey)),
                               labelText: 'E-Mail',
-                              // labelStyle: GoogleFonts.aBeeZee(
-                              //     color: kGrey,
-                              //     fontSize: 14,
-                              //     fontWeight: FontWeight.w400)
                             ),
                           ),
                           const SizedBox(height: 16.0),
@@ -192,7 +136,7 @@ class SignUpScreen extends StatelessWidget {
                               decoration: InputDecoration(
                                 prefixIcon: const Icon(Iconsax.password_check),
                                 labelText: 'Password',
-                                // focusedBorder: OutlineInputBorder(
+
                                 //     borderRadius:
                                 //         BorderRadius.circular(10.0),
                                 //     borderSide: const BorderSide(

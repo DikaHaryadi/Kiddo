@@ -1,4 +1,5 @@
-import 'package:animations/animations.dart';
+import 'dart:async';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -8,12 +9,13 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-import 'package:textspeech/interface/detail%20content/detail_animal.dart';
+import 'package:textspeech/controllers/animal_controller.dart';
 import 'package:textspeech/interface/homepage.dart';
 import 'package:textspeech/util/app_colors.dart';
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/curved_edges.dart';
 import 'package:textspeech/util/responsive.dart';
+import 'package:textspeech/util/widgets/animal_card.dart';
 
 class AnimalContent extends StatefulWidget {
   const AnimalContent({
@@ -80,6 +82,7 @@ class _AnimalContentState extends State<AnimalContent> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(AnimalController());
     String name = animalsList[selectedIndex]['name']!;
     String deskripsi = animalsList[selectedIndex]['deskripsi']!;
     String kategori = animalsList[selectedIndex]['kategori']!;
@@ -151,141 +154,30 @@ class _AnimalContentState extends State<AnimalContent> {
                         begin: -2.5,
                         end: 0,
                         duration: const Duration(milliseconds: 550)),
-                AnimationLimiter(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: animalsList.length,
-                    itemBuilder: (context, index) {
-                      return AnimationConfiguration.staggeredList(
-                        position: index,
-                        delay: const Duration(milliseconds: 250),
-                        duration: const Duration(milliseconds: 800),
-                        child: SlideAnimation(
-                          verticalOffset: 100.0,
-                          child: FadeInAnimation(
-                            child: SizedBox(
-                              width: double.infinity,
-                              height: 100,
-                              child: Row(
-                                children: [
-                                  OpenContainer(
-                                    closedElevation: 0,
-                                    transitionDuration:
-                                        const Duration(milliseconds: 500),
-                                    transitionType:
-                                        ContainerTransitionType.fade,
-                                    closedShape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                    ),
-                                    closedBuilder: (context, action) {
-                                      return Image.asset(
-                                        animalsList[index]['imagePath']!,
-                                        width: 60,
-                                        height: 60,
-                                        fit: BoxFit.cover,
-                                      );
-                                    },
-                                    openBuilder: (context, action) =>
-                                        DetailAnimals(
-                                      imgAnimal: animalsList[index]
-                                          ['imagePath']!,
-                                      name: animalsList[index]['name']!,
-                                      deskripsi: animalsList[index]
-                                          ['deskripsi']!,
-                                      audio: animalsList[index]['voice']!,
-                                      kategori: animalsList[index]['kategori']!,
-                                      jenisMakanan: animalsList[index]
-                                          ['jenis_makan']!,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      color: const Color(0xFFfcf4f1),
-                                      padding:
-                                          const EdgeInsets.only(left: 20.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          AutoSizeText(
-                                            animalsList[index]['name']!,
-                                            maxFontSize: 14,
-                                            minFontSize: 12,
-                                            style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.orangeAccent,
-                                            ),
-                                          ),
-                                          AutoSizeText.rich(
-                                            maxFontSize: 14,
-                                            minFontSize: 12,
-                                            TextSpan(
-                                                text:
-                                                    '${animalsList[index]['kategori']} | ${animalsList[index]['jenis_makan']}'),
-                                            style: GoogleFonts.robotoSlab(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.orangeAccent,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Future.delayed(
-                                          const Duration(milliseconds: 250),
-                                          () {
-                                        Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailAnimals(
-                                                imgAnimal: animalsList[index]
-                                                    ['imagePath']!,
-                                                name: animalsList[index]
-                                                    ['name']!,
-                                                deskripsi: animalsList[index]
-                                                    ['deskripsi']!,
-                                                audio: animalsList[index]
-                                                    ['voice']!,
-                                                kategori: animalsList[index]
-                                                    ['kategori']!,
-                                                jenisMakanan: animalsList[index]
-                                                    ['jenis_makan']!,
-                                              ),
-                                            ));
-                                      });
-                                    },
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: kGreen,
-                                          border: Border.fromBorderSide(
-                                              BorderSide(
-                                                  color: Colors.white,
-                                                  strokeAlign: 1,
-                                                  width: 2))),
-                                      child: const Icon(
-                                        Icons.play_arrow,
-                                        color: kDark,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
+                Obx(
+                  () => controller.isLoadingAnimal.value
+                      ? const CircularProgressIndicator()
+                      : AnimationLimiter(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: controller.animalModels.length,
+                            itemBuilder: (context, index) {
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                delay: const Duration(milliseconds: 250),
+                                duration: const Duration(milliseconds: 800),
+                                child: SlideAnimation(
+                                  verticalOffset: 100.0,
+                                  child: FadeInAnimation(
+                                      child: AnimalCardScreen(
+                                          model:
+                                              controller.animalModels[index])),
+                                ),
+                              );
+                            },
                           ),
                         ),
-                      );
-                    },
-                  ),
                 ),
               ],
             ),

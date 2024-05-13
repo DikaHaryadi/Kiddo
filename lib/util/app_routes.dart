@@ -18,6 +18,8 @@ import 'package:textspeech/interface/splash_screen.dart';
 import 'package:textspeech/auth/verify_email.dart';
 import 'package:textspeech/quiz/question_paper_controller.dart';
 import 'package:textspeech/quiz/quiz_screen.dart';
+import 'package:textspeech/util/widgets/change_name.dart';
+import 'package:textspeech/util/widgets/change_username.dart';
 
 class AppRoutes {
   static List<GetPage> routes() => [
@@ -61,5 +63,7 @@ class AppRoutes {
         GetPage(name: '/profile', page: () => const ProfileScreen()),
         // edit profile
         GetPage(name: '/edit-profile', page: () => const EditProfileScreen()),
+        GetPage(name: '/edit-name', page: () => const ChangeName()),
+        GetPage(name: '/edit-username', page: () => const ChangeUserName()),
       ];
 }

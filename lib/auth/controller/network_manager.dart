@@ -33,7 +33,7 @@ class NetworkManager extends GetxController {
         isDismissible: true,
         shouldIconPulse: true,
         colorText: Colors.white,
-        backgroundColor: kSoftblue,
+        backgroundColor: kError,
         snackPosition: SnackPosition.BOTTOM,
         duration: const Duration(seconds: 3),
         margin: const EdgeInsets.all(20),
@@ -55,6 +55,11 @@ class NetworkManager extends GetxController {
     } on PlatformException catch (_) {
       return false;
     }
+  }
+
+  Future<void> refreshConnectionStatus() async {
+    final result = await _connectivity.checkConnectivity();
+    _updateConnectionStatus(result);
   }
 
   /// Dispose or close the active connectivity stream.

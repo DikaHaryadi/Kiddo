@@ -51,10 +51,12 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
         request: request,
         rewardedAdLoadCallback: RewardedAdLoadCallback(
           onAdLoaded: (RewardedAd ad) {
+            print('$ad loaded.');
             _rewardedAd = ad;
             _numRewardedLoadAttempts = 0;
           },
           onAdFailedToLoad: (LoadAdError error) {
+            print('RewardedAd failed to load: $error');
             _rewardedAd = null;
             _numRewardedLoadAttempts += 1;
             if (_numRewardedLoadAttempts < maxFailedLoadAttempts) {
@@ -66,11 +68,12 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
 
   void _showRewardedAd() {
     if (_rewardedAd == null) {
+      print('Warning: attempt to show rewarded before loaded.');
       return;
     }
     _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-      // onAdShowedFullScreenContent: (RewardedAd ad) =>
-      //     print('ad onAdShowedFullScreenContent.'),
+      onAdShowedFullScreenContent: (RewardedAd ad) =>
+          print('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (RewardedAd ad) {
         ad.dispose();
         _createRewardedAd();
@@ -83,10 +86,10 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     );
 
     _rewardedAd!.setImmersiveMode(true);
-    // _rewardedAd!.show(
-    //     onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
-    //   print('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
-    // });
+    _rewardedAd!.show(
+        onUserEarnedReward: (AdWithoutView ad, RewardItem reward) {
+      print('$ad with reward $RewardItem(${reward.amount}, ${reward.type})');
+    });
     _rewardedAd = null;
   }
 
@@ -200,6 +203,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
         playCorrectSound(() {
           if (!clapSoundPlayed) {
             playClapSound();
+            print('playing clap sound here');
             clapSoundPlayed = true;
           }
         });
@@ -228,6 +232,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     }
 
     final path = AssetSource('voices/clap.mp3');
+    print('ini path clap sound' + path.toString());
     await audioPlayer.play(path);
     audioPlayer.setReleaseMode(ReleaseMode.stop);
   }
@@ -460,8 +465,15 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                _showRewardedAd();
-                // Tidak melakukan navigasi ke '/'. Menunggu sampai iklan selesai ditampilkan.
+                _showRewardedAd(); // Menampilkan iklan
+                // Navigasi ke /home setelah menutup iklan
+                _rewardedAd?.fullScreenContentCallback =
+                    FullScreenContentCallback(
+                  onAdDismissedFullScreenContent: (RewardedAd ad) {
+                    ad.dispose();
+                    Get.offNamed('/home'); // Navigasi ke /home
+                  },
+                );
               },
               child: const Text('OK'),
             ),

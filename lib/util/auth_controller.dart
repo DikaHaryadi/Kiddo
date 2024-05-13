@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/auth/controller/user_repo.dart';
 import 'package:textspeech/auth/verify_email.dart';
 import 'package:textspeech/interface/homepage.dart';
@@ -186,8 +188,49 @@ class AuthenticationRepository extends GetxController {
   // logOut user for any authentication
   Future<void> logOut() async {
     try {
-      await FirebaseAuth.instance.signOut();
-      Get.offAllNamed('/introduction');
+      final auth = AuthenticationRepository.instance;
+      final provider =
+          auth.authUser!.providerData.map((e) => e.providerId).first;
+
+      if (provider.isNotEmpty) {
+        if (provider == 'google.com') {
+          // Me-reinisialisasi GoogleSignIn
+          final GoogleSignIn googleSignIn = GoogleSignIn();
+
+          // Logout dari Google SignIn
+          await googleSignIn.signOut();
+          Get.offAllNamed('/introduction');
+          Get.snackbar(
+            'Congratulations!',
+            'You have successfully exited',
+            maxWidth: 600,
+            isDismissible: true,
+            shouldIconPulse: true,
+            colorText: Colors.white,
+            backgroundColor: Colors.blueAccent,
+            snackPosition: SnackPosition.BOTTOM,
+            duration: const Duration(seconds: 3),
+            margin: const EdgeInsets.all(10),
+            icon: const Icon(Iconsax.check, color: Colors.white),
+          );
+        } else if (provider == 'password') {
+          await FirebaseAuth.instance.signOut();
+          Get.offAllNamed('/introduction');
+          Get.snackbar(
+            'Congratulations!',
+            'You have successfully exited',
+            maxWidth: 600,
+            isDismissible: true,
+            shouldIconPulse: true,
+            colorText: Colors.white,
+            backgroundColor: Colors.blueAccent,
+            snackPosition: SnackPosition.BOTTOM,
+            duration: const Duration(seconds: 3),
+            margin: const EdgeInsets.all(10),
+            icon: const Icon(Iconsax.check, color: Colors.white),
+          );
+        }
+      }
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code);
     } on FirebaseException catch (e) {

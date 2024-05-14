@@ -2,24 +2,22 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:textspeech/util/constants.dart';
+import 'package:textspeech/controllers/family_controller.dart';
+import 'package:textspeech/models/family_model.dart';
 import 'package:textspeech/util/curved_edges.dart';
 import 'package:textspeech/util/family_info.dart';
 
+import '../../controllers/tts_controller.dart';
+
 class DetailFamily extends StatefulWidget {
-  final String imgFamily;
-  final String name;
-  final String deskripsi;
-  final String subtitle;
-  const DetailFamily(
-      {super.key,
-      required this.imgFamily,
-      required this.name,
-      required this.deskripsi,
-      required this.subtitle});
+  final FamilyModel model;
+  const DetailFamily({
+    super.key,
+    required this.model,
+  });
 
   @override
   State<DetailFamily> createState() => _DetailFamilyState();
@@ -27,25 +25,15 @@ class DetailFamily extends StatefulWidget {
 
 class _DetailFamilyState extends State<DetailFamily> {
   late int currentIndex = -1;
-  FlutterTts flutterTts = FlutterTts();
-
-  void textToSpeech(String text) async {
-    await flutterTts.setLanguage("id-ID");
-    await flutterTts.setVolume(1);
-    await flutterTts.setSpeechRate(0.5);
-    await flutterTts.setPitch(1);
-    await flutterTts.speak(text);
-  }
 
   static Route<dynamic> _routeBuilder(
-      BuildContext context, List<Map<String, String>> familyList, int index) {
+    BuildContext context,
+    FamilyModel familyModel,
+  ) {
     return MaterialPageRoute(
       builder: (_) {
         return DetailFamily(
-          imgFamily: familyList[index]['imagePath']!,
-          name: familyList[index]['name']!,
-          deskripsi: familyList[index]['deskripsi']!,
-          subtitle: familyList[index]['subtitle']!,
+          model: familyModel,
         );
       },
     );
@@ -53,6 +41,8 @@ class _DetailFamilyState extends State<DetailFamily> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(FamilyController());
+    final ttsController = Get.put(TtsController());
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
@@ -78,92 +68,103 @@ class _DetailFamilyState extends State<DetailFamily> {
                           initialChildSize: 0.5,
                           snap: true,
                           snapSizes: const [0.5, 1.0],
-                          builder: (context, scrollController) {
-                            return CustomScrollView(
-                              controller: scrollController,
-                              physics: const ClampingScrollPhysics(),
-                              slivers: [
-                                SliverPersistentHeader(
-                                  delegate: FamilyInfoAppBar(familyList.length),
-                                  pinned: true,
-                                ),
-                                AnimationLimiter(
-                                  child: SliverList(
-                                      delegate: SliverChildBuilderDelegate(
-                                          (_, index) => AnimationConfiguration
-                                                  .staggeredList(
-                                                position: index,
-                                                duration: const Duration(
-                                                    milliseconds: 800),
-                                                child: SlideAnimation(
-                                                  verticalOffset: 100.0,
-                                                  child: FadeInAnimation(
-                                                    child: ListTile(
-                                                      onTap: () {
-                                                        if (index !=
-                                                            currentIndex) {
-                                                          setState(() {
-                                                            currentIndex =
-                                                                index;
-                                                          });
-                                                          Navigator
-                                                              .pushReplacement(
-                                                            context,
-                                                            _routeBuilder(
+                          builder: (_, scrollController) {
+                            return Obx(() => CustomScrollView(
+                                  controller: scrollController,
+                                  physics: const ClampingScrollPhysics(),
+                                  slivers: [
+                                    SliverPersistentHeader(
+                                      delegate: FamilyInfoAppBar(
+                                          controller.familyModel.length),
+                                      pinned: true,
+                                    ),
+                                    AnimationLimiter(
+                                      child: SliverList(
+                                          delegate: SliverChildBuilderDelegate(
+                                              (_, index) =>
+                                                  AnimationConfiguration
+                                                      .staggeredList(
+                                                    position: index,
+                                                    duration: const Duration(
+                                                        milliseconds: 800),
+                                                    child: SlideAnimation(
+                                                      verticalOffset: 100.0,
+                                                      child: FadeInAnimation(
+                                                        child: ListTile(
+                                                          onTap: () {
+                                                            if (index !=
+                                                                currentIndex) {
+                                                              setState(() {
+                                                                currentIndex =
+                                                                    index;
+                                                              });
+                                                              Navigator
+                                                                  .pushReplacement(
                                                                 context,
-                                                                familyList,
-                                                                index),
-                                                          );
-                                                        }
-                                                      },
-                                                      leading: ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0),
-                                                        child: Image.asset(
-                                                          familyList[index]
-                                                              ['imagePath']!,
-                                                          width: 50,
-                                                          height: 50,
-                                                          fit: BoxFit.cover,
+                                                                _routeBuilder(
+                                                                    context,
+                                                                    widget
+                                                                        .model),
+                                                              );
+                                                            }
+                                                          },
+                                                          leading: ClipRRect(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5.0),
+                                                            child:
+                                                                Image.network(
+                                                              controller
+                                                                  .familyModel[
+                                                                      index]
+                                                                  .imageContent,
+                                                              width: 50,
+                                                              height: 50,
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          ),
+                                                          title: AutoSizeText(
+                                                              controller
+                                                                  .familyModel[
+                                                                      index]
+                                                                  .subjectFamily,
+                                                              maxFontSize: 16,
+                                                              minFontSize: 14,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              style: GoogleFonts.aBeeZee(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Colors
+                                                                      .black)),
+                                                          subtitle: AutoSizeText(
+                                                              controller
+                                                                  .familyModel[
+                                                                      index]
+                                                                  .subtitle,
+                                                              maxFontSize: 16,
+                                                              minFontSize: 14,
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .left,
+                                                              style: GoogleFonts.aBeeZee(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: Colors
+                                                                      .black)),
                                                         ),
                                                       ),
-                                                      title: AutoSizeText(
-                                                          familyList[index]
-                                                              ['name']!,
-                                                          maxFontSize: 16,
-                                                          minFontSize: 14,
-                                                          textAlign:
-                                                              TextAlign.left,
-                                                          style: GoogleFonts
-                                                              .aBeeZee(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Colors
-                                                                      .black)),
-                                                      subtitle: AutoSizeText(
-                                                          familyList[index]
-                                                              ['subtitle']!,
-                                                          maxFontSize: 16,
-                                                          minFontSize: 14,
-                                                          textAlign:
-                                                              TextAlign.left,
-                                                          style: GoogleFonts
-                                                              .aBeeZee(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w400,
-                                                                  color: Colors
-                                                                      .black)),
                                                     ),
                                                   ),
-                                                ),
-                                              ),
-                                          childCount: familyList.length)),
-                                )
-                              ],
-                            );
+                                              childCount: controller
+                                                  .familyModel.length)),
+                                    )
+                                  ],
+                                ));
                           },
                         );
                       },
@@ -194,7 +195,7 @@ class _DetailFamilyState extends State<DetailFamily> {
               top: height * 0.35,
               left: 30,
               child: Text(
-                widget.subtitle,
+                widget.model.subtitle,
                 style: GoogleFonts.montserrat(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -212,7 +213,7 @@ class _DetailFamilyState extends State<DetailFamily> {
               bottom: 150,
               child: GestureDetector(
                 onTap: () {
-                  textToSpeech(widget.subtitle);
+                  ttsController.textToSpeech(widget.model.subtitle);
                 },
                 child: Container(
                   width: 60,
@@ -237,7 +238,7 @@ class _DetailFamilyState extends State<DetailFamily> {
               top: height * 0.3,
               bottom: 10,
               left: 30,
-              child: AutoSizeText(widget.name,
+              child: AutoSizeText(widget.model.subjectFamily,
                       maxFontSize: 26,
                       minFontSize: 22,
                       style: GoogleFonts.aBeeZee(
@@ -257,12 +258,12 @@ class _DetailFamilyState extends State<DetailFamily> {
               left: 20,
               child: InkWell(
                 onTap: () {
-                  textToSpeech(widget.deskripsi);
+                  ttsController.textToSpeech(widget.model.deskripsiFamily);
                 },
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
                   child: AutoSizeText(
-                    widget.deskripsi,
+                    widget.model.deskripsiFamily,
                     maxFontSize: 18,
                     minFontSize: 16,
                     textAlign: TextAlign.justify,

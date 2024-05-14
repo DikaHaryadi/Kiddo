@@ -1,17 +1,16 @@
 import 'package:animations/animations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:textspeech/models/animal_model.dart';
+import 'package:textspeech/models/family_model.dart';
+import 'package:textspeech/interface/detail%20content/detail_family.dart';
 import 'package:textspeech/util/app_colors.dart';
-import 'package:textspeech/util/to_title_case.dart';
 
-import '../../interface/detail content/detail_animal.dart';
+class FamilyCardScreen extends StatelessWidget {
+  const FamilyCardScreen({super.key, required this.model});
 
-class AnimalCardScreen extends StatelessWidget {
-  const AnimalCardScreen({super.key, required this.model});
-
-  final AnimalModel model;
+  final FamilyModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,7 @@ class AnimalCardScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               );
             },
-            openBuilder: (context, action) => DetailAnimals(
+            openBuilder: (context, action) => DetailFamily(
               model: model,
             ),
           ),
@@ -48,7 +47,7 @@ class AnimalCardScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   AutoSizeText(
-                    toTitleCase(model.titleAnimal),
+                    model.subjectFamily,
                     maxFontSize: 14,
                     minFontSize: 12,
                     style: GoogleFonts.montserrat(
@@ -56,17 +55,15 @@ class AnimalCardScreen extends StatelessWidget {
                       color: Colors.orangeAccent,
                     ),
                   ),
-                  AutoSizeText.rich(
+                  AutoSizeText(
+                    model.subtitle,
                     maxFontSize: 14,
                     minFontSize: 12,
-                    TextSpan(
-                        text: toTitleCase(
-                            '${model.kategori} | ${model.jenisMakanan}')),
-                    style: GoogleFonts.robotoSlab(
+                    style: GoogleFonts.montserrat(
                       fontWeight: FontWeight.bold,
                       color: Colors.orangeAccent,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -74,13 +71,11 @@ class AnimalCardScreen extends StatelessWidget {
           GestureDetector(
             onTap: () {
               Future.delayed(const Duration(milliseconds: 250), () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailAnimals(
-                        model: model,
-                      ),
-                    ));
+                Get.to(
+                  () => DetailFamily(
+                    model: model,
+                  ),
+                );
               });
             },
             child: Container(

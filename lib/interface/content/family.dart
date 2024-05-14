@@ -1,19 +1,19 @@
-import 'package:animations/animations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-import 'package:textspeech/interface/detail%20content/detail_family.dart';
+import 'package:textspeech/controllers/family_controller.dart';
+import 'package:textspeech/controllers/tts_controller.dart';
 import 'package:textspeech/interface/homepage.dart';
-import 'package:textspeech/util/app_colors.dart';
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/curved_edges.dart';
 import 'package:textspeech/util/responsive.dart';
+import 'package:textspeech/util/shimmer/content_shimmer.dart';
+import 'package:textspeech/util/widgets/family_card.dart';
 
 class FamilyContent extends StatefulWidget {
   const FamilyContent({
@@ -29,15 +29,7 @@ class _FamilyContentState extends State<FamilyContent> {
 
   @override
   Widget build(BuildContext context) {
-    FlutterTts flutterTts = FlutterTts();
-
-    void textToSpeech(String text) async {
-      await flutterTts.setLanguage("id-ID");
-      await flutterTts.setVolume(1);
-      await flutterTts.setSpeechRate(0.5);
-      await flutterTts.setPitch(1);
-      await flutterTts.speak(text);
-    }
+    final controller = Get.put(FamilyController());
 
     String name = familyList[selectedIndex]['name']!;
     String subtitle = familyList[selectedIndex]['subtitle']!;
@@ -66,15 +58,8 @@ class _FamilyContentState extends State<FamilyContent> {
                         end: 0,
                         duration: const Duration(milliseconds: 300)),
               ),
-              title: AutoSizeText(
-                'Family',
-                maxFontSize: 20,
-                minFontSize: 18,
-                style: GoogleFonts.montserratAlternates(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              )
+              title: AutoSizeText('Family',
+                      style: Theme.of(context).textTheme.headlineMedium)
                   .animate(delay: const Duration(milliseconds: 250))
                   .fadeIn(duration: const Duration(milliseconds: 800)),
               centerTitle: true,
@@ -120,128 +105,30 @@ class _FamilyContentState extends State<FamilyContent> {
                     begin: -2.5,
                     end: 0,
                     duration: const Duration(milliseconds: 550)),
-                AnimationLimiter(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: familyList.length,
-                    itemBuilder: (context, index) {
-                      return AnimationConfiguration.staggeredList(
-                        position: index,
-                        duration: const Duration(milliseconds: 800),
-                        child: SlideAnimation(
-                          verticalOffset: 100.0,
-                          child: FadeInAnimation(
-                            child: SizedBox(
-                              width: double.infinity,
-                              height: 100,
-                              child: Row(
-                                children: [
-                                  OpenContainer(
-                                    closedElevation: 0,
-                                    transitionDuration:
-                                        const Duration(milliseconds: 500),
-                                    transitionType:
-                                        ContainerTransitionType.fade,
-                                    closedShape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10.0)),
-                                    ),
-                                    closedBuilder: (context, action) {
-                                      return Image.asset(
-                                        familyList[index]['imagePath']!,
-                                        width: 60,
-                                        height: 60,
-                                        fit: BoxFit.cover,
-                                      );
-                                    },
-                                    openBuilder: (context, action) =>
-                                        DetailFamily(
-                                      imgFamily: familyList[index]
-                                          ['imagePath']!,
-                                      name: familyList[index]['name']!,
-                                      deskripsi: familyList[index]
-                                          ['deskripsi']!,
-                                      subtitle: familyList[index]['subtitle']!,
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      color: const Color(0xFFfcf4f1),
-                                      padding:
-                                          const EdgeInsets.only(left: 20.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          AutoSizeText(
-                                            familyList[index]['name']!,
-                                            maxFontSize: 14,
-                                            minFontSize: 12,
-                                            style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.orangeAccent,
-                                            ),
-                                          ),
-                                          AutoSizeText(
-                                            familyList[index]['subtitle']!,
-                                            maxFontSize: 14,
-                                            minFontSize: 12,
-                                            style: GoogleFonts.montserrat(
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.orangeAccent,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Future.delayed(
-                                          const Duration(milliseconds: 250),
-                                          () {
-                                        Get.to(
-                                          () => DetailFamily(
-                                            imgFamily: familyList[index]
-                                                ['imagePath']!,
-                                            name: familyList[index]['name']!,
-                                            deskripsi: familyList[index]
-                                                ['deskripsi']!,
-                                            subtitle: familyList[index]
-                                                ['subtitle']!,
-                                          ),
-                                        );
-                                      });
-                                    },
-                                    child: Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: kGreen,
-                                          border: Border.fromBorderSide(
-                                              BorderSide(
-                                                  color: Colors.white,
-                                                  strokeAlign: 1,
-                                                  width: 2))),
-                                      child: const Icon(
-                                        Icons.play_arrow,
-                                        color: kDark,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
+                Obx(
+                  () => controller.isLoadingFamily.value
+                      ? const ContentShimmer()
+                      : AnimationLimiter(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: controller.familyModel.length,
+                            itemBuilder: (context, index) {
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                duration: const Duration(milliseconds: 800),
+                                child: SlideAnimation(
+                                  verticalOffset: 100.0,
+                                  child: FadeInAnimation(
+                                      child: FamilyCardScreen(
+                                          model:
+                                              controller.familyModel[index])),
+                                ),
+                              );
+                            },
                           ),
                         ),
-                      );
-                    },
-                  ),
-                ),
+                )
               ],
             ),
           if (isDesktop(context))
@@ -463,7 +350,7 @@ class _FamilyContentState extends State<FamilyContent> {
                             bottom: 150,
                             child: GestureDetector(
                               onTap: () {
-                                textToSpeech(subtitle);
+                                TtsController.instance.textToSpeech(subtitle);
                               },
                               child: Container(
                                 width: 85,
@@ -497,7 +384,7 @@ class _FamilyContentState extends State<FamilyContent> {
                             left: 20,
                             child: InkWell(
                               onTap: () {
-                                textToSpeech(deskripsi);
+                                TtsController.instance.textToSpeech(deskripsi);
                               },
                               child: Text(
                                 deskripsi,

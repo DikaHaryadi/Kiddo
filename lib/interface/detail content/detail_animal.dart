@@ -2,14 +2,15 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/controllers/animal_controller.dart';
+import 'package:textspeech/controllers/tts_controller.dart';
 import 'package:textspeech/util/animal_info.dart';
 import 'package:textspeech/util/curved_edges.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:textspeech/util/to_title_case.dart';
 
 import '../../models/animal_model.dart';
 
@@ -25,10 +26,10 @@ class DetailAnimals extends StatefulWidget {
 }
 
 class _DetailAnimalsState extends State<DetailAnimals> {
+  final ttsController = Get.put(TtsController());
   bool isPlaying = false;
   late final AudioPlayer player;
   late final UrlSource path;
-  FlutterTts flutterTts = FlutterTts();
 
   Duration _duration = const Duration();
   Duration _position = const Duration();
@@ -46,7 +47,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
     super.dispose();
   }
 
-  Future initPlayer() async {
+  Future<void> initPlayer() async {
     player = AudioPlayer();
     path = UrlSource(widget.model.audio);
 
@@ -64,14 +65,26 @@ class _DetailAnimalsState extends State<DetailAnimals> {
         _position = _duration;
       });
     });
+
+    // Menginisialisasi durasi saat halaman pertama kali dibuka
+    final initialDuration = await getAudioDuration();
+    setState(() {
+      _duration = initialDuration;
+    });
   }
 
-  void textToSpeech(String text) async {
-    await flutterTts.setLanguage('id-ID');
-    await flutterTts.setVolume(1);
-    await flutterTts.setSpeechRate(0.5);
-    await flutterTts.setPitch(1);
-    await flutterTts.speak(text);
+  Future<Duration> getAudioDuration() async {
+    await player.setSource(path);
+    final duration = await player.getDuration();
+    if (duration != null) {
+      return duration;
+    } else {
+      return const Duration();
+    }
+  }
+
+  Future<Duration> getAudioPosition() async {
+    return _position;
   }
 
   void playPause() async {
@@ -79,7 +92,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
       player.pause();
       isPlaying = false;
     } else {
-      flutterTts.stop();
+      ttsController.flutterTts.stop();
       player.play(path);
       isPlaying = true;
     }
@@ -153,7 +166,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10.0),
                     child: AutoSizeText(
-                      widget.model.titleAnimal,
+                      toTitleCase(widget.model.titleAnimal),
                       maxFontSize: 22,
                       minFontSize: 20,
                       style: GoogleFonts.aBeeZee(
@@ -176,7 +189,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                     child: Row(
                       children: [
                         AutoSizeText(
-                          widget.model.kategori,
+                          toTitleCase(widget.model.kategori),
                           maxFontSize: 16,
                           minFontSize: 14,
                           textAlign: TextAlign.left,
@@ -222,7 +235,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                 )),
                         const SizedBox(width: 5.0),
                         AutoSizeText(
-                          widget.model.jenisMakanan,
+                          toTitleCase(widget.model.jenisMakanan),
                           maxFontSize: 16,
                           minFontSize: 14,
                           textAlign: TextAlign.left,
@@ -252,13 +265,14 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                       child: InkWell(
                         onTap: () {
                           if (isPlaying == true) {
-                            flutterTts.stop();
+                            ttsController.flutterTts.stop();
                           } else {
-                            textToSpeech(widget.model.deskripsiAnimal);
+                            ttsController
+                                .textToSpeech(widget.model.deskripsiAnimal);
                           }
                         },
                         child: AutoSizeText(
-                          widget.model.deskripsiAnimal,
+                          toTitleCase(widget.model.deskripsiAnimal),
                           maxFontSize: 16,
                           minFontSize: 12,
                           textAlign: TextAlign.left,
@@ -292,7 +306,6 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                       },
                       min: 0,
                       max: _duration.inSeconds.toDouble(),
-                      // inactiveColor: Colors.grey,
                       activeColor: Colors.green,
                     ).animate(delay: const Duration(milliseconds: 250)).slideY(
                         begin: 2,
@@ -419,110 +432,114 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                   context: context,
                                   isScrollControlled: true,
                                   builder: (context) {
-                                    return Obx(
-                                        () => controller.isLoadingAnimal.value
-                                            ? const CircularProgressIndicator()
-                                            : DraggableScrollableSheet(
-                                                expand: false,
-                                                initialChildSize: 0.5,
-                                                snap: true,
-                                                snapSizes: const [0.5, 1.0],
-                                                builder: (context,
-                                                    scrollController) {
-                                                  return CustomScrollView(
-                                                    controller:
-                                                        scrollController,
-                                                    physics:
-                                                        const ClampingScrollPhysics(),
-                                                    slivers: [
-                                                      SliverPersistentHeader(
-                                                        delegate:
-                                                            AnimalInfoAppBar(
-                                                                controller
-                                                                    .animalModels
-                                                                    .length),
-                                                        pinned: true,
-                                                      ),
-                                                      AnimationLimiter(
-                                                        child: SliverList(
-                                                            delegate:
-                                                                SliverChildBuilderDelegate(
-                                                                    (_, index) =>
-                                                                        AnimationConfiguration
-                                                                            .staggeredList(
-                                                                          position:
-                                                                              index,
-                                                                          duration:
-                                                                              const Duration(milliseconds: 800),
-                                                                          child:
-                                                                              SlideAnimation(
-                                                                            verticalOffset:
-                                                                                100.0,
+                                    return DraggableScrollableSheet(
+                                      expand: false,
+                                      initialChildSize: 0.5,
+                                      snap: true,
+                                      snapSizes: const [0.5, 1.0],
+                                      builder: (_, scrollController) {
+                                        return Obx(() => CustomScrollView(
+                                              controller: scrollController,
+                                              physics:
+                                                  const ClampingScrollPhysics(),
+                                              slivers: [
+                                                SliverPersistentHeader(
+                                                  delegate: AnimalInfoAppBar(
+                                                      controller
+                                                          .animalModels.length),
+                                                  pinned: true,
+                                                ),
+                                                AnimationLimiter(
+                                                  child: SliverList(
+                                                      delegate:
+                                                          SliverChildBuilderDelegate(
+                                                              (_, index) =>
+                                                                  AnimationConfiguration
+                                                                      .staggeredList(
+                                                                    position:
+                                                                        index,
+                                                                    duration: const Duration(
+                                                                        milliseconds:
+                                                                            800),
+                                                                    child:
+                                                                        SlideAnimation(
+                                                                      verticalOffset:
+                                                                          100.0,
+                                                                      child:
+                                                                          FadeInAnimation(
+                                                                        child:
+                                                                            ListTile(
+                                                                          onTap:
+                                                                              () {
+                                                                            if (index !=
+                                                                                currentIndex) {
+                                                                              // Set currentIndex to the clicked index
+                                                                              setState(() {
+                                                                                currentIndex = index;
+                                                                              });
+                                                                              Navigator.push(
+                                                                                context,
+                                                                                _routeBuilder(context, widget.model),
+                                                                              );
+                                                                            }
+                                                                          },
+                                                                          leading:
+                                                                              ClipRRect(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(5.0),
                                                                             child:
-                                                                                FadeInAnimation(
-                                                                              child: ListTile(
-                                                                                onTap: () {
-                                                                                  if (index != currentIndex) {
-                                                                                    // Set currentIndex to the clicked index
-                                                                                    setState(() {
-                                                                                      currentIndex = index;
-                                                                                      print('ini currentIndex ketika di klik : ${currentIndex.toString()}');
-                                                                                    });
-                                                                                    Navigator.push(
-                                                                                      context,
-                                                                                      _routeBuilder(context, widget.model),
-                                                                                    );
-                                                                                  }
-                                                                                },
-                                                                                leading: ClipRRect(
-                                                                                  borderRadius: BorderRadius.circular(5.0),
-                                                                                  child: Image.network(
-                                                                                    controller.animalModels[index].imageContent,
-                                                                                    width: 50,
-                                                                                    height: 50,
-                                                                                    fit: BoxFit.cover,
-                                                                                  ),
-                                                                                ),
-                                                                                title: Text(controller.animalModels[index].titleAnimal, textAlign: TextAlign.left, style: GoogleFonts.aBeeZee(height: 1.3, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black)),
-                                                                                subtitle: Row(
-                                                                                  children: [
-                                                                                    Text(controller.animalModels[index].kategori, textAlign: TextAlign.left, style: GoogleFonts.aBeeZee(height: 1.3, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black)),
-                                                                                    const SizedBox(width: 5.0),
-                                                                                    Text(
-                                                                                      '|',
-                                                                                      textAlign: TextAlign.left,
-                                                                                      style: GoogleFonts.aBeeZee(
-                                                                                        height: 1.3,
-                                                                                        fontSize: 16,
-                                                                                        fontWeight: FontWeight.w400,
-                                                                                        color: Colors.black,
-                                                                                      ),
-                                                                                    ),
-                                                                                    const SizedBox(width: 5.0),
-                                                                                    Text(
-                                                                                      controller.animalModels[index].jenisMakanan,
-                                                                                      textAlign: TextAlign.left,
-                                                                                      style: GoogleFonts.aBeeZee(
-                                                                                        height: 1.3,
-                                                                                        fontSize: 16,
-                                                                                        fontWeight: FontWeight.w400,
-                                                                                        color: Colors.black,
-                                                                                      ),
-                                                                                    )
-                                                                                  ],
-                                                                                ),
-                                                                              ),
+                                                                                Image.network(
+                                                                              controller.animalModels[index].imageContent,
+                                                                              width: 50,
+                                                                              height: 50,
+                                                                              fit: BoxFit.cover,
                                                                             ),
                                                                           ),
+                                                                          title: Text(
+                                                                              controller.animalModels[index].titleAnimal,
+                                                                              textAlign: TextAlign.left,
+                                                                              style: GoogleFonts.aBeeZee(height: 1.3, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black)),
+                                                                          subtitle:
+                                                                              Row(
+                                                                            children: [
+                                                                              Text(controller.animalModels[index].kategori, textAlign: TextAlign.left, style: GoogleFonts.aBeeZee(height: 1.3, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black)),
+                                                                              const SizedBox(width: 5.0),
+                                                                              Text(
+                                                                                '|',
+                                                                                textAlign: TextAlign.left,
+                                                                                style: GoogleFonts.aBeeZee(
+                                                                                  height: 1.3,
+                                                                                  fontSize: 16,
+                                                                                  fontWeight: FontWeight.w400,
+                                                                                  color: Colors.black,
+                                                                                ),
+                                                                              ),
+                                                                              const SizedBox(width: 5.0),
+                                                                              Text(
+                                                                                controller.animalModels[index].jenisMakanan,
+                                                                                textAlign: TextAlign.left,
+                                                                                style: GoogleFonts.aBeeZee(
+                                                                                  height: 1.3,
+                                                                                  fontSize: 16,
+                                                                                  fontWeight: FontWeight.w400,
+                                                                                  color: Colors.black,
+                                                                                ),
+                                                                              )
+                                                                            ],
+                                                                          ),
                                                                         ),
-                                                                    childCount: controller
-                                                                        .animalModels
-                                                                        .length)),
-                                                      )
-                                                    ],
-                                                  );
-                                                },
-                                              ));
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                              childCount:
+                                                                  controller
+                                                                      .animalModels
+                                                                      .length)),
+                                                )
+                                              ],
+                                            ));
+                                      },
+                                    );
                                   },
                                 );
                               },

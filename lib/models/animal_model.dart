@@ -19,7 +19,7 @@ class AnimalModel {
     required this.audio,
   });
 
-  // static func to create an empty user model
+  // static func to create an empty animal model
   static AnimalModel empty() => AnimalModel(
         id: '',
         titleAnimal: '',

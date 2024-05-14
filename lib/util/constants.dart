@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:textspeech/interface/content/animal.dart';
+import 'package:textspeech/interface/content/family.dart';
+import 'package:textspeech/interface/content/fruits.dart';
+import 'package:textspeech/interface/content/letters.dart';
+import 'package:textspeech/interface/content/numbers.dart';
+import 'package:textspeech/interface/content/vegetables.dart';
 
 const List<Map<String, dynamic>> gameLevels = [
   {'title': 'Easy', 'level': 4, 'color': Colors.amberAccent},
@@ -90,6 +96,15 @@ const contentKiddo = [
     'subtitle': '(mēnsēs)',
     'enum': 'Months',
   },
+];
+
+List<Widget> openContent = const [
+  NumberContent(),
+  LettersContent(),
+  AnimalContent(),
+  FamilyContent(),
+  FruitsContent(),
+  VegetablesContent()
 ];
 
 // Content Slider

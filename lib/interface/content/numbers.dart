@@ -5,12 +5,15 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:textspeech/controllers/banner_ads_controller.dart';
+import 'package:textspeech/controllers/number_controller.dart';
 import 'package:textspeech/interface/homepage.dart';
-import 'package:textspeech/util/card.dart';
-import 'package:flutter_tts/flutter_tts.dart';
+import 'package:textspeech/util/card_number.dart';
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/responsive.dart';
+
+import '../../controllers/tts_controller.dart';
+import '../../util/shimmer/card_swiper_shimmer.dart';
 
 class NumberContent extends StatefulWidget {
   const NumberContent({
@@ -23,83 +26,9 @@ class NumberContent extends StatefulWidget {
 
 class _NumberContentState extends State<NumberContent> {
   final CardSwiperController controller = CardSwiperController();
-  FlutterTts flutterTts = FlutterTts();
+  final adsController = Get.put(BannerAdsController());
 
   int selectedIndex = 0;
-
-  void textToSpeech(String text) async {
-    await flutterTts.setLanguage('en-US');
-    await flutterTts.setVolume(1);
-    await flutterTts.setSpeechRate(0.5);
-    await flutterTts.setPitch(1);
-    await flutterTts.speak(text);
-  }
-
-  static const _insets = 16.0;
-  AdManagerBannerAd? _inlineAdaptiveAd;
-  bool _isLoaded = false;
-  AdSize? _adSize;
-
-  double get _adWidth => MediaQuery.of(context).size.width - (2 * _insets);
-
-  void _loadAd() async {
-    await _inlineAdaptiveAd?.dispose();
-    setState(() {
-      _inlineAdaptiveAd = null;
-      _isLoaded = false;
-    });
-
-    // Get an inline adaptive size based on the available width.
-    AdSize size = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(
-        _adWidth.truncate());
-
-    _inlineAdaptiveAd = AdManagerBannerAd(
-      adUnitId: 'ca-app-pub-3048736622280674/6380402407',
-      sizes: [size],
-      request: const AdManagerAdRequest(),
-      listener: AdManagerBannerAdListener(
-        onAdLoaded: (Ad ad) async {
-          print('Inline adaptive banner loaded: ${ad.responseInfo}');
-
-          AdManagerBannerAd bannerAd = (ad as AdManagerBannerAd);
-          final AdSize? size = await bannerAd.getPlatformAdSize();
-          if (size == null) {
-            print('Error: getPlatformAdSize() returned null for $bannerAd');
-            return;
-          }
-
-          setState(() {
-            _inlineAdaptiveAd = bannerAd;
-            _isLoaded = true;
-            _adSize = size;
-          });
-        },
-        onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          print('Inline adaptive banner failedToLoad: $error');
-          ad.dispose();
-        },
-      ),
-    );
-    await _inlineAdaptiveAd!.load();
-  }
-
-  Widget _getAdWidget() {
-    if (_inlineAdaptiveAd != null && _isLoaded && _adSize != null) {
-      return Container(
-        padding: const EdgeInsets.only(top: 30.0),
-        width: _adWidth,
-        height: _adSize!.height.toDouble(),
-        child: AdWidget(ad: _inlineAdaptiveAd!),
-      );
-    }
-    return const SizedBox.shrink();
-  }
-
-  @override
-  void initState() {
-    _loadAd();
-    super.initState();
-  }
 
   @override
   void dispose() {
@@ -109,6 +38,7 @@ class _NumberContentState extends State<NumberContent> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(NumberController());
     String counterPath = numsList[selectedIndex]['counterPath']!;
     String name = numsList[selectedIndex]['name']!;
     String title = numsList[selectedIndex]['title']!;
@@ -147,98 +77,9 @@ class _NumberContentState extends State<NumberContent> {
                 ? Column(
                     children: [
                       Flexible(
-                        child: AnimationLimiter(
-                          child: CardSwiper(
-                            controller: controller,
-                            cardsCount: numsList.length,
-                            onSwipe: _onSwipe,
-                            onUndo: _onUndo,
-                            numberOfCardsDisplayed: 3,
-                            backCardOffset: const Offset(40, 40),
-                            padding: const EdgeInsets.all(24.0),
-                            cardBuilder: (
-                              context,
-                              index,
-                              horizontalThresholdPercentage,
-                              verticalThresholdPercentage,
-                            ) {
-                              final numData = numsListMobile[index];
-                              return AnimationConfiguration.staggeredList(
-                                position: index,
-                                delay: const Duration(milliseconds: 200),
-                                duration: const Duration(milliseconds: 800),
-                                child: SlideAnimation(
-                                  verticalOffset: 100.0,
-                                  child: FadeInAnimation(
-                                    child: CardContent(
-                                      imagePath: numData['imagePath']!,
-                                      counterPath: numData['counterPath']!,
-                                      name: numData['title']!,
-                                      onTap: () {
-                                        textToSpeech(numData['name']!);
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: AnimationLimiter(
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: AnimationConfiguration.toStaggeredList(
-                                  delay: const Duration(milliseconds: 200),
-                                  duration: const Duration(milliseconds: 800),
-                                  childAnimationBuilder: (widget) =>
-                                      SlideAnimation(
-                                          horizontalOffset:
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width /
-                                                  2,
-                                          child: FadeInAnimation(
-                                            child: widget,
-                                          )),
-                                  children: [
-                                    FloatingActionButton(
-                                      heroTag: 'undo_button',
-                                      onPressed: controller.undo,
-                                      child: const Icon(Icons.rotate_left),
-                                    ),
-                                    FloatingActionButton(
-                                      heroTag: 'swipe_left_button',
-                                      onPressed: () => controller
-                                          .swipe(CardSwiperDirection.left),
-                                      child:
-                                          const Icon(Icons.keyboard_arrow_left),
-                                    ),
-                                    FloatingActionButton(
-                                      heroTag: 'swipe_right_button',
-                                      onPressed: () => controller
-                                          .swipe(CardSwiperDirection.right),
-                                      child: const Icon(
-                                          Icons.keyboard_arrow_right),
-                                    ),
-                                    FloatingActionButton(
-                                      heroTag: 'swipe_top_button',
-                                      onPressed: () => controller
-                                          .swipe(CardSwiperDirection.top),
-                                      child:
-                                          const Icon(Icons.keyboard_arrow_up),
-                                    ),
-                                    FloatingActionButton(
-                                      heroTag: 'swipe_bottom_button',
-                                      onPressed: () => controller
-                                          .swipe(CardSwiperDirection.bottom),
-                                      child:
-                                          const Icon(Icons.keyboard_arrow_down),
-                                    ),
-                                  ])),
-                        ),
+                        child: Obx(() => controller.isLoadingNumber.value
+                            ? const CardSwiperShimmer()
+                            : CardNumberContent(controller: controller)),
                       ),
                     ],
                   )
@@ -300,7 +141,7 @@ class _NumberContentState extends State<NumberContent> {
                                   padding: const EdgeInsets.only(top: 50.0),
                                   child: InkWell(
                                     onTap: () {
-                                      textToSpeech(name);
+                                      TtsController.instance.textToSpeech(name);
                                     },
                                     child: Image.asset(counterPath)
                                         .animate()
@@ -323,7 +164,7 @@ class _NumberContentState extends State<NumberContent> {
                                           const Duration(milliseconds: 2000),
                                       curve: Curves.easeIn),
                                 )),
-                                _getAdWidget(),
+                                adsController.getAdWidget(),
                                 const Spacer(),
                                 Align(
                                   alignment: Alignment.center,
@@ -382,27 +223,5 @@ class _NumberContentState extends State<NumberContent> {
                           )),
                     ],
                   )));
-  }
-
-  bool _onSwipe(
-    int previousIndex,
-    int? currentIndex,
-    CardSwiperDirection direction,
-  ) {
-    debugPrint(
-      'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top',
-    );
-    return true;
-  }
-
-  bool _onUndo(
-    int? previousIndex,
-    int currentIndex,
-    CardSwiperDirection direction,
-  ) {
-    debugPrint(
-      'The card $currentIndex was undod from the ${direction.name}',
-    );
-    return true;
   }
 }

@@ -15,6 +15,7 @@ import 'package:textspeech/util/app_colors.dart';
 import 'package:textspeech/util/constants.dart';
 import 'package:textspeech/util/curved_edges.dart';
 import 'package:textspeech/util/responsive.dart';
+import 'package:textspeech/util/shimmer/content_shimmer.dart';
 import 'package:textspeech/util/widgets/animal_card.dart';
 
 class AnimalContent extends StatefulWidget {
@@ -156,7 +157,7 @@ class _AnimalContentState extends State<AnimalContent> {
                         duration: const Duration(milliseconds: 550)),
                 Obx(
                   () => controller.isLoadingAnimal.value
-                      ? const CircularProgressIndicator()
+                      ? const ContentShimmer()
                       : AnimationLimiter(
                           child: ListView.builder(
                             shrinkWrap: true,

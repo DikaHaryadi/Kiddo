@@ -5,15 +5,10 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:textspeech/auth/controller/network_manager.dart';
 import 'package:textspeech/auth/controller/user_controller.dart';
-import 'package:textspeech/interface/content/animal.dart';
-import 'package:textspeech/interface/content/family.dart';
-import 'package:textspeech/interface/content/fruits.dart';
-import 'package:textspeech/interface/content/letters.dart';
-import 'package:textspeech/interface/content/numbers.dart';
-import 'package:textspeech/interface/content/vegetables.dart';
+import 'package:textspeech/controllers/anchor_ads_controller.dart';
+import 'package:textspeech/controllers/time_by_sun_position_controller.dart';
 import 'package:textspeech/interface/edit_profile.dart';
 import 'package:textspeech/util/category_list_mobile.dart';
 import 'package:textspeech/util/app_colors.dart';
@@ -29,116 +24,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String? _timeOfDay;
   bool showAll = false;
   List<bool> longPressStates = List.generate(contentKiddo.length, (_) => false);
   int? selectedLongPressIndex;
 
   CategoryListNotifier categoryListNotifier = CategoryListNotifier();
 
-  List<Widget> openContent = const [
-    NumberContent(),
-    LettersContent(),
-    AnimalContent(),
-    FamilyContent(),
-    FruitsContent(),
-    VegetablesContent()
-  ];
-
-  // banner ads
-  BannerAd? _anchoredAdaptiveAd;
-  bool _isLoaded = false;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _loadAd();
-  }
-
-  Future<void> _loadAd() async {
-    await _anchoredAdaptiveAd?.dispose();
-    setState(() {
-      _anchoredAdaptiveAd = null;
-      _isLoaded = false;
-    });
-
-    final AnchoredAdaptiveBannerAdSize? size =
-        await AdSize.getCurrentOrientationAnchoredAdaptiveBannerAdSize(
-            // ignore: use_build_context_synchronously
-            MediaQuery.of(context).size.width.truncate());
-
-    if (size == null) {
-      print('Unable to get height of anchored banner.');
-      return;
-    }
-
-    _anchoredAdaptiveAd = BannerAd(
-      adUnitId: 'ca-app-pub-3048736622280674/6380402407',
-      size: size,
-      request: const AdRequest(),
-      listener: BannerAdListener(
-        onAdLoaded: (Ad ad) {
-          print('$ad loaded: ${ad.responseInfo}');
-          setState(() {
-            _anchoredAdaptiveAd = ad as BannerAd;
-            _isLoaded = true;
-          });
-        },
-        onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          print('Anchored adaptive banner failedToLoad: $error');
-          ad.dispose();
-        },
-      ),
-    );
-    return _anchoredAdaptiveAd!.load();
-  }
-
-  Widget _getAdWidget() {
-    if (_anchoredAdaptiveAd != null && _isLoaded) {
-      return Container(
-        color: Colors.white,
-        width: _anchoredAdaptiveAd!.size.width.toDouble(),
-        height: _anchoredAdaptiveAd!.size.height.toDouble(),
-        child: AdWidget(ad: _anchoredAdaptiveAd!),
-      );
-    } else {
-      return const SizedBox.shrink();
-    }
-  }
-
-  void _getTimeOfDay() {
-    final currentTime = DateTime.now();
-    final hour = currentTime.hour;
-
-    setState(() {
-      if (hour >= 4 && hour < 12) {
-        _timeOfDay = 'Morning';
-      } else if (hour >= 12 && hour < 17) {
-        _timeOfDay = 'Afternoon';
-      } else if (hour >= 17 && hour < 20) {
-        _timeOfDay = 'Evening';
-      } else {
-        _timeOfDay = 'Night';
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    _loadAd();
-    _getTimeOfDay();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _anchoredAdaptiveAd?.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(UserController());
+    final timeSunPosition = Get.put(TimeSunPosition());
+    final adsController = Get.put(AnchorAdsController());
     return Scaffold(
       backgroundColor: const Color(0xFFfcf4f1),
       body: RefreshIndicator(
@@ -159,10 +55,13 @@ class _HomePageState extends State<HomePage> {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                AutoSizeText(
-                                  'Good $_timeOfDay',
-                                  style:
-                                      Theme.of(context).textTheme.headlineLarge,
+                                Obx(
+                                  () => AutoSizeText(
+                                    'Good ${timeSunPosition.timeOfDay.value}',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineLarge,
+                                  ),
                                 ).animate().slideX(
                                     begin: -4,
                                     end: 0,
@@ -576,7 +475,10 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                     Positioned(
-                        bottom: 0, left: 10, right: 10, child: _getAdWidget())
+                        bottom: 0,
+                        left: 10,
+                        right: 10,
+                        child: adsController.getAdWidget())
                   ],
                 )
               : SizedBox(
@@ -734,17 +636,19 @@ class _HomePageState extends State<HomePage> {
                               children: [
                                 Padding(
                                     padding: const EdgeInsets.only(left: 10.0),
-                                    child: AutoSizeText(
-                                      'Good $_timeOfDay',
-                                      maxFontSize: 45,
-                                      minFontSize: 40,
-                                      style: GoogleFonts.aBeeZee(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black),
-                                    ).animate().fadeIn(
-                                        curve: Curves.easeIn,
-                                        duration:
-                                            const Duration(milliseconds: 700))),
+                                    child: Obx(() => AutoSizeText(
+                                              'Good ${timeSunPosition.timeOfDay.value}',
+                                              maxFontSize: 45,
+                                              minFontSize: 40,
+                                              style: GoogleFonts.aBeeZee(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black),
+                                            ))
+                                        .animate()
+                                        .fadeIn(
+                                            curve: Curves.easeIn,
+                                            duration: const Duration(
+                                                milliseconds: 700))),
                                 const SizedBox(height: 20.0),
                                 AnimationLimiter(
                                   child: GridView.count(
@@ -1094,7 +998,7 @@ class _HomePageState extends State<HomePage> {
                                             )),
                                   ),
                                 ),
-                                _getAdWidget()
+                                adsController.getAdWidget()
                               ],
                             ),
                           )),

@@ -4,12 +4,14 @@ import 'package:shimmer/shimmer.dart';
 class DShimmerEffect extends StatelessWidget {
   final double width, height, radius;
   final Color? color;
+  final BoxShape boxShape;
   const DShimmerEffect(
       {super.key,
       required this.width,
       required this.height,
       this.radius = 15,
-      this.color});
+      this.color,
+      this.boxShape = BoxShape.rectangle});
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,12 @@ class DShimmerEffect extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-            color: color ?? Colors.white,
-            borderRadius: BorderRadius.circular(radius)),
+          shape: boxShape,
+          borderRadius: boxShape == BoxShape.rectangle
+              ? BorderRadius.circular(radius)
+              : null,
+          color: color ?? Colors.white,
+        ),
       ),
     );
   }

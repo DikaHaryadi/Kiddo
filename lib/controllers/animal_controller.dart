@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:textspeech/controllers/animal_repo.dart';
+import 'package:textspeech/repository/animal_repo.dart';
 import 'package:textspeech/models/animal_model.dart';
 
 class AnimalController extends GetxController {

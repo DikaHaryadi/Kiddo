@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/models/animal_model.dart';
-
-import '../util/exceptions/firebase_exceptions.dart';
-import '../util/exceptions/format_exceptions.dart';
-import '../util/exceptions/platform_exceptions.dart';
 
 class AnimalRepository extends GetxController {
   static AnimalRepository get instance => Get.find();
@@ -22,14 +19,22 @@ class AnimalRepository extends GetxController {
       } else {
         return [];
       }
-    } on FirebaseException catch (e) {
-      throw TFirebaseException(e.code).message;
-    } on FormatException catch (_) {
-      throw const TFormatException();
-    } on PlatformException catch (e) {
-      throw TPlatformException(e.code).message;
-    } catch (e) {
-      throw 'Something went wrong. Please try again';
+    } catch (err) {
+      throw Get.snackbar(
+        'Oh Snap!',
+        err.toString(),
+        isDismissible: true,
+        shouldIconPulse: true,
+        colorText: Colors.white,
+        backgroundColor: Colors.red.shade600,
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.all(20),
+        icon: const Icon(
+          Iconsax.warning_2,
+          color: Colors.white,
+        ),
+      );
     }
   }
 }

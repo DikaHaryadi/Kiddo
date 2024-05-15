@@ -4,6 +4,7 @@ import 'package:textspeech/models/letter_model.dart';
 
 class LetterController extends GetxController {
   RxList<LetterModel> letterModel = <LetterModel>[].obs;
+  final Rx<LetterModel?> selectedLetter = Rx<LetterModel?>(null);
   final letterRepo = Get.put(LetterRepository());
   final isLoadingLetter = RxBool(false);
 

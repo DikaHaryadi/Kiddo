@@ -4,8 +4,8 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:textspeech/util/app_colors.dart';
-import 'package:textspeech/util/constants.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
+import 'package:textspeech/util/etc/constants.dart';
 
 class ShowAllContent extends StatefulWidget {
   const ShowAllContent({super.key});

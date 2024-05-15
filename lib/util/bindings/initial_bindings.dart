@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:textspeech/auth/controller/network_manager.dart';
+import 'package:textspeech/auth/controller/user/network_manager.dart';
 import 'package:textspeech/services/firebase_storage_service.dart';
 
 class InitialBindings implements Bindings {

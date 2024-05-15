@@ -9,9 +9,8 @@ import 'package:intl/intl.dart';
 import 'package:textspeech/controllers/family_controller.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
 import 'package:textspeech/interface/homepage.dart';
-import 'package:textspeech/util/constants.dart';
-import 'package:textspeech/util/curved_edges.dart';
-import 'package:textspeech/util/responsive.dart';
+import 'package:textspeech/util/etc/curved_edges.dart';
+import 'package:textspeech/util/etc/responsive.dart';
 import 'package:textspeech/util/shimmer/content_shimmer.dart';
 import 'package:textspeech/util/widgets/family_card.dart';
 
@@ -31,9 +30,9 @@ class _FamilyContentState extends State<FamilyContent> {
   Widget build(BuildContext context) {
     final controller = Get.put(FamilyController());
 
-    String name = familyList[selectedIndex]['name']!;
-    String subtitle = familyList[selectedIndex]['subtitle']!;
-    String deskripsi = familyList[selectedIndex]['deskripsi']!;
+    String name = controller.familyModel[selectedIndex].subjectFamily;
+    String subtitle = controller.familyModel[selectedIndex].subtitle;
+    String deskripsi = controller.familyModel[selectedIndex].deskripsiFamily;
 
     return Scaffold(
       backgroundColor: const Color(0xFFfcf4f1),
@@ -149,8 +148,9 @@ class _FamilyContentState extends State<FamilyContent> {
                               child: ListView.builder(
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
-                                itemCount: familyList.length,
+                                itemCount: controller.familyModel.length,
                                 itemBuilder: (context, index) {
+                                  final family = controller.familyModel[index];
                                   return AnimationConfiguration.staggeredList(
                                     position: index,
                                     delay: const Duration(milliseconds: 250),
@@ -177,8 +177,7 @@ class _FamilyContentState extends State<FamilyContent> {
                                                             Radius.circular(
                                                                 10.0)),
                                                     child: Image.asset(
-                                                      familyList[index]
-                                                          ['imagePath']!,
+                                                      family.imageContent,
                                                       width: 60,
                                                       height: 60,
                                                       fit: BoxFit.cover,
@@ -195,8 +194,7 @@ class _FamilyContentState extends State<FamilyContent> {
                                                               .center,
                                                       children: [
                                                         Text(
-                                                          familyList[index]
-                                                              ['name']!,
+                                                          family.subjectFamily,
                                                           style: GoogleFonts
                                                               .montserrat(
                                                             fontSize: 20,
@@ -206,8 +204,7 @@ class _FamilyContentState extends State<FamilyContent> {
                                                           ),
                                                         ),
                                                         Text(
-                                                          familyList[index]
-                                                              ['subtitle']!,
+                                                          family.subtitle,
                                                           style: GoogleFonts
                                                               .robotoSlab(
                                                             fontSize: 15,

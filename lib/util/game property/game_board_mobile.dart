@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get_storage/get_storage.dart'; // Perubahan impor di sini
-import 'package:textspeech/util/constants.dart';
+import 'package:textspeech/util/etc/constants.dart';
 import 'package:textspeech/util/game%20property/game.dart';
 import 'package:textspeech/util/game%20property/game_confetti.dart';
 import 'package:textspeech/util/game%20property/restart_game.dart';

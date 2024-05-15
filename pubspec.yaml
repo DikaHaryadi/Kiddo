@@ -83,9 +83,6 @@ flutter:
     - assets/counters/
     - assets/animals/
     - assets/voices/
-    - assets/letters/
-    - assets/letters/avatars/
-    - assets/letters/samples/
     - assets/family/
     - assets/games/memo/
     - assets/games/

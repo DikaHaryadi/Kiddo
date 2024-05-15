@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
-import 'package:textspeech/auth/controller/network_manager.dart';
+import 'package:textspeech/auth/controller/user/network_manager.dart';
 import 'package:textspeech/auth/controller/user_repo.dart';
 import 'package:textspeech/auth/user_model.dart';
 import 'package:textspeech/auth/verify_email.dart';
-import 'package:textspeech/util/app_colors.dart';
-import 'package:textspeech/util/auth_controller.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
+import 'package:textspeech/auth/controller/auth_controller.dart';
 
 class SignupController extends GetxController {
   static SignupController get instance => Get.find();

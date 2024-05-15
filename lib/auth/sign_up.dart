@@ -5,8 +5,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/auth/controller/sign_up_controller.dart';
-import 'package:textspeech/util/app_colors.dart';
-import 'package:textspeech/util/responsive.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
+import 'package:textspeech/util/etc/responsive.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});

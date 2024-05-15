@@ -4,99 +4,25 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:textspeech/controllers/letter_controller.dart';
 import 'package:textspeech/interface/homepage.dart';
-import 'package:textspeech/util/card_letter.dart';
-import 'package:textspeech/util/constants.dart';
-import 'package:textspeech/util/responsive.dart';
+import 'package:textspeech/util/widgets/card_letter.dart';
+import 'package:textspeech/util/etc/responsive.dart';
+import 'package:textspeech/util/shimmer/tablet_shimmer.dart';
 
 import '../../controllers/tts_controller.dart';
 import '../../util/shimmer/card_swiper_shimmer.dart';
 
-class LettersContent extends StatefulWidget {
+class LettersContent extends StatelessWidget {
   const LettersContent({
     super.key,
   });
 
   @override
-  State<LettersContent> createState() => _LettersContentState();
-}
-
-class _LettersContentState extends State<LettersContent> {
-  int selectedIndex = 0;
-
-  static const _insets = 16.0;
-  AdManagerBannerAd? _inlineAdaptiveAd;
-  bool _isLoaded = false;
-  AdSize? _adSize;
-
-  double get _adWidth => MediaQuery.of(context).size.width - (2 * _insets);
-
-  void _loadAd() async {
-    await _inlineAdaptiveAd?.dispose();
-    setState(() {
-      _inlineAdaptiveAd = null;
-      _isLoaded = false;
-    });
-
-    AdSize size = AdSize.getCurrentOrientationInlineAdaptiveBannerAdSize(
-        _adWidth.truncate());
-
-    _inlineAdaptiveAd = AdManagerBannerAd(
-      adUnitId: 'ca-app-pub-3048736622280674/6380402407',
-      sizes: [size],
-      request: const AdManagerAdRequest(),
-      listener: AdManagerBannerAdListener(
-        onAdLoaded: (Ad ad) async {
-          print('Inline adaptive banner loaded: ${ad.responseInfo}');
-
-          AdManagerBannerAd bannerAd = (ad as AdManagerBannerAd);
-          final AdSize? size = await bannerAd.getPlatformAdSize();
-          if (size == null) {
-            print('Error: getPlatformAdSize() returned null for $bannerAd');
-            return;
-          }
-
-          setState(() {
-            _inlineAdaptiveAd = bannerAd;
-            _isLoaded = true;
-            _adSize = size;
-          });
-        },
-        onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          print('Inline adaptive banner failedToLoad: $error');
-          ad.dispose();
-        },
-      ),
-    );
-    await _inlineAdaptiveAd!.load();
-  }
-
-  Widget _getAdWidget() {
-    if (_inlineAdaptiveAd != null && _isLoaded && _adSize != null) {
-      return Container(
-        padding: const EdgeInsets.only(top: 30.0),
-        width: _adWidth,
-        height: _adSize!.height.toDouble(),
-        child: AdWidget(ad: _inlineAdaptiveAd!),
-      );
-    }
-    return const SizedBox.shrink();
-  }
-
-  @override
-  void initState() {
-    _loadAd();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final letterController = Get.put(LetterController());
     final ttsController = Get.put(TtsController());
-    String subImage = lettersList[selectedIndex]['subImage']!;
-    String name = lettersList[selectedIndex]['name']!;
+
     return Scaffold(
         appBar: isMobile(context)
             ? AppBar(
@@ -118,31 +44,21 @@ class _LettersContentState extends State<LettersContent> {
                           end: 0,
                           duration: const Duration(milliseconds: 300)),
                 ),
-                title: Text(
-                  'Huruf Hijaiyah',
-                  style: GoogleFonts.montserratAlternates(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ).animate(delay: const Duration(milliseconds: 250)).slideX(
-                    begin: 1,
-                    end: 0,
-                    duration: const Duration(milliseconds: 400)),
+                title: Text('Huruf Hijaiyah',
+                        style: Theme.of(context).textTheme.headlineMedium)
+                    .animate(delay: const Duration(milliseconds: 250))
+                    .slideX(
+                        begin: 1,
+                        end: 0,
+                        duration: const Duration(milliseconds: 400)),
                 centerTitle: true,
               )
             : null,
         body: SafeArea(
             child: isMobile(context)
-                ? Column(
-                    children: [
-                      Flexible(
-                        child: Obx(() => letterController.isLoadingLetter.value
-                            ? const CardSwiperShimmer()
-                            : CardLetterContent(controller: letterController)),
-                      ),
-                    ],
-                  )
+                ? Obx(() => letterController.isLoadingLetter.value
+                    ? const CardSwiperShimmer()
+                    : CardLetterContent(controller: letterController))
                 : Row(
                     children: [
                       Expanded(
@@ -200,39 +116,52 @@ class _LettersContentState extends State<LettersContent> {
                                           const Duration(milliseconds: 900),
                                       curve: Curves.easeIn),
                                 ),
-                                Center(
-                                    child: Padding(
-                                  padding: const EdgeInsets.only(top: 50.0),
-                                  child: InkWell(
-                                    onTap: () {
-                                      ttsController.textToSpeech(name);
-                                    },
-                                    child: Image.asset(
-                                      subImage,
-                                      width: double.infinity,
-                                      height: 400,
-                                    ).animate().fadeIn(
-                                        duration:
-                                            const Duration(milliseconds: 2000),
-                                        curve: Curves.easeIn),
-                                  ),
-                                )),
-                                Center(
-                                    child: Padding(
-                                  padding: const EdgeInsets.only(top: 30.0),
-                                  child: AutoSizeText(
-                                    name,
-                                    maxFontSize: 40,
-                                    minFontSize: 35,
-                                    style: GoogleFonts.roboto(
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ).animate().fadeIn(
-                                      duration:
-                                          const Duration(milliseconds: 2000),
-                                      curve: Curves.easeIn),
-                                )),
-                                _getAdWidget(),
+                                Obx(() {
+                                  final letter =
+                                      letterController.selectedLetter.value;
+                                  if (letter == null) {
+                                    return const SizedBox.shrink();
+                                  }
+                                  return Column(
+                                    children: [
+                                      Center(
+                                          child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 50.0),
+                                        child: InkWell(
+                                          onTap: () {
+                                            ttsController
+                                                .textToSpeech(letter.name);
+                                          },
+                                          child: Image.network(
+                                            letter.subImage,
+                                            width: double.infinity,
+                                            height: 400,
+                                          ).animate().fadeIn(
+                                              duration: const Duration(
+                                                  milliseconds: 2000),
+                                              curve: Curves.easeIn),
+                                        ),
+                                      )),
+                                      Center(
+                                          child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 30.0),
+                                        child: AutoSizeText(
+                                          letter.name,
+                                          maxFontSize: 40,
+                                          minFontSize: 35,
+                                          style: GoogleFonts.roboto(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ).animate().fadeIn(
+                                            duration: const Duration(
+                                                milliseconds: 2000),
+                                            curve: Curves.easeIn),
+                                      )),
+                                    ],
+                                  );
+                                }),
                                 const Spacer(),
                                 Align(
                                   alignment: Alignment.center,
@@ -252,43 +181,60 @@ class _LettersContentState extends State<LettersContent> {
                               ],
                             ),
                           )),
-                      Expanded(
-                          flex: 1,
-                          child: Container(
-                            color: Colors.white,
-                            padding: const EdgeInsets.only(top: 20.0),
-                            child: AnimationLimiter(
-                              child: GridView.count(
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 35,
-                                childAspectRatio:
-                                    MediaQuery.of(context).size.aspectRatio,
-                                children:
-                                    List.generate(lettersList.length, (index) {
-                                  return AnimationConfiguration.staggeredGrid(
-                                    columnCount: 2,
-                                    position: index,
-                                    delay: const Duration(milliseconds: 200),
-                                    duration: const Duration(milliseconds: 800),
-                                    child: ScaleAnimation(
-                                      scale: 0.5,
-                                      child: FadeInAnimation(
-                                        child: GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                selectedIndex = index;
-                                              });
-                                            },
-                                            child: Image.asset(
-                                              lettersList[index]['imagePath']!,
-                                            )),
-                                      ),
+                      Obx(
+                        () {
+                          if (letterController.isLoadingLetter.value) {
+                            return const TabletShimmer();
+                          } else {
+                            return AnimationLimiter(
+                              child: Expanded(
+                                flex: 1,
+                                child: Container(
+                                  color: Colors.white,
+                                  padding: const EdgeInsets.only(top: 20.0),
+                                  child: GridView.count(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 35,
+                                    childAspectRatio:
+                                        MediaQuery.of(context).size.aspectRatio,
+                                    children: List.generate(
+                                      letterController.letterModel.length,
+                                      (index) {
+                                        final letter =
+                                            letterController.letterModel[index];
+                                        return AnimationConfiguration
+                                            .staggeredGrid(
+                                          columnCount: 2,
+                                          position: index,
+                                          delay:
+                                              const Duration(milliseconds: 200),
+                                          duration:
+                                              const Duration(milliseconds: 800),
+                                          child: ScaleAnimation(
+                                            scale: 0.5,
+                                            child: FadeInAnimation(
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  letterController
+                                                      .selectedLetter
+                                                      .value = letter;
+                                                },
+                                                child: Image.network(
+                                                  letter.imagePath,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
-                                  );
-                                }),
+                                  ),
+                                ),
                               ),
-                            ),
-                          )),
+                            );
+                          }
+                        },
+                      ),
                     ],
                   )));
   }

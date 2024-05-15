@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/auth/controller/user/update_name_controller.dart';
-import 'package:textspeech/util/app_colors.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
 
 class ChangeName extends StatelessWidget {
   const ChangeName({super.key});

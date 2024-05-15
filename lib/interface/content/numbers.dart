@@ -8,9 +8,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/controllers/banner_ads_controller.dart';
 import 'package:textspeech/controllers/number_controller.dart';
 import 'package:textspeech/interface/homepage.dart';
-import 'package:textspeech/util/card_number.dart';
-import 'package:textspeech/util/constants.dart';
-import 'package:textspeech/util/responsive.dart';
+import 'package:textspeech/util/widgets/card_number.dart';
+import 'package:textspeech/util/etc/constants.dart';
+import 'package:textspeech/util/etc/responsive.dart';
 
 import '../../controllers/tts_controller.dart';
 import '../../util/shimmer/card_swiper_shimmer.dart';

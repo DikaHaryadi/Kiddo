@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/auth/success_verify.dart';
-import 'package:textspeech/util/auth_controller.dart';
+import 'package:textspeech/auth/controller/auth_controller.dart';
 
 class VerifyEmailController extends GetxController {
   static VerifyEmailController get instance => Get.find();

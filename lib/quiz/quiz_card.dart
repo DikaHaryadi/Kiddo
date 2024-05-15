@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/quiz/question_model.dart';
-import 'package:textspeech/util/app_colors.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
 
 class QuestionCard extends StatelessWidget {
   const QuestionCard({super.key, required this.model});

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:textspeech/auth/controller/network_manager.dart';
+import 'package:textspeech/auth/controller/user/network_manager.dart';
 import 'package:textspeech/auth/controller/sign_up_controller.dart';
-import 'package:textspeech/auth/controller/user_controller.dart';
-import 'package:textspeech/util/auth_controller.dart';
+import 'package:textspeech/auth/controller/user/user_controller.dart';
+import 'package:textspeech/auth/controller/auth_controller.dart';
 
 class IntroductionController extends GetxController {
   final rememberMe = false.obs;

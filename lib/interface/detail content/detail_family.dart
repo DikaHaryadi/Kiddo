@@ -7,8 +7,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/controllers/family_controller.dart';
 import 'package:textspeech/models/family_model.dart';
-import 'package:textspeech/util/curved_edges.dart';
-import 'package:textspeech/util/family_info.dart';
+import 'package:textspeech/util/etc/curved_edges.dart';
+import 'package:textspeech/util/etc/family_info.dart';
 
 import '../../controllers/tts_controller.dart';
 

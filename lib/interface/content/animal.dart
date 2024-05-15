@@ -11,10 +11,10 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:textspeech/controllers/animal_controller.dart';
 import 'package:textspeech/interface/homepage.dart';
-import 'package:textspeech/util/app_colors.dart';
-import 'package:textspeech/util/constants.dart';
-import 'package:textspeech/util/curved_edges.dart';
-import 'package:textspeech/util/responsive.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
+import 'package:textspeech/util/etc/constants.dart';
+import 'package:textspeech/util/etc/curved_edges.dart';
+import 'package:textspeech/util/etc/responsive.dart';
 import 'package:textspeech/util/shimmer/content_shimmer.dart';
 import 'package:textspeech/util/widgets/animal_card.dart';
 

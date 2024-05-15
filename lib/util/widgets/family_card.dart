@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/models/family_model.dart';
 import 'package:textspeech/interface/detail%20content/detail_family.dart';
-import 'package:textspeech/util/app_colors.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
 
 class FamilyCardScreen extends StatelessWidget {
   const FamilyCardScreen({super.key, required this.model});

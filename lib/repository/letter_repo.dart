@@ -20,6 +20,7 @@ class LetterRepository extends GetxController {
         return [];
       }
     } catch (err) {
+      print('ini error di letter category : $err');
       throw Get.snackbar(
         'Oh Snap!',
         err.toString(),

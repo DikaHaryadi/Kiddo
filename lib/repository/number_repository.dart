@@ -18,6 +18,7 @@ class NumberRepository extends GetxController {
         return [];
       }
     } catch (err) {
+      print('ini error number content :$err');
       throw Get.snackbar(
         'Oh Snap!',
         err.toString(),

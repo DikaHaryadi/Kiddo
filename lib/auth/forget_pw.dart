@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:textspeech/auth/controller/forget_pw_controller.dart';
-import 'package:textspeech/util/app_colors.dart';
+import 'package:textspeech/auth/controller/user/forget_pw_controller.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
 
 class ForgetPassword extends StatelessWidget {
   const ForgetPassword({super.key});

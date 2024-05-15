@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:textspeech/util/constants.dart';
-import 'package:textspeech/util/responsive.dart';
+import 'package:textspeech/util/etc/constants.dart';
+import 'package:textspeech/util/etc/responsive.dart';
 
 class VegetablesContent extends StatelessWidget {
   const VegetablesContent({super.key});

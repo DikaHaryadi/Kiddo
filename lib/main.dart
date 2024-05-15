@@ -8,10 +8,10 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:textspeech/firebase_options.dart';
-import 'package:textspeech/util/app_routes.dart';
-import 'package:textspeech/util/auth_controller.dart';
+import 'package:textspeech/util/etc/app_routes.dart';
+import 'package:textspeech/auth/controller/auth_controller.dart';
 import 'package:textspeech/util/bindings/initial_bindings.dart';
-import 'package:textspeech/util/theme.dart';
+import 'package:textspeech/util/widgets/theme.dart';
 
 // void main() async {
 //   final WidgetsBinding widgetsBinding =

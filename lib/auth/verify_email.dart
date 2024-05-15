@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/auth/controller/verify_email_controller.dart';
-import 'package:textspeech/util/app_colors.dart';
-import 'package:textspeech/util/auth_controller.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
+import 'package:textspeech/auth/controller/auth_controller.dart';
 
 class VerifyEmailScreen extends StatelessWidget {
   const VerifyEmailScreen({super.key, this.email});

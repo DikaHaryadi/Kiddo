@@ -7,10 +7,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/controllers/animal_controller.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
-import 'package:textspeech/util/animal_info.dart';
-import 'package:textspeech/util/curved_edges.dart';
+import 'package:textspeech/util/etc/animal_info.dart';
+import 'package:textspeech/util/etc/curved_edges.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:textspeech/util/to_title_case.dart';
+import 'package:textspeech/util/shimmer/to_title_case.dart';
 
 import '../../models/animal_model.dart';
 

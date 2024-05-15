@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:textspeech/util/shimmer.dart';
+import 'package:textspeech/util/shimmer/shimmer.dart';
 
 class ContentShimmer extends StatelessWidget {
   const ContentShimmer({super.key});

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:textspeech/interface/game_ui.dart';
+import 'package:textspeech/interface/game/game_ui.dart';
 import 'package:textspeech/util/widgets/game_controls_bottomsheet.dart';
 
 class RestartGame extends StatefulWidget {

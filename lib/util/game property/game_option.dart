@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:textspeech/util/constants.dart';
+import 'package:textspeech/util/etc/constants.dart';
 import 'package:textspeech/util/game%20property/game_board_mobile.dart';
 import 'package:textspeech/util/widgets/game_btn.dart';
 

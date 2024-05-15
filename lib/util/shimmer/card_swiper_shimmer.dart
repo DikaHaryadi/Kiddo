@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:get/get.dart';
-import 'package:textspeech/util/shimmer.dart';
+import 'package:textspeech/util/shimmer/shimmer.dart';
 
 class CardSwiperShimmer extends StatefulWidget {
   const CardSwiperShimmer({super.key});

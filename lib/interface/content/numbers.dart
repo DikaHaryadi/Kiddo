@@ -1,15 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:textspeech/controllers/banner_ads_controller.dart';
 import 'package:textspeech/controllers/number_controller.dart';
 import 'package:textspeech/interface/homepage.dart';
+import 'package:textspeech/util/shimmer/tablet_shimmer.dart';
 import 'package:textspeech/util/widgets/card_number.dart';
-import 'package:textspeech/util/etc/constants.dart';
 import 'package:textspeech/util/etc/responsive.dart';
 
 import '../../controllers/tts_controller.dart';
@@ -25,23 +23,11 @@ class NumberContent extends StatefulWidget {
 }
 
 class _NumberContentState extends State<NumberContent> {
-  final CardSwiperController controller = CardSwiperController();
-  final adsController = Get.put(BannerAdsController());
-
-  int selectedIndex = 0;
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(NumberController());
-    String counterPath = numsList[selectedIndex]['counterPath']!;
-    String name = numsList[selectedIndex]['name']!;
-    String title = numsList[selectedIndex]['title']!;
+    final ttsController = Get.put(TtsController());
+
     return Scaffold(
         appBar: isMobile(context)
             ? AppBar(
@@ -136,35 +122,48 @@ class _NumberContentState extends State<NumberContent> {
                                           const Duration(milliseconds: 900),
                                       curve: Curves.easeIn),
                                 ),
-                                Center(
-                                    child: Padding(
-                                  padding: const EdgeInsets.only(top: 50.0),
-                                  child: InkWell(
-                                    onTap: () {
-                                      TtsController.instance.textToSpeech(name);
-                                    },
-                                    child: Image.asset(counterPath)
-                                        .animate()
-                                        .fadeIn(
+                                Obx(() {
+                                  final numbers =
+                                      controller.selectedNumber.value;
+                                  if (numbers == null) {
+                                    return const SizedBox.shrink();
+                                  }
+                                  return Column(
+                                    children: [
+                                      Center(
+                                          child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 50.0),
+                                        child: InkWell(
+                                          onTap: () {
+                                            ttsController
+                                                .textToSpeech(numbers.name);
+                                          },
+                                          child: Image.network(numbers.subImage)
+                                              .animate()
+                                              .fadeIn(
+                                                  duration: const Duration(
+                                                      milliseconds: 2000),
+                                                  curve: Curves.easeIn),
+                                        ),
+                                      )),
+                                      Center(
+                                          child: Padding(
+                                        padding:
+                                            const EdgeInsets.only(top: 30.0),
+                                        child: Text(
+                                          numbers.name,
+                                          style: GoogleFonts.roboto(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 40),
+                                        ).animate().fadeIn(
                                             duration: const Duration(
                                                 milliseconds: 2000),
                                             curve: Curves.easeIn),
-                                  ),
-                                )),
-                                Center(
-                                    child: Padding(
-                                  padding: const EdgeInsets.only(top: 30.0),
-                                  child: Text(
-                                    title,
-                                    style: GoogleFonts.roboto(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 40),
-                                  ).animate().fadeIn(
-                                      duration:
-                                          const Duration(milliseconds: 2000),
-                                      curve: Curves.easeIn),
-                                )),
-                                adsController.getAdWidget(),
+                                      )),
+                                    ],
+                                  );
+                                }),
                                 const Spacer(),
                                 Align(
                                   alignment: Alignment.center,
@@ -183,44 +182,56 @@ class _NumberContentState extends State<NumberContent> {
                               ],
                             ),
                           )),
-                      Expanded(
-                          flex: 1,
-                          child: Container(
-                            color: Colors.white,
-                            padding: const EdgeInsets.only(
-                                top: 50.0, left: 10.0, right: 10.0),
-                            child: AnimationLimiter(
-                              child: GridView.count(
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 35,
-                                childAspectRatio:
-                                    MediaQuery.of(context).size.aspectRatio,
-                                children:
-                                    List.generate(numsList.length, (index) {
-                                  return AnimationConfiguration.staggeredGrid(
-                                    columnCount: 2,
-                                    position: index,
-                                    delay: const Duration(milliseconds: 250),
-                                    duration: const Duration(milliseconds: 500),
-                                    child: ScaleAnimation(
-                                      scale: 0.5,
-                                      child: FadeInAnimation(
-                                        child: GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                selectedIndex = index;
-                                              });
-                                            },
-                                            child: Image.asset(
-                                              numsList[index]['imagePath']!,
-                                            )),
-                                      ),
-                                    ),
-                                  );
-                                }),
-                              ),
-                            ),
-                          )),
+                      Obx(() {
+                        if (controller.isLoadingNumber.value) {
+                          return const TabletShimmer();
+                        } else {
+                          return Expanded(
+                              flex: 1,
+                              child: Container(
+                                color: Colors.white,
+                                padding: const EdgeInsets.only(
+                                  top: 20.0,
+                                ),
+                                child: AnimationLimiter(
+                                  child: GridView.count(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 35,
+                                    childAspectRatio:
+                                        MediaQuery.of(context).size.aspectRatio,
+                                    children: List.generate(
+                                        controller.numberModels.length,
+                                        (index) {
+                                      final numbers =
+                                          controller.numberModels[index];
+                                      return AnimationConfiguration
+                                          .staggeredGrid(
+                                        columnCount: 2,
+                                        position: index,
+                                        delay:
+                                            const Duration(milliseconds: 250),
+                                        duration:
+                                            const Duration(milliseconds: 500),
+                                        child: ScaleAnimation(
+                                          scale: 0.5,
+                                          child: FadeInAnimation(
+                                            child: GestureDetector(
+                                                onTap: () {
+                                                  controller.selectedNumber
+                                                      .value = numbers;
+                                                },
+                                                child: Image.network(
+                                                  numbers.imagePath,
+                                                )),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  ),
+                                ),
+                              ));
+                        }
+                      })
                     ],
                   )));
   }

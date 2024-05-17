@@ -155,6 +155,7 @@ class _AnimalContentState extends State<AnimalContent> {
                         begin: -2.5,
                         end: 0,
                         duration: const Duration(milliseconds: 550)),
+                const SizedBox(height: 20.0),
                 Obx(
                   () => controller.isLoadingAnimal.value
                       ? const ContentShimmer()

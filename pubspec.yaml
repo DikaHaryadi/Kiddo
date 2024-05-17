@@ -78,9 +78,6 @@ flutter:
     - assets/json/
     - assets/icons/
     - assets/images/
-    - assets/numbers/
-    - assets/number/
-    - assets/counters/
     - assets/animals/
     - assets/voices/
     - assets/family/

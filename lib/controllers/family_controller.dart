@@ -4,6 +4,7 @@ import 'package:textspeech/repository/family_repository.dart';
 
 class FamilyController extends GetxController {
   RxList<FamilyModel> familyModel = <FamilyModel>[].obs;
+  final Rx<FamilyModel?> selectedFamily = Rx<FamilyModel?>(null);
   final familyRepo = Get.put(FamilyRepository());
   final isLoadingFamily = RxBool(false);
 

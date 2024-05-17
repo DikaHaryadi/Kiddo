@@ -1,11 +1,11 @@
 import 'package:animations/animations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/auth/controller/user/network_manager.dart';
 import 'package:textspeech/auth/controller/user/user_controller.dart';
 import 'package:textspeech/controllers/anchor_ads_controller.dart';
@@ -16,6 +16,8 @@ import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:textspeech/util/etc/constants.dart';
 import 'package:textspeech/util/etc/responsive.dart';
 import 'package:textspeech/util/shimmer/shimmer.dart';
+
+import '../auth/controller/auth_controller.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -566,48 +568,84 @@ class _HomePageState extends State<HomePage> {
                                               topLeft: Radius.circular(15.0),
                                               topRight: Radius.circular(15.0)),
                                           color: kSoftblue),
-                                      child: AnimationLimiter(
-                                        child: Wrap(
-                                          children: List.generate(
-                                              navbarOpsion.length,
-                                              (index) => AnimationConfiguration
-                                                      .staggeredList(
-                                                    position: index,
-                                                    delay: const Duration(
-                                                        milliseconds: 600),
-                                                    duration: const Duration(
-                                                        milliseconds: 500),
-                                                    child: SlideAnimation(
-                                                      verticalOffset: 44.0,
-                                                      child: FadeInAnimation(
-                                                        child: ListTile(
-                                                          contentPadding:
-                                                              const EdgeInsets
-                                                                  .symmetric(
-                                                                  vertical:
-                                                                      20.0,
-                                                                  horizontal:
-                                                                      30.0),
-                                                          leading: Icon(
-                                                              navicon[index]),
-                                                          title: AutoSizeText(
-                                                            navbarOpsion[index]
-                                                                ['title']!,
-                                                            maxFontSize: 20.0,
-                                                            minFontSize: 18.0,
-                                                            style: GoogleFonts
-                                                                .aBeeZee(
+                                      child: Column(
+                                        children: [
+                                          AnimationLimiter(
+                                            child: Wrap(
+                                              children: List.generate(
+                                                  navbarOpsion.length,
+                                                  (index) =>
+                                                      AnimationConfiguration
+                                                          .staggeredList(
+                                                        position: index,
+                                                        delay: const Duration(
+                                                            milliseconds: 600),
+                                                        duration:
+                                                            const Duration(
+                                                                milliseconds:
+                                                                    500),
+                                                        child: SlideAnimation(
+                                                          verticalOffset: 44.0,
+                                                          child:
+                                                              FadeInAnimation(
+                                                            child: ListTile(
+                                                              contentPadding:
+                                                                  const EdgeInsets
+                                                                      .symmetric(
+                                                                      vertical:
+                                                                          20.0,
+                                                                      horizontal:
+                                                                          30.0),
+                                                              leading: Icon(
+                                                                  navicon[
+                                                                      index]),
+                                                              title:
+                                                                  AutoSizeText(
+                                                                navbarOpsion[
+                                                                        index]
+                                                                    ['title']!,
+                                                                maxFontSize:
+                                                                    20.0,
+                                                                minFontSize:
+                                                                    18.0,
+                                                                style: GoogleFonts.aBeeZee(
                                                                     fontWeight:
                                                                         FontWeight
                                                                             .bold,
                                                                     color: Colors
                                                                         .white),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    ),
-                                                  )),
-                                        ),
+                                                      )),
+                                            ),
+                                          ),
+                                          Expanded(child: Container()),
+                                          AnimationConfiguration.staggeredGrid(
+                                              position: 0,
+                                              columnCount: 1,
+                                              child: ListTile(
+                                                onTap: () =>
+                                                    AuthenticationRepository
+                                                        .instance
+                                                        .logOut(),
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 30.0),
+                                                leading:
+                                                    const Icon(Iconsax.logout),
+                                                title: AutoSizeText(
+                                                  'LogOut',
+                                                  maxFontSize: 20.0,
+                                                  minFontSize: 18.0,
+                                                  style: GoogleFonts.aBeeZee(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white),
+                                                ),
+                                              ))
+                                        ],
                                       )),
                                 )
                                     .animate(

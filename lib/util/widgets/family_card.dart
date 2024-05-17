@@ -14,9 +14,9 @@ class FamilyCardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: double.infinity,
-      height: 100,
+      margin: const EdgeInsets.only(bottom: 24.0),
       child: Row(
         children: [
           OpenContainer(

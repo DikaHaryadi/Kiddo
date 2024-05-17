@@ -15,9 +15,9 @@ class AnimalCardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: double.infinity,
-      height: 100,
+      margin: const EdgeInsets.only(bottom: 24.0),
       child: Row(
         children: [
           OpenContainer(
@@ -41,7 +41,7 @@ class AnimalCardScreen extends StatelessWidget {
           ),
           Expanded(
             child: Container(
-              color: const Color(0xFFfcf4f1),
+              color: Theme.of(context).scaffoldBackgroundColor,
               padding: const EdgeInsets.only(left: 20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

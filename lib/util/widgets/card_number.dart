@@ -87,7 +87,7 @@ class _CardNumberContentState extends State<CardNumberContent> {
                                           child: Image.network(
                                             numData.imagePath,
                                             width: double.infinity,
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.contain,
                                           ),
                                         ),
                                       ),

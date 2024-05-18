@@ -331,98 +331,98 @@ const gameList = [
 // ];
 
 //ANIMALS LIST
-const animalsList = [
-  {
-    'imagePath': 'assets/animals/leo.png',
-    'voice': 'voices/leo.mp3',
-    'name': 'Lion',
-    'kategori': 'Mamalia',
-    'jenis_makan': 'Karnivora',
-    'deskripsi':
-        'Singa adalah kucing besar dengan mantel cokelat keemasan, jantan memiliki janggut tebal. Mereka hidup dalam kelompok sosial yang disebut "pride" dan sering berburu mangsa besar seperti zebra dan impala. Singa aktif terutama pada malam hari.'
-  },
-  {
-    'imagePath': 'assets/animals/duck.png',
-    'voice': 'voices/duck.mp3',
-    'name': 'Duck',
-    'kategori': 'Unggas',
-    'jenis_makan': 'Omnivora',
-    'deskripsi':
-        'Bebek adalah jenis unggas air yang sering ditemui di danau, sungai, dan kolam di seluruh dunia. Mereka memiliki tubuh ramping dengan leher panjang, paruh ramping, dan bulu yang biasanya berwarna cokelat atau hijau keabu-abuan. Bebek sering dijinakkan dan dipelihara oleh manusia untuk daging, telur, dan hobi.'
-  },
-  {
-    'imagePath': 'assets/animals/chicken.png',
-    'voice': 'voices/chicken.mp3',
-    'name': 'Chicken',
-    'kategori': 'Unggas',
-    'jenis_makan': 'Omnivora',
-    'deskripsi':
-        'Ayam adalah jenis unggas yang sering dijinakkan dan dipelihara oleh manusia untuk daging, telur, dan bulu. Mereka memiliki tubuh berbulu dengan sayap, kaki bersisik, dan paruh. Ada banyak ras ayam dengan variasi dalam warna, ukuran, dan karakteristik fisik lainnya. Ayam biasanya hidup dalam kandang atau peternakan, tetapi ada juga ayam liar yang hidup di alam liar.'
-  },
-  {
-    'imagePath': 'assets/animals/horse.png',
-    'voice': 'voices/horse.mp3',
-    'name': 'Horse',
-    'kategori': 'Mamalia',
-    'jenis_makan': 'Herbivora',
-    'deskripsi':
-        'Kuda adalah mamalia berkuku genap yang digunakan manusia untuk transportasi, pertanian, dan olahraga. Mereka memiliki tubuh besar dengan kaki panjang dan kuat, ekor berbulu, dan bulu di sekitar leher yang disebut "jambul". Kuda dapat memiliki berbagai warna bulu dan banyak ras yang berbeda. Mereka memiliki hubungan yang kuat dengan manusia selama ribuan tahun dan sering menjadi bagian penting dalam budaya dan sejarah manusia.'
-  },
-  {
-    'imagePath': 'assets/animals/goat.png',
-    'voice': 'voices/goat.mp3',
-    'name': 'Goat',
-    'kategori': 'Mamalia',
-    'jenis_makan': 'Herbivora',
-    'deskripsi':
-        'Kambing adalah mamalia kecil berkuku genap yang sering dipelihara oleh manusia untuk daging, susu, dan bulu. Mereka memiliki tubuh yang ramping dengan bulu yang bisa beragam warna dan jenis, seperti halnya tanduk yang biasanya ada pada kedua jenis kelamin. Kambing adalah hewan yang serbaguna, mereka dapat hidup di berbagai lingkungan dan mampu beradaptasi dengan kondisi lingkungan yang berbeda.'
-  },
-  {
-    'imagePath': 'assets/animals/cat.png',
-    'voice': 'voices/cat.mp3',
-    'name': 'Cat',
-    'kategori': 'Mamalia',
-    'jenis_makan': 'Karnivora',
-    'deskripsi':
-        'Kucing adalah mamalia kecil yang sering dijinakkan oleh manusia sebagai hewan peliharaan. Mereka memiliki tubuh kecil, fleksibel, dengan bulu yang halus dan cakar yang tajam. Kucing biasanya memiliki mata yang besar dan telinga yang tegak. Mereka dikenal karena kemampuan berburu dan sikap mandiri. Kucing dapat memiliki berbagai warna bulu dan karakteristik fisik yang berbeda tergantung pada rasnya.'
-  },
-  {
-    'imagePath': 'assets/animals/mouse.png',
-    'voice': 'voices/mouse.mp3',
-    'name': 'Mouse',
-    'kategori': 'Mamalia',
-    'jenis_makan': 'Omnivora',
-    'deskripsi':
-        'Tikus adalah mamalia kecil yang sering ditemui di berbagai habitat di seluruh dunia. Mereka memiliki tubuh kecil dengan telinga dan ekor panjang. Tikus sering kali dianggap sebagai hama karena kemampuannya merusak tanaman, makanan, dan benda-benda di rumah. Namun, tikus juga memainkan peran penting dalam ekosistem sebagai pemakan serangga dan penyebar biji-bijian.'
-  },
-  {
-    'imagePath': 'assets/animals/frog.png',
-    'voice': 'voices/frog.mp3',
-    'name': 'Frog',
-    'kategori': 'Amphibia',
-    'jenis_makan': 'Omnivora',
-    'deskripsi':
-        'Katak adalah amfibi dengan tubuh yang halus dan licin, serta memiliki kaki yang panjang dan kuat untuk melompat. Mereka biasanya hidup di dekat air, seperti rawa, danau, atau sungai, meskipun ada beberapa spesies yang hidup di darat. Katak memiliki kulit yang berpori, yang memungkinkan mereka untuk bernapas melalui kulit saat berada di dalam air.'
-  },
-  {
-    'imagePath': 'assets/animals/dog.png',
-    'voice': 'voices/dog.mp3',
-    'name': 'Dog',
-    'kategori': 'Mamalia',
-    'jenis_makan': 'Karnivora',
-    'deskripsi':
-        'Anjing adalah mamalia yang sering dijinakkan dan dipelihara oleh manusia sebagai hewan peliharaan, hewan pekerja, atau untuk tujuan perlindungan. Mereka memiliki berbagai ras, ukuran, dan warna bulu yang berbeda. Anjing dikenal karena kecerdasan, loyalitas, dan kemampuan untuk berinteraksi dengan manusia.'
-  },
-  {
-    'imagePath': 'assets/animals/cow.png',
-    'voice': 'voices/cow.mp3',
-    'name': 'Cow',
-    'kategori': 'Mamalia',
-    'jenis_makan': 'Herbivora',
-    'deskripsi':
-        'Sapi adalah mamalia besar yang sering dipelihara oleh manusia untuk daging, susu, dan tenaga kerja. Mereka memiliki tubuh yang besar dengan bulu yang beragam warna dan pola, serta memiliki tanduk pada beberapa ras. Sapi adalah hewan herbivora, yang berarti mereka memakan rumput dan tanaman lainnya.'
-  },
-];
+// const animalsList = [
+//   {
+//     'imagePath': 'assets/animals/leo.png',
+//     'voice': 'voices/leo.mp3',
+//     'name': 'Lion',
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Karnivora',
+//     'deskripsi':
+//         'Singa adalah kucing besar dengan mantel cokelat keemasan, jantan memiliki janggut tebal. Mereka hidup dalam kelompok sosial yang disebut "pride" dan sering berburu mangsa besar seperti zebra dan impala. Singa aktif terutama pada malam hari.'
+//   },
+//   {
+//     'imagePath': 'assets/animals/duck.png',
+//     'voice': 'voices/duck.mp3',
+//     'name': 'Duck',
+//     'kategori': 'Unggas',
+//     'jenis_makan': 'Omnivora',
+//     'deskripsi':
+//         'Bebek adalah jenis unggas air yang sering ditemui di danau, sungai, dan kolam di seluruh dunia. Mereka memiliki tubuh ramping dengan leher panjang, paruh ramping, dan bulu yang biasanya berwarna cokelat atau hijau keabu-abuan. Bebek sering dijinakkan dan dipelihara oleh manusia untuk daging, telur, dan hobi.'
+//   },
+//   {
+//     'imagePath': 'assets/animals/chicken.png',
+//     'voice': 'voices/chicken.mp3',
+//     'name': 'Chicken',
+//     'kategori': 'Unggas',
+//     'jenis_makan': 'Omnivora',
+//     'deskripsi':
+//         'Ayam adalah jenis unggas yang sering dijinakkan dan dipelihara oleh manusia untuk daging, telur, dan bulu. Mereka memiliki tubuh berbulu dengan sayap, kaki bersisik, dan paruh. Ada banyak ras ayam dengan variasi dalam warna, ukuran, dan karakteristik fisik lainnya. Ayam biasanya hidup dalam kandang atau peternakan, tetapi ada juga ayam liar yang hidup di alam liar.'
+//   },
+//   {
+//     'imagePath': 'assets/animals/horse.png',
+//     'voice': 'voices/horse.mp3',
+//     'name': 'Horse',
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Herbivora',
+//     'deskripsi':
+//         'Kuda adalah mamalia berkuku genap yang digunakan manusia untuk transportasi, pertanian, dan olahraga. Mereka memiliki tubuh besar dengan kaki panjang dan kuat, ekor berbulu, dan bulu di sekitar leher yang disebut "jambul". Kuda dapat memiliki berbagai warna bulu dan banyak ras yang berbeda. Mereka memiliki hubungan yang kuat dengan manusia selama ribuan tahun dan sering menjadi bagian penting dalam budaya dan sejarah manusia.'
+//   },
+//   {
+//     'imagePath': 'assets/animals/goat.png',
+//     'voice': 'voices/goat.mp3',
+//     'name': 'Goat',
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Herbivora',
+//     'deskripsi':
+//         'Kambing adalah mamalia kecil berkuku genap yang sering dipelihara oleh manusia untuk daging, susu, dan bulu. Mereka memiliki tubuh yang ramping dengan bulu yang bisa beragam warna dan jenis, seperti halnya tanduk yang biasanya ada pada kedua jenis kelamin. Kambing adalah hewan yang serbaguna, mereka dapat hidup di berbagai lingkungan dan mampu beradaptasi dengan kondisi lingkungan yang berbeda.'
+//   },
+//   {
+//     'imagePath': 'assets/animals/cat.png',
+//     'voice': 'voices/cat.mp3',
+//     'name': 'Cat',
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Karnivora',
+//     'deskripsi':
+//         'Kucing adalah mamalia kecil yang sering dijinakkan oleh manusia sebagai hewan peliharaan. Mereka memiliki tubuh kecil, fleksibel, dengan bulu yang halus dan cakar yang tajam. Kucing biasanya memiliki mata yang besar dan telinga yang tegak. Mereka dikenal karena kemampuan berburu dan sikap mandiri. Kucing dapat memiliki berbagai warna bulu dan karakteristik fisik yang berbeda tergantung pada rasnya.'
+//   },
+//   {
+//     'imagePath': 'assets/animals/mouse.png',
+//     'voice': 'voices/mouse.mp3',
+//     'name': 'Mouse',
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Omnivora',
+//     'deskripsi':
+//         'Tikus adalah mamalia kecil yang sering ditemui di berbagai habitat di seluruh dunia. Mereka memiliki tubuh kecil dengan telinga dan ekor panjang. Tikus sering kali dianggap sebagai hama karena kemampuannya merusak tanaman, makanan, dan benda-benda di rumah. Namun, tikus juga memainkan peran penting dalam ekosistem sebagai pemakan serangga dan penyebar biji-bijian.'
+//   },
+//   {
+//     'imagePath': 'assets/animals/frog.png',
+//     'voice': 'voices/frog.mp3',
+//     'name': 'Frog',
+//     'kategori': 'Amphibia',
+//     'jenis_makan': 'Omnivora',
+//     'deskripsi':
+//         'Katak adalah amfibi dengan tubuh yang halus dan licin, serta memiliki kaki yang panjang dan kuat untuk melompat. Mereka biasanya hidup di dekat air, seperti rawa, danau, atau sungai, meskipun ada beberapa spesies yang hidup di darat. Katak memiliki kulit yang berpori, yang memungkinkan mereka untuk bernapas melalui kulit saat berada di dalam air.'
+//   },
+//   {
+//     'imagePath': 'assets/animals/dog.png',
+//     'voice': 'voices/dog.mp3',
+//     'name': 'Dog',
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Karnivora',
+//     'deskripsi':
+//         'Anjing adalah mamalia yang sering dijinakkan dan dipelihara oleh manusia sebagai hewan peliharaan, hewan pekerja, atau untuk tujuan perlindungan. Mereka memiliki berbagai ras, ukuran, dan warna bulu yang berbeda. Anjing dikenal karena kecerdasan, loyalitas, dan kemampuan untuk berinteraksi dengan manusia.'
+//   },
+//   {
+//     'imagePath': 'assets/animals/cow.png',
+//     'voice': 'voices/cow.mp3',
+//     'name': 'Cow',
+//     'kategori': 'Mamalia',
+//     'jenis_makan': 'Herbivora',
+//     'deskripsi':
+//         'Sapi adalah mamalia besar yang sering dipelihara oleh manusia untuk daging, susu, dan tenaga kerja. Mereka memiliki tubuh yang besar dengan bulu yang beragam warna dan pola, serta memiliki tanduk pada beberapa ras. Sapi adalah hewan herbivora, yang berarti mereka memakan rumput dan tanaman lainnya.'
+//   },
+// ];
 
 //LETTERS LIST
 // const lettersList = [

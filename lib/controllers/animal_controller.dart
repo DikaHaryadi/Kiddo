@@ -3,8 +3,8 @@ import 'package:textspeech/repository/animal_repo.dart';
 import 'package:textspeech/models/animal_model.dart';
 
 class AnimalController extends GetxController {
-  RxList<AnimalModel> animalModels =
-      <AnimalModel>[].obs; // Use RxList instead of Rx
+  RxList<AnimalModel> animalModels = <AnimalModel>[].obs;
+  final Rx<AnimalModel?> selectedAnimal = Rx<AnimalModel?>(null);
   final animalRepo = Get.put(AnimalRepository());
   final isLoadingAnimal = RxBool(false);
 

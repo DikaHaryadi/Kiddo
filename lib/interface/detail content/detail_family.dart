@@ -103,8 +103,9 @@ class _DetailFamilyState extends State<DetailFamily> {
                                                                 context,
                                                                 _routeBuilder(
                                                                     context,
-                                                                    widget
-                                                                        .model),
+                                                                    controller
+                                                                            .familyModel[
+                                                                        index]),
                                                               );
                                                             }
                                                           },

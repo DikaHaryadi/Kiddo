@@ -473,13 +473,12 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                                                               () {
                                                                             if (index !=
                                                                                 currentIndex) {
-                                                                              // Set currentIndex to the clicked index
                                                                               setState(() {
                                                                                 currentIndex = index;
                                                                               });
-                                                                              Navigator.push(
+                                                                              Navigator.pushReplacement(
                                                                                 context,
-                                                                                _routeBuilder(context, widget.model),
+                                                                                _routeBuilder(context, controller.animalModels[index]),
                                                                               );
                                                                             }
                                                                           },

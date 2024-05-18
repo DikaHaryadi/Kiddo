@@ -19,6 +19,11 @@ class FamilyController extends GetxController {
       isLoadingFamily.value = true;
       final family = await familyRepo.fetchFamilyContent();
       familyModel.assignAll(family);
+
+      // Set the default selected family to the first item if the list is not empty
+      if (familyModel.isNotEmpty) {
+        selectedFamily.value = familyModel[0];
+      }
     } catch (e) {
       familyModel.assignAll([]);
     } finally {

@@ -4,16 +4,17 @@ class NumberModel {
   String imagePath;
   String name;
   String subImage;
+  String speech;
 
   NumberModel(
-      {required this.imagePath, required this.name, required this.subImage});
+      {required this.imagePath,
+      required this.name,
+      required this.subImage,
+      required this.speech});
 
   // static func to create an empty number model
-  static NumberModel empty() => NumberModel(
-        imagePath: '',
-        name: '',
-        subImage: '',
-      );
+  static NumberModel empty() =>
+      NumberModel(imagePath: '', name: '', subImage: '', speech: '');
 
   // convert model to json structure for storing data in firebase
   Map<String, dynamic> toJson() {
@@ -32,7 +33,8 @@ class NumberModel {
       return NumberModel(
           imagePath: data?['ImagePath'],
           name: data?['Name'],
-          subImage: data?['SubImage']);
+          subImage: data?['SubImage'],
+          speech: data?['speech']);
     } else {
       return NumberModel.empty();
     }

@@ -19,6 +19,10 @@ class AnimalController extends GetxController {
       isLoadingAnimal.value = true;
       final animals = await animalRepo.fetchAnimalContent();
       animalModels.assignAll(animals); // Use assignAll to update RxList
+
+      if (animalModels.isNotEmpty) {
+        selectedAnimal.value = animalModels[0];
+      }
     } catch (e) {
       animalModels.assignAll([]); // Use assignAll to update RxList
     } finally {

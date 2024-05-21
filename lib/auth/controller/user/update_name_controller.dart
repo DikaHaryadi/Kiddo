@@ -4,7 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/auth/controller/user/network_manager.dart';
 import 'package:textspeech/auth/controller/sign_up_controller.dart';
 import 'package:textspeech/auth/controller/user/user_controller.dart';
-import 'package:textspeech/auth/controller/user_repo.dart';
+import 'package:textspeech/repository/user_repo.dart';
 import 'package:textspeech/interface/user/profile.dart';
 
 class UpdateNameController extends GetxController {

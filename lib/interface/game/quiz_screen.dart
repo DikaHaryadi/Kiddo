@@ -13,26 +13,18 @@ class QuizScreen extends StatelessWidget {
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Obx(
-              () => ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return QuestionCard(model: controller.allPapers[index]);
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(height: 20);
-                },
-                itemCount: controller.allPapers.length,
-              ),
-            ),
-            // Obx(() => Text(
-            //     dataUploader.loadingStatus.value == LoadingStatus.completed
-            //         ? 'uploaded completed'
-            //         : 'uploaded'))
-          ],
+        child: Obx(
+          () => ListView.separated(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) {
+              return QuestionCard(model: controller.allPapers[index]);
+            },
+            separatorBuilder: (context, index) {
+              return const SizedBox(height: 20);
+            },
+            itemCount: controller.allPapers.length,
+          ),
         ),
       ),
     );

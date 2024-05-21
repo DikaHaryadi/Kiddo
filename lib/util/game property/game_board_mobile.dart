@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:get_storage/get_storage.dart'; // Perubahan impor di sini
+import 'package:get_storage/get_storage.dart';
 import 'package:textspeech/util/etc/constants.dart';
 import 'package:textspeech/util/game%20property/game.dart';
 import 'package:textspeech/util/game%20property/game_confetti.dart';
@@ -303,7 +303,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  Get.offAllNamed('/');
+                                  Get.offAllNamed('/home');
                                 },
                                 child: Text(
                                   'Exit',

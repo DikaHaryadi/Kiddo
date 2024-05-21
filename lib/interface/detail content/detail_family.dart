@@ -226,6 +226,7 @@ class _DetailFamilyState extends State<DetailFamily> {
                   child: const Icon(
                     Iconsax.play_circle,
                     color: Colors.white,
+                    size: 40,
                   ),
                 ).animate(delay: const Duration(milliseconds: 250)).slideX(
                     begin: 2,

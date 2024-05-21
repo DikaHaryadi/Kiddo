@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:textspeech/auth/controller/user_repo.dart';
+import 'package:textspeech/repository/user_repo.dart';
 import 'package:textspeech/auth/verify_email.dart';
 import 'package:textspeech/interface/homepage.dart';
 import 'package:textspeech/interface/intro/introduction_screen.dart';

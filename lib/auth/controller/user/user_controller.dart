@@ -5,9 +5,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:textspeech/auth/controller/user/network_manager.dart';
 import 'package:textspeech/auth/controller/sign_up_controller.dart';
-import 'package:textspeech/auth/controller/user_repo.dart';
+import 'package:textspeech/repository/user_repo.dart';
 import 'package:textspeech/auth/re_auth_user_login.dart';
-import 'package:textspeech/auth/user_model.dart';
+import 'package:textspeech/models/user_model.dart';
 import 'package:textspeech/interface/intro/introduction_screen.dart';
 import 'package:textspeech/auth/controller/auth_controller.dart';
 
@@ -42,7 +42,8 @@ class UserController extends GetxController {
     }
   }
 
-  Future<void> saveUserRecord(UserCredential? userCredential) async {
+  Future<void> saveUserRecord(
+      UserCredential? userCredential, String token) async {
     try {
       // First update Rx User and then check if user data is already stored. If not store new data
       await fetchUserRecord();
@@ -62,7 +63,8 @@ class UserController extends GetxController {
                   nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '',
               username: username,
               email: userCredential.user!.email ?? '',
-              profilePicture: userCredential.user!.photoURL ?? '');
+              profilePicture: userCredential.user!.photoURL ?? '',
+              token: token);
           // save user data
           await userRepo.saveUserRecord(user);
         }

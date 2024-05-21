@@ -1,61 +1,186 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/util/game%20property/game_option.dart';
+import '../../util/etc/constants.dart';
+import '../../util/game property/game_board_mobile.dart';
 
-class MemoryGameHome extends StatelessWidget {
+class MemoryGameHome extends StatefulWidget {
   const MemoryGameHome({super.key});
+
+  @override
+  State<MemoryGameHome> createState() => _MemoryGameHomeState();
+}
+
+class _MemoryGameHomeState extends State<MemoryGameHome> {
+  int? activeIndex; // Menyimpan indeks tombol yang aktif
+
+  static Route<dynamic> _routeBuilder(BuildContext context, int gameLevel) {
+    return MaterialPageRoute(
+      builder: (_) {
+        return GameBoardMobile(gameLevel: gameLevel);
+      },
+    );
+  }
+
+  void _onLevelSelected(int? index) {
+    setState(() {
+      activeIndex = index;
+    });
+  }
+
+  void _startGame() {
+    if (activeIndex != null) {
+      Navigator.of(context).pushAndRemoveUntil(
+        _routeBuilder(context, gameLevels[activeIndex!]['level']),
+        (Route<dynamic> route) => false,
+      );
+    } else {
+      // Tampilkan pesan atau indikator bahwa level harus dipilih terlebih dahulu
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select a game level first.')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 15.0, top: 25.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Memory\nGame',
-                  style: GoogleFonts.oswald(
-                      fontWeight: FontWeight.w500, fontSize: 35),
-                ).animate(delay: const Duration(milliseconds: 250)).slideX(
-                    begin: -2,
-                    end: 0,
-                    duration: const Duration(milliseconds: 500)),
-                IconButton(
-                    onPressed: () => Get.offNamed('/home'),
-                    icon: const Icon(Icons.arrow_back_ios))
-              ],
+      appBar: AppBar(
+        backgroundColor: const Color(0xFFFEF8F2),
+        automaticallyImplyLeading: false,
+        leading: IconButton(
+            onPressed: () => Get.offNamed('/home'),
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Color(0xFFFE9081),
+            )),
+        title: Text(
+          'Memory Game',
+          style: Theme.of(context).textTheme.headlineMedium!.apply(
+                color: const Color(0xFFFE9081),
+              ),
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Iconsax.firstline,
+                color: Color(0xFFFE9081),
+              ))
+        ],
+      ),
+      body: SizedBox(
+        width: Get.width,
+        height: Get.height,
+        child: Column(children: [
+          Expanded(
+            flex: 3,
+            child: Container(
+              color: const Color(0xFFFEF8F2),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding:
+                        EdgeInsets.only(left: 24.0, right: 24.0, top: 10.0),
+                    child: Text(
+                      "In this game you'll be honing your memory in choosing the same card, the shorter the time it takes you to complete the chosen level, the better!",
+                    ),
+                  ),
+                  const SizedBox(height: 8.0),
+                  GameOptions(
+                    onLevelSelected: _onLevelSelected,
+                  )
+                      .animate(
+                        delay: const Duration(milliseconds: 500),
+                      )
+                      .slideY(
+                        begin: 5,
+                        end: 0,
+                        duration: const Duration(milliseconds: 500),
+                        curve: Curves.bounceInOut,
+                      ),
+                ],
+              ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
+          Expanded(
+            flex: 1,
+            child: Container(
+              width: Get.width,
+              height: 30,
+              color: const Color(0xFFDEE0F5),
+              child: Stack(
+                clipBehavior: Clip.none,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15.0),
-                    child: Text(
-                      'Tingkat Kesulitan',
-                      style: GoogleFonts.playfairDisplay(
-                          fontWeight: FontWeight.w500, fontSize: 22),
+                  Positioned(
+                    top: -20.0,
+                    left: (Get.width / 2) - 100,
+                    child: GestureDetector(
+                      onTap: _startGame,
+                      child: Container(
+                        height: 40,
+                        width: 200,
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30.0),
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Color(0xFF2D396F),
+                              offset: Offset(2, 0),
+                            ),
+                            BoxShadow(
+                              color: Color(0xFF2D396F),
+                              offset: Offset(-2, 0),
+                            ),
+                            BoxShadow(
+                              color: Color(0xFF2D396F),
+                              offset: Offset(0, -2),
+                            ),
+                            BoxShadow(
+                              color: Color(0xFF2D396F),
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                          color: const Color(0xFFFE9081),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Icon(
+                              Iconsax.backward,
+                              color: Colors.white,
+                            ),
+                            Text(
+                              'Start Game',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .apply(color: Colors.white),
+                            ),
+                            const Icon(
+                              Iconsax.forward,
+                              color: Colors.white,
+                            )
+                          ],
+                        ),
+                      ),
                     ),
-                  ).animate(delay: const Duration(milliseconds: 250)).slideY(
-                      begin: 20,
-                      end: 0,
-                      duration: const Duration(milliseconds: 350),
-                      curve: Curves.bounceInOut),
-                  const GameOptions()
-                      .animate(delay: const Duration(milliseconds: 500))
-                      .slideY(
-                          begin: 5,
-                          end: 0,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.bounceInOut),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                      width: 270,
+                      height: 80,
+                      decoration: BoxDecoration(
+                        color: Colors.pink,
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),

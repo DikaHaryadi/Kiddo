@@ -178,10 +178,13 @@ class CircularImage extends StatelessWidget {
                         const Icon(Icons.error),
                   ),
                 )
-              : Image(
-                  image: AssetImage(image),
-                  fit: fit,
-                  color: overlayColor,
+              : InkWell(
+                  onTap: onTap,
+                  child: Image(
+                    image: AssetImage(image),
+                    fit: fit,
+                    color: overlayColor,
+                  ),
                 ),
         ),
       ),

@@ -6,6 +6,7 @@ import 'package:textspeech/auth/controller/user/network_manager.dart';
 import 'package:textspeech/auth/controller/sign_up_controller.dart';
 import 'package:textspeech/auth/controller/user/user_controller.dart';
 import 'package:textspeech/auth/controller/auth_controller.dart';
+import 'package:textspeech/services/notification.dart';
 
 class IntroductionController extends GetxController {
   final rememberMe = false.obs;
@@ -15,6 +16,7 @@ class IntroductionController extends GetxController {
   final password = TextEditingController();
   GlobalKey<FormState> loginFromKey = GlobalKey<FormState>();
   final userController = Get.put(UserController());
+  final firebaseNotification = Get.put(FirebaseNotification());
 
   @override
   void onInit() {
@@ -99,9 +101,10 @@ class IntroductionController extends GetxController {
       // google authentification
       final userCredentials =
           await AuthenticationRepository.instance.signInWithGoogle();
+      final token = firebaseNotification.mToken.value;
 
       // save user data
-      await userController.saveUserRecord(userCredentials);
+      await userController.saveUserRecord(userCredentials, token);
       print('user credential$userCredentials');
       Navigator.of(Get.overlayContext!).pop();
       // navigate

@@ -7,15 +7,16 @@ class UserModel {
   String username;
   String email;
   String profilePicture;
+  String token;
 
-  UserModel({
-    required this.id,
-    required this.firstName,
-    required this.lastName,
-    required this.username,
-    required this.email,
-    required this.profilePicture,
-  });
+  UserModel(
+      {required this.id,
+      required this.firstName,
+      required this.lastName,
+      required this.username,
+      required this.email,
+      required this.profilePicture,
+      required this.token});
 
   // to get the full name
   String get fullName => '$firstName $lastName';
@@ -42,6 +43,7 @@ class UserModel {
         username: '',
         email: '',
         profilePicture: '',
+        token: '',
       );
 
   // Convert model to JSON structure for storing data in firebase
@@ -52,6 +54,7 @@ class UserModel {
       'Username': username,
       'Email': email,
       'ProfilePicture': profilePicture,
+      'Token': token
     };
   }
 
@@ -61,13 +64,13 @@ class UserModel {
     if (document.data() != null) {
       final data = document.data();
       return UserModel(
-        id: document.id,
-        firstName: data?['FirstName'] ?? '',
-        lastName: data?['LastName'] ?? '',
-        username: data?['Username'] ?? '',
-        email: data?['Email'] ?? '',
-        profilePicture: data?['ProfilePicture'] ?? '',
-      );
+          id: document.id,
+          firstName: data?['FirstName'] ?? '',
+          lastName: data?['LastName'] ?? '',
+          username: data?['Username'] ?? '',
+          email: data?['Email'] ?? '',
+          profilePicture: data?['ProfilePicture'] ?? '',
+          token: data?['Token'] ?? '');
     } else {
       return UserModel.empty();
     }

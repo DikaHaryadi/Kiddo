@@ -136,7 +136,7 @@ class _CardNumberContentState extends State<CardNumberContent> {
                                           ),
                                           GestureDetector(
                                             onTap: () => ttsController
-                                                .textToSpeech(numData.name),
+                                                .textToSpeech(numData.speech),
                                             child: Container(
                                               width: 50,
                                               height: 50,

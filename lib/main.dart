@@ -1,4 +1,5 @@
 import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -8,25 +9,12 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:textspeech/firebase_options.dart';
+import 'package:textspeech/services/notification.dart';
 import 'package:textspeech/util/etc/app_routes.dart';
 import 'package:textspeech/auth/controller/auth_controller.dart';
 import 'package:textspeech/util/bindings/initial_bindings.dart';
 import 'package:textspeech/util/widgets/theme.dart';
 
-// void main() async {
-//   final WidgetsBinding widgetsBinding =
-//       WidgetsFlutterBinding.ensureInitialized();
-//   InitialBindings().dependencies();
-//   MobileAds.instance.initialize();
-//   await GetStorage.init();
-//   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-//   await initializeDateFormatting('en_US', null);
-//   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-//   await FirebaseAppCheck.instance.activate();
-//   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
-//       .then((FirebaseApp value) => Get.put(AuthController()));
-//   runApp(const MyApp());
-// }
 void main() async {
   final WidgetsBinding widgetBinding =
       WidgetsFlutterBinding.ensureInitialized();
@@ -38,20 +26,26 @@ void main() async {
   // Inisialisasi Firebase
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform)
       .then((FirebaseApp value) => Get.put(AuthenticationRepository()));
-  // Inisialisasi Dependency Injection
-  // InitialBindings().dependencies();
 
   // Inisialisasi lainnya
   MobileAds.instance.initialize();
   await initializeDateFormatting('en_US', null);
+  await FirebaseMessaging.instance.getInitialMessage();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   await FirebaseAppCheck.instance.activate();
 
-  runApp(const MyApp());
+  // Inisialisasi FirebaseNotification
+  Get.put(FirebaseNotification());
+
+  // Mendapatkan navigatorKey dari FirebaseNotification
+  final navigatorKey = FirebaseNotification.instance.getNavigatorKey();
+
+  runApp(MyApp(navigatorKey: navigatorKey));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final GlobalKey<NavigatorState> navigatorKey;
+  const MyApp({super.key, required this.navigatorKey});
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +55,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       getPages: AppRoutes.routes(),
       initialBinding: InitialBindings(),
+      navigatorKey: navigatorKey,
     );
   }
 }

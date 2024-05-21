@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:textspeech/auth/user_model.dart';
+import 'package:textspeech/models/user_model.dart';
 import 'package:textspeech/auth/controller/auth_controller.dart';
 import 'package:textspeech/util/exceptions/firebase_exceptions.dart';
 import 'package:textspeech/util/exceptions/format_exceptions.dart';

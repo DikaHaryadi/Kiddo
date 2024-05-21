@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 import 'package:textspeech/auth/controller/user/network_manager.dart';
-import 'package:textspeech/auth/controller/user_repo.dart';
-import 'package:textspeech/auth/user_model.dart';
+import 'package:textspeech/repository/user_repo.dart';
+import 'package:textspeech/models/user_model.dart';
 import 'package:textspeech/auth/verify_email.dart';
+import 'package:textspeech/services/notification.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:textspeech/auth/controller/auth_controller.dart';
 
@@ -21,6 +22,7 @@ class SignupController extends GetxController {
   final userName = TextEditingController();
   final password = TextEditingController();
   GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
+  final firebaseNotification = Get.put(FirebaseNotification());
 
   void signup() async {
     try {
@@ -75,6 +77,8 @@ class SignupController extends GetxController {
       final userCredential = await AuthenticationRepository.instance
           .registerWithEmailAndPassword(
               email.text.trim(), password.text.trim());
+      // get token
+      final token = firebaseNotification.mToken.value;
 
       // Save Auth user data in Firebase Firestore
       final newUser = UserModel(
@@ -84,6 +88,7 @@ class SignupController extends GetxController {
         username: userName.text.trim(),
         email: email.text.trim(),
         profilePicture: '',
+        token: token,
       );
 
       final userRepository = Get.put(UserRepository());

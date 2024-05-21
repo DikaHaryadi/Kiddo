@@ -9,9 +9,9 @@ import 'package:textspeech/interface/content/numbers.dart';
 import 'package:textspeech/interface/content/vegetables.dart';
 
 const List<Map<String, dynamic>> gameLevels = [
-  {'title': 'Easy', 'level': 4, 'color': Colors.amberAccent},
-  {'title': 'Medium', 'level': 6, 'color': Colors.blueAccent},
-  {'title': 'Hard', 'level': 8, 'color': Colors.cyanAccent},
+  {'title': 'Easy', 'level': 4},
+  {'title': 'Medium', 'level': 6},
+  {'title': 'Hard', 'level': 8},
 ];
 
 const String gameTitle = 'MEMORY MATCH';

@@ -18,6 +18,7 @@ import 'package:textspeech/interface/intro/splash_screen.dart';
 import 'package:textspeech/auth/verify_email.dart';
 import 'package:textspeech/quiz/question_paper_controller.dart';
 import 'package:textspeech/interface/game/quiz_screen.dart';
+import 'package:textspeech/services/message.dart';
 import 'package:textspeech/util/widgets/change_name.dart';
 import 'package:textspeech/util/widgets/change_username.dart';
 
@@ -65,5 +66,8 @@ class AppRoutes {
         GetPage(name: '/edit-profile', page: () => const EditProfileScreen()),
         GetPage(name: '/edit-name', page: () => const ChangeName()),
         GetPage(name: '/edit-username', page: () => const ChangeUserName()),
+
+        // notif
+        GetPage(name: '/message', page: () => const MessageScreen()),
       ];
 }

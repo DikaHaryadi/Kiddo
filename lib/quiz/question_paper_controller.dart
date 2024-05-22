@@ -6,6 +6,7 @@ import 'package:textspeech/services/firebase_storage_service.dart';
 
 class QuestionPaperController extends GetxController {
   final allPapers = <QuestionModel>[].obs;
+  final isLoadingLetter = RxBool(false);
 
   @override
   void onReady() {
@@ -15,6 +16,7 @@ class QuestionPaperController extends GetxController {
 
   Future<void> getAllpapers() async {
     try {
+      isLoadingLetter.value = true;
       QuerySnapshot<Map<String, dynamic>> data = await questionPaperRF.get();
       final paperList =
           data.docs.map((paper) => QuestionModel.fromSnapshot(paper)).toList();
@@ -28,6 +30,8 @@ class QuestionPaperController extends GetxController {
       allPapers.assignAll(paperList);
     } catch (e) {
       print('question_paper_controller error :' + e.toString());
+    } finally {
+      isLoadingLetter.value = false;
     }
   }
 }

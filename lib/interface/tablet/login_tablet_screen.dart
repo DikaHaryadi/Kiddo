@@ -24,20 +24,23 @@ class LoginTabletScreen extends StatelessWidget {
               ))),
       child: Column(
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 12),
-              Text(
-                'Welcome back',
-                style: Theme.of(context).textTheme.displayLarge,
-              ),
-              const SizedBox(height: 15),
-              Text(
-                'Come on in and explore the world of fun learning with us! Please login before playing',
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: 50.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 12),
+                Text(
+                  'Welcome back',
+                  style: Theme.of(context).textTheme.displayMedium,
+                ),
+                const SizedBox(height: 15),
+                Text(
+                  'Come on in and explore the world of fun learning with us! Please login before playing',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+              ],
+            ),
           ),
           Form(
               key: controller.loginFromKey,
@@ -100,8 +103,8 @@ class LoginTabletScreen extends StatelessWidget {
                           children: [
                             Obx(
                               () => SizedBox(
-                                width: 24,
-                                height: 24,
+                                width: 30,
+                                height: 30,
                                 child: Checkbox(
                                   value: controller.rememberMe.value,
                                   onChanged: (value) => controller.rememberMe
@@ -161,7 +164,7 @@ class LoginTabletScreen extends StatelessWidget {
                 color: kGrey,
                 thickness: .5,
                 indent: 60,
-                endIndent: 5,
+                endIndent: 10,
               )),
               Text(
                 'or sign in with',
@@ -174,7 +177,7 @@ class LoginTabletScreen extends StatelessWidget {
                   child: Divider(
                 color: kGrey,
                 thickness: .5,
-                indent: 5,
+                indent: 10,
                 endIndent: 60,
               )),
             ],

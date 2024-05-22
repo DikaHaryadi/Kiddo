@@ -1,14 +1,16 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:textspeech/controllers/family_controller.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
 import 'package:textspeech/models/family_model.dart';
+import 'package:textspeech/util/etc/to_title_case.dart';
 
+import '../../util/etc/app_colors.dart';
 import '../../util/etc/curved_edges.dart';
 
 class FamilyTabletScreen extends StatelessWidget {
@@ -75,20 +77,19 @@ class FamilyTabletScreen extends StatelessWidget {
                                                 MainAxisAlignment.center,
                                             children: [
                                               Text(
-                                                family.subjectFamily,
-                                                style: GoogleFonts.montserrat(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                ),
+                                                toTitleCase(
+                                                    family.subjectFamily),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleLarge
+                                                    ?.apply(color: kWhite),
                                               ),
                                               Text(
-                                                family.subtitle,
-                                                style: GoogleFonts.robotoSlab(
-                                                  fontSize: 15,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.white,
-                                                ),
+                                                toTitleCase(family.subtitle),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium
+                                                    ?.apply(color: kWhite),
                                               ),
                                             ],
                                           ),
@@ -136,19 +137,24 @@ class FamilyTabletScreen extends StatelessWidget {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(left: 35.0),
-                              child: Text(
+                              child: AutoSizeText(
                                 'Today',
-                                style: GoogleFonts.montserrat(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleLarge
+                                    ?.copyWith(fontWeight: FontWeight.bold),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      Text(
+                      AutoSizeText(
                         DateFormat('EEEE, MMM d').format(DateTime.now()),
-                        style: GoogleFonts.roboto(
-                            fontWeight: FontWeight.bold, fontSize: 25),
+                        maxFontSize: 30,
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineSmall
+                            ?.copyWith(fontWeight: FontWeight.bold),
                       ),
                       Expanded(
                         child: Image.asset(
@@ -181,13 +187,15 @@ class FamilyTabletScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      top: 400,
+                      top: Get.height * 0.35,
                       left: 30,
-                      child: Text(model.subjectFamily,
-                              style: GoogleFonts.aBeeZee(
-                                  fontSize: 35,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white))
+                      child: Text(
+                        toTitleCase(model.subjectFamily),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineLarge
+                            ?.apply(color: kWhite),
+                      )
                           .animate(delay: const Duration(milliseconds: 250))
                           .fadeIn(
                               duration: const Duration(milliseconds: 600),
@@ -195,14 +203,13 @@ class FamilyTabletScreen extends StatelessWidget {
                               delay: const Duration(milliseconds: 100)),
                     ),
                     Positioned(
-                      top: 460,
-                      left: 30,
+                      top: Get.height * 0.4,
+                      left: 30.0,
                       child: Text(
-                        model.subtitle,
-                        style: GoogleFonts.montserrat(
-                            fontSize: 40,
-                            fontWeight: FontWeight.bold,
-                            color: const Color(0xFFa35e3e)),
+                        toTitleCase(model.subtitle),
+                        style: Theme.of(context).textTheme.headlineLarge?.apply(
+                              color: const Color(0xFFa35e3e),
+                            ),
                       )
                           .animate(delay: const Duration(milliseconds: 250))
                           .fadeIn(
@@ -228,8 +235,8 @@ class FamilyTabletScreen extends StatelessWidget {
                           child: const Center(
                             child: Icon(
                               Iconsax.play_circle,
-                              color: Colors.white,
-                              size: 25,
+                              color: kWhite,
+                              size: 50,
                             ),
                           ),
                         )
@@ -243,23 +250,17 @@ class FamilyTabletScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      bottom: 100,
+                      top: Get.height * 0.6,
+                      bottom: 10,
                       right: 20,
                       left: 20,
                       child: InkWell(
                         onTap: () {
                           ttsController.textToSpeech(model.deskripsiFamily);
                         },
-                        child: Text(
-                          model.deskripsiFamily,
-                          textAlign: TextAlign.left,
-                          style: GoogleFonts.aBeeZee(
-                            height: 1.4,
-                            fontSize: 25,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.black,
-                          ),
-                        )
+                        child: Text(model.deskripsiFamily,
+                                textAlign: TextAlign.left,
+                                style: Theme.of(context).textTheme.bodyMedium)
                             .animate(
                               delay: const Duration(milliseconds: 250),
                             )

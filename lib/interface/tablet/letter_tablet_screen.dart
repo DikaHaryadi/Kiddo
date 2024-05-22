@@ -42,29 +42,29 @@ class LetterTabletScreen extends StatelessWidget {
                           curve: Curves.easeIn),
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
-                    child: AutoSizeText(
-                      'Hijaiyah',
-                      maxFontSize: 50,
-                      minFontSize: 45,
-                      style: GoogleFonts.montserrat(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ).animate().slideX(
-                        begin: -2,
-                        end: 0,
-                        duration: const Duration(milliseconds: 700),
-                        curve: Curves.easeIn),
+                    child: Text('Hijaiyah',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge
+                                ?.copyWith(fontSize: 50))
+                        .animate()
+                        .slideX(
+                            begin: -2,
+                            end: 0,
+                            duration: const Duration(milliseconds: 700),
+                            curve: Curves.easeIn),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
-                    child: AutoSizeText(
-                      'Today, we will learn about the hijaiyah letters.',
-                      maxFontSize: 40,
-                      minFontSize: 35,
-                      style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w400,
-                        color: Colors.grey.shade400,
-                      ),
+                    child: Text(
+                      'Today, we will learn about hijaiyah letters',
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge
+                          ?.copyWith(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 35,
+                              color: Colors.grey.shade400),
                     ).animate().slideX(
                         begin: -2,
                         end: 0,
@@ -116,9 +116,7 @@ class LetterTabletScreen extends StatelessWidget {
                     alignment: Alignment.center,
                     child: AutoSizeText(
                       'click on the image to reveal the sound',
-                      maxFontSize: 25,
-                      minFontSize: 22,
-                      style: GoogleFonts.roboto(fontWeight: FontWeight.bold),
+                      style: Theme.of(context).textTheme.headlineSmall,
                     ).animate().slideY(
                         begin: 1,
                         end: 0,

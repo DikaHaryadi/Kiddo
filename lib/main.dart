@@ -13,6 +13,7 @@ import 'package:textspeech/services/notification.dart';
 import 'package:textspeech/util/etc/app_routes.dart';
 import 'package:textspeech/auth/controller/auth_controller.dart';
 import 'package:textspeech/util/bindings/initial_bindings.dart';
+import 'package:textspeech/util/etc/responsive.dart';
 import 'package:textspeech/util/widgets/theme.dart';
 
 void main() async {
@@ -51,7 +52,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       themeMode: ThemeMode.light,
-      theme: AppTheme.lightTheme,
+      theme:
+          isMobile(context) ? AppTheme.lightTheme : AppTheme.lightDesktopTheme,
       debugShowCheckedModeBanner: false,
       getPages: AppRoutes.routes(),
       initialBinding: InitialBindings(),

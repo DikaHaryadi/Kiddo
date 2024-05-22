@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -65,12 +66,10 @@ class _ShowAllContentState extends State<ShowAllContent> {
                                                     title: Text(
                                                       navbarOpsion[index]
                                                           ['title']!,
-                                                      style:
-                                                          GoogleFonts.aBeeZee(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 20,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleMedium
+                                                          ?.apply(
                                                               color:
                                                                   Colors.white),
                                                     ),
@@ -148,23 +147,26 @@ class _ShowAllContentState extends State<ShowAllContent> {
                                                   left: 15.0),
                                               child: Text(
                                                 'Today',
-                                                style: GoogleFonts.montserrat(
-                                                    fontSize: 20,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleLarge
+                                                    ?.copyWith(
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: kWhite),
                                               ),
                                             ),
                                           ],
                                         ),
                                         Text(
-                                          DateFormat('EEEE, MMM d')
+                                          DateFormat.yMd()
                                               .format(DateTime.now()),
-                                          textAlign: TextAlign.center,
-                                          style: GoogleFonts.roboto(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 24),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall
+                                              ?.copyWith(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: kWhite),
                                         ),
                                       ])))).animate().slideY(
                           begin: 3,

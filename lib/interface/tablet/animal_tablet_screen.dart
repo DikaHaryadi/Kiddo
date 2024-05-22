@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:textspeech/controllers/animal_controller.dart';
 import 'package:textspeech/models/animal_model.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
 
-import '../../util/etc/app_colors.dart';
 import '../../util/etc/curved_edges.dart';
+import '../../util/etc/to_title_case.dart';
 
 class AnimalTabletScreen extends StatefulWidget {
   final AnimalModel model;
@@ -128,26 +128,20 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   AutoSizeText(
-                                                    animal.titleAnimal,
-                                                    maxFontSize: 25,
-                                                    minFontSize: 22,
-                                                    style:
-                                                        GoogleFonts.montserrat(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white,
-                                                    ),
+                                                    toTitleCase(
+                                                        animal.titleAnimal),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleLarge
+                                                        ?.apply(color: kWhite),
                                                   ),
                                                   AutoSizeText(
-                                                    '${animal.kategori}  |  ${animal.jenisMakanan}',
-                                                    minFontSize: 16,
-                                                    maxFontSize: 20,
-                                                    style:
-                                                        GoogleFonts.robotoSlab(
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: Colors.white,
-                                                    ),
+                                                    toTitleCase(
+                                                        '${animal.kategori}  |  ${animal.jenisMakanan}'),
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium
+                                                        ?.apply(color: kWhite),
                                                   ),
                                                 ],
                                               ),
@@ -204,11 +198,10 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                                 padding: const EdgeInsets.only(left: 35.0),
                                 child: AutoSizeText(
                                   'Today',
-                                  minFontSize: 22,
-                                  maxFontSize: 25,
-                                  style: GoogleFonts.montserrat(
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleLarge
+                                      ?.copyWith(fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ],
@@ -217,11 +210,10 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                         AutoSizeText(
                           DateFormat('EEEE, MMM d').format(DateTime.now()),
                           maxFontSize: 30,
-                          minFontSize: 25,
-                          style: GoogleFonts.roboto(
-                            fontWeight: FontWeight.bold,
-                            color: kDark,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                         Expanded(
                           child: Image.asset(
@@ -257,12 +249,11 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                     top: Get.height * 0.35,
                     left: 30,
                     child: Text(
-                      widget.model.titleAnimal,
-                      style: GoogleFonts.aBeeZee(
-                        fontSize: 35,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                      toTitleCase(widget.model.titleAnimal),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge
+                          ?.apply(color: kWhite),
                     ).animate(delay: const Duration(milliseconds: 250)).fadeIn(
                           duration: const Duration(milliseconds: 600),
                           curve: Curves.easeInOutBack,
@@ -273,12 +264,11 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                     top: Get.height * 0.4,
                     left: 30.0,
                     child: Text(
-                      '${widget.model.kategori} | ${widget.model.jenisMakanan}',
-                      style: GoogleFonts.montserrat(
-                        fontSize: 40,
-                        fontWeight: FontWeight.bold,
-                        color: const Color(0xFFa35e3e),
-                      ),
+                      toTitleCase(
+                          '${widget.model.kategori} | ${widget.model.jenisMakanan}'),
+                      style: Theme.of(context).textTheme.headlineLarge?.apply(
+                            color: const Color(0xFFa35e3e),
+                          ),
                     ).animate(delay: const Duration(milliseconds: 250)).fadeIn(
                           duration: const Duration(milliseconds: 600),
                           curve: Curves.easeInOutBack,
@@ -301,7 +291,7 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                         child: Center(
                           child: Icon(
                             isPlaying ? Iconsax.pause : Iconsax.play_circle,
-                            color: Colors.white,
+                            color: kWhite,
                             size: 50,
                           ),
                         ),
@@ -323,16 +313,9 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                     left: 20,
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
-                      child: AutoSizeText(
-                        widget.model.deskripsiAnimal,
-                        maxFontSize: 25,
-                        minFontSize: 22,
-                        textAlign: TextAlign.justify,
-                        style: GoogleFonts.aBeeZee(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.black,
-                        ),
-                      ),
+                      child: AutoSizeText(widget.model.deskripsiAnimal,
+                          textAlign: TextAlign.left,
+                          style: Theme.of(context).textTheme.bodyMedium),
                     )
                         .animate(
                           delay: const Duration(milliseconds: 250),

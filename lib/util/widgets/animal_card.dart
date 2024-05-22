@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/models/animal_model.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
-import 'package:textspeech/util/shimmer/to_title_case.dart';
+import 'package:textspeech/util/etc/to_title_case.dart';
 
 import '../../interface/detail content/detail_animal.dart';
 

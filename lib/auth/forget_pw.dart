@@ -14,6 +14,7 @@ class ForgetPassword extends StatelessWidget {
     final controller = Get.put(ForgetPasswordController());
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: IconButton(
           padding: const EdgeInsets.only(left: 24),
           onPressed: () => Get.back(),
@@ -28,9 +29,7 @@ class ForgetPassword extends StatelessWidget {
           children: [
             AutoSizeText(
               "Forget password",
-              minFontSize: 22,
-              maxFontSize: 24,
-              style: GoogleFonts.archivoBlack(),
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 16.0),
             AutoSizeText(

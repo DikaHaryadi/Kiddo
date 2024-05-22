@@ -40,24 +40,29 @@ class NumberTabletScreen extends StatelessWidget {
                           curve: Curves.easeIn),
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
-                    child: Text(
-                      'Numbers',
-                      style: GoogleFonts.montserrat(
-                          fontWeight: FontWeight.bold, fontSize: 50),
-                    ).animate().slideX(
-                        begin: -2,
-                        end: 0,
-                        duration: const Duration(milliseconds: 700),
-                        curve: Curves.easeIn),
+                    child: Text('Numbers',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineLarge
+                                ?.copyWith(fontSize: 50))
+                        .animate()
+                        .slideX(
+                            begin: -2,
+                            end: 0,
+                            duration: const Duration(milliseconds: 700),
+                            curve: Curves.easeIn),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
                     child: Text(
                       'Today, we will learn about numbers with great enthusiasm',
-                      style: GoogleFonts.roboto(
-                          fontWeight: FontWeight.w400,
-                          color: Colors.grey.shade400,
-                          fontSize: 40),
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge
+                          ?.copyWith(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 35,
+                              color: Colors.grey.shade400),
                     ).animate().slideX(
                         begin: -2,
                         end: 0,
@@ -103,15 +108,14 @@ class NumberTabletScreen extends StatelessWidget {
                   const Spacer(),
                   Align(
                     alignment: Alignment.center,
-                    child: Text(
-                      'click on the image to reveal the sound',
-                      style: GoogleFonts.roboto(
-                          fontSize: 25, fontWeight: FontWeight.bold),
-                    ).animate().slideY(
-                        begin: 1,
-                        end: 0,
-                        duration: const Duration(milliseconds: 1100),
-                        curve: Curves.bounceInOut),
+                    child: Text('click on the image to reveal the sound',
+                            style: Theme.of(context).textTheme.headlineSmall)
+                        .animate()
+                        .slideY(
+                            begin: 1,
+                            end: 0,
+                            duration: const Duration(milliseconds: 1100),
+                            curve: Curves.bounceInOut),
                   )
                 ],
               ),

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:textspeech/auth/controller/sign_up_controller.dart';
 import 'package:textspeech/auth/controller/verify_email_controller.dart';
+import 'package:textspeech/controllers/question_controller.dart';
 import 'package:textspeech/interface/content/animal.dart';
 import 'package:textspeech/interface/content/family.dart';
 import 'package:textspeech/interface/content/fruits.dart';
@@ -18,6 +19,7 @@ import 'package:textspeech/interface/intro/splash_screen.dart';
 import 'package:textspeech/auth/verify_email.dart';
 import 'package:textspeech/quiz/question_paper_controller.dart';
 import 'package:textspeech/interface/game/quiz_screen.dart';
+import 'package:textspeech/quiz/question_screen.dart';
 import 'package:textspeech/services/message.dart';
 import 'package:textspeech/util/widgets/change_name.dart';
 import 'package:textspeech/util/widgets/change_username.dart';
@@ -50,6 +52,13 @@ class AppRoutes {
             binding: BindingsBuilder(() {
               Get.put(QuestionPaperController());
             })),
+        GetPage(
+            name: QuestionScreen.routeName,
+            page: () => const QuestionScreen(),
+            binding: BindingsBuilder(() {
+              Get.put(QuestionController());
+            })),
+
         // Content
         GetPage(name: '/number-content', page: () => const NumberContent()),
         GetPage(name: '/letters-content', page: () => const LettersContent()),

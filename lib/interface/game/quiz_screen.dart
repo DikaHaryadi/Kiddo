@@ -20,7 +20,10 @@ class QuizScreen extends StatelessWidget {
               ? Obx(() {
                   final loading = controller.isLoadingLetter.value;
                   if (loading) {
-                    return const ContentShimmer();
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 24.0),
+                      child: ContentShimmer(),
+                    );
                   } else {
                     return AnimationLimiter(
                       child: ListView.separated(

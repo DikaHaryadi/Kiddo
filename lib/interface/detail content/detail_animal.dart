@@ -52,25 +52,33 @@ class _DetailAnimalsState extends State<DetailAnimals> {
     path = UrlSource(widget.model.audio);
 
     player.onDurationChanged.listen((Duration d) {
-      setState(() => _duration = d);
+      if (mounted) {
+        setState(() => _duration = d);
+      }
     });
 
     player.onPositionChanged.listen((Duration p) {
-      setState(() => _position = p);
+      if (mounted) {
+        setState(() => _position = p);
+      }
     });
 
     player.onPlayerComplete.listen((_) {
-      setState(() {
-        isPlaying = false;
-        _position = _duration;
-      });
+      if (mounted) {
+        setState(() {
+          isPlaying = false;
+          _position = _duration;
+        });
+      }
     });
 
-    // Menginisialisasi durasi saat halaman pertama kali dibuka
+    // Initialize duration when the page first opens
     final initialDuration = await getAudioDuration();
-    setState(() {
-      _duration = initialDuration;
-    });
+    if (mounted) {
+      setState(() {
+        _duration = initialDuration;
+      });
+    }
   }
 
   Future<Duration> getAudioDuration() async {
@@ -96,6 +104,12 @@ class _DetailAnimalsState extends State<DetailAnimals> {
       player.play(path);
       isPlaying = true;
     }
+    setState(() {});
+  }
+
+  void stopAudio() {
+    player.stop();
+    isPlaying = false;
     setState(() {});
   }
 
@@ -473,9 +487,11 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                                                               () {
                                                                             if (index !=
                                                                                 currentIndex) {
+                                                                              stopAudio();
                                                                               setState(() {
                                                                                 currentIndex = index;
                                                                               });
+
                                                                               Navigator.pushReplacement(
                                                                                 context,
                                                                                 _routeBuilder(context, controller.animalModels[index]),

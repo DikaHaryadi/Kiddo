@@ -11,19 +11,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "2"
+          "answer": "2"
         },
         {
           "identifier": "B",
-          "Answer": "8"
+          "answer": "8"
         },
         {
           "identifier": "C",
-          "Answer": "Still 5"
+          "answer": "Still 5"
         },
         {
           "identifier": "D",
-          "Answer": "3"
+          "answer": "3"
         }
       ],
       "correct_answer": "A"
@@ -34,19 +34,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "1 Nails"
+          "answer": "1 Nails"
         },
         {
           "identifier": "B",
-          "Answer": "8 Nails"
+          "answer": "8 Nails"
         },
         {
           "identifier": "C",
-          "Answer": "7 Nails"
+          "answer": "7 Nails"
         },
         {
           "identifier": "D",
-          "Answer": "10 Nails"
+          "answer": "10 Nails"
         }
       ],
       "correct_answer": "C"
@@ -57,19 +57,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "She didn't cook the eggs"
+          "answer": "She didn't cook the eggs"
         },
         {
           "identifier": "B",
-          "Answer": "She have only 2 eggs"
+          "answer": "She have only 2 eggs"
         },
         {
           "identifier": "C",
-          "Answer": "The mother does not have any eggs "
+          "answer": "The mother does not have any eggs "
         },
         {
           "identifier": "D",
-          "Answer": "She have 5 eggs"
+          "answer": "She have 5 eggs"
         }
       ],
       "correct_answer": "D"
@@ -80,19 +80,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "2 Hours"
+          "answer": "2 Hours"
         },
         {
           "identifier": "B",
-          "Answer": "4 Hours"
+          "answer": "4 Hours"
         },
         {
           "identifier": "C",
-          "Answer": "7 Hours"
+          "answer": "7 Hours"
         },
         {
           "identifier": "D",
-          "Answer": "3 Hours"
+          "answer": "3 Hours"
         }
       ],
       "correct_answer": "C"
@@ -103,19 +103,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "32 Wheels"
+          "answer": "32 Wheels"
         },
         {
           "identifier": "B",
-          "Answer": "36 Wheels"
+          "answer": "36 Wheels"
         },
         {
           "identifier": "C",
-          "Answer": "13 Wheels"
+          "answer": "13 Wheels"
         },
         {
           "identifier": "D",
-          "Answer": "5 Wheels"
+          "answer": "5 Wheels"
         }
       ],
       "correct_answer": "B"

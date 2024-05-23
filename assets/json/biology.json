@@ -11,19 +11,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "Xyloem"
+          "answer": "Xyloem"
         },
         {
           "identifier": "B",
-          "Answer": "Chlorophyll"
+          "answer": "Chlorophyll"
         },
         {
           "identifier": "C",
-          "Answer": "Phloem"
+          "answer": "Phloem"
         },
         {
           "identifier": "D",
-          "Answer": "Pigment Green"
+          "answer": "Pigment Green"
         }
       ],
       "correct_answer": "B"
@@ -34,19 +34,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "Meat"
+          "answer": "Meat"
         },
         {
           "identifier": "B",
-          "Answer": "Leaf"
+          "answer": "Leaf"
         },
         {
           "identifier": "C",
-          "Answer": "Insects"
+          "answer": "Insects"
         },
         {
           "identifier": "D",
-          "Answer": "Broccoli"
+          "answer": "Broccoli"
         }
       ],
       "correct_answer": "A"
@@ -57,19 +57,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "Mutualism"
+          "answer": "Mutualism"
         },
         {
           "identifier": "B",
-          "Answer": "Symbiosis"
+          "answer": "Symbiosis"
         },
         {
           "identifier": "C",
-          "Answer": "Competition"
+          "answer": "Competition"
         },
         {
           "identifier": "D",
-          "Answer": "Commensialism"
+          "answer": "Commensialism"
         }
       ],
       "correct_answer": "B"
@@ -80,19 +80,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "Mutualism"
+          "answer": "Mutualism"
         },
         {
           "identifier": "B",
-          "Answer": "Commensialism"
+          "answer": "Commensialism"
         },
         {
           "identifier": "C",
-          "Answer": "Parasitism"
+          "answer": "Parasitism"
         },
         {
           "identifier": "D",
-          "Answer": "Predation"
+          "answer": "Predation"
         }
       ],
       "correct_answer": "A"
@@ -103,19 +103,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "ribosomes"
+          "answer": "ribosomes"
         },
         {
           "identifier": "B",
-          "Answer": "mitochondria"
+          "answer": "mitochondria"
         },
         {
           "identifier": "C",
-          "Answer": "endoplasmic reticulum"
+          "answer": "endoplasmic reticulum"
         },
         {
           "identifier": "D",
-          "Answer": "chloroplasts"
+          "answer": "chloroplasts"
         }
       ],
       "correct_answer": "D"
@@ -126,19 +126,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "Mutualism"
+          "answer": "Mutualism"
         },
         {
           "identifier": "B",
-          "Answer": "Communityism"
+          "answer": "Communityism"
         },
         {
           "identifier": "C",
-          "Answer": "Commensialism"
+          "answer": "Commensialism"
         },
         {
           "identifier": "D",
-          "Answer": "Parasitism"
+          "answer": "Parasitism"
         }
       ],
       "correct_answer": "C"
@@ -149,19 +149,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "Amensalism"
+          "answer": "Amensalism"
         },
         {
           "identifier": "B",
-          "Answer": "Netralism"
+          "answer": "Netralism"
         },
         {
           "identifier": "C",
-          "Answer": "Parasitism"
+          "answer": "Parasitism"
         },
         {
           "identifier": "D",
-          "Answer": "Commensialism"
+          "answer": "Commensialism"
         }
       ],
       "correct_answer": "A"
@@ -172,19 +172,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "A relationship between two living beings that offers neither benefit nor harm."
+          "answer": "A relationship between two living beings that offers neither benefit nor harm."
         },
         {
           "identifier": "B",
-          "Answer": "A relationship between two living beings that only benefits one party."
+          "answer": "A relationship between two living beings that only benefits one party."
         },
         {
           "identifier": "C",
-          "Answer": "Two living things that benefit each other."
+          "answer": "Two living things that benefit each other."
         },
         {
           "identifier": "D",
-          "Answer": "Occurs between two living things when one of them secretes an antibiotic substance."
+          "answer": "Occurs between two living things when one of them secretes an antibiotic substance."
         }
       ],
       "correct_answer": "B"
@@ -195,19 +195,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "A relationship between two living beings that offers neither benefit nor harm."
+          "answer": "A relationship between two living beings that offers neither benefit nor harm."
         },
         {
           "identifier": "B",
-          "Answer": "A relationship between two living beings that only benefits one party."
+          "answer": "A relationship between two living beings that only benefits one party."
         },
         {
           "identifier": "C",
-          "Answer": "Two living things that benefit each other."
+          "answer": "Two living things that benefit each other."
         },
         {
           "identifier": "D",
-          "Answer": "Occurs between two living things when one of them secretes an antibiotic substance."
+          "answer": "Occurs between two living things when one of them secretes an antibiotic substance."
         }
       ],
       "correct_answer": "C"
@@ -218,19 +218,19 @@
       "answers": [
         {
           "identifier": "A",
-          "Answer": "A relationship between two living beings that offers neither benefit nor harm."
+          "answer": "A relationship between two living beings that offers neither benefit nor harm."
         },
         {
           "identifier": "B",
-          "Answer": "A relationship between two living beings that only benefits one party."
+          "answer": "A relationship between two living beings that only benefits one party."
         },
         {
           "identifier": "C",
-          "Answer": "Two living things that benefit each other."
+          "answer": "Two living things that benefit each other."
         },
         {
           "identifier": "D",
-          "Answer": "Occurs between two living things when one of them secretes an antibiotic substance."
+          "answer": "Occurs between two living things when one of them secretes an antibiotic substance."
         }
       ],
       "correct_answer": "A"

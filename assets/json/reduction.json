@@ -12,19 +12,19 @@
             "answers": [
                 {
                     "identifier": "A",
-                    "Answer": "2"
+                    "answer": "2"
                 },
                 {
                     "identifier": "B",
-                    "Answer": "18"
+                    "answer": "18"
                 },
                 {
                     "identifier": "C",
-                    "Answer": "4"
+                    "answer": "4"
                 },
                 {
                     "identifier": "D",
-                    "Answer": "6"
+                    "answer": "6"
                 }
             ],
             "correct_answer": "A"
@@ -35,19 +35,19 @@
             "answers": [
                 {
                     "identifier": "A",
-                    "Answer": "Yellow light"
+                    "answer": "Yellow light"
                 },
                 {
                     "identifier": "B",
-                    "Answer": "Green light"
+                    "answer": "Green light"
                 },
                 {
                     "identifier": "C",
-                    "Answer": "Violet light"
+                    "answer": "Violet light"
                 },
                 {
                     "identifier": "D",
-                    "Answer": "Red light"
+                    "answer": "Red light"
                 }
             ],
             "correct_answer": "C"
@@ -58,19 +58,19 @@
             "answers": [
                 {
                     "identifier": "A",
-                    "Answer": "First law of motion"
+                    "answer": "First law of motion"
                 },
                 {
                     "identifier": "B",
-                    "Answer": "Second law of motion"
+                    "answer": "Second law of motion"
                 },
                 {
                     "identifier": "C",
-                    "Answer": "Law of conservation of mass"
+                    "answer": "Law of conservation of mass"
                 },
                 {
                     "identifier": "D",
-                    "Answer": "Law of conservation of energy"
+                    "answer": "Law of conservation of energy"
                 }
             ],
             "correct_answer": "C"
@@ -81,19 +81,19 @@
             "answers": [
                 {
                     "identifier": "A",
-                    "Answer": "ohm"
+                    "answer": "ohm"
                 },
                 {
                     "identifier": "B",
-                    "Answer": "volt"
+                    "answer": "volt"
                 },
                 {
                     "identifier": "C",
-                    "Answer": "watt"
+                    "answer": "watt"
                 },
                 {
                     "identifier": "D",
-                    "Answer": "amp"
+                    "answer": "amp"
                 }
             ],
             "correct_answer": "D"
@@ -104,19 +104,19 @@
             "answers": [
                 {
                     "identifier": "A",
-                    "Answer": "Shapen"
+                    "answer": "Shapen"
                 },
                 {
                     "identifier": "B",
-                    "Answer": "Size"
+                    "answer": "Size"
                 },
                 {
                     "identifier": "C",
-                    "Answer": "Acceleration"
+                    "answer": "Acceleration"
                 },
                 {
                     "identifier": "D",
-                    "Answer": "Position"
+                    "answer": "Position"
                 }
             ],
             "correct_answer": "D"

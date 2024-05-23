@@ -9,6 +9,14 @@ class QuestionController extends GetxController {
   final loadingStatus = LoadingStatus.loading.obs;
   late QuestionModel questionModel;
   final allQuestions = <Questions>[];
+  // next or previous question
+  final questionIndex = 0.obs;
+  bool get isFirstQuestion => questionIndex.value > 0;
+  // last question
+  bool get isLastQuestion => questionIndex.value >= allQuestions.length - 1;
+  // current question
+  Rxn<Questions> currentQuestion = Rxn<Questions>();
+
   @override
   void onReady() {
     final _questionPaper = Get.arguments as QuestionModel;
@@ -50,6 +58,7 @@ class QuestionController extends GetxController {
         if (questionPaper.questions != null &&
             questionPaper.questions!.isNotEmpty) {
           allQuestions.assignAll(questionPaper.questions!);
+          currentQuestion.value = questionPaper.questions![0];
           print(questionPaper.questions![0].question);
           loadingStatus.value = LoadingStatus.completed;
         } else {
@@ -61,5 +70,25 @@ class QuestionController extends GetxController {
         print(e.toString());
       }
     }
+  }
+
+  // selected answere
+  void selectedAnswer(String? answer) {
+    currentQuestion.value!.selectedAnswer = answer;
+    update(['answers_list']);
+  }
+
+  // nextQuestion func
+  void nextQuestion() {
+    if (questionIndex.value >= allQuestions.length - 1) return;
+    questionIndex.value++;
+    currentQuestion.value = allQuestions[questionIndex.value];
+  }
+
+  // prevQuestion func
+  void prevQuestion() {
+    if (questionIndex.value <= 0) return;
+    questionIndex.value--;
+    currentQuestion.value = allQuestions[questionIndex.value];
   }
 }

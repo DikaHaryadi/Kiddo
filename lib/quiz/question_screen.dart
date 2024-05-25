@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:textspeech/auth/controller/auth_controller.dart';
 import 'package:textspeech/controllers/question_controller.dart';
 import 'package:textspeech/firebase/loading_status.dart';
 import 'package:textspeech/quiz/answer_card.dart';
+import 'package:textspeech/quiz/app_bar_quiz.dart';
+import 'package:textspeech/quiz/quiz_overview_screen.dart';
+import 'package:textspeech/quiz/timer_screen.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
-import 'package:textspeech/util/etc/curved_edges.dart';
 
 class QuestionScreen extends GetView<QuestionController> {
   const QuestionScreen({super.key});
@@ -19,67 +20,27 @@ class QuestionScreen extends GetView<QuestionController> {
         child: Obx(() {
           return Column(
             children: [
-              ClipPath(
-                clipper: TCustomCurvedEdges(),
-                child: Container(
-                  color: Colors.blueAccent,
-                  padding: const EdgeInsets.only(bottom: 24.0),
-                  child: Padding(
+              AppBarQuizz(
+                leading: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 8.0),
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0, vertical: 12.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: 100,
-                              height: 30,
-                              color: kError,
-                            ),
-                            GestureDetector(
-                              onTap: () =>
-                                  AuthenticationRepository.instance.logOut(),
-                              child: Container(
-                                width: 100,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: kWhite),
-                                    borderRadius: BorderRadius.circular(2.0)),
-                                child: Center(
-                                  child: Text(
-                                    'LOGOUT',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.apply(color: kWhite),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => Get.toNamed('/edit-profile'),
-                              child: Container(
-                                width: 100,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: kWhite),
-                                    borderRadius: BorderRadius.circular(2.0)),
-                                child: Center(
-                                  child: Text(
-                                    'EDIT PROFILE',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.apply(color: kWhite),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                        horizontal: 8.0, vertical: 4.0),
+                    decoration: const ShapeDecoration(
+                        shape: StadiumBorder(
+                            side: BorderSide(color: kWhite, width: 2))),
+                    child: Obx(() => TimerScreen(time: controller.time.value)),
+                  ),
+                ),
+                showActionIcon: true,
+                titleWidget: Obx(
+                  () => Text(
+                    'Number: ${(controller.questionIndex.value + 1).toString().padLeft(2, '0')}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineMedium
+                        ?.apply(color: kWhite),
                   ),
                 ),
               ),
@@ -145,8 +106,10 @@ class QuestionScreen extends GetView<QuestionController> {
                                           side: const BorderSide(
                                               color: kError, width: 1),
                                         ),
-                                        child:
-                                            const Icon(Icons.arrow_back_ios)),
+                                        child: const Icon(
+                                          Icons.arrow_back_ios,
+                                          color: kDark,
+                                        )),
                                   ),
                                 ),
                               ),
@@ -157,8 +120,8 @@ class QuestionScreen extends GetView<QuestionController> {
                                   child: ElevatedButton(
                                       onPressed: () {
                                         controller.isLastQuestion
-                                            ? print(
-                                                'Print ke halaman score berhasil')
+                                            ? Get.toNamed(
+                                                TestOverviewScreen.routeName)
                                             : controller.nextQuestion();
                                       },
                                       child: Text(

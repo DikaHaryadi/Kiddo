@@ -36,10 +36,14 @@ class ResultQuizScreen extends GetView<QuestionController> {
               padding: const EdgeInsets.symmetric(horizontal: 24.0),
               child: Column(
                 children: [
-                  Image.asset('assets/images/logo.png'),
+                  Image.asset(
+                    'assets/images/logo.png',
+                    width: 100,
+                  ),
                   const SizedBox(height: 16.0),
                   Text('Congratulations'),
                   Text('You have ${controller.points} points'),
+                  const SizedBox(height: 16.0),
                   Expanded(
                     child: GridView.builder(
                       itemCount: controller.allQuestions.length,
@@ -73,19 +77,34 @@ class ResultQuizScreen extends GetView<QuestionController> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 24.0),
-                    child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                            onPressed: () => Get.offAllNamed('/home'),
-                            child: Text(
-                              'Complete',
-                              style: Theme.of(context).textTheme.headlineMedium,
-                            ))),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton(
+                              onPressed: () => controller.tryAgain(),
+                              child: Text(
+                                'Try Again',
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
+                              )),
+                        ),
+                        const SizedBox(width: 10.0),
+                        Expanded(
+                          child: ElevatedButton(
+                              onPressed: () => controller.saveTestResults(),
+                              child: Text(
+                                'Complete',
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
+                              )),
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     ));

@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:textspeech/interface/homepage.dart';
+import 'package:textspeech/quiz/question_paper_controller.dart';
 import 'package:textspeech/quiz/result_screen.dart';
 import 'package:textspeech/firebase/loading_status.dart';
 import 'package:textspeech/firebase/references.dart';
@@ -140,5 +142,17 @@ class QuestionController extends GetxController {
   void complete() {
     _timer!.cancel();
     Get.offAndToNamed(ResultQuizScreen.routeName);
+  }
+
+  // try again
+  void tryAgain() {
+    Get.find<QuestionPaperController>()
+        .navigateToQuestions(paper: questionModel, tryAgain: true);
+  }
+
+  // navigateTo Home after finished the test
+  void navigateToHome() {
+    _timer!.cancel();
+    Get.offNamedUntil('/home', (route) => false);
   }
 }

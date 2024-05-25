@@ -44,7 +44,8 @@ class QuestionPaperController extends GetxController {
     if (user != null) {
       if (tryAgain) {
         Get.back();
-        // Get.offNamed('');
+        Get.toNamed(QuestionScreen.routeName,
+            arguments: paper, preventDuplicates: false);
       } else {
         Get.toNamed(QuestionScreen.routeName, arguments: paper);
       }

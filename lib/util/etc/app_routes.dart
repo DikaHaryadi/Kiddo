@@ -6,10 +6,8 @@ import 'package:textspeech/quiz/answer_check_screen.dart';
 import 'package:textspeech/quiz/result_screen.dart';
 import 'package:textspeech/interface/content/animal.dart';
 import 'package:textspeech/interface/content/family.dart';
-import 'package:textspeech/interface/content/fruits.dart';
 import 'package:textspeech/interface/content/letters.dart';
 import 'package:textspeech/interface/content/numbers.dart';
-import 'package:textspeech/interface/content/vegetables.dart';
 import 'package:textspeech/interface/detail%20content/showall_content.dart';
 import 'package:textspeech/interface/user/edit_profile.dart';
 import 'package:textspeech/interface/game/game_ui.dart';
@@ -83,9 +81,7 @@ class AppRoutes {
         GetPage(name: '/letters-content', page: () => const LettersContent()),
         GetPage(name: '/animals-content', page: () => const AnimalContent()),
         GetPage(name: '/family-content', page: () => const FamilyContent()),
-        GetPage(name: '/fruits-content', page: () => const FruitsContent()),
-        GetPage(
-            name: '/vegetables-content', page: () => const VegetablesContent()),
+
         // show all content
         GetPage(name: '/show-all-content', page: () => const ShowAllContent()),
         // profile

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,6 +14,10 @@ import 'package:textspeech/util/game%20property/game.dart';
 import 'package:textspeech/util/game%20property/game_confetti.dart';
 import 'package:textspeech/util/game%20property/restart_game.dart';
 import 'package:textspeech/util/widgets/memory_card.dart';
+
+import '../../auth/controller/user/user_controller.dart';
+import '../../interface/user/edit_profile.dart';
+import '../shimmer/shimmer.dart';
 
 class GameBoardMobile extends StatefulWidget {
   const GameBoardMobile({
@@ -27,6 +32,7 @@ class GameBoardMobile extends StatefulWidget {
 }
 
 class _GameBoardMobileState extends State<GameBoardMobile> {
+  final controller = Get.put(UserController());
   late Timer timer;
   late Game game;
   late Duration duration;
@@ -361,20 +367,30 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                             bottomRight: Radius.circular(30.0))),
                     child: Row(
                       children: [
-                        const CircleAvatar(
-                            maxRadius: 20,
-                            minRadius: 15,
-                            backgroundColor: Color(0xFF8dbffa),
-                            backgroundImage:
-                                AssetImage('assets/animals/cat.png')),
+                        Obx(() {
+                          final networkImage =
+                              controller.user.value.profilePicture;
+                          final image = networkImage.isNotEmpty
+                              ? networkImage
+                              : 'assets/images/cat.png';
+                          return CircularImage(
+                            image: image,
+                            widht: 40,
+                            height: 40,
+                            isNetworkImage: networkImage.isNotEmpty,
+                            onTap: () => Get.toNamed('/profile'),
+                          );
+                        }),
                         const SizedBox(width: 5.0),
-                        Text(
-                          'Melissa',
-                          style:
-                              GoogleFonts.aBeeZee(fontSize: 14, shadows: const [
-                            Shadow(color: Colors.white, offset: Offset(2, 2))
-                          ]),
-                        ),
+                        Obx(() => controller.profileLoading.value
+                            ? const DShimmerEffect(width: 100, height: 20)
+                            : AutoSizeText(
+                                controller.user.value.username,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
+                              ))
                       ],
                     ),
                   ),

@@ -8,6 +8,7 @@ import 'package:textspeech/quiz/result_screen.dart';
 import 'package:textspeech/firebase/loading_status.dart';
 import 'package:textspeech/firebase/references.dart';
 import 'package:textspeech/quiz/question_model.dart';
+import 'package:textspeech/util/widgets/dialog_widget.dart';
 
 class QuestionController extends GetxController {
   final loadingStatus = LoadingStatus.loading.obs;
@@ -34,7 +35,7 @@ class QuestionController extends GetxController {
   }
 
   void loadData(QuestionModel questionPaper) async {
-    questionModel = questionPaper;
+    questionModel = questionPaper; // Ensure questionModel is set
     loadingStatus.value = LoadingStatus.loading;
     try {
       final QuerySnapshot<Map<String, dynamic>> questionQuery =
@@ -82,7 +83,7 @@ class QuestionController extends GetxController {
     }
   }
 
-  // selected answere
+  // selected answer
   void selectedAnswer(String? answer) {
     currentQuestion.value!.selectedAnswer = answer;
     update(['answers_list']);
@@ -103,20 +104,32 @@ class QuestionController extends GetxController {
   }
 
   // start timer
-  _startTimer(int seconds) {
+  void _startTimer(int seconds) {
     const duration = Duration(seconds: 1);
     remainSeconds = seconds;
     _timer = Timer.periodic(duration, (Timer timer) {
-      if (remainSeconds == 0) {
+      remainSeconds--; // Decrement remainSeconds first
+      if (remainSeconds <= 0) {
+        // Then check if remainSeconds is less than or equal to 0
         timer.cancel();
+        Get.dialog(
+          Dialogs.timesUpDialogue(onTap: tryAgain),
+          barrierDismissible: false,
+        );
       } else {
         int minutes = remainSeconds ~/ 60;
         int seconds = remainSeconds % 60;
         time.value =
             '${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}';
-        remainSeconds--;
       }
     });
+  }
+
+  // Reset all selected answers
+  void resetSelectedAnswers() {
+    for (var question in allQuestions) {
+      question.selectedAnswer = null;
+    }
   }
 
   // complete test and check the all question was selected and not selected
@@ -137,7 +150,7 @@ class QuestionController extends GetxController {
     }
   }
 
-  // when quizz completed
+  // when quiz completed
   void complete() {
     _timer!.cancel();
     Get.offAndToNamed(ResultQuizScreen.routeName);
@@ -145,11 +158,24 @@ class QuestionController extends GetxController {
 
   // try again
   void tryAgain() {
-    Get.find<QuestionPaperController>()
-        .navigateToQuestions(paper: questionModel, tryAgain: true);
+    // Reset selected answers
+    resetSelectedAnswers();
+    _timer?.cancel();
+
+    // Close the dialog
+    Get.back();
+
+    // Handle navigation or reloading questions
+    if (Get.arguments != null && Get.arguments is QuestionModel) {
+      final _questionPaper = Get.arguments as QuestionModel;
+      loadData(_questionPaper);
+    } else {
+      // Handle the case where Get.arguments is null or not of expected type
+      print('Error: Invalid or null QuestionModel argument');
+    }
   }
 
-  // navigateTo Home after finished the test
+  // navigate to Home after finished the test
   void navigateToHome() {
     _timer!.cancel();
     Get.offNamedUntil('/home', (route) => false);

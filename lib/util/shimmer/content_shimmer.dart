@@ -11,7 +11,7 @@ class ContentShimmer extends StatelessWidget {
       itemCount: 6,
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
+      itemBuilder: (_, index) {
         return SizedBox(
             width: double.infinity,
             height: 100,

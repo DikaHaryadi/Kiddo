@@ -121,111 +121,116 @@ class QuestionCard extends GetView<QuestionPaperController> {
               ),
             ),
           )
-        : Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: Get.width * 0.2,
-                      width: Get.width * 0.2,
-                      child: CachedNetworkImage(
-                        imageUrl: model.imageUrl,
-                        placeholder: (context, url) => Container(
-                          alignment: Alignment.center,
-                          child: const CircularProgressIndicator(),
-                        ),
-                        errorWidget: (context, url, error) =>
-                            Image.asset('assets/images/Logo_color1.png'),
-                      ),
-                    ),
-                    const SizedBox(width: 12.0),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            model.title,
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineMedium
-                                ?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    color: kButtonPrimary),
+        : InkWell(
+            onTap: () {
+              controller.navigateToQuestions(paper: model, tryAgain: false);
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: Get.width * 0.2,
+                        width: Get.width * 0.2,
+                        child: CachedNetworkImage(
+                          imageUrl: model.imageUrl,
+                          placeholder: (context, url) => Container(
+                            alignment: Alignment.center,
+                            child: const CircularProgressIndicator(),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 10.0, bottom: 15.0, right: 10.0),
-                            child: Text(
-                              model.description,
-                              style: Theme.of(context).textTheme.bodyLarge,
+                          errorWidget: (context, url, error) =>
+                              Image.asset('assets/images/Logo_color1.png'),
+                        ),
+                      ),
+                      const SizedBox(width: 12.0),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              model.title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium
+                                  ?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      color: kButtonPrimary),
                             ),
-                          ),
-                          Row(
-                            children: [
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Iconsax.note,
-                                    size: 35,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    '${model.questionCount} questions',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.apply(color: kGrey),
-                                  ),
-                                ],
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 10.0, bottom: 15.0, right: 10.0),
+                              child: Text(
+                                model.description,
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
-                              const SizedBox(width: 16.0),
-                              Row(
-                                children: [
-                                  const Icon(
-                                    Iconsax.clock,
-                                    size: 35,
-                                  ),
-                                  const SizedBox(width: 4),
-                                  Text(
-                                    model.timeInMinits(),
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.apply(color: kError),
-                                  ),
-                                ],
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                Positioned(
-                    bottom: -8.0,
-                    right: -8.0,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 16, horizontal: 26),
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(10.0),
-                                bottomRight: Radius.circular(10.0)),
-                            color: kGreen),
-                        child: const Icon(
-                          Iconsax.lamp,
-                          color: kError,
+                            ),
+                            Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Iconsax.note,
+                                      size: 35,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      '${model.questionCount} questions',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.apply(color: kGrey),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(width: 16.0),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Iconsax.clock,
+                                      size: 35,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Text(
+                                      model.timeInMinits(),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.apply(color: kError),
+                                    ),
+                                  ],
+                                )
+                              ],
+                            )
+                          ],
                         ),
-                      ),
-                    ))
-              ],
+                      )
+                    ],
+                  ),
+                  Positioned(
+                      bottom: -8.0,
+                      right: -8.0,
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 16, horizontal: 26),
+                          decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10.0),
+                                  bottomRight: Radius.circular(10.0)),
+                              color: kGreen),
+                          child: const Icon(
+                            Iconsax.lamp,
+                            color: kError,
+                          ),
+                        ),
+                      ))
+                ],
+              ),
             ),
           );
   }

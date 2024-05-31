@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/quiz/quiz_overview_screen.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
+import 'package:textspeech/util/etc/responsive.dart';
 import '../util/etc/curved_edges.dart';
 
 class AppBarQuizz extends StatelessWidget {
@@ -22,59 +23,119 @@ class AppBarQuizz extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipPath(
-      clipper: TCustomCurvedEdges(),
-      child: Container(
-        color: Colors.blueAccent,
-        height: 100,
-        padding: const EdgeInsets.only(bottom: 16.0),
-        child: Stack(
-          children: [
-            Positioned.fill(
-                child: titleWidget == null
-                    ? Center(
-                        child: Text(
-                          title,
-                          style: Theme.of(context).textTheme.headlineMedium,
-                        ),
-                      )
-                    : Center(
-                        child: titleWidget,
-                      )),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                leading ??
-                    Transform.translate(
-                      offset: const Offset(-14, 0),
-                      child: const Align(
-                          alignment: Alignment.centerLeft,
+    return isMobile(context)
+        ? ClipPath(
+            clipper: TCustomCurvedEdges(),
+            child: Container(
+              color: Colors.blueAccent,
+              height: 100,
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                      child: titleWidget == null
+                          ? Center(
+                              child: Text(
+                                title,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
+                              ),
+                            )
+                          : Center(
+                              child: titleWidget,
+                            )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      leading ??
+                          Transform.translate(
+                            offset: const Offset(-14, 0),
+                            child: const Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 8.0),
+                                  child: BackButton(),
+                                )),
+                          ),
+                      if (showActionIcon)
+                        Transform.translate(
+                          offset: const Offset(10, 0),
                           child: Padding(
-                            padding: EdgeInsets.only(left: 8.0),
-                            child: BackButton(),
-                          )),
-                    ),
-                if (showActionIcon)
-                  Transform.translate(
-                    offset: const Offset(10, 0),
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 22.0),
-                      child: InkWell(
-                        onTap: onMenuActionTap ??
-                            () => Get.toNamed(TestOverviewScreen.routeName),
-                        child: const Icon(
-                          Iconsax.firstline,
-                          color: kWhite,
-                        ),
-                      ),
-                    ),
+                            padding: const EdgeInsets.only(right: 22.0),
+                            child: InkWell(
+                              onTap: onMenuActionTap ??
+                                  () =>
+                                      Get.toNamed(TestOverviewScreen.routeName),
+                              child: const Icon(
+                                Iconsax.firstline,
+                                color: kWhite,
+                              ),
+                            ),
+                          ),
+                        )
+                    ],
                   )
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+                ],
+              ),
+            ),
+          )
+        : ClipPath(
+            clipper: TCustomCurvedEdges(),
+            child: Container(
+              color: Colors.blueAccent,
+              height: 200,
+              padding: const EdgeInsets.only(bottom: 32.0),
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                      child: titleWidget == null
+                          ? Center(
+                              child: Text(
+                                title,
+                                style:
+                                    Theme.of(context).textTheme.headlineMedium,
+                              ),
+                            )
+                          : Center(
+                              child: titleWidget,
+                            )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      leading ??
+                          Transform.translate(
+                            offset: const Offset(-14, 0),
+                            child: const Align(
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 8.0),
+                                  child: BackButton(),
+                                )),
+                          ),
+                      if (showActionIcon)
+                        Transform.translate(
+                          offset: const Offset(10, 0),
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 25.0),
+                            child: InkWell(
+                              onTap: onMenuActionTap ??
+                                  () =>
+                                      Get.toNamed(TestOverviewScreen.routeName),
+                              child: const Icon(
+                                Iconsax.firstline,
+                                size: 40,
+                                color: kWhite,
+                              ),
+                            ),
+                          ),
+                        )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
@@ -67,7 +68,9 @@ class _GameButtonState extends State<GameButton> {
                 ),
                 child: Row(
                   children: [
-                    Image.asset('assets/images/logo.png'),
+                    ClipRRect(
+                        borderRadius: BorderRadius.circular(widget.height / 2),
+                        child: Image.asset('assets/images/logo.png')),
                     const SizedBox(width: 15.0),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

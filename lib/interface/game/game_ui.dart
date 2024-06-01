@@ -57,13 +57,18 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                   icon: const Icon(
                     Icons.arrow_back_ios,
                     color: Color(0xFFFE9081),
-                  )),
+                  ).animate(delay: const Duration(milliseconds: 250)).slideX(
+                      begin: -2,
+                      end: 0,
+                      duration: const Duration(milliseconds: 800))),
               title: Text(
                 'Memory Game',
                 style: Theme.of(context).textTheme.headlineMedium!.apply(
                       color: const Color(0xFFFE9081),
                     ),
-              ),
+              )
+                  .animate(delay: const Duration(milliseconds: 250))
+                  .fadeIn(duration: const Duration(milliseconds: 800)),
               centerTitle: true,
               actions: [
                 IconButton(
@@ -71,7 +76,10 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                     icon: const Icon(
                       Iconsax.firstline,
                       color: Color(0xFFFE9081),
-                    ))
+                    ).animate(delay: const Duration(milliseconds: 800)).slideX(
+                        begin: 2,
+                        end: 0,
+                        duration: const Duration(milliseconds: 800)))
               ],
             )
           : AppBar(
@@ -122,12 +130,15 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.only(
+                        Padding(
+                          padding: const EdgeInsets.only(
                               left: 24.0, right: 24.0, top: 10.0),
-                          child: Text(
+                          child: const Text(
                             "In this game you'll be honing your memory in choosing the same card, the shorter the time it takes you to complete the chosen level, the better!",
-                          ),
+                          )
+                              .animate(delay: const Duration(milliseconds: 250))
+                              .fadeIn(
+                                  duration: const Duration(milliseconds: 800)),
                         ),
                         const SizedBox(height: 8.0),
                         GameOptions(
@@ -208,7 +219,12 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                                   )
                                 ],
                               ),
-                            ),
+                            )
+                                .animate(
+                                    delay: const Duration(milliseconds: 250))
+                                .fadeIn(
+                                    duration:
+                                        const Duration(milliseconds: 800)),
                           ),
                         ),
                         Align(

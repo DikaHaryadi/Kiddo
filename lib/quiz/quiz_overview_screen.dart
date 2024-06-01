@@ -62,21 +62,34 @@ class TestOverviewScreen extends GetView<QuestionController> {
                               },
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 24.0),
-                            child: SizedBox(
-                                width: double.infinity,
-                                child: ElevatedButton(
-                                    onPressed: controller.complete,
-                                    child: Text(
-                                      'Complete',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineMedium,
-                                    ))),
-                          )
                         ],
                       ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 24.0, left: 24.0, right: 24.0),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: Get.width / 3,
+                          child: OutlinedButton(
+                              onPressed: controller.navigateToHome,
+                              child: const Text(
+                                'Keluar',
+                              )),
+                        ),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                  onPressed: controller.complete,
+                                  child: const Text(
+                                    'Complete',
+                                  ))),
+                        ),
+                      ],
                     ),
                   )
                 ],
@@ -140,6 +153,32 @@ class TestOverviewScreen extends GetView<QuestionController> {
                           )
                         ],
                       ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                        bottom: 24.0, left: 24.0, right: 24.0),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: Get.width / 3,
+                          child: OutlinedButton(
+                              onPressed: () => Get.offAllNamed('/home'),
+                              child: const Text(
+                                'Keluar',
+                              )),
+                        ),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                  onPressed: controller.complete,
+                                  child: const Text(
+                                    'Complete',
+                                  ))),
+                        ),
+                      ],
                     ),
                   )
                 ],

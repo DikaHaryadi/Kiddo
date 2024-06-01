@@ -55,42 +55,42 @@ const contentKiddo = [
   {
     'imagePath': 'assets/images/fruits.png',
     'name': 'Fruits',
-    'routePath': '/fruits-content',
+    'routePath': '/home',
     'subtitle': '(fructūs)',
     'enum': "All"
   },
   {
     'imagePath': 'assets/vegetables.png',
     'name': 'Vegetables',
-    'routePath': '/vegetables-content',
+    'routePath': '/home',
     'subtitle': '(leguminae)',
     'enum': "All"
   },
   {
     'imagePath': 'assets/images/fruits.png',
     'name': 'Alphabets Eng',
-    'routePath': '/fruits-content',
+    'routePath': '/home',
     'subtitle': '(alphabetum)',
     'enum': 'Alphabet'
   },
   {
     'imagePath': 'assets/vegetables.png',
     'name': 'Alphabets Urdu',
-    'routePath': '/vegetables-content',
+    'routePath': '/home',
     'subtitle': '(alphabetum)',
     'enum': 'Alphabet'
   },
   {
     'imagePath': 'assets/vegetables.png',
     'name': 'Months',
-    'routePath': '/vegetables-content',
+    'routePath': '/home',
     'subtitle': '(mēnsēs)',
     'enum': 'Months',
   },
   {
     'imagePath': 'assets/images/fruits.png',
     'name': 'Islamic Months',
-    'routePath': '/fruits-content',
+    'routePath': '/home',
     'subtitle': '(mēnsēs)',
     'enum': 'Months',
   },

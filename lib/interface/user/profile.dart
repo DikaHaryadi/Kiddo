@@ -200,7 +200,11 @@ class ProfileScreen extends StatelessWidget {
                         height: 100,
                         width: 100,
                         color: kWhite,
-                      )
+                      ),
+                      Text(
+                        'nanti taro navbar (rate us, ContactUs, report bug)',
+                        style: Theme.of(context).textTheme.headlineMedium,
+                      ),
                     ],
                   ),
                 )

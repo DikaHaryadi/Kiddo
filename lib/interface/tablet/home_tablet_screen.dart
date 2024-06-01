@@ -12,6 +12,8 @@ import '../../controllers/anchor_ads_controller.dart';
 import '../../controllers/time_by_sun_position_controller.dart';
 import '../../util/etc/app_colors.dart';
 import '../../util/etc/constants.dart';
+import '../../util/shimmer/shimmer.dart';
+import '../user/edit_profile.dart';
 
 class HomeTabletScreen extends StatefulWidget {
   const HomeTabletScreen({super.key});
@@ -182,15 +184,53 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                        padding: const EdgeInsets.only(left: 10.0, top: 8.0),
-                        child: Obx(() => AutoSizeText(
-                            'Good ${timeSunPosition.timeOfDay.value}',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineLarge)).animate().fadeIn(
-                            curve: Curves.easeIn,
-                            duration: const Duration(milliseconds: 700))),
-                    const SizedBox(height: 15.0),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Obx(() => AutoSizeText(
+                              'Good ${timeSunPosition.timeOfDay.value}',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headlineLarge)).animate().fadeIn(
+                              curve: Curves.easeIn,
+                              duration: const Duration(milliseconds: 700)),
+                          Expanded(child: Container()),
+                          Row(
+                            children: [
+                              Obx(() {
+                                final networkImage =
+                                    controller.user.value.profilePicture;
+                                final image = networkImage.isNotEmpty
+                                    ? networkImage
+                                    : 'assets/images/cat.png';
+                                return CircularImage(
+                                  image: image,
+                                  widht: 55,
+                                  height: 55,
+                                  isNetworkImage: networkImage.isNotEmpty,
+                                );
+                              }),
+                              const SizedBox(width: 8),
+                              Obx(() => controller.profileLoading.value
+                                  ? const DShimmerEffect(width: 100, height: 20)
+                                  : Text(
+                                      controller.user.value.username,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
+                                    ))
+                            ],
+                          ),
+                        ],
+                      ).animate().slideX(
+                          begin: 4,
+                          end: 0,
+                          curve: Curves.bounceIn,
+                          duration: const Duration(milliseconds: 800)),
+                    ),
+                    const SizedBox(height: 10.0),
                     AnimationLimiter(
                       child: GridView.count(
                         shrinkWrap: true,

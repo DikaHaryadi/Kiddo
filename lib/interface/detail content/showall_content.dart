@@ -1,12 +1,16 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:textspeech/util/etc/constants.dart';
+
+import '../../auth/controller/user/user_controller.dart';
+import '../../util/shimmer/shimmer.dart';
+import '../user/edit_profile.dart';
 
 class ShowAllContent extends StatefulWidget {
   const ShowAllContent({super.key});
@@ -18,6 +22,7 @@ class ShowAllContent extends StatefulWidget {
 class _ShowAllContentState extends State<ShowAllContent> {
   List<bool> longPressStates = List.generate(contentKiddo.length, (_) => false);
   int? selectedLongPressIndex;
+  final controller = Get.put(UserController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,92 +92,129 @@ class _ShowAllContentState extends State<ShowAllContent> {
                                 curve: Curves.bounceIn),
                       ),
                       Container(
-                          width: double.infinity,
-                          height: 300,
-                          margin: const EdgeInsets.only(top: 20.0),
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15.0, vertical: 20.0),
-                          decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15.0),
-                                  topRight: Radius.circular(15.0)),
-                              color: kStrongblue),
-                          child: AnimationLimiter(
-                              child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children:
-                                      AnimationConfiguration.toStaggeredList(
-                                          duration:
-                                              const Duration(milliseconds: 500),
-                                          delay:
-                                              const Duration(milliseconds: 600),
-                                          childAnimationBuilder: (widget) =>
-                                              SlideAnimation(
-                                                horizontalOffset:
-                                                    MediaQuery.of(context)
-                                                            .size
-                                                            .width /
-                                                        2,
-                                                child: FadeInAnimation(
-                                                    child: widget),
-                                              ),
-                                          children: [
-                                        Image.asset(
-                                          'assets/images/Logo_color1.png',
-                                          width: 200,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              decoration: const BoxDecoration(
-                                                  color: Colors.yellow,
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              10.0))),
-                                              child: IconButton(
-                                                  onPressed: () {
-                                                    Get.offNamed('/home');
-                                                  },
-                                                  icon: const Icon(
-                                                    Icons.arrow_back_ios_new,
-                                                    color: Colors.black,
-                                                  )),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 15.0),
-                                              child: Text(
-                                                'Today',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleLarge
-                                                    ?.copyWith(
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: kWhite),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                          DateFormat.yMd()
-                                              .format(DateTime.now()),
+                              width: double.infinity,
+                              height: 300,
+                              margin: const EdgeInsets.only(top: 20.0),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15.0, vertical: 20.0),
+                              decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15.0),
+                                      topRight: Radius.circular(15.0)),
+                                  color: kStrongblue),
+                              child: Stack(children: [
+                                Image.asset(
+                                  'assets/images/Logo_color1.png',
+                                  width: 200,
+                                )
+                                    .animate(
+                                        delay:
+                                            const Duration(milliseconds: 250))
+                                    .fadeIn(
+                                        duration:
+                                            const Duration(milliseconds: 400)),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        decoration: const BoxDecoration(
+                                            color: Colors.yellow,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.0))),
+                                        child: IconButton(
+                                            onPressed: () {
+                                              Get.offNamed('/home');
+                                            },
+                                            icon: const Icon(
+                                              Icons.arrow_back_ios_new,
+                                              color: Colors.black,
+                                            )),
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 15.0),
+                                        child: Text(
+                                          'Back',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headlineSmall
+                                              .titleLarge
                                               ?.copyWith(
                                                   fontWeight: FontWeight.bold,
                                                   color: kWhite),
                                         ),
-                                      ])))).animate().slideY(
-                          begin: 3,
-                          end: 0,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.bounceIn),
+                                      ),
+                                    ],
+                                  )
+                                      .animate(
+                                          delay:
+                                              const Duration(milliseconds: 250))
+                                      .fadeIn(
+                                          duration: const Duration(
+                                              milliseconds: 400)),
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Row(
+                                    children: [
+                                      Obx(() {
+                                        final networkImage = controller
+                                            .user.value.profilePicture;
+                                        final image = networkImage.isNotEmpty
+                                            ? networkImage
+                                            : 'assets/images/cat.png';
+                                        return CircularImage(
+                                          image: image,
+                                          widht: 50,
+                                          height: 50,
+                                          isNetworkImage:
+                                              networkImage.isNotEmpty,
+                                        )
+                                            .animate(
+                                                delay: const Duration(
+                                                    milliseconds: 250))
+                                            .slideX(
+                                                begin: -4,
+                                                end: 0,
+                                                curve: Curves.bounceIn,
+                                                duration: const Duration(
+                                                    milliseconds: 400));
+                                      }),
+                                      const SizedBox(width: 8),
+                                      Obx(
+                                        () => controller.profileLoading.value
+                                            ? const DShimmerEffect(
+                                                width: 100, height: 20)
+                                            : Text(
+                                                controller.user.value.username,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleLarge,
+                                              )
+                                                .animate(
+                                                    delay: const Duration(
+                                                        milliseconds: 250))
+                                                .slideX(
+                                                    begin: 4,
+                                                    end: 0,
+                                                    curve: Curves.bounceIn,
+                                                    duration: const Duration(
+                                                        milliseconds: 400)),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ]))
+                          .animate()
+                          .slideY(
+                              begin: 3,
+                              end: 0,
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.bounceIn),
                     ],
                   ),
                 )),

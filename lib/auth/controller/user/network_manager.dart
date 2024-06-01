@@ -29,7 +29,6 @@ class NetworkManager extends GetxController {
       Get.snackbar(
         'No Internet Connection',
         '',
-        maxWidth: 600,
         isDismissible: true,
         shouldIconPulse: true,
         colorText: Colors.white,

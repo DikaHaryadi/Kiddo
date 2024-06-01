@@ -163,7 +163,7 @@ class TestOverviewScreen extends GetView<QuestionController> {
                         SizedBox(
                           width: Get.width / 3,
                           child: OutlinedButton(
-                              onPressed: () => Get.offAllNamed('/home'),
+                              onPressed: controller.navigateToHome,
                               child: const Text(
                                 'Keluar',
                               )),

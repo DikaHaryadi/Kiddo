@@ -4,11 +4,14 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:info_popup/info_popup.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:textspeech/util/etc/constants.dart';
 import 'package:textspeech/util/game%20property/game.dart';
 import 'package:textspeech/util/game%20property/game_confetti.dart';
@@ -378,7 +381,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                             widht: 40,
                             height: 40,
                             isNetworkImage: networkImage.isNotEmpty,
-                            onTap: () => Get.toNamed('/profile'),
                           );
                         }),
                         const SizedBox(width: 5.0),
@@ -388,8 +390,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                                 controller.user.value.username,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style:
-                                    Theme.of(context).textTheme.headlineMedium,
                               ))
                       ],
                     ),
@@ -402,12 +402,81 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(30.0),
                             bottomLeft: Radius.circular(30.0))),
-                    child: RestartGame(
-                      isGameOver: game.isGameOver,
-                      pauseGame: () => pauseTimer(),
-                      restartGame: () => _resetGame(),
-                      continueGame: () => startTimer(),
-                      color: Colors.amberAccent[700]!,
+                    child: Row(
+                      children: [
+                        RestartGame(
+                          isGameOver: game.isGameOver,
+                          pauseGame: () => pauseTimer(),
+                          restartGame: () => _resetGame(),
+                          continueGame: () => startTimer(),
+                          color: Colors.amberAccent[700]!,
+                        ),
+                        const SizedBox(width: 8.0),
+                        InfoPopupWidget(
+                          customContent: () {
+                            return Container(
+                                decoration: BoxDecoration(
+                                  color: kWhite,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Row(
+                                  children: [
+                                    IconButton(
+                                        onPressed: toggleMute,
+                                        icon: Icon(isMusicPlaying
+                                            ? Iconsax.volume_mute
+                                            : Iconsax.volume_cross)),
+                                    Slider(
+                                      value: isMusicPlaying ? _volume : 0.0,
+                                      min: 0.0,
+                                      max: 1.0,
+                                      onChanged: (newValue) {
+                                        setVolume(newValue);
+                                      },
+                                      onChangeEnd: (newValue) {
+                                        setVolume(newValue);
+                                      },
+                                    ),
+                                    Text(
+                                      '${calculateVolumePercentage(isMusicPlaying ? _volume : 0.0)}%',
+                                    ),
+                                  ],
+                                ));
+                          },
+                          arrowTheme: const InfoPopupArrowTheme(
+                            color: Colors.pink,
+                            arrowDirection: ArrowDirection.up,
+                          ),
+                          dismissTriggerBehavior:
+                              PopupDismissTriggerBehavior.onTapArea,
+                          areaBackgroundColor: Colors.transparent,
+                          indicatorOffset: Offset.zero,
+                          contentOffset: Offset.zero,
+                          onControllerCreated: (controller) {
+                            print('Info Popup Controller Created');
+                          },
+                          onAreaPressed: (InfoPopupController controller) {
+                            print('Area Pressed');
+                            controller.dismissInfoPopup();
+                          },
+                          infoPopupDismissed: () {
+                            print('Info Popup Dismissed');
+                          },
+                          onLayoutMounted: (Size size) {
+                            print('Info Popup Layout Mounted');
+                          },
+                          child: CircleAvatar(
+                            minRadius: 15,
+                            maxRadius: 20,
+                            backgroundColor: const Color(0xFF8dbffa),
+                            child: Icon(isMusicPlaying
+                                ? Iconsax.volume_mute
+                                : Iconsax.volume_cross),
+                          ),
+                        ),
+                      ],
                     ),
                   )
                 ],
@@ -438,30 +507,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                         color: Colors.black.withOpacity(.4),
                       ),
                     ),
-                    child: Row(
-                      children: [
-                        IconButton(
-                            onPressed: toggleMute,
-                            icon: isMusicPlaying
-                                ? const Icon(Iconsax.volume)
-                                : const Icon(Iconsax.volume_mute)),
-                        Slider(
-                          value: isMusicPlaying ? _volume : 0.0,
-                          min: 0.0,
-                          max: 1.0,
-                          onChanged: (newValue) {
-                            setVolume(newValue);
-                          },
-                          onChangeEnd: (newValue) {
-                            setVolume(newValue);
-                          },
-                        ),
-                        Text(
-                          '${calculateVolumePercentage(isMusicPlaying ? _volume : 0.0)}%',
-                          style: const TextStyle(fontSize: 16),
-                        ),
-                      ],
-                    )),
+                    child: Text('ads Disni nanti')),
               ),
             ],
           ),

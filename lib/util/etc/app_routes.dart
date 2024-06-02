@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:textspeech/auth/controller/sign_up_controller.dart';
 import 'package:textspeech/auth/controller/verify_email_controller.dart';
 import 'package:textspeech/controllers/question_controller.dart';
+import 'package:textspeech/interface/content/kid_song.dart';
 import 'package:textspeech/quiz/answer_check_screen.dart';
 import 'package:textspeech/quiz/result_screen.dart';
 import 'package:textspeech/interface/content/animal.dart';
@@ -80,6 +81,7 @@ class AppRoutes {
         GetPage(name: '/number-content', page: () => const NumberContent()),
         GetPage(name: '/letters-content', page: () => const LettersContent()),
         GetPage(name: '/animals-content', page: () => const AnimalContent()),
+        GetPage(name: '/kid-song', page: () => const KidSong()),
         GetPage(name: '/family-content', page: () => const FamilyContent()),
 
         // show all content

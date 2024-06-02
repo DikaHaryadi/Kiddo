@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../auth/controller/user/user_controller.dart';
 import '../../controllers/anchor_ads_controller.dart';
 import '../../controllers/time_by_sun_position_controller.dart';
-import '../../util/etc/app_colors.dart';
-import '../../util/etc/category_list_mobile.dart';
 import '../../util/etc/constants.dart';
 import '../../util/shimmer/shimmer.dart';
 import '../user/edit_profile.dart';
@@ -24,7 +21,6 @@ class HomeMobileScreem extends StatefulWidget {
 
 class _HomeMobileScreemState extends State<HomeMobileScreem> {
   bool showAll = false;
-  CategoryListNotifier categoryListNotifier = CategoryListNotifier();
 
   final controller = Get.put(UserController());
   final timeSunPosition = Get.put(TimeSunPosition());
@@ -176,234 +172,158 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                 ),
               ),
             ),
+            const SizedBox(height: 8.0),
+            GestureDetector(
+              onTap: () => Get.toNamed('/kid-song'),
+              child: AnimationConfiguration.staggeredGrid(
+                duration: const Duration(milliseconds: 900),
+                position: 0,
+                columnCount: 1,
+                child: FadeInAnimation(
+                  child: Container(
+                    height: Get.height * 0.12,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.white,
+                      border:
+                          Border.all(width: 2, color: const Color(0xFFd1d1d1)),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(8.0),
+                              bottomLeft: Radius.circular(8.0),
+                            ),
+                            child: Image.asset(
+                              'assets/games/color.png',
+                              fit: BoxFit.fitHeight,
+                              height: MediaQuery.of(context).size.height,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                    'Kid Song',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium,
+                                  ),
+                                ),
+                                FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                    'Subtitle kid song disini',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall
+                                        ?.copyWith(fontWeight: FontWeight.w400),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             const SizedBox(height: 15.0),
-            ValueListenableBuilder<int?>(
-              valueListenable: categoryListNotifier.selectedTab,
-              builder: (context, selectedIndex, child) {
-                final gameList = categoryListNotifier.categoryList;
-                final displayCount = showAll ? gameList.length : 2;
+            AnimationLimiter(
+                child: GridView.builder(
+              itemCount: contentKiddo.length,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 1,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
+              ),
+              itemBuilder: (_, index) {
+                final content = contentKiddo[index];
 
-                // Inisialisasi selectedIndex dengan nilai default dari selectedTab
-                selectedIndex ??= categoryListNotifier.selectedTab.value;
-
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      ...gameList
-                          .asMap()
-                          .entries
-                          .take(displayCount)
-                          .map((entry) {
-                        final int index = entry.key;
-                        final Map<String, String> game = entry.value;
-
-                        final bool isSelected = selectedIndex == index;
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5.0),
-                              backgroundColor: Colors.white,
-                              side: BorderSide(
-                                color:
-                                    isSelected ? Colors.black45 : Colors.white,
-                                width: 2,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                            ),
-                            onPressed: () {
-                              categoryListNotifier.selectTab(index);
-                            },
-                            icon: const CircleAvatar(
-                              minRadius: 10,
-                              maxRadius: 15,
-                              backgroundColor: Colors.pink,
-                            ),
-                            label: AutoSizeText(
-                              game['enum']!,
-                              maxFontSize: 14,
-                              minFontSize: 12,
-                              style: GoogleFonts.aBeeZee(
-                                fontWeight: FontWeight.w600,
-                                color: kDark,
-                              ),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                      if (!showAll && gameList.length > 2)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5.0),
-                              backgroundColor: Colors.white,
-                              side: const BorderSide(color: Colors.white),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                showAll = true;
-                              });
-                            },
-                            icon: const CircleAvatar(
-                              minRadius: 10,
-                              maxRadius: 15,
-                              backgroundColor: Colors.pink,
-                            ),
-                            label: Text(
-                              "Show All",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(fontWeight: FontWeight.bold),
-                            ), // Ganti teks sesuai kebutuhan
+                return AnimationConfiguration.staggeredGrid(
+                  columnCount: 2,
+                  position: index,
+                  duration: const Duration(milliseconds: 800),
+                  child: ScaleAnimation(
+                    scale: 0.5,
+                    child: FadeInAnimation(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.0),
+                          color: Colors.white,
+                          border: Border.all(
+                            width: 2,
+                            color: const Color(0xFFd1d1d1),
                           ),
                         ),
-                      if (showAll)
-                        Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: ElevatedButton.icon(
-                            style: ElevatedButton.styleFrom(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5.0),
-                              backgroundColor: Colors.white,
-                              side: const BorderSide(color: Colors.white),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: OpenContainer(
+                                closedColor: const Color(0xFFfcf4f1),
+                                closedElevation: 0,
+                                transitionDuration:
+                                    const Duration(milliseconds: 500),
+                                transitionType: ContainerTransitionType.fade,
+                                closedShape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(8.0),
+                                  ),
+                                ),
+                                openBuilder: (context, action) {
+                                  return openContent[index];
+                                },
+                                closedBuilder: (context, action) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Get.toNamed(content['routePath']!);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          image:
+                                              AssetImage(content['imagePath']!),
+                                          fit: BoxFit.fitHeight,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
                             ),
-                            onPressed: () {
-                              setState(() {
-                                showAll = false;
-                              });
-                            },
-                            icon: const CircleAvatar(
-                              minRadius: 10,
-                              maxRadius: 15,
-                              backgroundColor: Colors.pink,
-                            ),
-                            label: Text(
-                              "Show Less",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(fontWeight: FontWeight.bold),
-                            ), // Ganti teks sesuai kebutuhan
-                          ),
+                            AutoSizeText('${content['name']}',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).textTheme.bodyLarge)
+                          ],
                         ),
-                    ],
+                      ),
+                    ),
                   ),
                 );
               },
-            ),
-            const SizedBox(height: 10.0),
-            AnimationLimiter(
-              child: ValueListenableBuilder<int?>(
-                valueListenable: categoryListNotifier.selectedTab,
-                builder: (context, value, child) {
-                  final gameList = categoryListNotifier.categoryList;
-                  if (value != null && value >= 0 && value < gameList.length) {
-                    final selectedEnum = gameList[value]['enum'];
-                    List<Map<String, String>> filteredContent;
-
-                    if (selectedEnum == 'All') {
-                      filteredContent = contentKiddo;
-                    } else {
-                      filteredContent = contentKiddo
-                          .where((item) => item['enum'] == selectedEnum)
-                          .toList();
-                    }
-
-                    return GridView.count(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      crossAxisCount: 2,
-                      childAspectRatio: 1,
-                      crossAxisSpacing: 20,
-                      mainAxisSpacing: 20,
-                      children: List.generate(filteredContent.length, (index) {
-                        final content = filteredContent[index];
-                        return AnimationConfiguration.staggeredGrid(
-                          columnCount: 2,
-                          position: index,
-                          duration: const Duration(milliseconds: 800),
-                          child: ScaleAnimation(
-                            scale: 0.5,
-                            child: FadeInAnimation(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  color: Colors.white,
-                                  border: Border.all(
-                                    width: 2,
-                                    color: const Color(0xFFd1d1d1),
-                                  ),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Expanded(
-                                      child: OpenContainer(
-                                        closedColor: const Color(0xFFfcf4f1),
-                                        closedElevation: 0,
-                                        transitionDuration:
-                                            const Duration(milliseconds: 500),
-                                        transitionType:
-                                            ContainerTransitionType.fade,
-                                        closedShape:
-                                            const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(8.0),
-                                          ),
-                                        ),
-                                        openBuilder: (context, action) {
-                                          return openContent[index];
-                                        },
-                                        closedBuilder: (context, action) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              Get.toNamed(
-                                                  content['routePath']!);
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                image: DecorationImage(
-                                                  image: AssetImage(
-                                                      content['imagePath']!),
-                                                  fit: BoxFit.fitHeight,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    AutoSizeText('${content['name']}',
-                                        textAlign: TextAlign.center,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge)
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      }),
-                    );
-                  } else {
-                    return const SizedBox.shrink();
-                  }
-                },
-              ),
-            ),
+            )),
           ],
         ),
         Positioned(

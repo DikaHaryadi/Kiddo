@@ -48,3 +48,49 @@ class AnimalInfoAppBar extends SliverPersistentHeaderDelegate {
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
       true;
 }
+
+class QuestionInforAppBar extends SliverPersistentHeaderDelegate {
+  final String title;
+
+  QuestionInforAppBar(this.title);
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 20.0),
+      child: Align(
+        alignment: Alignment.centerLeft,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Icon(
+              Iconsax.repeat,
+              size: 25,
+            ),
+            const SizedBox(width: 5.0),
+            AutoSizeText.rich(
+              maxFontSize: 14,
+              minFontSize: 12,
+              TextSpan(text: 'Single Replay | $title categories'),
+              style: GoogleFonts.robotoSlab(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  double get maxExtent => 80;
+
+  @override
+  double get minExtent => 50;
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      true;
+}

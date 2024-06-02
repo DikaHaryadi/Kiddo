@@ -33,6 +33,7 @@ class _GameOptionsState extends State<GameOptions> {
               widget.onLevelSelected(activeIndex);
             },
             title: level['title'],
+            level: level['kesulitan'],
             width: 250,
             isActive:
                 activeIndex == index, // Kirim status aktif berdasarkan indeks

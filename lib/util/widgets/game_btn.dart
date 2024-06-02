@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:lottie/lottie.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:textspeech/util/etc/responsive.dart';
 
 class GameButton extends StatefulWidget {
-  const GameButton({
-    required this.title,
-    required this.onPressed,
-    required this.isActive,
-    this.height = 40,
-    this.width = double.infinity,
-    this.fontSize = 18,
-    Key? key,
-  }) : super(key: key);
+  const GameButton(
+      {required this.title,
+      required this.onPressed,
+      required this.isActive,
+      this.height = 40,
+      this.width = double.infinity,
+      this.fontSize = 18,
+      Key? key,
+      required this.level})
+      : super(key: key);
 
   final String title;
   final VoidCallback onPressed;
@@ -22,6 +22,7 @@ class GameButton extends StatefulWidget {
   final double height;
   final double width;
   final double fontSize;
+  final String level;
 
   @override
   State<GameButton> createState() => _GameButtonState();
@@ -92,10 +93,10 @@ class _GameButtonState extends State<GameButton> {
                                   borderRadius: BorderRadius.circular(30.0),
                                   color: Colors.blue),
                               child: Text(
-                                '3',
+                                widget.level,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headlineMedium
+                                    .headlineSmall
                                     ?.apply(color: kWhite),
                               ),
                             ),
@@ -171,7 +172,7 @@ class _GameButtonState extends State<GameButton> {
                                   borderRadius: BorderRadius.circular(30.0),
                                   color: Colors.blue),
                               child: Text(
-                                '3',
+                                widget.level,
                                 style: Theme.of(context)
                                     .textTheme
                                     .headlineMedium

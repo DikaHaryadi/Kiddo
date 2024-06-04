@@ -116,6 +116,7 @@ class QuestionController extends GetxController {
         timer.cancel();
         if (bottomSheetContext != null) {
           Navigator.pop(bottomSheetContext!);
+          bottomSheetContext = null;
         }
         Get.dialog(
           Dialogs.timesUpDialogue(onTap: tryAgain),

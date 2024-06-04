@@ -74,3 +74,46 @@ class FamilyCurvedEdges extends CustomClipper<Path> {
     return true;
   }
 }
+
+class InfoAppCurvedEdges extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+    path.moveTo(0, size.height * 0.1887500);
+    path.quadraticBezierTo(size.width * 0.0030833, size.height * 0.2200625,
+        size.width * 0.0410000, size.height * 0.2515000);
+    path.cubicTo(
+        size.width * 0.0620000,
+        size.height * 0.2708125,
+        size.width * 0.0818333,
+        size.height * 0.2888375,
+        size.width * 0.1096667,
+        size.height * 0.3007500);
+    path.quadraticBezierTo(size.width * 0.1468167, size.height * 0.3138375,
+        size.width * 0.2386667, size.height * 0.3130000);
+    path.lineTo(size.width * 0.3213333, size.height * 0.3127500);
+    path.lineTo(size.width * 0.3966667, size.height * 0.3127500);
+    path.quadraticBezierTo(size.width * 0.7060833, size.height * 0.3106250,
+        size.width * 0.8316667, size.height * 0.3127500);
+    path.cubicTo(
+        size.width * 0.8851667,
+        size.height * 0.3211875,
+        size.width * 0.9028333,
+        size.height * 0.3329375,
+        size.width * 0.9303333,
+        size.height * 0.3490000);
+    path.quadraticBezierTo(size.width * 0.9555000, size.height * 0.3666875,
+        size.width * 1.0002000, size.height * 0.4380500);
+    path.lineTo(size.width * 1.0004000, size.height * -0.0004250);
+    path.lineTo(0, 0);
+    path.lineTo(0, size.height * 0.1887500);
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}

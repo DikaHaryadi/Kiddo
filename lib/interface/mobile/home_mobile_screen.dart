@@ -247,6 +247,81 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                 ),
               ),
             ),
+            const SizedBox(height: 8.0),
+            GestureDetector(
+              onTap: () => Get.toNamed('/kid-song'),
+              child: AnimationConfiguration.staggeredGrid(
+                duration: const Duration(milliseconds: 900),
+                position: 0,
+                columnCount: 1,
+                child: FadeInAnimation(
+                  child: Container(
+                    height: Get.height * 0.12,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.white,
+                      border:
+                          Border.all(width: 2, color: const Color(0xFFd1d1d1)),
+                    ),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(8.0),
+                              bottomLeft: Radius.circular(8.0),
+                            ),
+                            child: Image.asset(
+                              'assets/games/logo_musik.png',
+                              fit: BoxFit.fitHeight,
+                              height: MediaQuery.of(context).size.height,
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 5.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                    'Lagu Nasional',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineMedium,
+                                  ),
+                                ),
+                                FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Text(
+                                    'Subtitle kid song disini',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .headlineSmall
+                                        ?.copyWith(fontWeight: FontWeight.w400),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
             const SizedBox(height: 15.0),
             AnimationLimiter(
                 child: GridView.builder(

@@ -43,7 +43,7 @@ class ResultQuizScreen extends GetView<QuestionController> {
                       width: 100,
                     ),
                     const SizedBox(height: 16.0),
-                    Text('Congratulations'),
+                    const Text('Congratulations'),
                     Text('You have ${controller.points} points'),
                     const SizedBox(height: 16.0),
                     Expanded(

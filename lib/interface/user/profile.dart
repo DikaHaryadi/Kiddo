@@ -70,15 +70,7 @@ class ProfileScreen extends StatelessWidget {
                                           isNetworkImage:
                                               networkImage.isNotEmpty,
                                         );
-                                })
-                                    .animate(
-                                        delay:
-                                            const Duration(milliseconds: 250))
-                                    .slideY(
-                                        begin: 2,
-                                        end: 0,
-                                        duration:
-                                            const Duration(milliseconds: 700)),
+                                }),
                                 const SizedBox(width: 16.0),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -124,21 +116,24 @@ class ProfileScreen extends StatelessWidget {
                             Row(
                               children: [
                                 Expanded(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: kWhite),
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
-                                    child: Center(
-                                      child: TextButton(
-                                        onPressed: () =>
-                                            Get.toNamed('/edit-profile'),
-                                        child: Text(
-                                          'Edit Profile',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium
-                                              ?.apply(color: kWhite),
+                                  child: GestureDetector(
+                                    onTap: () => Get.toNamed('/edit-profile'),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          border: Border.all(color: kWhite),
+                                          borderRadius:
+                                              BorderRadius.circular(5.0)),
+                                      child: Center(
+                                        child: TextButton(
+                                          onPressed: () =>
+                                              Get.toNamed('/edit-profile'),
+                                          child: Text(
+                                            'Edit Profile',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium
+                                                ?.apply(color: kWhite),
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -152,7 +147,7 @@ class ProfileScreen extends StatelessWidget {
                                             BorderRadius.circular(5.0)),
                                     child: IconButton(
                                         onPressed: () =>
-                                            Get.toNamed('/edit-profile'),
+                                            Get.toNamed('/info-app'),
                                         icon: const Icon(
                                           Iconsax.info_circle,
                                           color: kWhite,

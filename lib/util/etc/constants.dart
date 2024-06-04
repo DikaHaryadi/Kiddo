@@ -49,6 +49,12 @@ const contentKiddo = [
     'subtitle': '(familia)',
   },
   {
+    'imagePath': 'assets/banner_animals.png',
+    'name': 'Dinosaurus',
+    'routePath': '/animals-content',
+    'subtitle': '(animalia)',
+  },
+  {
     'imagePath': 'assets/banner_vehicle.png',
     'name': 'Vehicle',
     'routePath': '/vehicle-content',
@@ -57,6 +63,12 @@ const contentKiddo = [
   {
     'imagePath': 'assets/banner_vehicle.png',
     'name': 'Islamic Months',
+    'routePath': '/vehicle-content',
+    'subtitle': '(islamic months)',
+  },
+  {
+    'imagePath': 'assets/banner_vehicle.png',
+    'name': 'Nama Nama Malaikat',
     'routePath': '/vehicle-content',
     'subtitle': '(islamic months)',
   },

@@ -209,11 +209,11 @@ class _DetailKidSongState extends State<DetailKidSong> {
                         child: Container(
                           width: 160,
                           height: 160,
-                          decoration: BoxDecoration(
-                            border: const Border.fromBorderSide(BorderSide(
+                          decoration: const BoxDecoration(
+                            border: Border.fromBorderSide(BorderSide(
                                 color: Color.fromARGB(255, 176, 173, 168))),
                             image: DecorationImage(
-                              image: NetworkImage(widget.model.imageContent),
+                              image: AssetImage('assets/banner_musik.png'),
                               fit: BoxFit.fill,
                             ),
                             shape: BoxShape.circle,
@@ -239,13 +239,24 @@ class _DetailKidSongState extends State<DetailKidSong> {
                         fontWeight: FontWeight.bold,
                         color: kBlack,
                       ),
-                    ).animate(delay: const Duration(milliseconds: 250)).slideY(
-                        begin: 2,
-                        end: 0,
+                    ).animate(delay: const Duration(milliseconds: 250)).fadeIn(
                         duration: const Duration(
                           milliseconds: 900,
                         ),
-                        curve: Curves.easeOut,
+                        delay: const Duration(
+                          milliseconds: 100,
+                        )),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4.0),
+                    child: AutoSizeText(
+                      toTitleCase(widget.model.penyanyi),
+                      maxFontSize: 20,
+                      minFontSize: 18,
+                    ).animate(delay: const Duration(milliseconds: 250)).fadeIn(
+                        duration: const Duration(
+                          milliseconds: 900,
+                        ),
                         delay: const Duration(
                           milliseconds: 100,
                         )),
@@ -451,8 +462,8 @@ class _DetailKidSongState extends State<DetailKidSong> {
                                                                           borderRadius:
                                                                               BorderRadius.circular(5.0),
                                                                           child:
-                                                                              Image.network(
-                                                                            controller.kidSongModel[index].imageContent,
+                                                                              Image.asset(
+                                                                            'assets/banner_musik.png',
                                                                             width:
                                                                                 50,
                                                                             height:
@@ -462,39 +473,13 @@ class _DetailKidSongState extends State<DetailKidSong> {
                                                                           ),
                                                                         ),
                                                                         title: Text(
-                                                                            controller.kidSongModel[index].titleKidSong,
+                                                                            toTitleCase(controller.kidSongModel[index].titleKidSong),
                                                                             textAlign: TextAlign.left,
                                                                             style: GoogleFonts.aBeeZee(height: 1.3, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black)),
-                                                                        subtitle:
-                                                                            Row(
-                                                                          children: [
-                                                                            Text('kategori song disini',
-                                                                                textAlign: TextAlign.left,
-                                                                                style: GoogleFonts.aBeeZee(height: 1.3, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black)),
-                                                                            const SizedBox(width: 5.0),
-                                                                            Text(
-                                                                              '|',
-                                                                              textAlign: TextAlign.left,
-                                                                              style: GoogleFonts.aBeeZee(
-                                                                                height: 1.3,
-                                                                                fontSize: 16,
-                                                                                fontWeight: FontWeight.w400,
-                                                                                color: Colors.black,
-                                                                              ),
-                                                                            ),
-                                                                            const SizedBox(width: 5.0),
-                                                                            Text(
-                                                                              'ntahlah apa ini',
-                                                                              textAlign: TextAlign.left,
-                                                                              style: GoogleFonts.aBeeZee(
-                                                                                height: 1.3,
-                                                                                fontSize: 16,
-                                                                                fontWeight: FontWeight.w400,
-                                                                                color: Colors.black,
-                                                                              ),
-                                                                            )
-                                                                          ],
-                                                                        ),
+                                                                        subtitle: Text(
+                                                                            toTitleCase(controller.kidSongModel[index].penyanyi),
+                                                                            textAlign: TextAlign.left,
+                                                                            style: GoogleFonts.aBeeZee(height: 1.3, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black)),
                                                                       ),
                                                                     ),
                                                                   ),

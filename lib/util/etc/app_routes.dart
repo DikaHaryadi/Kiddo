@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:textspeech/auth/controller/sign_up_controller.dart';
 import 'package:textspeech/auth/controller/verify_email_controller.dart';
 import 'package:textspeech/controllers/question_controller.dart';
+import 'package:textspeech/interface/content/info_app.dart';
 import 'package:textspeech/interface/content/kid_song.dart';
 import 'package:textspeech/interface/content/vehicle.dart';
 import 'package:textspeech/quiz/answer_check_screen.dart';
@@ -22,7 +23,6 @@ import 'package:textspeech/auth/verify_email.dart';
 import 'package:textspeech/quiz/question_paper_controller.dart';
 import 'package:textspeech/interface/game/quiz_screen.dart';
 import 'package:textspeech/quiz/question_screen.dart';
-import 'package:textspeech/quiz/quiz_overview_screen.dart';
 import 'package:textspeech/services/message.dart';
 import 'package:textspeech/util/widgets/change_name.dart';
 import 'package:textspeech/util/widgets/change_username.dart';
@@ -61,12 +61,7 @@ class AppRoutes {
             binding: BindingsBuilder(() {
               Get.put<QuestionController>(QuestionController());
             })),
-        GetPage(
-            name: TestOverviewScreen.routeName,
-            page: () => const TestOverviewScreen(),
-            binding: BindingsBuilder(() {
-              Get.put(QuestionController());
-            })),
+
         GetPage(
             name: ResultQuizScreen.routeName,
             page: () => const ResultQuizScreen(),
@@ -97,5 +92,11 @@ class AppRoutes {
 
         // notif
         GetPage(name: '/message', page: () => const MessageScreen()),
+
+        // info app
+        GetPage(
+          name: '/info-app',
+          page: () => const InfoAppScreen(),
+        )
       ];
 }

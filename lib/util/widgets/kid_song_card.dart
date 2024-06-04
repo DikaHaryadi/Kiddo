@@ -3,6 +3,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/interface/detail%20content/detail_kid_song.dart';
 import 'package:textspeech/models/kidsong_model.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
@@ -28,11 +29,9 @@ class KidSongCardScreen extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
             closedBuilder: (context, action) {
-              return Image.network(
-                model.imageContent,
-                width: 60,
-                height: 60,
-                fit: BoxFit.cover,
+              return const Icon(
+                Iconsax.headphone,
+                size: 45,
               );
             },
             openBuilder: (context, action) => DetailKidSong(
@@ -56,15 +55,11 @@ class KidSongCardScreen extends StatelessWidget {
                       color: Colors.orangeAccent,
                     ),
                   ),
-                  AutoSizeText.rich(
+                  AutoSizeText(
+                    toTitleCase(model.penyanyi),
                     maxFontSize: 14,
                     minFontSize: 12,
-                    TextSpan(text: toTitleCase('ini disini')),
-                    style: GoogleFonts.robotoSlab(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.orangeAccent,
-                    ),
-                  )
+                  ),
                 ],
               ),
             ),

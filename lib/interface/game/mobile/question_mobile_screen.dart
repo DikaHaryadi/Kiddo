@@ -6,7 +6,7 @@ import '../../../controllers/question_controller.dart';
 import '../../../firebase/loading_status.dart';
 import '../../../quiz/answer_card.dart';
 import '../../../quiz/app_bar_quiz.dart';
-import '../../../quiz/quiz_overview_screen.dart';
+import '../../../quiz/question_number.dart';
 import '../../../quiz/timer_screen.dart';
 import '../../../util/etc/app_colors.dart';
 
@@ -90,22 +90,27 @@ class QuestionMobileScreen extends StatelessWidget {
                         children: [
                           Visibility(
                             visible: controller.isFirstQuestion,
-                            child: SizedBox(
-                              width: 56,
-                              height: 56,
-                              child: Padding(
-                                padding: const EdgeInsets.only(right: 8.0),
-                                child: ElevatedButton(
-                                    onPressed: () => controller.prevQuestion(),
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: kSoftblue,
-                                      side: const BorderSide(
-                                          color: kError, width: 1),
-                                    ),
-                                    child: const Icon(
-                                      Icons.arrow_back_ios,
-                                      color: kDark,
-                                    )),
+                            child: Expanded(
+                              child: SizedBox(
+                                width: 56,
+                                height: 56,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 8.0),
+                                  child: ElevatedButton(
+                                      onPressed: () =>
+                                          controller.prevQuestion(),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: kSoftblue,
+                                        side: const BorderSide(
+                                            color: kError, width: 1),
+                                      ),
+                                      child: Text(
+                                        'Back',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge,
+                                      )),
+                                ),
                               ),
                             ),
                           ),
@@ -116,8 +121,129 @@ class QuestionMobileScreen extends StatelessWidget {
                               child: ElevatedButton(
                                   onPressed: () {
                                     controller.isLastQuestion
-                                        ? Get.toNamed(
-                                            TestOverviewScreen.routeName)
+                                        ? showModalBottomSheet(
+                                            enableDrag: true,
+                                            useSafeArea: true,
+                                            clipBehavior: Clip.hardEdge,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20),
+                                                topRight: Radius.circular(20),
+                                              ),
+                                            ),
+                                            context: context,
+                                            isScrollControlled: true,
+                                            builder: (BuildContext context) {
+                                              controller.bottomSheetContext =
+                                                  context;
+                                              return DraggableScrollableSheet(
+                                                expand: false,
+                                                initialChildSize: 0.5,
+                                                snap: true,
+                                                snapSizes: const [0.5, 1.0],
+                                                builder: (_, scrollController) {
+                                                  return CustomScrollView(
+                                                    controller:
+                                                        scrollController,
+                                                    physics:
+                                                        const ClampingScrollPhysics(),
+                                                    slivers: [
+                                                      SliverToBoxAdapter(
+                                                        child:
+                                                            Obx(() => Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .all(
+                                                                          8.0),
+                                                                  child: Text(
+                                                                      '${controller.time} Remuygfhhvgaining'),
+                                                                )),
+                                                      ),
+                                                      SliverGrid(
+                                                        delegate:
+                                                            SliverChildBuilderDelegate(
+                                                          (_, index) {
+                                                            AnswerStatus?
+                                                                _answerStatus;
+                                                            if (controller
+                                                                    .allQuestions[
+                                                                        index]
+                                                                    .selectedAnswer !=
+                                                                null) {
+                                                              _answerStatus =
+                                                                  AnswerStatus
+                                                                      .answered;
+                                                            }
+                                                            return QuestionNumberCard(
+                                                              index: index + 1,
+                                                              status:
+                                                                  _answerStatus,
+                                                              onTap: () => controller
+                                                                  .jumpToQuestion(
+                                                                      index),
+                                                            );
+                                                          },
+                                                          childCount: controller
+                                                              .allQuestions
+                                                              .length,
+                                                        ),
+                                                        gridDelegate:
+                                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                          crossAxisCount:
+                                                              (Get.width ~/ 50),
+                                                          childAspectRatio: 1,
+                                                          crossAxisSpacing: 8,
+                                                          mainAxisSpacing: 8,
+                                                        ),
+                                                      ),
+                                                      SliverToBoxAdapter(
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .symmetric(
+                                                                  vertical:
+                                                                      24.0),
+                                                          child: Row(
+                                                            children: [
+                                                              SizedBox(
+                                                                width:
+                                                                    Get.width /
+                                                                        3,
+                                                                child:
+                                                                    OutlinedButton(
+                                                                  onPressed:
+                                                                      controller
+                                                                          .navigateToHome,
+                                                                  child: const Text(
+                                                                      'Keluar'),
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                  width: 8.0),
+                                                              Expanded(
+                                                                child: SizedBox(
+                                                                  width: double
+                                                                      .infinity,
+                                                                  child:
+                                                                      ElevatedButton(
+                                                                    onPressed:
+                                                                        controller
+                                                                            .complete,
+                                                                    child: const Text(
+                                                                        'Complete'),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          )
                                         : controller.nextQuestion();
                                   },
                                   child: Text(

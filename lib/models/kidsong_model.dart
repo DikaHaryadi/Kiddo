@@ -3,30 +3,22 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class KidSongModel {
   final String id;
   String titleKidSong;
-  String imageContent;
   String audio;
+  String penyanyi;
 
   KidSongModel(
       {required this.id,
       required this.titleKidSong,
-      required this.imageContent,
-      required this.audio});
+      required this.audio,
+      required this.penyanyi});
 
   // static func empty kidsong model
-  static KidSongModel empty() => KidSongModel(
-        id: '',
-        titleKidSong: '',
-        imageContent: '',
-        audio: '',
-      );
+  static KidSongModel empty() =>
+      KidSongModel(id: '', titleKidSong: '', audio: '', penyanyi: '');
 
   // convert model to json structure
   Map<String, dynamic> toJson() {
-    return {
-      'Title': titleKidSong,
-      'ImageContent': imageContent,
-      'Audio': audio,
-    };
+    return {'Title': titleKidSong, 'Audio': audio, 'Penyanyi': penyanyi};
   }
 
   // create a KidSongModel from firebase document
@@ -37,8 +29,8 @@ class KidSongModel {
       return KidSongModel(
         id: document.id,
         titleKidSong: data?['Title'] ?? '',
-        imageContent: data?['ImageContent'] ?? '',
         audio: data?['Audio'] ?? '',
+        penyanyi: data?['Penyanyi'] ?? '',
       );
     } else {
       return KidSongModel.empty();

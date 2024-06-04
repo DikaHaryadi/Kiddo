@@ -83,8 +83,6 @@ class EditProfileScreen extends StatelessWidget {
                   Iconsax.copy,
                 ),
                 _profileMenu('E-mail', controller.user.value.email, () {}),
-                _profileMenu('Gender', 'Male', () {}),
-                _profileMenu('Date of Birth', '17 Augst, 2001', () {}),
                 const Divider(),
                 const SizedBox(height: 16.0),
                 Center(

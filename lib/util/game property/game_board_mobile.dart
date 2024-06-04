@@ -4,13 +4,13 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:info_popup/info_popup.dart';
+import 'package:textspeech/controllers/anchor_ads_controller.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:textspeech/util/etc/constants.dart';
 import 'package:textspeech/util/game%20property/game.dart';
@@ -36,6 +36,7 @@ class GameBoardMobile extends StatefulWidget {
 
 class _GameBoardMobileState extends State<GameBoardMobile> {
   final controller = Get.put(UserController());
+  final anchorAdsController = Get.put(AnchorAdsController());
   late Timer timer;
   late Game game;
   late Duration duration;
@@ -296,7 +297,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                         horizontal: 15.0, vertical: 10.0),
                     decoration: BoxDecoration(
                         border: const Border.fromBorderSide(
-                            BorderSide(color: Colors.red)),
+                            BorderSide(color: kWhite)),
                         borderRadius: BorderRadius.circular(30.0)),
                     child: Material(
                       color: Colors.transparent,
@@ -419,8 +420,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                                   color: kWhite,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10.0),
                                 child: Row(
                                   children: [
                                     IconButton(
@@ -446,7 +445,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                                 ));
                           },
                           arrowTheme: const InfoPopupArrowTheme(
-                            color: Colors.pink,
+                            color: kWhite,
                             arrowDirection: ArrowDirection.up,
                           ),
                           dismissTriggerBehavior:
@@ -507,7 +506,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                         color: Colors.black.withOpacity(.4),
                       ),
                     ),
-                    child: Text('ads Disni nanti')),
+                    child: anchorAdsController.getAdWidget()),
               ),
             ],
           ),

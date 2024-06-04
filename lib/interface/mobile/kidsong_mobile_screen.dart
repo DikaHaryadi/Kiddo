@@ -26,7 +26,7 @@ class KidSongMobileScreen extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
                 child: Image.asset(
-                  'assets/banner_animals.png',
+                  'assets/banner_musik.png',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -34,7 +34,7 @@ class KidSongMobileScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 25.0),
-        AutoSizeText('Categories',
+        AutoSizeText('PlayList',
                 style: Theme.of(context).textTheme.headlineMedium)
             .animate(delay: const Duration(milliseconds: 250))
             .slideX(

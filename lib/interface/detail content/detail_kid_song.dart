@@ -1,15 +1,20 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/controllers/kidsong_controller.dart';
+import 'package:textspeech/controllers/native_ads_controller.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
 import 'package:textspeech/models/kidsong_model.dart';
 import 'package:textspeech/util/etc/animal_info.dart';
-import 'package:textspeech/util/etc/curved_edges.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:textspeech/util/etc/to_title_case.dart';
 
@@ -128,8 +133,11 @@ class _DetailKidSongState extends State<DetailKidSong> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(KidSongController());
+    final NativeAdsController nativeAdsController =
+        Get.put(NativeAdsController());
+
     return Scaffold(
-      backgroundColor: const Color(0xFFfab800),
+      backgroundColor: kWhite,
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
@@ -145,46 +153,74 @@ class _DetailKidSongState extends State<DetailKidSong> {
       ),
       body: Column(
         children: [
-          ClipPath(
-            clipper: TCustomCurvedEdges(),
-            child: Container(
-              width: double.infinity,
-              height: MediaQuery.of(context).size.height / 3,
-              color: const Color(0xFFfffffc),
-              child: Center(
-                  child: Container(
-                width: 160,
-                height: 160,
-                decoration: BoxDecoration(
-                  border: const Border.fromBorderSide(
-                      BorderSide(color: Color.fromARGB(255, 176, 173, 168))),
-                  image: DecorationImage(
-                      image: NetworkImage(widget.model.imageContent),
-                      fit: BoxFit.fill),
-                  shape: BoxShape.circle,
-                ),
-              ).animate(delay: const Duration(milliseconds: 250)).slideY(
-                      begin: 2,
-                      end: 0,
-                      duration: const Duration(milliseconds: 700))),
-            ),
+          Obx(
+            () => AnimatedSwitcher(
+                duration: const Duration(milliseconds: 700),
+                transitionBuilder: (Widget child, Animation<double> animation) {
+                  final rotate = Tween(begin: pi, end: 0.0).animate(animation);
+                  return RotationYTransition(rotation: rotate, child: child);
+                },
+                child: nativeAdsController.isAdLoaded.value
+                    ? Container(
+                        // key: const ValueKey(2),
+                        decoration: BoxDecoration(
+                            color: kGrey.withOpacity(.15),
+                            borderRadius: BorderRadius.circular(30.0)),
+                        width: MediaQuery.of(Get.context!).size.width * .8,
+                        height: MediaQuery.of(Get.context!).size.height * .4,
+                        child: Stack(
+                          children: [
+                            AdWidget(ad: nativeAdsController.nativeAd!),
+                            Positioned(
+                              top: 5,
+                              right: 5,
+                              child: IconButton(
+                                icon: const Icon(Icons.close,
+                                    color: Colors.white),
+                                onPressed: () {
+                                  nativeAdsController.closeAd();
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Container(
+                        width: MediaQuery.of(Get.context!).size.width * .8,
+                        height: MediaQuery.of(Get.context!).size.height * .4,
+                        // key: const ValueKey(1),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            color: kGrey.withOpacity(.15),
+                            borderRadius: BorderRadius.circular(30.0)),
+                        child: Container(
+                          width: 160,
+                          height: 160,
+                          decoration: BoxDecoration(
+                            border: const Border.fromBorderSide(BorderSide(
+                                color: Color.fromARGB(255, 176, 173, 168))),
+                            image: DecorationImage(
+                                image: NetworkImage(widget.model.imageContent),
+                                fit: BoxFit.fill),
+                            shape: BoxShape.circle,
+                          ),
+                        ))),
           ),
           Expanded(
             child: Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(horizontal: 15.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 10.0),
+                    padding: const EdgeInsets.only(top: 24.0),
                     child: AutoSizeText(
                       toTitleCase(widget.model.titleKidSong),
                       maxFontSize: 22,
                       minFontSize: 20,
                       style: GoogleFonts.aBeeZee(
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: kBlack,
                       ),
                     ).animate(delay: const Duration(milliseconds: 250)).slideY(
                         begin: 2,
@@ -227,12 +263,12 @@ class _DetailKidSongState extends State<DetailKidSong> {
                       Text(
                         _position.format(),
                         style: GoogleFonts.aBeeZee(
-                            color: Colors.white, fontWeight: FontWeight.w400),
+                            color: kBlack, fontWeight: FontWeight.w400),
                       ),
                       Text(
                         _duration.format(),
                         style: GoogleFonts.aBeeZee(
-                            color: Colors.white, fontWeight: FontWeight.w400),
+                            color: kBlack, fontWeight: FontWeight.w400),
                       ),
                     ],
                   ).animate(delay: const Duration(milliseconds: 250)).slideY(
@@ -246,20 +282,24 @@ class _DetailKidSongState extends State<DetailKidSong> {
                         milliseconds: 100,
                       )),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 10.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          IconButton(
-                              onPressed: playPause,
-                              icon: const Icon(
-                                Iconsax.repeat,
-                                color: Colors.white,
-                                size: 30,
-                              )),
-                          IconButton(
+                    flex: 3,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconButton(
+                            onPressed: playPause,
+                            icon: const Icon(
+                              Iconsax.repeat,
+                              color: kGrey,
+                              size: 30,
+                            )),
+                        ClayContainer(
+                          emboss: true,
+                          borderRadius: 50,
+                          width: 60,
+                          height: 60,
+                          child: IconButton(
                             onPressed: _duration.inSeconds >= 10
                                 ? () {
                                     if (_position.inSeconds >= 10) {
@@ -272,34 +312,35 @@ class _DetailKidSongState extends State<DetailKidSong> {
                                   }
                                 : null,
                             icon: Icon(
-                              Iconsax.backward,
+                              Iconsax.backward_10_seconds,
                               color: _duration.inSeconds >= 10
                                   ? Colors.white
                                   : Colors.grey,
-                              size: 40,
+                              size: 30,
                             ),
                           ),
-                          GestureDetector(
-                            onTap: playPause,
-                            child: Container(
-                              width: 60,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Colors.white,
-                                  border: Border.fromBorderSide(BorderSide(
-                                      color: isPlaying
-                                          ? const Color(0xFFfffceb)
-                                          : Colors.grey,
-                                      width: 2,
-                                      strokeAlign: 1))),
-                              child: Icon(
-                                isPlaying ? Iconsax.pause : Iconsax.play,
-                                color: isPlaying ? Colors.green : Colors.grey,
-                              ),
+                        ),
+                        ClayContainer(
+                          emboss: true,
+                          borderRadius: 50,
+                          width: 60,
+                          height: 60,
+                          child: IconButton(
+                            onPressed: playPause,
+                            icon: Icon(
+                              isPlaying ? Iconsax.pause : Iconsax.play,
+                              color: kWhite,
+                              size: 30,
                             ),
+                            // color: kGrey,
                           ),
-                          IconButton(
+                        ),
+                        ClayContainer(
+                          emboss: true,
+                          borderRadius: 50,
+                          width: 60,
+                          height: 60,
+                          child: IconButton(
                             onPressed: _duration.inSeconds >= 10
                                 ? () {
                                     if (_position.inSeconds <
@@ -313,159 +354,162 @@ class _DetailKidSongState extends State<DetailKidSong> {
                                   }
                                 : null,
                             icon: Icon(
-                              Iconsax.forward,
+                              Iconsax.forward_10_seconds,
                               color: _duration.inSeconds >= 10
                                   ? Colors.white
                                   : Colors.grey,
-                              size: 40,
+                              size: 30,
                             ),
                           ),
-                          IconButton(
-                              onPressed: () {
-                                showModalBottomSheet(
-                                  enableDrag: true,
-                                  useSafeArea: true,
-                                  clipBehavior: Clip.hardEdge,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(20),
-                                      topRight: Radius.circular(20),
-                                    ),
+                        ),
+                        IconButton(
+                            onPressed: () {
+                              showModalBottomSheet(
+                                enableDrag: true,
+                                useSafeArea: true,
+                                clipBehavior: Clip.hardEdge,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(20),
+                                    topRight: Radius.circular(20),
                                   ),
-                                  context: context,
-                                  isScrollControlled: true,
-                                  builder: (context) {
-                                    return DraggableScrollableSheet(
-                                      expand: false,
-                                      initialChildSize: 0.5,
-                                      snap: true,
-                                      snapSizes: const [0.5, 1.0],
-                                      builder: (_, scrollController) {
-                                        return Obx(() => CustomScrollView(
-                                              controller: scrollController,
-                                              physics:
-                                                  const ClampingScrollPhysics(),
-                                              slivers: [
-                                                SliverPersistentHeader(
-                                                  delegate: AnimalInfoAppBar(
-                                                      controller
-                                                          .kidSongModel.length),
-                                                  pinned: true,
-                                                ),
-                                                AnimationLimiter(
-                                                  child: SliverList(
-                                                      delegate:
-                                                          SliverChildBuilderDelegate(
-                                                              (_, index) =>
-                                                                  AnimationConfiguration
-                                                                      .staggeredList(
-                                                                    position:
-                                                                        index,
-                                                                    duration: const Duration(
-                                                                        milliseconds:
-                                                                            800),
+                                ),
+                                context: context,
+                                isScrollControlled: true,
+                                builder: (context) {
+                                  return DraggableScrollableSheet(
+                                    expand: false,
+                                    initialChildSize: 0.5,
+                                    snap: true,
+                                    snapSizes: const [0.5, 1.0],
+                                    builder: (_, scrollController) {
+                                      return Obx(() => CustomScrollView(
+                                            controller: scrollController,
+                                            physics:
+                                                const ClampingScrollPhysics(),
+                                            slivers: [
+                                              SliverPersistentHeader(
+                                                delegate: AnimalInfoAppBar(
+                                                    controller
+                                                        .kidSongModel.length),
+                                                pinned: true,
+                                              ),
+                                              AnimationLimiter(
+                                                child: SliverList(
+                                                    delegate:
+                                                        SliverChildBuilderDelegate(
+                                                            (_, index) =>
+                                                                AnimationConfiguration
+                                                                    .staggeredList(
+                                                                  position:
+                                                                      index,
+                                                                  duration: const Duration(
+                                                                      milliseconds:
+                                                                          800),
+                                                                  child:
+                                                                      SlideAnimation(
+                                                                    verticalOffset:
+                                                                        100.0,
                                                                     child:
-                                                                        SlideAnimation(
-                                                                      verticalOffset:
-                                                                          100.0,
+                                                                        FadeInAnimation(
                                                                       child:
-                                                                          FadeInAnimation(
-                                                                        child:
-                                                                            ListTile(
-                                                                          onTap:
-                                                                              () {
-                                                                            if (index !=
-                                                                                currentIndex) {
-                                                                              stopAudio();
-                                                                              setState(() {
-                                                                                currentIndex = index;
-                                                                              });
+                                                                          ListTile(
+                                                                        onTap:
+                                                                            () {
+                                                                          if (index !=
+                                                                              currentIndex) {
+                                                                            stopAudio();
+                                                                            setState(() {
+                                                                              currentIndex = index;
+                                                                            });
 
-                                                                              Navigator.pushReplacement(
-                                                                                context,
-                                                                                _routeBuilder(context, controller.kidSongModel[index]),
-                                                                              );
-                                                                            }
-                                                                          },
-                                                                          leading:
-                                                                              ClipRRect(
-                                                                            borderRadius:
-                                                                                BorderRadius.circular(5.0),
-                                                                            child:
-                                                                                Image.network(
-                                                                              controller.kidSongModel[index].imageContent,
-                                                                              width: 50,
-                                                                              height: 50,
-                                                                              fit: BoxFit.cover,
-                                                                            ),
+                                                                            Navigator.pushReplacement(
+                                                                              context,
+                                                                              _routeBuilder(context, controller.kidSongModel[index]),
+                                                                            );
+                                                                          }
+                                                                        },
+                                                                        leading:
+                                                                            ClipRRect(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(5.0),
+                                                                          child:
+                                                                              Image.network(
+                                                                            controller.kidSongModel[index].imageContent,
+                                                                            width:
+                                                                                50,
+                                                                            height:
+                                                                                50,
+                                                                            fit:
+                                                                                BoxFit.cover,
                                                                           ),
-                                                                          title: Text(
-                                                                              controller.kidSongModel[index].titleKidSong,
+                                                                        ),
+                                                                        title: Text(
+                                                                            controller.kidSongModel[index].titleKidSong,
+                                                                            textAlign: TextAlign.left,
+                                                                            style: GoogleFonts.aBeeZee(height: 1.3, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black)),
+                                                                        subtitle:
+                                                                            Row(
+                                                                          children: [
+                                                                            Text('kategori song disini',
+                                                                                textAlign: TextAlign.left,
+                                                                                style: GoogleFonts.aBeeZee(height: 1.3, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black)),
+                                                                            const SizedBox(width: 5.0),
+                                                                            Text(
+                                                                              '|',
                                                                               textAlign: TextAlign.left,
-                                                                              style: GoogleFonts.aBeeZee(height: 1.3, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black)),
-                                                                          subtitle:
-                                                                              Row(
-                                                                            children: [
-                                                                              Text('kategori song disini', textAlign: TextAlign.left, style: GoogleFonts.aBeeZee(height: 1.3, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black)),
-                                                                              const SizedBox(width: 5.0),
-                                                                              Text(
-                                                                                '|',
-                                                                                textAlign: TextAlign.left,
-                                                                                style: GoogleFonts.aBeeZee(
-                                                                                  height: 1.3,
-                                                                                  fontSize: 16,
-                                                                                  fontWeight: FontWeight.w400,
-                                                                                  color: Colors.black,
-                                                                                ),
+                                                                              style: GoogleFonts.aBeeZee(
+                                                                                height: 1.3,
+                                                                                fontSize: 16,
+                                                                                fontWeight: FontWeight.w400,
+                                                                                color: Colors.black,
                                                                               ),
-                                                                              const SizedBox(width: 5.0),
-                                                                              Text(
-                                                                                'ntahlah apa ini',
-                                                                                textAlign: TextAlign.left,
-                                                                                style: GoogleFonts.aBeeZee(
-                                                                                  height: 1.3,
-                                                                                  fontSize: 16,
-                                                                                  fontWeight: FontWeight.w400,
-                                                                                  color: Colors.black,
-                                                                                ),
-                                                                              )
-                                                                            ],
-                                                                          ),
+                                                                            ),
+                                                                            const SizedBox(width: 5.0),
+                                                                            Text(
+                                                                              'ntahlah apa ini',
+                                                                              textAlign: TextAlign.left,
+                                                                              style: GoogleFonts.aBeeZee(
+                                                                                height: 1.3,
+                                                                                fontSize: 16,
+                                                                                fontWeight: FontWeight.w400,
+                                                                                color: Colors.black,
+                                                                              ),
+                                                                            )
+                                                                          ],
                                                                         ),
                                                                       ),
                                                                     ),
                                                                   ),
-                                                              childCount:
-                                                                  controller
-                                                                      .kidSongModel
-                                                                      .length)),
-                                                )
-                                              ],
-                                            ));
-                                      },
-                                    );
-                                  },
-                                );
-                              },
-                              icon: const Icon(
-                                Iconsax.firstline,
-                                color: Colors.white,
-                                size: 35,
-                              ))
-                        ],
-                      )
-                          .animate(delay: const Duration(milliseconds: 250))
-                          .slideY(
-                              begin: 2,
-                              end: 0,
-                              duration: const Duration(
-                                milliseconds: 900,
-                              ),
-                              curve: Curves.easeOut,
-                              delay: const Duration(
-                                milliseconds: 100,
-                              )),
-                    ),
+                                                                ),
+                                                            childCount:
+                                                                controller
+                                                                    .kidSongModel
+                                                                    .length)),
+                                              )
+                                            ],
+                                          ));
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                            icon: const Icon(
+                              Iconsax.firstline,
+                              color: kGrey,
+                              size: 35,
+                            ))
+                      ],
+                    ).animate(delay: const Duration(milliseconds: 250)).slideY(
+                        begin: 2,
+                        end: 0,
+                        duration: const Duration(
+                          milliseconds: 900,
+                        ),
+                        curve: Curves.easeOut,
+                        delay: const Duration(
+                          milliseconds: 100,
+                        )),
                   ),
                 ],
               ),
@@ -473,6 +517,74 @@ class _DetailKidSongState extends State<DetailKidSong> {
           ),
         ],
       ),
+    );
+  }
+
+  // Widget _contentView() {
+  //   return Container(
+  //     width: MediaQuery.of(Get.context!).size.width * .8,
+  //     height: MediaQuery.of(Get.context!).size.height * .4,
+  //     key: const ValueKey(1),
+  //     alignment: Alignment.center,
+  //     decoration: BoxDecoration(
+  //         color: kGrey.withOpacity(.15),
+  //         borderRadius: BorderRadius.circular(30.0)),
+  //     child: Container(
+  //       width: 160,
+  //       height: 160,
+  //       decoration: BoxDecoration(
+  //         border: const Border.fromBorderSide(
+  //             BorderSide(color: Color.fromARGB(255, 176, 173, 168))),
+  //         image: DecorationImage(
+  //             image: NetworkImage(widget.model.imageContent), fit: BoxFit.fill),
+  //         shape: BoxShape.circle,
+  //       ),
+  //     ).animate(delay: const Duration(milliseconds: 250)).slideY(
+  //         begin: 2, end: 0, duration: const Duration(milliseconds: 700)),
+  //   );
+  // }
+
+  //  Widget _showAds() {
+  //   return Container(
+  //     key: ValueKey(2),
+  //     color: Colors.red,
+  //     width: 300,
+  //     height: 250,
+  //     child: Stack(
+  //       children: [
+  //         AdWidget(ad: nativeAdsController.nativeAd!),
+  //         Positioned(
+  //           top: 5,
+  //           right: 5,
+  //           child: IconButton(
+  //             icon: Icon(Icons.close, color: Colors.white),
+  //             onPressed: () {
+  //               nativeAdsController.closeAd();
+  //             },
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
+}
+
+class RotationYTransition extends AnimatedWidget {
+  const RotationYTransition({
+    Key? key,
+    required Animation<double> rotation,
+    required this.child,
+  }) : super(key: key, listenable: rotation);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final Animation<double> rotation = listenable as Animation<double>;
+    return Transform(
+      transform: Matrix4.rotationY(rotation.value),
+      alignment: Alignment.center,
+      child: child,
     );
   }
 }

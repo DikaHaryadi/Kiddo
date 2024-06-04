@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -10,12 +12,6 @@ class BannerAdsController extends GetxController {
   static const _insets = 16.0;
   double get _adWidth => Get.width - (2 * _insets);
 
-  @override
-  void onInit() {
-    loadBannerAds();
-    super.onInit();
-  }
-
   Future<void> loadBannerAds() async {
     await inlineAdaptiveAd.value?.dispose();
     inlineAdaptiveAd.value = null;
@@ -26,7 +22,9 @@ class BannerAdsController extends GetxController {
         _adWidth.truncate());
 
     inlineAdaptiveAd.value = AdManagerBannerAd(
-      adUnitId: 'ca-app-pub-3048736622280674/6380402407',
+      adUnitId: Platform.isAndroid
+          ? 'ca-app-pub-3940256099942544/6300978111'
+          : 'ca-app-pub-3940256099942544/2934735716',
       sizes: [size],
       request: const AdManagerAdRequest(),
       listener: AdManagerBannerAdListener(

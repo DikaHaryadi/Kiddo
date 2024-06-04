@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textspeech/quiz/result_screen.dart';
 import 'package:textspeech/firebase/loading_status.dart';
@@ -24,6 +25,8 @@ class QuestionController extends GetxController {
   Timer? _timer;
   int remainSeconds = 1;
   final time = '00.00'.obs;
+  // modal bottom sheet
+  BuildContext? bottomSheetContext;
 
   @override
   void onReady() {
@@ -111,6 +114,9 @@ class QuestionController extends GetxController {
       if (remainSeconds <= 0) {
         // Then check if remainSeconds is less than or equal to 0
         timer.cancel();
+        if (bottomSheetContext != null) {
+          Navigator.pop(bottomSheetContext!);
+        }
         Get.dialog(
           Dialogs.timesUpDialogue(onTap: tryAgain),
           barrierDismissible: false,

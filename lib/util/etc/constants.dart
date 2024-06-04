@@ -48,6 +48,18 @@ const contentKiddo = [
     'routePath': '/family-content',
     'subtitle': '(familia)',
   },
+  {
+    'imagePath': 'assets/banner_vehicle.png',
+    'name': 'Vehicle',
+    'routePath': '/vehicle-content',
+    'subtitle': '(vehiculum)',
+  },
+  {
+    'imagePath': 'assets/banner_vehicle.png',
+    'name': 'Islamic Months',
+    'routePath': '/vehicle-content',
+    'subtitle': '(islamic months)',
+  },
 ];
 
 List<Widget> openContent = const [
@@ -88,14 +100,14 @@ const gameList = [
   {
     'GameName': 'Memo Game',
     'subtitle': '(ludus memorialis)',
-    'imagePath': 'assets/games/color.png',
+    'imagePath': 'assets/games/memory_game.png',
     'enum': 'memo',
     'routePath': '/memo-game'
   },
   {
     'GameName': 'Summation',
     'subtitle': '(summation)',
-    'imagePath': 'assets/games/memo.png',
+    'imagePath': 'assets/games/quizz.png',
     'enum': 'numbers',
     'routePath': '/main-menu-quiz'
   },

@@ -22,6 +22,7 @@ class TestOverviewScreen extends GetView<QuestionController> {
                 children: [
                   AppBarQuizz(
                     title: controller.completedTest,
+                    controller: controller,
                   ),
                   Expanded(
                     child: Padding(
@@ -98,6 +99,7 @@ class TestOverviewScreen extends GetView<QuestionController> {
                 children: [
                   AppBarQuizz(
                     title: controller.completedTest,
+                    controller: controller,
                   ),
                   Expanded(
                     child: Padding(

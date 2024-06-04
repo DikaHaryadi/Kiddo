@@ -199,7 +199,7 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                               bottomLeft: Radius.circular(8.0),
                             ),
                             child: Image.asset(
-                              'assets/games/color.png',
+                              'assets/games/logo_musik.png',
                               fit: BoxFit.fitHeight,
                               height: MediaQuery.of(context).size.height,
                             ),

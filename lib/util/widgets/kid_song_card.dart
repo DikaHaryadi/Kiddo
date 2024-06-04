@@ -1,6 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:clay_containers/widgets/clay_container.dart';
+import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/interface/detail%20content/detail_kid_song.dart';
@@ -69,24 +69,25 @@ class KidSongCardScreen extends StatelessWidget {
               ),
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              Future.delayed(const Duration(milliseconds: 250), () {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailKidSong(
-                        model: model,
-                      ),
-                    ));
-              });
-            },
-            child: const ClayContainer(
-              color: kWhite,
-              child: Icon(
-                Icons.play_arrow,
-                color: kDark,
-              ),
+          ClayContainer(
+            emboss: true,
+            borderRadius: 50,
+            curveType: CurveType.convex,
+            spread: 0,
+            child: IconButton(
+              onPressed: () {
+                Future.delayed(const Duration(milliseconds: 250), () {
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DetailKidSong(
+                          model: model,
+                        ),
+                      ));
+                });
+              },
+              icon: const Icon(Icons.play_arrow),
+              color: kDark,
             ),
           )
         ],

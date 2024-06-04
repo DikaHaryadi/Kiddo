@@ -17,6 +17,7 @@ class AnswereCheckScreen extends GetView<QuestionController> {
         child: Column(
           children: [
             AppBarQuizz(
+              controller: controller,
               titleWidget: Obx(() => Text(
                     'Number${(controller.questionIndex.value + 1).toString().padLeft(2, "0")}',
                     style: Theme.of(context).textTheme.headlineMedium,

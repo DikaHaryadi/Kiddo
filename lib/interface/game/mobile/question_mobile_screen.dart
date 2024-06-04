@@ -42,6 +42,7 @@ class QuestionMobileScreen extends StatelessWidget {
                     ?.apply(color: kWhite),
               ),
             ),
+            controller: controller,
           ),
           if (controller.loadingStatus.value == LoadingStatus.loading)
             const Expanded(child: QuestionMobileShimmer()),

@@ -86,7 +86,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
       onAdDismissedFullScreenContent: (RewardedAd ad) {
         ad.dispose();
         _createRewardedAd();
-        Get.offNamed('/home');
+        Get.offNamed('/memo-game'); // Navigasi ke /home
       },
       onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
         ad.dispose();
@@ -522,20 +522,15 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Game Over'),
+          title: Text(
+            'Game Over',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
           content: const Text('Congratulations! You have completed the game.'),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 _showRewardedAd(); // Menampilkan iklan
-                // Navigasi ke /home setelah menutup iklan
-                _rewardedAd?.fullScreenContentCallback =
-                    FullScreenContentCallback(
-                  onAdDismissedFullScreenContent: (RewardedAd ad) {
-                    ad.dispose();
-                    Get.offNamed('/home'); // Navigasi ke /home
-                  },
-                );
               },
               child: const Text('OK'),
             ),

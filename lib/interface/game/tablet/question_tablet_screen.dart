@@ -20,6 +20,7 @@ class QuestionTabletScreen extends StatelessWidget {
       () => Column(
         children: [
           AppBarQuizz(
+            controller: controller,
             leading: Align(
               alignment: Alignment.centerLeft,
               child: Container(

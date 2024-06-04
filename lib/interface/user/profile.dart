@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/auth/controller/user/user_controller.dart';
 import 'package:textspeech/auth/controller/auth_controller.dart';
 import 'package:textspeech/interface/user/edit_profile.dart';
@@ -34,13 +35,6 @@ class ProfileScreen extends StatelessWidget {
                   )
                       .animate(delay: const Duration(milliseconds: 250))
                       .slideX(begin: -2, end: 0)),
-              title: Text(
-                'Back',
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineLarge
-                    ?.copyWith(fontWeight: FontWeight.normal, color: kWhite),
-              ),
             )
           : AppBar(),
       body: isMobile(context)
@@ -128,54 +122,55 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 12.0),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
+                                Expanded(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: kWhite),
+                                        borderRadius:
+                                            BorderRadius.circular(5.0)),
+                                    child: Center(
+                                      child: TextButton(
+                                        onPressed: () =>
+                                            Get.toNamed('/edit-profile'),
+                                        child: Text(
+                                          'Edit Profile',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium
+                                              ?.apply(color: kWhite),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: 5.0),
                                 Container(
-                                  width: 100,
-                                  height: 30,
-                                  color: kError,
-                                ),
-                                GestureDetector(
-                                  onTap: () => AuthenticationRepository.instance
-                                      .logOut(),
-                                  child: Container(
-                                    width: 100,
-                                    height: 30,
                                     decoration: BoxDecoration(
                                         border: Border.all(color: kWhite),
                                         borderRadius:
-                                            BorderRadius.circular(2.0)),
-                                    child: Center(
-                                      child: Text(
-                                        'LOGOUT',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.apply(color: kWhite),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () => Get.toNamed('/edit-profile'),
-                                  child: Container(
-                                    width: 100,
-                                    height: 30,
+                                            BorderRadius.circular(5.0)),
+                                    child: IconButton(
+                                        onPressed: () =>
+                                            Get.toNamed('/edit-profile'),
+                                        icon: const Icon(
+                                          Iconsax.info_circle,
+                                          color: kWhite,
+                                        ))),
+                                const SizedBox(width: 5.0),
+                                Container(
                                     decoration: BoxDecoration(
                                         border: Border.all(color: kWhite),
                                         borderRadius:
-                                            BorderRadius.circular(2.0)),
-                                    child: Center(
-                                      child: Text(
-                                        'EDIT PROFILE',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.apply(color: kWhite),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                            BorderRadius.circular(5.0)),
+                                    child: IconButton(
+                                        onPressed: () =>
+                                            AuthenticationRepository.instance
+                                                .logOut(),
+                                        icon: const Icon(
+                                          Iconsax.logout,
+                                          color: kWhite,
+                                        ))),
                               ],
                             )
                           ],

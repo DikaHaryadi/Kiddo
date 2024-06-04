@@ -3,6 +3,7 @@ import 'package:textspeech/auth/controller/sign_up_controller.dart';
 import 'package:textspeech/auth/controller/verify_email_controller.dart';
 import 'package:textspeech/controllers/question_controller.dart';
 import 'package:textspeech/interface/content/kid_song.dart';
+import 'package:textspeech/interface/content/vehicle.dart';
 import 'package:textspeech/quiz/answer_check_screen.dart';
 import 'package:textspeech/quiz/result_screen.dart';
 import 'package:textspeech/interface/content/animal.dart';
@@ -83,6 +84,7 @@ class AppRoutes {
         GetPage(name: '/animals-content', page: () => const AnimalContent()),
         GetPage(name: '/kid-song', page: () => const KidSong()),
         GetPage(name: '/family-content', page: () => const FamilyContent()),
+        GetPage(name: '/vehicle-content', page: () => const VehicleContent()),
 
         // show all content
         GetPage(name: '/show-all-content', page: () => const ShowAllContent()),

@@ -44,7 +44,7 @@ class Dialogs {
       ),
       actions: [
         TextButton(
-            onPressed: () => Get.offAllNamed('/home'),
+            onPressed: () => Get.offAllNamed('/main-menu-quiz'),
             child: const Text('Exit')),
         TextButton(onPressed: onTap, child: const Text('TryAgain?')),
       ],

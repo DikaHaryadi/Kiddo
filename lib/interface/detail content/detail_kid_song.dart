@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:clay_containers/clay_containers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,8 @@ class DetailKidSong extends StatefulWidget {
 
 class _DetailKidSongState extends State<DetailKidSong> {
   final ttsController = Get.put(TtsController());
+  final NativeAdsController nativeAdsController =
+      Get.put(NativeAdsController());
   bool isPlaying = false;
   late final AudioPlayer player;
   late final UrlSource path;
@@ -133,8 +136,6 @@ class _DetailKidSongState extends State<DetailKidSong> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(KidSongController());
-    final NativeAdsController nativeAdsController =
-        Get.put(NativeAdsController());
 
     return Scaffold(
       backgroundColor: kWhite,
@@ -143,6 +144,7 @@ class _DetailKidSongState extends State<DetailKidSong> {
         automaticallyImplyLeading: false,
         leading: IconButton(
             onPressed: () {
+              nativeAdsController.showInterstitialAd();
               Future.delayed(const Duration(milliseconds: 250), () {
                 Get.offAllNamed('/kid-song');
               });
@@ -155,44 +157,55 @@ class _DetailKidSongState extends State<DetailKidSong> {
         children: [
           Obx(
             () => AnimatedSwitcher(
-                duration: const Duration(milliseconds: 700),
-                transitionBuilder: (Widget child, Animation<double> animation) {
-                  final rotate = Tween(begin: pi, end: 0.0).animate(animation);
-                  return RotationYTransition(rotation: rotate, child: child);
-                },
-                child: nativeAdsController.isAdLoaded.value
-                    ? Container(
-                        // key: const ValueKey(2),
-                        decoration: BoxDecoration(
-                            color: kGrey.withOpacity(.15),
-                            borderRadius: BorderRadius.circular(30.0)),
-                        width: MediaQuery.of(Get.context!).size.width * .8,
-                        height: MediaQuery.of(Get.context!).size.height * .4,
-                        child: Stack(
-                          children: [
-                            AdWidget(ad: nativeAdsController.nativeAd!),
-                            Positioned(
-                              top: 5,
-                              right: 5,
-                              child: IconButton(
-                                icon: const Icon(Icons.close,
-                                    color: Colors.white),
-                                onPressed: () {
-                                  nativeAdsController.closeAd();
-                                },
-                              ),
+              duration: const Duration(milliseconds: 700),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                final rotate = Tween(begin: pi, end: 0.0).animate(animation);
+                return RotationYTransition(rotation: rotate, child: child);
+              },
+              child: nativeAdsController.isNativeAdLoaded.value &&
+                      nativeAdsController.nativeAd != null
+                  ? Container(
+                      key: const ValueKey(1),
+                      decoration: BoxDecoration(
+                        color: kGrey.withOpacity(.15),
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      width: MediaQuery.of(Get.context!).size.width * .8,
+                      height: MediaQuery.of(Get.context!).size.height * .4,
+                      child: Stack(
+                        children: [
+                          AdWidget(ad: nativeAdsController.nativeAd!),
+                          Positioned(
+                            top: 20,
+                            right: 20,
+                            child: IconButton(
+                              icon: const Icon(Icons.close),
+                              onPressed: () {
+                                nativeAdsController
+                                    .closeNativeAd(); // Menutup iklan native
+                              },
                             ),
-                          ],
-                        ),
-                      )
-                    : Container(
+                          ),
+                        ],
+                      ),
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        print('iklan gak nampil');
+                        if (!nativeAdsController.isNativeAdLoaded.value) {
+                          print('nampilin iklan ey');
+                          nativeAdsController.loadNativeAd();
+                        }
+                      },
+                      child: Container(
+                        key: const ValueKey(2),
                         width: MediaQuery.of(Get.context!).size.width * .8,
                         height: MediaQuery.of(Get.context!).size.height * .4,
-                        // key: const ValueKey(1),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                            color: kGrey.withOpacity(.15),
-                            borderRadius: BorderRadius.circular(30.0)),
+                          color: kGrey.withOpacity(.15),
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
                         child: Container(
                           width: 160,
                           height: 160,
@@ -200,11 +213,15 @@ class _DetailKidSongState extends State<DetailKidSong> {
                             border: const Border.fromBorderSide(BorderSide(
                                 color: Color.fromARGB(255, 176, 173, 168))),
                             image: DecorationImage(
-                                image: NetworkImage(widget.model.imageContent),
-                                fit: BoxFit.fill),
+                              image: NetworkImage(widget.model.imageContent),
+                              fit: BoxFit.fill,
+                            ),
                             shape: BoxShape.circle,
                           ),
-                        ))),
+                        ),
+                      ),
+                    ),
+            ),
           ),
           Expanded(
             child: Container(
@@ -519,54 +536,6 @@ class _DetailKidSongState extends State<DetailKidSong> {
       ),
     );
   }
-
-  // Widget _contentView() {
-  //   return Container(
-  //     width: MediaQuery.of(Get.context!).size.width * .8,
-  //     height: MediaQuery.of(Get.context!).size.height * .4,
-  //     key: const ValueKey(1),
-  //     alignment: Alignment.center,
-  //     decoration: BoxDecoration(
-  //         color: kGrey.withOpacity(.15),
-  //         borderRadius: BorderRadius.circular(30.0)),
-  //     child: Container(
-  //       width: 160,
-  //       height: 160,
-  //       decoration: BoxDecoration(
-  //         border: const Border.fromBorderSide(
-  //             BorderSide(color: Color.fromARGB(255, 176, 173, 168))),
-  //         image: DecorationImage(
-  //             image: NetworkImage(widget.model.imageContent), fit: BoxFit.fill),
-  //         shape: BoxShape.circle,
-  //       ),
-  //     ).animate(delay: const Duration(milliseconds: 250)).slideY(
-  //         begin: 2, end: 0, duration: const Duration(milliseconds: 700)),
-  //   );
-  // }
-
-  //  Widget _showAds() {
-  //   return Container(
-  //     key: ValueKey(2),
-  //     color: Colors.red,
-  //     width: 300,
-  //     height: 250,
-  //     child: Stack(
-  //       children: [
-  //         AdWidget(ad: nativeAdsController.nativeAd!),
-  //         Positioned(
-  //           top: 5,
-  //           right: 5,
-  //           child: IconButton(
-  //             icon: Icon(Icons.close, color: Colors.white),
-  //             onPressed: () {
-  //               nativeAdsController.closeAd();
-  //             },
-  //           ),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }
 
 class RotationYTransition extends AnimatedWidget {

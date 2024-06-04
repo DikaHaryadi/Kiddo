@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -5,28 +7,34 @@ import 'package:textspeech/util/etc/app_colors.dart';
 
 class NativeAdsController extends GetxController {
   NativeAd? nativeAd;
-  RxBool isAdLoaded = false.obs;
+  InterstitialAd? interstitialAd;
+  RxBool isNativeAdLoaded = false.obs;
+  RxBool isInterstitialAdLoaded = false.obs;
 
   // Ganti adUnitId dengan ID iklan Anda sendiri
-  final String adUnitId = "ca-app-pub-3940256099942544/2247696110";
+  final String nativeAdUnitId = "ca-app-pub-3940256099942544/2247696110";
+  final String interstitialAdUnitId = Platform.isAndroid
+      ? 'ca-app-pub-3940256099942544/1033173712'
+      : 'ca-app-pub-3940256099942544/4411468910';
 
   @override
   void onInit() {
     super.onInit();
-    loadAd();
+    loadNativeAd();
+    loadInterstitialAd();
   }
 
-  void loadAd() {
+  void loadNativeAd() {
     nativeAd = NativeAd(
-      adUnitId: adUnitId,
+      adUnitId: nativeAdUnitId,
       listener: NativeAdListener(
         onAdLoaded: (ad) {
-          isAdLoaded.value = true;
-          print("Ad Loaded");
+          isNativeAdLoaded.value = true;
+          print("Native Ad Loaded");
         },
         onAdFailedToLoad: (ad, error) {
-          isAdLoaded.value = false;
-          print("Failed to load an ad: $error");
+          isNativeAdLoaded.value = false;
+          print("Failed to load a native ad: $error");
           ad.dispose();
         },
       ),
@@ -34,16 +42,15 @@ class NativeAdsController extends GetxController {
       nativeTemplateStyle: NativeTemplateStyle(
         templateType: TemplateType.medium,
         mainBackgroundColor: kGrey.withOpacity(.15),
-        cornerRadius: 10.0,
+        cornerRadius: 30.0,
         callToActionTextStyle: NativeTemplateTextStyle(
           textColor: Colors.cyan,
-          backgroundColor: Colors.red,
           style: NativeTemplateFontStyle.monospace,
           size: 16.0,
         ),
         primaryTextStyle: NativeTemplateTextStyle(
-          textColor: Colors.red,
-          backgroundColor: Colors.cyan,
+          textColor: kWhite,
+          backgroundColor: kBlack,
           style: NativeTemplateFontStyle.italic,
           size: 16.0,
         ),
@@ -64,15 +71,59 @@ class NativeAdsController extends GetxController {
     nativeAd!.load();
   }
 
-  void closeAd() {
+  void loadInterstitialAd() {
+    InterstitialAd.load(
+        adUnitId: interstitialAdUnitId,
+        request: const AdRequest(),
+        adLoadCallback: InterstitialAdLoadCallback(
+          onAdLoaded: (ad) {
+            interstitialAd = ad;
+            isInterstitialAdLoaded.value = true;
+            print("Interstitial Ad Loaded");
+          },
+          onAdFailedToLoad: (LoadAdError error) {
+            isInterstitialAdLoaded.value = false;
+            print("Failed to load an interstitial ad: $error");
+          },
+        ));
+  }
+
+  void showInterstitialAd() {
+    if (isInterstitialAdLoaded.value && interstitialAd != null) {
+      interstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdShowedFullScreenContent: (ad) {},
+        onAdImpression: (ad) {},
+        onAdFailedToShowFullScreenContent: (ad, err) {
+          ad.dispose();
+          Get.toNamed('/kid-song');
+          isInterstitialAdLoaded.value = false;
+          loadInterstitialAd();
+        },
+        onAdDismissedFullScreenContent: (ad) {
+          ad.dispose();
+          isInterstitialAdLoaded.value = false;
+          loadInterstitialAd();
+        },
+        onAdClicked: (ad) {},
+      );
+
+      interstitialAd!.show();
+    } else {
+      print('Interstitial Ad is not loaded yet');
+    }
+  }
+
+  void closeNativeAd() {
     nativeAd?.dispose();
-    isAdLoaded.value = false;
+    isNativeAdLoaded.value = false;
   }
 
   @override
   void dispose() {
     nativeAd?.dispose();
-    isAdLoaded.value = false;
+    interstitialAd?.dispose();
+    isNativeAdLoaded.value = false;
+    isInterstitialAdLoaded.value = false;
     super.dispose();
   }
 }

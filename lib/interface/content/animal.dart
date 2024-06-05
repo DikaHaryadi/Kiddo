@@ -8,20 +8,15 @@ import 'package:textspeech/interface/mobile/animal_mobile_screen.dart';
 import 'package:textspeech/interface/tablet/animal_tablet_screen.dart';
 import 'package:textspeech/util/etc/responsive.dart';
 
-class AnimalContent extends StatefulWidget {
+class AnimalContent extends StatelessWidget {
   const AnimalContent({
     super.key,
   });
 
   @override
-  State<AnimalContent> createState() => _AnimalContentState();
-}
-
-class _AnimalContentState extends State<AnimalContent> {
-  final controller = Get.put(AnimalController());
-
-  @override
   Widget build(BuildContext context) {
+    final controller = Get.put(AnimalController());
+
     return Scaffold(
       backgroundColor: const Color(0xFFfcf4f1),
       appBar: isMobile(context)

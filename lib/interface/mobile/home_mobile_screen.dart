@@ -249,7 +249,7 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
             ),
             const SizedBox(height: 8.0),
             GestureDetector(
-              onTap: () => Get.toNamed('/kid-song'),
+              onTap: () => Get.toNamed('/lagu-nasional'),
               child: AnimationConfiguration.staggeredGrid(
                 duration: const Duration(milliseconds: 900),
                 position: 0,

@@ -10,16 +10,11 @@ import 'package:textspeech/util/etc/responsive.dart';
 
 import '../../util/shimmer/card_swiper_shimmer.dart';
 
-class NumberContent extends StatefulWidget {
+class NumberContent extends StatelessWidget {
   const NumberContent({
     super.key,
   });
 
-  @override
-  State<NumberContent> createState() => _NumberContentState();
-}
-
-class _NumberContentState extends State<NumberContent> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(NumberController());
@@ -55,15 +50,9 @@ class _NumberContentState extends State<NumberContent> {
             : null,
         body: SafeArea(
             child: isMobile(context)
-                ? Column(
-                    children: [
-                      Flexible(
-                        child: Obx(() => controller.isLoadingNumber.value
-                            ? const CardSwiperShimmer()
-                            : CardNumberContent(controller: controller)),
-                      ),
-                    ],
-                  )
+                ? Obx(() => controller.isLoadingNumber.value
+                    ? const CardSwiperShimmer()
+                    : CardNumberContent(controller: controller))
                 : NumberTabletScreen(controller: controller)));
   }
 }

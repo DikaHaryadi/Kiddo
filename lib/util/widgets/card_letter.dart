@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/controllers/letter_controller.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
-import 'package:textspeech/util/shimmer/card_swiper_shimmer.dart';
 
 class CardLetterContent extends StatefulWidget {
   final LetterController controller;
@@ -31,142 +30,136 @@ class _CardLetterContentState extends State<CardLetterContent> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Obx(() => widget.controller.isLoadingLetter.value
-            ? const CardSwiperShimmer()
-            : Flexible(
-                child: AnimationLimiter(
-                  child: CardSwiper(
-                      controller: controllerCard,
-                      cardsCount: widget.controller.letterModel.length,
-                      onSwipe: _onSwipe,
-                      onUndo: _onUndo,
-                      numberOfCardsDisplayed: 3,
-                      backCardOffset: const Offset(40, 40),
-                      padding: const EdgeInsets.all(24.0),
-                      cardBuilder: (
-                        context,
-                        index,
-                        horizontalThresholdPercentage,
-                        verticalThresholdPercentage,
-                      ) {
-                        final numData = widget.controller.letterModel[index];
-                        return AnimationConfiguration.staggeredList(
-                          position: index,
-                          delay: const Duration(milliseconds: 200),
-                          duration: const Duration(milliseconds: 1000),
-                          child: SlideAnimation(
-                            verticalOffset: 100.0,
-                            child: FadeInAnimation(
-                              child: Container(
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                  color: Colors.white,
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.red,
-                                      offset: Offset(0, 2),
-                                      blurRadius: 6,
+        Flexible(
+          child: AnimationLimiter(
+            child: CardSwiper(
+                controller: controllerCard,
+                cardsCount: widget.controller.letterModel.length,
+                onSwipe: _onSwipe,
+                onUndo: _onUndo,
+                numberOfCardsDisplayed: 3,
+                backCardOffset: const Offset(40, 40),
+                padding: const EdgeInsets.all(24.0),
+                cardBuilder: (
+                  context,
+                  index,
+                  horizontalThresholdPercentage,
+                  verticalThresholdPercentage,
+                ) {
+                  final numData = widget.controller.letterModel[index];
+                  return AnimationConfiguration.staggeredList(
+                    position: index,
+                    delay: const Duration(milliseconds: 200),
+                    duration: const Duration(milliseconds: 1000),
+                    child: SlideAnimation(
+                      verticalOffset: 100.0,
+                      child: FadeInAnimation(
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: Colors.white,
+                            boxShadow: const [
+                              BoxShadow(
+                                color: Colors.red,
+                                offset: Offset(0, 2),
+                                blurRadius: 6,
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(bottom: 5.0),
+                                  child: ClipRRect(
+                                    borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(16.0),
+                                        topRight: Radius.circular(16.0)),
+                                    child: Image.network(
+                                      numData.imagePath,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
                                     ),
-                                  ],
+                                  ),
                                 ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                              ),
+                              Container(
+                                width: double.infinity,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Colors.black,
+                                          offset: Offset(0, -2),
+                                          blurRadius: .5,
+                                          spreadRadius: 1,
+                                          blurStyle: BlurStyle.outer)
+                                    ],
+                                    borderRadius: BorderRadius.only(
+                                        bottomLeft: Radius.circular(16.0),
+                                        bottomRight: Radius.circular(16.0))),
+                                child: Row(
                                   children: [
+                                    const SizedBox(height: 8),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 5.0),
+                                      child: Image.network(
+                                        numData.subImage,
+                                        width: 60,
+                                        height: 60,
+                                      ),
+                                    ),
+                                    const SizedBox(width: 10.0),
                                     Expanded(
-                                      child: Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 5.0),
-                                        child: ClipRRect(
-                                          borderRadius: const BorderRadius.only(
-                                              topLeft: Radius.circular(16.0),
-                                              topRight: Radius.circular(16.0)),
-                                          child: Image.network(
-                                            numData.imagePath,
-                                            width: double.infinity,
-                                            fit: BoxFit.cover,
-                                          ),
+                                      child: AutoSizeText(
+                                        numData.name,
+                                        maxFontSize: 20,
+                                        minFontSize: 18,
+                                        style: GoogleFonts.montserrat(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black,
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      width: double.infinity,
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 10.0),
-                                      decoration: const BoxDecoration(
-                                          color: Colors.white,
-                                          boxShadow: [
-                                            BoxShadow(
-                                                color: Colors.black,
-                                                offset: Offset(0, -2),
-                                                blurRadius: .5,
-                                                spreadRadius: 1,
-                                                blurStyle: BlurStyle.outer)
-                                          ],
-                                          borderRadius: BorderRadius.only(
-                                              bottomLeft: Radius.circular(16.0),
-                                              bottomRight:
-                                                  Radius.circular(16.0))),
-                                      child: Row(
-                                        children: [
-                                          const SizedBox(height: 8),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                left: 5.0),
-                                            child: Image.network(
-                                              numData.subImage,
-                                              width: 60,
-                                              height: 60,
-                                            ),
-                                          ),
-                                          const SizedBox(width: 10.0),
-                                          Expanded(
-                                            child: AutoSizeText(
-                                              numData.name,
-                                              maxFontSize: 20,
-                                              minFontSize: 18,
-                                              style: GoogleFonts.montserrat(
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black,
-                                              ),
-                                            ),
-                                          ),
-                                          GestureDetector(
-                                            onTap: () => ttsController
-                                                .textToSpeech(numData.name),
-                                            child: Container(
-                                              width: 50,
-                                              height: 50,
-                                              margin: const EdgeInsets.only(
-                                                  right: 15.0),
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: Theme.of(context)
-                                                      .scaffoldBackgroundColor,
-                                                  border: const Border
-                                                      .fromBorderSide(
-                                                      BorderSide(
-                                                          color: Colors.orange,
-                                                          strokeAlign: 1,
-                                                          width: 1))),
-                                              child: const Icon(
-                                                Icons.play_arrow,
-                                                color: Colors.orange,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                    GestureDetector(
+                                      onTap: () => ttsController
+                                          .textToSpeech(numData.name),
+                                      child: Container(
+                                        width: 50,
+                                        height: 50,
+                                        margin:
+                                            const EdgeInsets.only(right: 15.0),
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Theme.of(context)
+                                                .scaffoldBackgroundColor,
+                                            border: const Border.fromBorderSide(
+                                                BorderSide(
+                                                    color: Colors.orange,
+                                                    strokeAlign: 1,
+                                                    width: 1))),
+                                        child: const Icon(
+                                          Icons.play_arrow,
+                                          color: Colors.orange,
+                                        ),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        );
-                      }),
-                ),
-              )),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
+          ),
+        ),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: AnimationLimiter(

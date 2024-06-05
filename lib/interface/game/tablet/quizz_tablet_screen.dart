@@ -18,6 +18,7 @@ class QuizTabletScreen extends GetView<QuestionPaperController> {
       } else {
         return AnimationLimiter(
           child: ListView.separated(
+            padding: const EdgeInsets.only(top: 20.0),
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {

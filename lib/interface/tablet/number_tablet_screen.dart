@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/controllers/number_controller.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
 
@@ -105,6 +106,44 @@ class NumberTabletScreen extends StatelessWidget {
                       ],
                     );
                   }),
+                  const SizedBox(height: 35.0),
+                  Obx(() {
+                    final numbers = controller.selectedNumber.value;
+                    if (numbers == null) {
+                      return const SizedBox.shrink();
+                    }
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            const Icon(
+                              Iconsax.gallery,
+                              size: 40,
+                            ),
+                            const SizedBox(height: 12.0),
+                            Text(
+                              'English',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            )
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            const Icon(
+                              Iconsax.home,
+                              size: 40,
+                            ),
+                            const SizedBox(height: 12.0),
+                            Text(
+                              'Arabic',
+                              style: Theme.of(context).textTheme.headlineSmall,
+                            )
+                          ],
+                        )
+                      ],
+                    );
+                  }),
                   const Spacer(),
                   Align(
                     alignment: Alignment.center,
@@ -150,6 +189,7 @@ class NumberTabletScreen extends StatelessWidget {
                               child: GestureDetector(
                                   onTap: () {
                                     controller.selectedNumber.value = numbers;
+                                    ttsController.textToSpeech(numbers.speech);
                                   },
                                   child: Image.network(
                                     numbers.imagePath,

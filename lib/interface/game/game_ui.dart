@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:textspeech/util/etc/responsive.dart';
 import 'package:textspeech/util/game%20property/game_option.dart';
 import '../../util/etc/constants.dart';
@@ -93,19 +94,6 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                   duration: const Duration(milliseconds: 500),
                   curve: Curves.easeInOutCubic),
               centerTitle: true,
-              actions: [
-                IconButton(
-                        padding: const EdgeInsets.only(right: 24.0),
-                        onPressed: () {},
-                        icon: const Icon(
-                          Iconsax.firstline,
-                          color: Color(0xFFFE9081),
-                        ))
-                    .animate(delay: const Duration(milliseconds: 250))
-                    .fadeIn(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.easeInOutCubic),
-              ],
             ),
       body: isMobile(context)
           ? SizedBox(
@@ -152,25 +140,20 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                     width: Get.width,
                     height: 30,
                     color: const Color(0xFFDEE0F5),
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: GestureDetector(
-                            onTap: _startGame,
-                            child: Container(
-                              width: 270,
-                              height: 80,
-                              decoration: BoxDecoration(
-                                color: Colors.pink,
-                                borderRadius: BorderRadius.circular(30.0),
-                              ),
-                              child: Center(child: Text('Start Game')),
-                            ),
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: GestureDetector(
+                        onTap: _startGame,
+                        child: Container(
+                          width: 270,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            color: Colors.pink,
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
+                          child: const Center(child: Text('Start Game')),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
@@ -225,86 +208,47 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                     width: Get.width,
                     height: 30,
                     color: const Color(0xFFDEE0F5),
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        Positioned(
-                          top: -30.0,
-                          left: (Get.width / 2) - 200,
-                          child: GestureDetector(
-                            onTap: _startGame,
-                            child: Container(
-                              height: 70,
-                              width: 400,
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30.0),
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Color(0xFF2D396F),
-                                    offset: Offset(2, 0),
-                                  ),
-                                  BoxShadow(
-                                    color: Color(0xFF2D396F),
-                                    offset: Offset(-2, 0),
-                                  ),
-                                  BoxShadow(
-                                    color: Color(0xFF2D396F),
-                                    offset: Offset(0, -2),
-                                  ),
-                                  BoxShadow(
-                                    color: Color(0xFF2D396F),
-                                    offset: Offset(0, 2),
-                                  ),
-                                ],
-                                color: const Color(0xFFFE9081),
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  const Icon(
-                                    Iconsax.backward,
-                                    color: Colors.white,
-                                  ),
-                                  Text(
-                                    'Start Game',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium!
-                                        .apply(color: Colors.white),
-                                  ),
-                                  const Icon(
-                                    Iconsax.forward,
-                                    color: Colors.white,
-                                  )
-                                ],
-                              ),
-                            )
-                                .animate(
-                                    delay: const Duration(milliseconds: 250))
-                                .fadeIn(
-                                    duration: const Duration(milliseconds: 500),
-                                    curve: Curves.easeInOutCubic),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Container(
-                            width: Get.width * 0.6,
-                            height: 80,
-                            decoration: BoxDecoration(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: GestureDetector(
+                        onTap: _startGame,
+                        child: Container(
+                          width: Get.width * .5,
+                          height: 80,
+                          decoration: BoxDecoration(
                               color: Colors.pink,
                               borderRadius: BorderRadius.circular(30.0),
-                            ),
-                          )
-                              .animate(delay: const Duration(milliseconds: 250))
-                              .fadeIn(
-                                  duration: const Duration(milliseconds: 500),
-                                  curve: Curves.easeInOutCubic),
+                              border: Border.all(
+                                  color: kPrimary,
+                                  style: BorderStyle.solid,
+                                  width: 2,
+                                  strokeAlign: BorderSide.strokeAlignOutside)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Iconsax.backward,
+                                size: 40,
+                                color: kWhite,
+                              ),
+                              const SizedBox(width: 25.0),
+                              Text(
+                                'Start Game',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium
+                                    ?.apply(color: kWhite),
+                              ),
+                              const SizedBox(width: 25.0),
+                              const Icon(
+                                Iconsax.forward,
+                                size: 40,
+                                color: kWhite,
+                              )
+                            ],
+                          ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),

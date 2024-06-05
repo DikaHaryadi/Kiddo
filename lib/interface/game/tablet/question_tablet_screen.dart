@@ -143,8 +143,13 @@ class QuestionTabletScreen extends StatelessWidget {
                                                         const ClampingScrollPhysics(),
                                                     slivers: [
                                                       SliverToBoxAdapter(
-                                                          child: Obx(() => Text(
-                                                              '${controller.time} Remaining'))),
+                                                          child: Column(
+                                                        children: [
+                                                          Obx(() => Text(
+                                                              '${controller.time} Remaining')),
+                                                          Text('sasafa')
+                                                        ],
+                                                      )),
                                                       SliverGrid(
                                                         delegate:
                                                             SliverChildBuilderDelegate(

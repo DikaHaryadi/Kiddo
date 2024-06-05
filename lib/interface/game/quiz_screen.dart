@@ -19,6 +19,7 @@ class QuizScreen extends StatelessWidget {
             : AppBar(
                 backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 leading: IconButton(
+                    padding: const EdgeInsets.only(left: 25.0),
                     onPressed: () => Get.toNamed('/home'),
                     icon: const Icon(Icons.arrow_back_ios))),
         body: isMobile(context)

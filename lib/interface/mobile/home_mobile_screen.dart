@@ -274,7 +274,7 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                               bottomLeft: Radius.circular(8.0),
                             ),
                             child: Image.asset(
-                              'assets/games/logo_musik.png',
+                              'assets/games/nationalsong.png',
                               fit: BoxFit.fitHeight,
                               height: MediaQuery.of(context).size.height,
                             ),
@@ -292,7 +292,7 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                                 FittedBox(
                                   fit: BoxFit.contain,
                                   child: Text(
-                                    'Lagu Nasional',
+                                    'Nasional Anthem',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context)

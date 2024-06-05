@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -10,8 +12,11 @@ import 'package:textspeech/controllers/tts_controller.dart';
 import 'package:textspeech/models/family_model.dart';
 import 'package:textspeech/util/etc/to_title_case.dart';
 
+import '../../auth/controller/user/user_controller.dart';
 import '../../util/etc/app_colors.dart';
 import '../../util/etc/curved_edges.dart';
+import '../../util/shimmer/shimmer.dart';
+import '../user/edit_profile.dart';
 
 class FamilyTabletScreen extends StatelessWidget {
   final FamilyModel model;
@@ -22,6 +27,8 @@ class FamilyTabletScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ttsController = Get.put(TtsController());
+    final userController = Get.put(UserController());
+
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
@@ -111,57 +118,100 @@ class FamilyTabletScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20.0),
                       color: Colors.white),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  child: Stack(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20.0, horizontal: 15.0),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                      Positioned(
+                        top: 20.0,
+                        left: 0,
+                        right: 0,
+                        child: ListTile(
+                          leading: Container(
+                            decoration: const BoxDecoration(
+                                color: Colors.yellow,
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10.0))),
+                            child: IconButton(
+                                onPressed: () {
+                                  Get.offNamed('/home');
+                                },
+                                icon: const Icon(
+                                  Icons.arrow_back_ios_new,
+                                  color: Colors.black,
+                                )),
+                          ),
+                          title: AutoSizeText(
+                            'Today',
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: AutoSizeText(
+                          DateFormat('EEEE, MMM d').format(DateTime.now()),
+                          maxFontSize: 30,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineSmall
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 20.0,
+                        left: 0,
+                        right: 0,
+                        child: Column(
                           children: [
-                            Container(
-                              decoration: const BoxDecoration(
-                                  color: Colors.yellow,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10.0))),
-                              child: IconButton(
-                                  onPressed: () {
-                                    Get.offNamed('/home');
-                                  },
-                                  icon: const Icon(
-                                    Icons.arrow_back_ios_new,
-                                    color: Colors.black,
-                                  )),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(left: 35.0),
-                              child: AutoSizeText(
-                                'Today',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleLarge
-                                    ?.copyWith(fontWeight: FontWeight.bold),
-                              ),
-                            ),
+                            Obx(() {
+                              final networkImage =
+                                  userController.user.value.profilePicture;
+                              final image = networkImage.isNotEmpty
+                                  ? networkImage
+                                  : 'assets/images/cat.png';
+                              return CircularImage(
+                                overlayColor: kBlack,
+                                image: image,
+                                widht: 60,
+                                height: 60,
+                                isNetworkImage: networkImage.isNotEmpty,
+                              )
+                                  .animate(
+                                      delay: const Duration(milliseconds: 250))
+                                  .slideX(
+                                      begin: -4,
+                                      end: 0,
+                                      curve: Curves.bounceIn,
+                                      duration:
+                                          const Duration(milliseconds: 400));
+                            }),
+                            const SizedBox(width: 8),
+                            Obx(
+                              () => userController.profileLoading.value
+                                  ? const DShimmerEffect(width: 100, height: 20)
+                                  : Text(
+                                      userController.user.value.username,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge,
+                                    )
+                                      .animate(
+                                          delay:
+                                              const Duration(milliseconds: 250))
+                                      .slideX(
+                                          begin: 4,
+                                          end: 0,
+                                          curve: Curves.bounceIn,
+                                          duration: const Duration(
+                                              milliseconds: 400)),
+                            )
                           ],
                         ),
                       ),
-                      AutoSizeText(
-                        DateFormat('EEEE, MMM d').format(DateTime.now()),
-                        maxFontSize: 30,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall
-                            ?.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      Expanded(
-                        child: Image.asset(
-                          'assets/images/Logo_color1.png',
-                          width: 210,
-                        ),
-                      )
                     ],
                   ),
                 ).animate(delay: const Duration(milliseconds: 250)).slideY(

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -41,47 +39,46 @@ class _ShowAllContentState extends State<ShowAllContent> {
                       Expanded(
                         child: Container(
                                 width: double.infinity,
+                                padding: const EdgeInsets.only(top: 20.0),
                                 decoration: const BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(15.0),
                                         bottomRight: Radius.circular(15.0)),
                                     color: kSoftblue),
                                 child: AnimationLimiter(
-                                  child: Wrap(
-                                    children: List.generate(
-                                        navbarOpsion.length,
-                                        (index) => AnimationConfiguration
-                                                .staggeredList(
-                                              position: index,
-                                              delay: const Duration(
-                                                  milliseconds: 600),
-                                              duration: const Duration(
-                                                  milliseconds: 700),
-                                              child: SlideAnimation(
-                                                verticalOffset: 44.0,
-                                                child: FadeInAnimation(
-                                                  child: ListTile(
-                                                    contentPadding:
-                                                        const EdgeInsets
-                                                            .symmetric(
-                                                            vertical: 20.0,
-                                                            horizontal: 30.0),
-                                                    leading:
-                                                        Icon(navicon[index]),
-                                                    title: Text(
-                                                      navbarOpsion[index]
-                                                          ['title']!,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .titleMedium
-                                                          ?.apply(
-                                                              color:
-                                                                  Colors.white),
-                                                    ),
-                                                  ),
-                                                ),
+                                  child: ListView.separated(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: navbarOpsion.length,
+                                    itemBuilder: (context, index) {
+                                      final navbar = navbarOpsion[index];
+                                      return AnimationConfiguration
+                                          .staggeredList(
+                                        position: index,
+                                        delay:
+                                            const Duration(milliseconds: 250),
+                                        duration:
+                                            const Duration(milliseconds: 800),
+                                        child: SlideAnimation(
+                                          verticalOffset: 44.0,
+                                          child: FadeInAnimation(
+                                            child: ListTile(
+                                              leading: Icon(navicon[index]),
+                                              title: Text(
+                                                navbar['title']!,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .titleLarge
+                                                    ?.apply(color: kWhite),
                                               ),
-                                            )),
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    separatorBuilder: (_, __) =>
+                                        const SizedBox(height: 30.0),
                                   ),
                                 ))
                             .animate()
@@ -155,9 +152,11 @@ class _ShowAllContentState extends State<ShowAllContent> {
                                           duration: const Duration(
                                               milliseconds: 400)),
                                 ),
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Row(
+                                Positioned(
+                                  bottom: 0,
+                                  left: 0,
+                                  right: 0,
+                                  child: Column(
                                     children: [
                                       Obx(() {
                                         final networkImage = controller
@@ -222,6 +221,7 @@ class _ShowAllContentState extends State<ShowAllContent> {
                 flex: 3,
                 child: Container(
                   color: const Color(0xFFfcf4f1),
+                  padding: const EdgeInsets.only(bottom: 10.0),
                   child: AnimationLimiter(
                     child: GridView.count(
                       shrinkWrap: true,
@@ -266,113 +266,122 @@ class _ShowAllContentState extends State<ShowAllContent> {
                                           }
                                         });
                                       },
-                                      child: Container(
-                                        margin:
-                                            const EdgeInsets.only(bottom: 10.0),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            color: Colors.white),
-                                        child: Column(
-                                          children: [
-                                            Expanded(
-                                              flex: 3,
-                                              child: Stack(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            20.0),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0),
-                                                      child: Image.asset(
-                                                        contentKiddo[index]
-                                                            ['imagePath']!,
-                                                        fit: BoxFit.fitHeight,
-                                                        height: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .height,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          right: 10.0,
+                                          top: 10.0,
+                                        ),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                              color: Colors.white),
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                flex: 3,
+                                                child: Stack(
+                                                  children: [
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              20.0),
+                                                      child: ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0),
+                                                        child: Image.asset(
+                                                          contentKiddo[index]
+                                                              ['imagePath']!,
+                                                          fit: BoxFit.fitHeight,
+                                                          height: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .height,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  longPressStates[index]
-                                                      ? Positioned(
-                                                          right: 30.0,
-                                                          bottom: 30.0,
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              Get.toNamed(
-                                                                  contentKiddo[
-                                                                          index]
-                                                                      [
-                                                                      'routePath']!);
-                                                            },
-                                                            child: Container(
-                                                              width: 55,
-                                                              height: 55,
-                                                              decoration: const BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                  color: kGreen,
-                                                                  border: Border.fromBorderSide(BorderSide(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      strokeAlign:
-                                                                          1,
-                                                                      width:
-                                                                          1))),
-                                                              child: const Icon(
-                                                                Icons
-                                                                    .play_arrow,
-                                                                color: kDark,
+                                                    longPressStates[index]
+                                                        ? Positioned(
+                                                            right: 30.0,
+                                                            bottom: 30.0,
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () {
+                                                                Get.toNamed(
+                                                                    contentKiddo[
+                                                                            index]
+                                                                        [
+                                                                        'routePath']!);
+                                                              },
+                                                              child: Container(
+                                                                width: 55,
+                                                                height: 55,
+                                                                decoration: const BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    color:
+                                                                        kGreen,
+                                                                    border: Border.fromBorderSide(BorderSide(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        strokeAlign:
+                                                                            1,
+                                                                        width:
+                                                                            1))),
+                                                                child:
+                                                                    const Icon(
+                                                                  Icons
+                                                                      .play_arrow,
+                                                                  color: kDark,
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                        )
-                                                      : const SizedBox.shrink()
-                                                ],
+                                                          )
+                                                        : const SizedBox
+                                                            .shrink()
+                                                  ],
+                                                ),
                                               ),
-                                            ),
-                                            Expanded(
-                                                flex: 1,
-                                                child: Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 20.0),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                            contentKiddo[index]
-                                                                ['name']!,
-                                                            style: const TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: 25,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
-                                                        Text(
-                                                            contentKiddo[index]
-                                                                ['subtitle']!,
-                                                            style: GoogleFonts
-                                                                .aBeeZee(
-                                                                    fontSize:
-                                                                        18)),
-                                                      ],
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              left: 20.0),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                              contentKiddo[
+                                                                      index]
+                                                                  ['name']!,
+                                                              style: const TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 25,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold)),
+                                                          Text(
+                                                              contentKiddo[
+                                                                      index]
+                                                                  ['subtitle']!,
+                                                              style: GoogleFonts
+                                                                  .aBeeZee(
+                                                                      fontSize:
+                                                                          18)),
+                                                        ],
+                                                      ),
                                                     ),
-                                                  ),
-                                                )),
-                                          ],
+                                                  )),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),

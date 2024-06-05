@@ -37,13 +37,13 @@ const contentKiddo = [
     'subtitle': '(الحروف الهجائية)',
   },
   {
-    'imagePath': 'assets/banner_animals.png',
+    'imagePath': 'assets/animals.png',
     'name': 'Animals',
     'routePath': '/animals-content',
     'subtitle': '(animalia)',
   },
   {
-    'imagePath': 'assets/banner_family.png',
+    'imagePath': 'assets/family.png',
     'name': 'Family',
     'routePath': '/family-content',
     'subtitle': '(familia)',
@@ -117,8 +117,8 @@ const gameList = [
     'routePath': '/memo-game'
   },
   {
-    'GameName': 'Summation',
-    'subtitle': '(summation)',
+    'GameName': 'Quizz',
+    'subtitle': '(interrogatio)',
     'imagePath': 'assets/games/quizz.png',
     'enum': 'numbers',
     'routePath': '/main-menu-quiz'

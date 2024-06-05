@@ -157,6 +157,7 @@ class LetterTabletScreen extends StatelessWidget {
                                   onTap: () {
                                     letterController.selectedLetter.value =
                                         letter;
+                                    ttsController.textToSpeech(letter.name);
                                   },
                                   child: Image.network(
                                     letter.imagePath,

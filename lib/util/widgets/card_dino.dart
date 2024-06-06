@@ -5,7 +5,6 @@ import 'package:textspeech/controllers/dino_controller.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
 import 'package:textspeech/models/dino_model.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
-import 'package:textspeech/util/shimmer/shimmer.dart';
 
 class CardDinoContent extends StatelessWidget {
   final DinoController controller;

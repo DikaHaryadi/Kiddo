@@ -19,6 +19,10 @@ class LetterController extends GetxController {
       isLoadingLetter.value = true;
       final letter = await letterRepo.fetchLetterContent();
       letterModel.assignAll(letter);
+
+      if (letterModel.isNotEmpty) {
+        selectedLetter.value = letterModel[0];
+      }
     } catch (e) {
       letterModel.assignAll([]);
     } finally {

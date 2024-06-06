@@ -51,9 +51,18 @@ class LettersContent extends StatelessWidget {
             : null,
         body: SafeArea(
             child: isMobile(context)
-                ? Obx(() => letterController.isLoadingLetter.value
-                    ? const CardSwiperShimmer()
-                    : CardLetterContent(controller: letterController))
+                ? Obx(() {
+                    final selectedLetter =
+                        letterController.selectedLetter.value;
+                    if (letterController.isLoadingLetter.value) {
+                      return const CardSwiperShimmer();
+                    } else {
+                      return CardLetterContent(
+                        controller: letterController,
+                        model: selectedLetter!,
+                      );
+                    }
+                  })
                 : LetterTabletScreen(letterController: letterController)));
   }
 }

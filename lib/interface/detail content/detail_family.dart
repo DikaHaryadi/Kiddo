@@ -240,18 +240,22 @@ class _DetailFamilyState extends State<DetailFamily> {
               top: height * 0.3,
               bottom: 10,
               left: 30,
-              child: AutoSizeText(widget.model.subjectFamily,
-                      maxFontSize: 26,
-                      minFontSize: 22,
-                      style: GoogleFonts.aBeeZee(
-                          fontWeight: FontWeight.bold, color: Colors.white))
-                  .animate(delay: const Duration(milliseconds: 250))
-                  .slideX(
-                      begin: -2,
-                      end: 0,
-                      duration: const Duration(milliseconds: 600),
-                      curve: Curves.easeInOutBack,
-                      delay: const Duration(milliseconds: 100)),
+              child: InkWell(
+                onTap: () => ttsController.textToSpeech(
+                    widget.model.subjectFamily, 'ar'),
+                child: AutoSizeText(widget.model.subjectFamily,
+                        maxFontSize: 26,
+                        minFontSize: 22,
+                        style: GoogleFonts.aBeeZee(
+                            fontWeight: FontWeight.bold, color: Colors.white))
+                    .animate(delay: const Duration(milliseconds: 250))
+                    .slideX(
+                        begin: -2,
+                        end: 0,
+                        duration: const Duration(milliseconds: 600),
+                        curve: Curves.easeInOutBack,
+                        delay: const Duration(milliseconds: 100)),
+              ),
             ),
             Positioned(
               top: height * 0.55,

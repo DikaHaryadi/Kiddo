@@ -4,9 +4,12 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/controllers/number_controller.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
 import 'package:textspeech/models/number_model.dart';
+
+import '../etc/app_colors.dart';
 
 class CardNumberContent extends StatefulWidget {
   final NumberController controller;
@@ -25,6 +28,7 @@ class CardNumberContent extends StatefulWidget {
 class _CardNumberContentState extends State<CardNumberContent> {
   final CardSwiperController controllerCard = CardSwiperController();
   final ttsController = Get.put(TtsController());
+  int _currentIndex = 0;
 
   @override
   void dispose() {
@@ -170,6 +174,7 @@ class _CardNumberContentState extends State<CardNumberContent> {
           padding: const EdgeInsets.all(16.0),
           child: AnimationLimiter(
             child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: AnimationConfiguration.toStaggeredList(
                     delay: const Duration(milliseconds: 200),
                     duration: const Duration(milliseconds: 800),
@@ -179,32 +184,52 @@ class _CardNumberContentState extends State<CardNumberContent> {
                           child: widget,
                         )),
                     children: [
-                  FloatingActionButton(
-                    heroTag: 'undo_button',
-                    onPressed: controllerCard.undo,
-                    child: const Icon(Icons.rotate_left),
-                  ),
-                  Expanded(child: Container()),
-                  FloatingActionButton(
-                    heroTag: 'arabic',
-                    onPressed: () =>
-                        ttsController.textToSpeech(widget.model.name, 'ar-UEA'),
-                    child: Image.asset(
-                      'assets/icon/arabic.png',
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                  const SizedBox(width: 8.0),
-                  FloatingActionButton(
-                    heroTag: 'english',
-                    onPressed: () =>
-                        ttsController.textToSpeech(widget.model.name, 'en-US'),
-                    child: Image.asset(
-                      'assets/icon/english.png',
-                      fit: BoxFit.fitHeight,
-                    ),
-                  ),
-                ])),
+                      InkWell(
+                        onTap: () => controllerCard.undo(),
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              color: kPrimary),
+                          child: const Icon(
+                            Iconsax.rotate_left,
+                            color: kBlack,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 16.0),
+                      InkWell(
+                        onTap: () => ttsController.textToSpeech(
+                            widget.controller.numberModels[_currentIndex].name,
+                            'ar'),
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              image: const DecorationImage(
+                                  image: AssetImage('assets/icon/arabic.png'),
+                                  fit: BoxFit.fill)),
+                        ),
+                      ),
+                      const SizedBox(width: 16.0),
+                      InkWell(
+                        onTap: () => ttsController.textToSpeech(
+                            widget
+                                .controller.numberModels[_currentIndex].speech,
+                            'en-US'),
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              image: const DecorationImage(
+                                  image: AssetImage('assets/icon/english.png'),
+                                  fit: BoxFit.fill)),
+                        ),
+                      ),
+                    ])),
           ),
         ),
       ],
@@ -219,6 +244,15 @@ class _CardNumberContentState extends State<CardNumberContent> {
     debugPrint(
       'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top',
     );
+
+    if (currentIndex != null) {
+      setState(() {
+        _currentIndex = currentIndex;
+      });
+      final numData = widget.controller.numberModels[currentIndex];
+      ttsController.textToSpeech(numData.speech, "en-US");
+    }
+
     return true;
   }
 
@@ -230,6 +264,13 @@ class _CardNumberContentState extends State<CardNumberContent> {
     debugPrint(
       'The card $currentIndex was undod from the ${direction.name}',
     );
+
+    setState(() {
+      _currentIndex = currentIndex;
+    });
+    final numData = widget.controller.numberModels[currentIndex];
+    ttsController.textToSpeech(numData.speech, "en-US");
+
     return true;
   }
 }

@@ -4,13 +4,18 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/controllers/letter_controller.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
+import 'package:textspeech/models/letter_model.dart';
+import 'package:textspeech/util/etc/app_colors.dart';
 
 class CardLetterContent extends StatefulWidget {
   final LetterController controller;
+  final LetterModel model;
 
-  const CardLetterContent({super.key, required this.controller});
+  const CardLetterContent(
+      {super.key, required this.controller, required this.model});
 
   @override
   State<CardLetterContent> createState() => _CardLetterContentState();
@@ -19,6 +24,7 @@ class CardLetterContent extends StatefulWidget {
 class _CardLetterContentState extends State<CardLetterContent> {
   final CardSwiperController controllerCard = CardSwiperController();
   final ttsController = Get.put(TtsController());
+  int _currentIndex = 0;
 
   @override
   void dispose() {
@@ -164,7 +170,7 @@ class _CardLetterContentState extends State<CardLetterContent> {
           padding: const EdgeInsets.all(16.0),
           child: AnimationLimiter(
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: AnimationConfiguration.toStaggeredList(
                     delay: const Duration(milliseconds: 200),
                     duration: const Duration(milliseconds: 800),
@@ -174,34 +180,34 @@ class _CardLetterContentState extends State<CardLetterContent> {
                           child: widget,
                         )),
                     children: [
-                      FloatingActionButton(
-                        heroTag: 'undo_button',
-                        onPressed: controllerCard.undo,
-                        child: const Icon(Icons.rotate_left),
+                      InkWell(
+                        onTap: () => controllerCard.undo(),
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              color: kPrimary),
+                          child: const Icon(
+                            Iconsax.rotate_left,
+                            color: kBlack,
+                          ),
+                        ),
                       ),
-                      FloatingActionButton(
-                        heroTag: 'swipe_left_button',
-                        onPressed: () =>
-                            controllerCard.swipe(CardSwiperDirection.left),
-                        child: const Icon(Icons.keyboard_arrow_left),
-                      ),
-                      FloatingActionButton(
-                        heroTag: 'swipe_right_button',
-                        onPressed: () =>
-                            controllerCard.swipe(CardSwiperDirection.right),
-                        child: const Icon(Icons.keyboard_arrow_right),
-                      ),
-                      FloatingActionButton(
-                        heroTag: 'swipe_top_button',
-                        onPressed: () =>
-                            controllerCard.swipe(CardSwiperDirection.top),
-                        child: const Icon(Icons.keyboard_arrow_up),
-                      ),
-                      FloatingActionButton(
-                        heroTag: 'swipe_bottom_button',
-                        onPressed: () =>
-                            controllerCard.swipe(CardSwiperDirection.bottom),
-                        child: const Icon(Icons.keyboard_arrow_down),
+                      const SizedBox(width: 16.0),
+                      InkWell(
+                        onTap: () => ttsController.textToSpeech(
+                            widget.controller.letterModel[_currentIndex].name,
+                            'ar'),
+                        child: Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15.0),
+                              image: const DecorationImage(
+                                  image: AssetImage('assets/icon/arabic.png'),
+                                  fit: BoxFit.fill)),
+                        ),
                       ),
                     ])),
           ),
@@ -218,6 +224,14 @@ class _CardLetterContentState extends State<CardLetterContent> {
     debugPrint(
       'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top',
     );
+
+    if (currentIndex != null) {
+      setState(() {
+        _currentIndex = currentIndex;
+      });
+      final numData = widget.controller.letterModel[currentIndex];
+      ttsController.textToSpeech(numData.name, 'ar');
+    }
     return true;
   }
 
@@ -229,6 +243,13 @@ class _CardLetterContentState extends State<CardLetterContent> {
     debugPrint(
       'The card $currentIndex was undod from the ${direction.name}',
     );
+
+    setState(() {
+      _currentIndex = currentIndex;
+    });
+    final numData = widget.controller.letterModel[currentIndex];
+    ttsController.textToSpeech(numData.name, 'ar');
+
     return true;
   }
 }

@@ -20,6 +20,10 @@ class NumberController extends GetxController {
       isLoadingNumber.value = true;
       final numbers = await animalRepo.fetchNumberContent();
       numberModels.assignAll(numbers); // Use assignAll to update RxList
+
+      if (numberModels.isNotEmpty) {
+        selectedNumber.value = numberModels[0];
+      }
     } catch (e) {
       numberModels.assignAll([]); // Use assignAll to update RxList
     } finally {

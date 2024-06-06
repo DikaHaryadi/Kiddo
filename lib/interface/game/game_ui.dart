@@ -146,12 +146,39 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                         onTap: _startGame,
                         child: Container(
                           width: 270,
-                          height: 80,
+                          height: 60,
                           decoration: BoxDecoration(
-                            color: Colors.pink,
-                            borderRadius: BorderRadius.circular(30.0),
+                              color: Colors.pink,
+                              borderRadius: BorderRadius.circular(30.0),
+                              border: Border.all(
+                                  color: kPrimary,
+                                  style: BorderStyle.solid,
+                                  width: 2,
+                                  strokeAlign: BorderSide.strokeAlignOutside)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Iconsax.backward,
+                                size: 40,
+                                color: kWhite,
+                              ),
+                              const SizedBox(width: 25.0),
+                              Text(
+                                'Start Game',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium
+                                    ?.apply(color: kWhite),
+                              ),
+                              const SizedBox(width: 25.0),
+                              const Icon(
+                                Iconsax.forward,
+                                size: 40,
+                                color: kWhite,
+                              )
+                            ],
                           ),
-                          child: const Center(child: Text('Start Game')),
                         ),
                       ),
                     ),

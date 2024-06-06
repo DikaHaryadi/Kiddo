@@ -214,7 +214,7 @@ class _DetailFamilyState extends State<DetailFamily> {
               bottom: 150,
               child: GestureDetector(
                 onTap: () {
-                  ttsController.textToSpeech(widget.model.subtitle);
+                  ttsController.textToSpeech(widget.model.subtitle, "en-US");
                 },
                 child: Container(
                   width: 60,
@@ -260,7 +260,8 @@ class _DetailFamilyState extends State<DetailFamily> {
               left: 20,
               child: InkWell(
                 onTap: () {
-                  ttsController.textToSpeech(widget.model.deskripsiFamily);
+                  ttsController.textToSpeech(
+                      widget.model.deskripsiFamily, "en-US");
                 },
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,

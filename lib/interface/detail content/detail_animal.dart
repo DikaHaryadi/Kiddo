@@ -281,8 +281,8 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                           if (isPlaying == true) {
                             ttsController.flutterTts.stop();
                           } else {
-                            ttsController
-                                .textToSpeech(widget.model.deskripsiAnimal);
+                            ttsController.textToSpeech(
+                                widget.model.deskripsiAnimal, "en-US");
                           }
                         },
                         child: AutoSizeText(

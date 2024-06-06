@@ -6,14 +6,16 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/controllers/number_controller.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
-import 'package:textspeech/util/shimmer/card_swiper_shimmer.dart';
+import 'package:textspeech/models/number_model.dart';
 
 class CardNumberContent extends StatefulWidget {
   final NumberController controller;
+  final NumberModel model;
 
   const CardNumberContent({
     super.key,
     required this.controller,
+    required this.model,
   });
 
   @override
@@ -130,8 +132,8 @@ class _CardNumberContentState extends State<CardNumberContent> {
                                       ),
                                     ),
                                     GestureDetector(
-                                      onTap: () => ttsController
-                                          .textToSpeech(numData.speech),
+                                      onTap: () => ttsController.textToSpeech(
+                                          numData.speech, "en-US"),
                                       child: Container(
                                         width: 50,
                                         height: 50,
@@ -168,7 +170,6 @@ class _CardNumberContentState extends State<CardNumberContent> {
           padding: const EdgeInsets.all(16.0),
           child: AnimationLimiter(
             child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: AnimationConfiguration.toStaggeredList(
                     delay: const Duration(milliseconds: 200),
                     duration: const Duration(milliseconds: 800),
@@ -178,36 +179,32 @@ class _CardNumberContentState extends State<CardNumberContent> {
                           child: widget,
                         )),
                     children: [
-                      FloatingActionButton(
-                        heroTag: 'undo_button',
-                        onPressed: controllerCard.undo,
-                        child: const Icon(Icons.rotate_left),
-                      ),
-                      FloatingActionButton(
-                        heroTag: 'swipe_left_button',
-                        onPressed: () =>
-                            controllerCard.swipe(CardSwiperDirection.left),
-                        child: const Icon(Icons.keyboard_arrow_left),
-                      ),
-                      FloatingActionButton(
-                        heroTag: 'swipe_right_button',
-                        onPressed: () =>
-                            controllerCard.swipe(CardSwiperDirection.right),
-                        child: const Icon(Icons.keyboard_arrow_right),
-                      ),
-                      FloatingActionButton(
-                        heroTag: 'swipe_top_button',
-                        onPressed: () =>
-                            controllerCard.swipe(CardSwiperDirection.top),
-                        child: const Icon(Icons.keyboard_arrow_up),
-                      ),
-                      FloatingActionButton(
-                        heroTag: 'swipe_bottom_button',
-                        onPressed: () =>
-                            controllerCard.swipe(CardSwiperDirection.bottom),
-                        child: const Icon(Icons.keyboard_arrow_down),
-                      ),
-                    ])),
+                  FloatingActionButton(
+                    heroTag: 'undo_button',
+                    onPressed: controllerCard.undo,
+                    child: const Icon(Icons.rotate_left),
+                  ),
+                  Expanded(child: Container()),
+                  FloatingActionButton(
+                    heroTag: 'arabic',
+                    onPressed: () =>
+                        ttsController.textToSpeech(widget.model.name, 'ar-UEA'),
+                    child: Image.asset(
+                      'assets/icon/arabic.png',
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                  const SizedBox(width: 8.0),
+                  FloatingActionButton(
+                    heroTag: 'english',
+                    onPressed: () =>
+                        ttsController.textToSpeech(widget.model.name, 'en-US'),
+                    child: Image.asset(
+                      'assets/icon/english.png',
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ])),
           ),
         ),
       ],

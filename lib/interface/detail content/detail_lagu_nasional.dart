@@ -232,7 +232,8 @@ class _DetailLaguNasionalState extends State<DetailLaguNasional> {
                           if (isPlaying == true) {
                             ttsController.flutterTts.stop();
                           } else {
-                            ttsController.textToSpeech(widget.model.deskripsi);
+                            ttsController.textToSpeech(
+                                widget.model.deskripsi, "en-US");
                           }
                         },
                         child: AutoSizeText(

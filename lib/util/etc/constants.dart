@@ -49,7 +49,7 @@ const contentKiddo = [
     'subtitle': '(familia)',
   },
   {
-    'imagePath': 'assets/banner_animals.png',
+    'imagePath': 'assets/dino.png',
     'name': 'Dinosaurus',
     'routePath': '/dino',
     'subtitle': '(animalia)',

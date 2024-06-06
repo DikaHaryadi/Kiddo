@@ -126,8 +126,8 @@ class _CardLetterContentState extends State<CardLetterContent> {
                                       ),
                                     ),
                                     GestureDetector(
-                                      onTap: () => ttsController
-                                          .textToSpeech(numData.name),
+                                      onTap: () => ttsController.textToSpeech(
+                                          numData.name, "en-US"),
                                       child: Container(
                                         width: 50,
                                         height: 50,

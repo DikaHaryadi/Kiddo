@@ -1,11 +1,10 @@
 import 'package:get/get.dart';
 import 'package:textspeech/models/dino_model.dart';
 import 'package:textspeech/repository/dino_repository.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 class DinoController extends GetxController {
   RxList<DinoModel> dinoModel = <DinoModel>[].obs;
+  final Rx<DinoModel?> selectedDino = Rx<DinoModel?>(null);
   final dinoRepo = Get.put(DinoRepository());
   final isLoadingDino = RxBool(false);
 
@@ -18,41 +17,14 @@ class DinoController extends GetxController {
   Future<void> fetchDinoCategory() async {
     try {
       isLoadingDino.value = true;
-      final dino = await dinoRepo.fetchDinoContent();
-      if (dino.isEmpty) {
-        Get.snackbar(
-          'No Data',
-          'No dinosaur data found',
-          isDismissible: true,
-          shouldIconPulse: true,
-          colorText: Colors.white,
-          backgroundColor: Colors.orange.shade600,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: const Duration(seconds: 3),
-          margin: const EdgeInsets.all(20),
-          icon: const Icon(
-            Iconsax.info_circle,
-            color: Colors.white,
-          ),
-        );
+      final animals = await dinoRepo.fetchDinoContent();
+      dinoModel.assignAll(animals); // Use assignAll to update RxList
+
+      if (dinoModel.isNotEmpty) {
+        selectedDino.value = dinoModel[0];
       }
-      dinoModel.assignAll(dino);
     } catch (e) {
-      Get.snackbar(
-        'Oh Snap!',
-        'Error fetching dinosaur data: $e',
-        isDismissible: true,
-        shouldIconPulse: true,
-        colorText: Colors.white,
-        backgroundColor: Colors.red.shade600,
-        snackPosition: SnackPosition.BOTTOM,
-        duration: const Duration(seconds: 3),
-        margin: const EdgeInsets.all(20),
-        icon: const Icon(
-          Iconsax.warning_2,
-          color: Colors.white,
-        ),
-      );
+      dinoModel.assignAll([]); // Use assignAll to update RxList
     } finally {
       isLoadingDino.value = false;
     }

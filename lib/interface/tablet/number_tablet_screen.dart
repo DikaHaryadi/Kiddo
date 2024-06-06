@@ -82,7 +82,8 @@ class NumberTabletScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 50.0),
                           child: InkWell(
                             onTap: () {
-                              ttsController.textToSpeech(numbers.speech);
+                              ttsController.textToSpeech(
+                                  numbers.speech, "en-US");
                             },
                             child: Image.network(numbers.subImage)
                                 .animate()
@@ -189,7 +190,8 @@ class NumberTabletScreen extends StatelessWidget {
                               child: GestureDetector(
                                   onTap: () {
                                     controller.selectedNumber.value = numbers;
-                                    ttsController.textToSpeech(numbers.speech);
+                                    ttsController.textToSpeech(
+                                        numbers.speech, "en-US");
                                   },
                                   child: Image.network(
                                     numbers.imagePath,

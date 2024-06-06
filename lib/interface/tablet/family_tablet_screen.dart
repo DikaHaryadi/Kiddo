@@ -273,7 +273,8 @@ class FamilyTabletScreen extends StatelessWidget {
                       bottom: 150,
                       child: GestureDetector(
                         onTap: () {
-                          TtsController.instance.textToSpeech(model.subtitle);
+                          TtsController.instance
+                              .textToSpeech(model.subtitle, "en-US");
                         },
                         child: Container(
                           width: 85,
@@ -306,7 +307,8 @@ class FamilyTabletScreen extends StatelessWidget {
                       left: 20,
                       child: InkWell(
                         onTap: () {
-                          ttsController.textToSpeech(model.deskripsiFamily);
+                          ttsController.textToSpeech(
+                              model.deskripsiFamily, "en-US");
                         },
                         child: Text(model.deskripsiFamily,
                                 textAlign: TextAlign.left,

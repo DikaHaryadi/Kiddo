@@ -50,9 +50,17 @@ class NumberContent extends StatelessWidget {
             : null,
         body: SafeArea(
             child: isMobile(context)
-                ? Obx(() => controller.isLoadingNumber.value
-                    ? const CardSwiperShimmer()
-                    : CardNumberContent(controller: controller))
+                ? Obx(() {
+                    final selectedNumber = controller.selectedNumber.value;
+                    if (controller.isLoadingNumber.value) {
+                      return const CardSwiperShimmer();
+                    } else {
+                      return CardNumberContent(
+                        controller: controller,
+                        model: selectedNumber!,
+                      );
+                    }
+                  })
                 : NumberTabletScreen(controller: controller)));
   }
 }

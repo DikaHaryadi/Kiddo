@@ -83,7 +83,7 @@ class LetterTabletScreen extends StatelessWidget {
                           padding: const EdgeInsets.only(top: 50.0),
                           child: InkWell(
                             onTap: () {
-                              ttsController.textToSpeech(letter.name);
+                              ttsController.textToSpeech(letter.name, "en-US");
                             },
                             child: Image.network(
                               letter.subImage,
@@ -157,7 +157,8 @@ class LetterTabletScreen extends StatelessWidget {
                                   onTap: () {
                                     letterController.selectedLetter.value =
                                         letter;
-                                    ttsController.textToSpeech(letter.name);
+                                    ttsController.textToSpeech(
+                                        letter.name, "en-US");
                                   },
                                   child: Image.network(
                                     letter.imagePath,

@@ -12,9 +12,8 @@ class IntroductionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(IntroductionController());
     return Scaffold(
-        body: SingleChildScrollView(
-            child: isMobile(context)
-                ? LoginMobileScreen(controller: controller)
-                : LoginTabletScreen(controller: controller)));
+        body: isMobile(context)
+            ? LoginMobileScreen(controller: controller)
+            : LoginTabletScreen(controller: controller));
   }
 }

@@ -43,7 +43,7 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                     Obx(
                       () => AutoSizeText(
                         'Good ${timeSunPosition.timeOfDay.value}',
-                        style: Theme.of(context).textTheme.headlineLarge,
+                        style: Theme.of(context).textTheme.displayMedium,
                       ),
                     ).animate().slideX(
                         begin: -4,
@@ -56,7 +56,7 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                             controller.user.value.username,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context).textTheme.headlineMedium,
+                            style: Theme.of(context).textTheme.displaySmall,
                           )).animate().slideX(
                         begin: -4,
                         end: 0,
@@ -144,7 +144,10 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                                         overflow: TextOverflow.ellipsis,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .headlineMedium,
+                                            .headlineMedium
+                                            ?.copyWith(
+                                                fontFamily: 'Kiddosy',
+                                                fontWeight: FontWeight.w400),
                                       ),
                                     ),
                                     FittedBox(
@@ -193,52 +196,41 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                       children: [
                         Expanded(
                           flex: 2,
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(8.0),
-                              bottomLeft: Radius.circular(8.0),
-                            ),
-                            child: Image.asset(
-                              'assets/games/logo_musik.png',
-                              fit: BoxFit.fitHeight,
-                              height: MediaQuery.of(context).size.height,
-                            ),
+                          child: Image.asset(
+                            'assets/games/logo_musik.png',
+                            fit: BoxFit.fitHeight,
+                            height: MediaQuery.of(context).size.height,
                           ),
                         ),
                         Expanded(
-                          flex: 3,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                FittedBox(
-                                  fit: BoxFit.contain,
-                                  child: Text(
-                                    'Kid Song',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineMedium,
-                                  ),
+                          flex: 4,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FittedBox(
+                                fit: BoxFit.contain,
+                                child: Text(
+                                  'Kid Song',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium
+                                      ?.copyWith(
+                                          fontFamily: 'Kiddosy',
+                                          fontWeight: FontWeight.w400),
                                 ),
-                                FittedBox(
-                                  fit: BoxFit.contain,
-                                  child: Text(
-                                    'Subtitle kid song disini',
+                              ),
+                              FittedBox(
+                                fit: BoxFit.contain,
+                                child: Text('Subtitle kid song disini',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall
-                                        ?.copyWith(fontWeight: FontWeight.w400),
-                                  ),
-                                )
-                              ],
-                            ),
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge),
+                              )
+                            ],
                           ),
                         ),
                       ],
@@ -268,52 +260,40 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                       children: [
                         Expanded(
                           flex: 2,
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(8.0),
-                              bottomLeft: Radius.circular(8.0),
-                            ),
-                            child: Image.asset(
-                              'assets/games/nationalsong.png',
-                              fit: BoxFit.fitHeight,
-                              height: MediaQuery.of(context).size.height,
-                            ),
+                          child: Image.asset(
+                            height: 100,
+                            'assets/games/nationalsong.png',
                           ),
                         ),
                         Expanded(
-                          flex: 3,
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 5.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                FittedBox(
-                                  fit: BoxFit.contain,
-                                  child: Text(
-                                    'Nasional Anthem',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineMedium,
-                                  ),
+                          flex: 4,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              FittedBox(
+                                fit: BoxFit.contain,
+                                child: Text(
+                                  'Nasional Anthem',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium
+                                      ?.copyWith(
+                                          fontFamily: 'Kiddosy',
+                                          fontWeight: FontWeight.w400),
                                 ),
-                                FittedBox(
-                                  fit: BoxFit.contain,
-                                  child: Text(
-                                    'Subtitle kid song disini',
+                              ),
+                              FittedBox(
+                                fit: BoxFit.contain,
+                                child: Text('Subtitle kid song disini',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .headlineSmall
-                                        ?.copyWith(fontWeight: FontWeight.w400),
-                                  ),
-                                )
-                              ],
-                            ),
+                                    style:
+                                        Theme.of(context).textTheme.bodyLarge),
+                              )
+                            ],
                           ),
                         ),
                       ],
@@ -372,19 +352,13 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                                 },
                                 closedBuilder: (context, action) {
                                   return GestureDetector(
-                                    onTap: () {
-                                      Get.toNamed(content['routePath']!);
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                          image:
-                                              AssetImage(content['imagePath']!),
-                                          fit: BoxFit.fitHeight,
-                                        ),
-                                      ),
-                                    ),
-                                  );
+                                      onTap: () {
+                                        Get.toNamed(content['routePath']!);
+                                      },
+                                      child: Image.asset(
+                                        width: double.infinity,
+                                        content['imagePath']!,
+                                      ));
                                 },
                               ),
                             ),

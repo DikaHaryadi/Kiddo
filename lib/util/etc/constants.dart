@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/interface/content/animal.dart';
+import 'package:textspeech/interface/content/dino.dart';
 import 'package:textspeech/interface/content/family.dart';
-import 'package:textspeech/interface/content/letters.dart';
 import 'package:textspeech/interface/content/numbers.dart';
 
 const List<Map<String, dynamic>> gameLevels = [
@@ -30,12 +30,12 @@ const contentKiddo = [
     'routePath': '/number-content',
     'subtitle': '(numerus)',
   },
-  {
-    'imagePath': 'assets/letters.png',
-    'name': 'Hijaiyah',
-    'routePath': '/letters-content',
-    'subtitle': '(الحروف الهجائية)',
-  },
+  // {
+  //   'imagePath': 'assets/letters.png',
+  //   'name': 'Hijaiyah',
+  //   'routePath': '/letters-content',
+  //   'subtitle': '(الحروف الهجائية)',
+  // },
   {
     'imagePath': 'assets/animals.png',
     'name': 'Animals',
@@ -54,31 +54,13 @@ const contentKiddo = [
     'routePath': '/dino',
     'subtitle': '(animalia)',
   },
-  {
-    'imagePath': 'assets/banner_vehicle.png',
-    'name': 'Vehicle',
-    'routePath': '/vehicle-content',
-    'subtitle': '(vehiculum)',
-  },
-  {
-    'imagePath': 'assets/banner_vehicle.png',
-    'name': 'Islamic Months',
-    'routePath': '/vehicle-content',
-    'subtitle': '(islamic months)',
-  },
-  {
-    'imagePath': 'assets/banner_vehicle.png',
-    'name': 'Nama Nama Malaikat',
-    'routePath': '/vehicle-content',
-    'subtitle': '(islamic months)',
-  },
 ];
 
 List<Widget> openContent = const [
   NumberContent(),
-  LettersContent(),
   AnimalContent(),
   FamilyContent(),
+  DinoSaurusScreens()
 ];
 
 // Navbar

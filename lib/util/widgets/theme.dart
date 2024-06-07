@@ -63,6 +63,21 @@ class CTextTheme {
 
   /// Mobile Text Theme
   static TextTheme lightTextTheme = TextTheme(
+    displayLarge: const TextStyle().copyWith(
+        fontFamily: 'Kiddosy',
+        fontSize: 24.0,
+        fontWeight: FontWeight.w400,
+        color: const Color(0xFF272727)),
+    displayMedium: const TextStyle().copyWith(
+        fontFamily: 'Kiddosy',
+        fontSize: 22.0,
+        fontWeight: FontWeight.bold,
+        color: const Color(0xFF272727)),
+    displaySmall: const TextStyle().copyWith(
+        fontFamily: 'Kiddosy',
+        fontSize: 20.0,
+        fontWeight: FontWeight.w400,
+        color: const Color(0xFF272727)),
     headlineLarge: const TextStyle().copyWith(
         fontSize: 24.0,
         fontWeight: FontWeight.bold,
@@ -104,10 +119,12 @@ class CTextTheme {
   // Tablet Text Theme
   static TextTheme lightDesktopTextTheme = TextTheme(
     displayMedium: const TextStyle().copyWith(
+        fontFamily: 'Kiddosy',
         fontSize: 50.0,
         fontWeight: FontWeight.bold,
         color: const Color(0xFF272727)),
     displaySmall: const TextStyle().copyWith(
+        fontFamily: 'Kiddosy',
         fontSize: 40.0,
         fontWeight: FontWeight.w400,
         color: const Color(0xFF272727)),

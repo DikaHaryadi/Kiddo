@@ -12,7 +12,6 @@ import 'package:textspeech/quiz/answer_check_screen.dart';
 import 'package:textspeech/quiz/result_screen.dart';
 import 'package:textspeech/interface/content/animal.dart';
 import 'package:textspeech/interface/content/family.dart';
-import 'package:textspeech/interface/content/letters.dart';
 import 'package:textspeech/interface/content/numbers.dart';
 import 'package:textspeech/interface/detail%20content/showall_content.dart';
 import 'package:textspeech/interface/user/edit_profile.dart';
@@ -78,12 +77,12 @@ class AppRoutes {
 
         // Content
         GetPage(name: '/number-content', page: () => const NumberContent()),
-        GetPage(name: '/letters-content', page: () => const LettersContent()),
         GetPage(name: '/animals-content', page: () => const AnimalContent()),
         GetPage(name: '/kid-song', page: () => const KidSong()),
         GetPage(name: '/family-content', page: () => const FamilyContent()),
         GetPage(name: '/vehicle-content', page: () => const VehicleContent()),
         GetPage(name: '/dino', page: () => const DinoSaurusScreens()),
+
         GetPage(
             name: '/lagu-nasional',
             page: () => const LaguNasionalContent(),

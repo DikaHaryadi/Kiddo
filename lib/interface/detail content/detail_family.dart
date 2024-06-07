@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -110,21 +111,36 @@ class _DetailFamilyState extends State<DetailFamily> {
                                                             }
                                                           },
                                                           leading: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5.0),
-                                                            child:
-                                                                Image.network(
-                                                              controller
-                                                                  .familyModel[
-                                                                      index]
-                                                                  .imageContent,
-                                                              width: 50,
-                                                              height: 50,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          5.0),
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                imageUrl: controller
+                                                                    .familyModel[
+                                                                        index]
+                                                                    .imageContent,
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                                width: 50,
+                                                                height: 50,
+                                                                placeholder:
+                                                                    (context,
+                                                                            url) =>
+                                                                        Container(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .center,
+                                                                  child:
+                                                                      const CircularProgressIndicator(),
+                                                                ),
+                                                                errorWidget: (context,
+                                                                        url,
+                                                                        error) =>
+                                                                    Image.asset(
+                                                                        'assets/images/Logo_color1.png'),
+                                                              )),
                                                           title: AutoSizeText(
                                                               controller
                                                                   .familyModel[

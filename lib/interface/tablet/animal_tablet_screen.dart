@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -112,11 +113,21 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                                                   const BorderRadius.all(
                                                 Radius.circular(10.0),
                                               ),
-                                              child: Image.network(
-                                                animal.imageContent,
+                                              child: CachedNetworkImage(
+                                                imageUrl: animal.imageContent,
+                                                fit: BoxFit.cover,
                                                 width: 60,
                                                 height: 60,
-                                                fit: BoxFit.cover,
+                                                placeholder: (context, url) =>
+                                                    Container(
+                                                  alignment: Alignment.center,
+                                                  child:
+                                                      const CircularProgressIndicator(),
+                                                ),
+                                                errorWidget: (context, url,
+                                                        error) =>
+                                                    Image.asset(
+                                                        'assets/images/Logo_color1.png'),
                                               ),
                                             ),
                                             const SizedBox(width: 15.0),

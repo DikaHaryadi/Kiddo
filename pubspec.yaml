@@ -72,7 +72,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/icon/kiddie.png"
+  image_path: "assets/icon/logo.png"
   min_sdk_android: 21
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -118,6 +118,21 @@ flutter:
         - asset: assets/fonts/Urbanist-SemiBold.ttf
           weight: 600
         - asset: assets/fonts/Urbanist-Bold.ttf
+          weight: 800
+
+    - family: Kiddosy
+      fonts:
+        - asset: assets/fonts/big-text/kiddosy-kiddosy-regular-400.ttf
+          weight: 400
+        - asset: assets/fonts/big-text/kiddosy-kiddosy-regular-block-400.ttf
+          weight: 500
+        - asset: assets/fonts/big-text/kiddosy-kiddosy-regular-extrude-left-400.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/big-text/kiddosy-kiddosy-regular-extrude-right-400.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/big-text/kiddosy-kiddosy-regular-outline-400.ttf
           weight: 800
   #   - family: Schyler
   #     fonts:

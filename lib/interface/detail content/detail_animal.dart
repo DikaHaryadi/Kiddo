@@ -1,19 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:textspeech/controllers/animal_controller.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
-import 'package:textspeech/util/etc/animal_info.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
-import 'package:textspeech/util/etc/curved_edges.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:textspeech/util/etc/to_title_case.dart';
 
 import '../../models/animal_model.dart';
 
@@ -116,18 +106,18 @@ class _DetailAnimalsState extends State<DetailAnimals> {
     setState(() {});
   }
 
-  static Route<dynamic> _routeBuilder(
-    BuildContext context,
-    AnimalModel animalModel,
-  ) {
-    return MaterialPageRoute(
-      builder: (_) {
-        return DetailAnimals(
-          model: animalModel,
-        );
-      },
-    );
-  }
+  // static Route<dynamic> _routeBuilder(
+  //   BuildContext context,
+  //   AnimalModel animalModel,
+  // ) {
+  //   return MaterialPageRoute(
+  //     builder: (_) {
+  //       return DetailAnimals(
+  //         model: animalModel,
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -185,69 +175,55 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                       border: Border.all(
                           color: kWhite, width: 2, style: BorderStyle.solid),
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Iconsax.backward)),
-                        Text(
-                          widget.model.titleAnimal,
-                          style: Theme.of(context).textTheme.headlineLarge,
-                        ),
-                        IconButton(
-                            onPressed: () {},
-                            icon: const Icon(Iconsax.forward)),
-                      ],
-                    ),
+                    child: Center(
+                        child: TextButton(
+                      onPressed: () => ttsController.textToSpeech(
+                          widget.model.titleAnimal, 'en-US'),
+                      child: Text(
+                        widget.model.titleAnimal,
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ),
+                    )),
                   ),
                 ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 56.0),
-              child: Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(
-                        top: 35.0, left: 16.0, right: 16.0, bottom: 5.0),
-                    margin: const EdgeInsets.only(right: 56.0),
-                    decoration: BoxDecoration(
-                      color: kWhite,
-                      boxShadow: [
-                        BoxShadow(
-                            color: kBlack.withOpacity(.3),
-                            offset: const Offset(3, 0),
-                            blurStyle: BlurStyle.normal,
-                            blurRadius: 1),
-                        BoxShadow(
-                            color: kBlack.withOpacity(.3),
-                            offset: const Offset(0, 3),
-                            blurStyle: BlurStyle.normal,
-                            blurRadius: 1),
-                      ],
-                      borderRadius: const BorderRadius.only(
-                          bottomRight: Radius.circular(30.0)),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        if (isPlaying == true) {
-                          ttsController.flutterTts.stop();
-                        } else {
-                          ttsController.textToSpeech(
-                              widget.model.deskripsiAnimal, "en-US");
-                        }
-                      },
-                      child: Text(
-                        widget.model.deskripsiAnimal,
-                        textAlign: TextAlign.justify,
-                        style: Theme.of(context).textTheme.bodySmall,
+                padding: const EdgeInsets.only(top: 56.0),
+                child: Stack(
+                  clipBehavior: Clip.none,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(
+                          top: 35.0, left: 16.0, right: 16.0, bottom: 5.0),
+                      margin: const EdgeInsets.only(right: 56.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        border:
+                            Border.all(color: Colors.white.withOpacity(0.13)),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.white.withOpacity(0.15),
+                            Colors.white.withOpacity(0.05),
+                          ],
+                        ),
+                      ),
+                      child: InkWell(
+                        onTap: () => ttsController.textToSpeech(
+                            widget.model.deskripsiAnimal, 'en-US'),
+                        child: Text(
+                          widget.model.deskripsiAnimal,
+                          textAlign: TextAlign.justify,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.apply(color: kBlack),
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
+                    Positioned(
                       right: -55.0,
                       top: -30.0,
                       child: Container(
@@ -255,33 +231,35 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                         margin: const EdgeInsets.only(right: 56.0),
                         height: 60,
                         decoration: BoxDecoration(
-                            color: kSoftblue,
-                            borderRadius: const BorderRadius.only(
-                              bottomRight: Radius.circular(30.0),
-                              topLeft: Radius.circular(10.0),
-                              bottomLeft: Radius.circular(10.0),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: kBlack.withOpacity(.3),
-                                  offset: const Offset(-2, 0),
-                                  blurStyle: BlurStyle.normal,
-                                  blurRadius: 1),
-                              BoxShadow(
-                                  color: kBlack.withOpacity(.3),
-                                  offset: const Offset(0, -2),
-                                  blurStyle: BlurStyle.normal,
-                                  blurRadius: 1),
-                            ]),
-                        child: Center(
-                          child: Text('Description',
-                              style:
-                                  Theme.of(context).textTheme.headlineMedium),
+                          color: kSoftblue,
+                          borderRadius: const BorderRadius.only(
+                            bottomRight: Radius.circular(30.0),
+                            topLeft: Radius.circular(10.0),
+                            bottomLeft: Radius.circular(10.0),
+                          ),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Colors.black.withOpacity(.3),
+                                offset: const Offset(-2, 0),
+                                blurStyle: BlurStyle.normal,
+                                blurRadius: 1),
+                            BoxShadow(
+                                color: Colors.black.withOpacity(.3),
+                                offset: const Offset(0, -2),
+                                blurStyle: BlurStyle.normal,
+                                blurRadius: 1),
+                          ],
                         ),
-                      ))
-                ],
-              ),
-            ),
+                        child: Center(
+                          child: Text(
+                            'Description',
+                            style: Theme.of(context).textTheme.displaySmall,
+                          ),
+                        ),
+                      ),
+                    )
+                  ],
+                )),
             Padding(
               padding: const EdgeInsets.only(top: 56.0),
               child: Stack(
@@ -293,28 +271,27 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                           top: 25.0, left: 16.0, right: 16.0, bottom: 16.0),
                       margin: const EdgeInsets.only(left: 56.0),
                       decoration: BoxDecoration(
-                        color: kWhite,
-                        boxShadow: [
-                          BoxShadow(
-                              color: kBlack.withOpacity(.3),
-                              offset: const Offset(3, 0),
-                              blurStyle: BlurStyle.normal,
-                              blurRadius: 1),
-                          BoxShadow(
-                              color: kBlack.withOpacity(.3),
-                              offset: const Offset(0, 3),
-                              blurStyle: BlurStyle.normal,
-                              blurRadius: 1),
-                        ],
-                        borderRadius: const BorderRadius.only(
-                            bottomRight: Radius.circular(30.0)),
+                        borderRadius: BorderRadius.circular(30),
+                        border:
+                            Border.all(color: Colors.white.withOpacity(0.13)),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.white.withOpacity(0.15),
+                            Colors.white.withOpacity(0.05),
+                          ],
+                        ),
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             widget.model.titleAnimal,
-                            style: Theme.of(context).textTheme.headlineMedium,
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall
+                                ?.apply(color: kBlack),
                           ),
                           AutoSizeText.rich(
                             maxFontSize: 14,
@@ -325,20 +302,19 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge
-                                ?.copyWith(fontWeight: FontWeight.normal),
+                                ?.copyWith(
+                                    fontWeight: FontWeight.normal,
+                                    color: kBlack),
                           ),
                           const SizedBox(height: 15.0),
                           Container(
                             decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                border: Border.all(color: kGrey)),
+                                border: Border.all(color: kBlack)),
                             child: IconButton(
                                 onPressed: playPause,
-                                icon: Image.asset(
-                                  'assets/icon/volume.png',
-                                  width: 25,
-                                  height: 25,
-                                )),
+                                icon: Image.asset('assets/icon/volume.png',
+                                    width: 25, height: 25, color: kBlack)),
                           ),
                         ],
                       )),

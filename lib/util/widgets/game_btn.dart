@@ -71,7 +71,7 @@ class _GameButtonState extends State<GameButton> {
                   children: [
                     ClipRRect(
                         borderRadius: BorderRadius.circular(widget.height / 2),
-                        child: Image.asset('assets/images/logo.png')),
+                        child: Image.asset('assets/icon/logo.png')),
                     const SizedBox(width: 15.0),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

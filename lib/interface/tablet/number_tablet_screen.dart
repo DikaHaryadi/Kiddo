@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -85,12 +86,15 @@ class NumberTabletScreen extends StatelessWidget {
                               ttsController.textToSpeech(
                                   numbers.speech, "en-US");
                             },
-                            child: Image.network(numbers.subImage)
-                                .animate()
-                                .fadeIn(
-                                    duration:
-                                        const Duration(milliseconds: 2000),
-                                    curve: Curves.easeIn),
+                            child: CachedNetworkImage(
+                              imageUrl: numbers.subImage,
+                              placeholder: (context, url) => Container(
+                                alignment: Alignment.center,
+                                child: const CircularProgressIndicator(),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  Image.asset('assets/images/Logo_color1.png'),
+                            ),
                           ),
                         )),
                         Center(
@@ -188,14 +192,22 @@ class NumberTabletScreen extends StatelessWidget {
                             scale: 0.5,
                             child: FadeInAnimation(
                               child: GestureDetector(
-                                  onTap: () {
-                                    controller.selectedNumber.value = numbers;
-                                    ttsController.textToSpeech(
-                                        numbers.speech, "en-US");
-                                  },
-                                  child: Image.network(
-                                    numbers.imagePath,
-                                  )),
+                                onTap: () {
+                                  controller.selectedNumber.value = numbers;
+                                  ttsController.textToSpeech(
+                                      numbers.speech, "en-US");
+                                },
+                                child: CachedNetworkImage(
+                                  imageUrl: numbers.imagePath,
+                                  placeholder: (context, url) => Container(
+                                    alignment: Alignment.center,
+                                    child: const CircularProgressIndicator(),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      Image.asset(
+                                          'assets/images/Logo_color1.png'),
+                                ),
+                              ),
                             ),
                           ),
                         );

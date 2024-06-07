@@ -43,43 +43,53 @@ class CardDinoContent extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Wrap(
                   spacing: 8.0,
-                  children: List.generate(
-                      controller.dinoModel.length,
-                      (index) => GestureDetector(
-                            onTap: () {
-                              controller.selectedDino.value =
-                                  controller.dinoModel[index];
-                            },
-                            child: Container(
-                              width: 50,
-                              height: 50,
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: controller.selectedDino.value ==
-                                              controller.dinoModel[index]
-                                          ? kWhite
-                                          : Colors.transparent)),
-                              child: CachedNetworkImage(
-                                imageUrl:
-                                    controller.dinoModel[index].imageContent,
-                                fit: BoxFit.fill,
-                                placeholder: (context, url) => Container(
-                                  alignment: Alignment.center,
-                                  child: const CircularProgressIndicator(),
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    Image.asset(
-                                        'assets/images/Logo_color1.png'),
-                              ),
-                            ),
-                          )),
+                  children: List.generate(controller.dinoModel.length, (index) {
+                    return GestureDetector(
+                      onTap: () {
+                        controller.selectedDino.value =
+                            controller.dinoModel[index];
+                        ttsController.textToSpeech(
+                            controller.dinoModel[index].deskripsi, 'en-US');
+                      },
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                                color: controller.selectedDino.value ==
+                                        controller.dinoModel[index]
+                                    ? kWhite
+                                    : Colors.transparent)),
+                        child: CachedNetworkImage(
+                          imageUrl: controller.dinoModel[index].imageContent,
+                          fit: BoxFit.fill,
+                          placeholder: (context, url) => Container(
+                            alignment: Alignment.center,
+                            child: const CircularProgressIndicator(),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              Image.asset('assets/images/Logo_color1.png'),
+                        ),
+                      ),
+                    );
+                  }),
                 ),
               ),
               Container(
                 margin: const EdgeInsets.only(top: 16.0),
                 padding: const EdgeInsets.all(8.0),
                 decoration: BoxDecoration(
-                    color: kWhite, borderRadius: BorderRadius.circular(15.0)),
+                  borderRadius: BorderRadius.circular(30),
+                  border: Border.all(color: Colors.white.withOpacity(0.13)),
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      kBlack.withOpacity(0.15),
+                      kBlack.withOpacity(0.05),
+                    ],
+                  ),
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -88,14 +98,23 @@ class CardDinoContent extends StatelessWidget {
                           ttsController.textToSpeech(model.title, "en-US"),
                       child: Text(
                         model.title,
-                        style: Theme.of(context).textTheme.headlineMedium,
+                        style: Theme.of(context)
+                            .textTheme
+                            .displaySmall
+                            ?.apply(color: kWhite),
                       ),
                     ),
                     const SizedBox(height: 8.0),
                     InkWell(
                         onTap: () => ttsController.textToSpeech(
                             model.jenisMakanan, "en-US"),
-                        child: Text(model.jenisMakanan)),
+                        child: Text(
+                          model.jenisMakanan,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.apply(color: kWhite),
+                        )),
                     const SizedBox(height: 5.0),
                     InkWell(
                       onTap: () =>
@@ -103,7 +122,10 @@ class CardDinoContent extends StatelessWidget {
                       child: Text(
                         model.deskripsi,
                         textAlign: TextAlign.justify,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.apply(color: kWhite),
                       ),
                     ),
                   ],

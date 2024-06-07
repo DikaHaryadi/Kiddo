@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/interface/detail%20content/detail_lagu_nasional.dart';
@@ -26,11 +27,17 @@ class LaguNasionalCard extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
             closedBuilder: (context, action) {
-              return Image.network(
-                model.image,
+              return CachedNetworkImage(
+                imageUrl: model.image,
                 width: 60,
                 height: 60,
                 fit: BoxFit.cover,
+                placeholder: (context, url) => Container(
+                  alignment: Alignment.center,
+                  child: const CircularProgressIndicator(),
+                ),
+                errorWidget: (context, url, error) =>
+                    Image.asset('assets/images/Logo_color1.png'),
               );
             },
             openBuilder: (context, action) => DetailLaguNasional(

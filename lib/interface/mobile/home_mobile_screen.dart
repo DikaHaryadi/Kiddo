@@ -129,11 +129,9 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                             ),
                             Expanded(
                               flex: 3,
-                              child: FittedBox(
-                                fit: BoxFit.contain,
+                              child: Center(
                                 child: Text(
                                   game['GameName']!,
-                                  maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme

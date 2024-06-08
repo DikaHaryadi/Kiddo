@@ -86,7 +86,7 @@ List<IconData> navicon = [
 
 const gameList = [
   {
-    'GameName': 'Memo Game',
+    'GameName': 'Memo\nGame',
     'imagePath': 'assets/games/memory_game.png',
     'enum': 'memo',
     'routePath': '/memo-game'

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:audioplayers/audioplayers.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +11,9 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:info_popup/info_popup.dart';
+import 'package:textspeech/auth/controller/auth_controller.dart';
 import 'package:textspeech/controllers/anchor_ads_controller.dart';
+import 'package:textspeech/firebase/references.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:textspeech/util/etc/constants.dart';
 import 'package:textspeech/util/game%20property/game.dart';
@@ -87,6 +90,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
       onAdDismissedFullScreenContent: (RewardedAd ad) {
         ad.dispose();
         _createRewardedAd();
+        saveGameStatus(bestTime);
         Get.offNamed('/memo-game'); // Navigasi ke /home
       },
       onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
@@ -122,9 +126,22 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     checkGameStatus();
   }
 
-  void saveGameStatus(bool isGameFinished) async {
-    final box = GetStorage(); // Perubahan di sini
-    await box.write('isGameFinished', isGameFinished.toString());
+  void saveGameStatus(int bestTime) async {
+    print('loaded save best score');
+    var batch = fireStore.batch();
+    final memoUser = fireStore.collection('Users');
+    User? user = AuthenticationRepository.instance.authUser;
+    if (user == null) return;
+    batch
+        .set(memoUser.doc(user.email).collection('memory_game').doc(user.uid), {
+      'Tingkat Kesulitan': widget.gameLevel.toString(), //disini
+      'score': bestTime
+    });
+    print('berhasil ke save memory game ke firebase');
+    batch.commit();
+
+    // final box = GetStorage(); // Perubahan di sini
+    // await box.write('isGameFinished', isGameFinished.toString());
   }
 
   void checkGameStatus() async {
@@ -259,8 +276,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
       startTimer();
       showConfetti = false;
     });
-
-    saveGameStatus(false);
   }
 
   @override

@@ -39,7 +39,7 @@ class LaguNasionalContent extends GetView<LaguNasionalController> {
                     ),
               ),
               title: AutoSizeText(
-                'Nasional Anthem',
+                'National Anthem',
                 style: Theme.of(context).textTheme.headlineMedium,
               )
                   .animate(delay: const Duration(milliseconds: 250))

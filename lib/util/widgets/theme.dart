@@ -121,7 +121,7 @@ class CTextTheme {
     displayMedium: const TextStyle().copyWith(
         fontFamily: 'Kiddosy',
         fontSize: 50.0,
-        fontWeight: FontWeight.bold,
+        fontWeight: FontWeight.w400,
         color: const Color(0xFF272727)),
     displaySmall: const TextStyle().copyWith(
         fontFamily: 'Kiddosy',

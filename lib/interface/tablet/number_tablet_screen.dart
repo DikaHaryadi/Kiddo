@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/controllers/number_controller.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
 
@@ -43,10 +41,7 @@ class NumberTabletScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
                     child: Text('Numbers',
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineLarge
-                                ?.copyWith(fontSize: 50))
+                            style: Theme.of(context).textTheme.displayMedium)
                         .animate()
                         .slideX(
                             begin: -2,
@@ -100,13 +95,13 @@ class NumberTabletScreen extends StatelessWidget {
                         Center(
                             child: Padding(
                           padding: const EdgeInsets.only(top: 30.0),
-                          child: Text(
-                            numbers.name,
-                            style: GoogleFonts.roboto(
-                                fontWeight: FontWeight.bold, fontSize: 40),
-                          ).animate().fadeIn(
-                              duration: const Duration(milliseconds: 2000),
-                              curve: Curves.easeIn),
+                          child: Text(numbers.name,
+                                  style:
+                                      Theme.of(context).textTheme.displayMedium)
+                              .animate()
+                              .fadeIn(
+                                  duration: const Duration(milliseconds: 2000),
+                                  curve: Curves.easeIn),
                         )),
                       ],
                     );
@@ -120,31 +115,63 @@ class NumberTabletScreen extends StatelessWidget {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Column(
-                          children: [
-                            const Icon(
-                              Iconsax.gallery,
-                              size: 40,
-                            ),
-                            const SizedBox(height: 12.0),
-                            Text(
-                              'English',
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            )
-                          ],
+                        GestureDetector(
+                          onTap: () {
+                            ttsController.textToSpeech(numbers.speech, 'en-US');
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 65,
+                                height: 65,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    image: const DecorationImage(
+                                        image: AssetImage(
+                                            'assets/icon/english.png'),
+                                        fit: BoxFit.fitHeight)),
+                              ),
+                              const SizedBox(height: 12.0),
+                              Text(
+                                'English',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall
+                                    ?.copyWith(
+                                        fontFamily: 'Kiddosy',
+                                        fontWeight: FontWeight.normal),
+                              )
+                            ],
+                          ),
                         ),
-                        Column(
-                          children: [
-                            const Icon(
-                              Iconsax.home,
-                              size: 40,
-                            ),
-                            const SizedBox(height: 12.0),
-                            Text(
-                              'Arabic',
-                              style: Theme.of(context).textTheme.headlineSmall,
-                            )
-                          ],
+                        GestureDetector(
+                          onTap: () {
+                            ttsController.textToSpeech(numbers.speech, 'ar');
+                          },
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 65,
+                                height: 65,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    image: const DecorationImage(
+                                        image: AssetImage(
+                                            'assets/icon/arabic.png'),
+                                        fit: BoxFit.fitHeight)),
+                              ),
+                              const SizedBox(height: 12.0),
+                              Text(
+                                'Arabic',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineSmall
+                                    ?.copyWith(
+                                        fontFamily: 'Kiddosy',
+                                        fontWeight: FontWeight.normal),
+                              )
+                            ],
+                          ),
                         )
                       ],
                     );

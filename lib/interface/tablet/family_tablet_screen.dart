@@ -1,8 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -250,18 +248,22 @@ class FamilyTabletScreen extends StatelessWidget {
                     Positioned(
                       top: Get.height * 0.35,
                       left: 30,
-                      child: Text(
-                        toTitleCase(model.subjectFamily),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineLarge
-                            ?.apply(color: kWhite),
-                      )
-                          .animate(delay: const Duration(milliseconds: 250))
-                          .fadeIn(
-                              duration: const Duration(milliseconds: 600),
-                              curve: Curves.easeInOutBack,
-                              delay: const Duration(milliseconds: 100)),
+                      child: InkWell(
+                        onTap: () => ttsController.textToSpeech(
+                            model.subjectFamily, 'ar'),
+                        child: Text(
+                          toTitleCase(model.subjectFamily),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge
+                              ?.apply(color: kWhite),
+                        )
+                            .animate(delay: const Duration(milliseconds: 250))
+                            .fadeIn(
+                                duration: const Duration(milliseconds: 600),
+                                curve: Curves.easeInOutBack,
+                                delay: const Duration(milliseconds: 100)),
+                      ),
                     ),
                     Positioned(
                       top: Get.height * 0.4,

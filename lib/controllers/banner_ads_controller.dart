@@ -9,8 +9,13 @@ class BannerAdsController extends GetxController {
   final adSize = Rx<AdSize?>(null);
   final isAdsLoaded = RxBool(false);
 
-  static const _insets = 16.0;
-  double get _adWidth => Get.width - (2 * _insets);
+  double get _adWidth => Get.width;
+
+  @override
+  void onInit() {
+    loadBannerAds();
+    super.onInit();
+  }
 
   Future<void> loadBannerAds() async {
     await inlineAdaptiveAd.value?.dispose();

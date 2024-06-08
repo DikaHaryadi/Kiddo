@@ -183,7 +183,7 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                               'Good ${timeSunPosition.timeOfDay.value}',
                               style: Theme.of(context)
                                   .textTheme
-                                  .headlineLarge)).animate().fadeIn(
+                                  .displaySmall)).animate().fadeIn(
                               curve: Curves.easeIn,
                               duration: const Duration(milliseconds: 700)),
                           Expanded(child: Container()),
@@ -256,37 +256,16 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                                                   )),
                                               Expanded(
                                                   flex: 3,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10.0),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        AutoSizeText(
-                                                          gameList[index]
-                                                              ['GameName']!,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .titleLarge,
-                                                        ),
-                                                        AutoSizeText(
-                                                          gameList[index]
-                                                              ['subtitle']!,
-                                                          style:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .titleMedium,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ))
+                                                  child: AutoSizeText(
+                                                      gameList[index]
+                                                          ['GameName']!,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .displaySmall
+                                                          ?.copyWith(
+                                                              fontSize: 30.0)))
                                             ],
                                           ),
                                         ),
@@ -332,42 +311,36 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                                 ),
                                 Expanded(
                                   flex: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        FittedBox(
-                                          fit: BoxFit.contain,
-                                          child: Text(
-                                            'Kid Song',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineMedium,
-                                          ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      FittedBox(
+                                        fit: BoxFit.contain,
+                                        child: Text(
+                                          'Kid Song',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .displaySmall,
                                         ),
-                                        FittedBox(
-                                          fit: BoxFit.contain,
-                                          child: Text(
-                                            'Subtitle kid song disini',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall
-                                                ?.copyWith(
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                      ),
+                                      FittedBox(
+                                        fit: BoxFit.contain,
+                                        child: Text(
+                                          'Subtitle kid song disini',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall
+                                              ?.copyWith(
+                                                  fontWeight: FontWeight.w400),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
                               ],
@@ -412,42 +385,36 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                                 ),
                                 Expanded(
                                   flex: 3,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 5.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        FittedBox(
-                                          fit: BoxFit.contain,
-                                          child: Text(
-                                            'Nasional Anthem',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineMedium,
-                                          ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      FittedBox(
+                                        fit: BoxFit.contain,
+                                        child: Text(
+                                          'National Anthem',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .displaySmall,
                                         ),
-                                        FittedBox(
-                                          fit: BoxFit.contain,
-                                          child: Text(
-                                            'Subtitle kid song disini',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineSmall
-                                                ?.copyWith(
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                          ),
-                                        )
-                                      ],
-                                    ),
+                                      ),
+                                      FittedBox(
+                                        fit: BoxFit.contain,
+                                        child: Text(
+                                          'Subtitle kid song disini',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headlineSmall
+                                              ?.copyWith(
+                                                  fontWeight: FontWeight.w400),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
                               ],
@@ -465,7 +432,10 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                         children: [
                           AutoSizeText(
                             'Categories',
-                            style: Theme.of(context).textTheme.headlineMedium,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(fontFamily: 'Kiddosy'),
                           ).animate().fadeIn(
                               curve: Curves.easeIn,
                               duration: const Duration(milliseconds: 700)),

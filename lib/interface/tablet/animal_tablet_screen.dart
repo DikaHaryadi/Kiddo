@@ -25,7 +25,7 @@ class AnimalTabletScreen extends StatefulWidget {
 }
 
 class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
-  bool isPlaying = false;
+  late bool isPlaying;
 
   late final AudioPlayer player;
   late UrlSource path;
@@ -35,6 +35,14 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
     super.initState();
     player = AudioPlayer();
     path = UrlSource(widget.model.audio);
+    isPlaying = false;
+    player.onPlayerStateChanged.listen((PlayerState state) {
+      if (state == PlayerState.completed) {
+        setState(() {
+          isPlaying = false;
+        });
+      }
+    });
   }
 
   @override
@@ -44,14 +52,14 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
   }
 
   void playPause() async {
-    if (isPlaying) {
-      player.pause();
-      isPlaying = false;
+    if (isPlaying && player.state == PlayerState.playing) {
+      await player.pause();
     } else {
-      player.play(path);
-      isPlaying = true;
+      await player.play(path);
     }
-    setState(() {});
+    setState(() {
+      isPlaying = !isPlaying;
+    });
   }
 
   @override

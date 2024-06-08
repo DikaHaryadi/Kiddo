@@ -8,6 +8,9 @@ class DinoController extends GetxController {
   final dinoRepo = Get.put(DinoRepository());
   final isLoadingDino = RxBool(false);
 
+  // New collapse state and its getter
+  final RxBool collapse = RxBool(false);
+
   @override
   void onInit() {
     fetchDinoCategory();
@@ -18,15 +21,20 @@ class DinoController extends GetxController {
     try {
       isLoadingDino.value = true;
       final animals = await dinoRepo.fetchDinoContent();
-      dinoModel.assignAll(animals); // Use assignAll to update RxList
+      dinoModel.assignAll(animals);
 
       if (dinoModel.isNotEmpty) {
         selectedDino.value = dinoModel[0];
       }
     } catch (e) {
-      dinoModel.assignAll([]); // Use assignAll to update RxList
+      dinoModel.assignAll([]);
     } finally {
       isLoadingDino.value = false;
     }
+  }
+
+  // Method to toggle collapse state
+  void toggleCollapse() {
+    collapse.value = !collapse.value;
   }
 }

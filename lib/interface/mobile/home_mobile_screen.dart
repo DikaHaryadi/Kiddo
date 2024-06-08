@@ -129,41 +129,18 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                             ),
                             Expanded(
                               flex: 3,
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 5.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    FittedBox(
-                                      fit: BoxFit.contain,
-                                      child: Text(
-                                        game['GameName']!,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineMedium
-                                            ?.copyWith(
-                                                fontFamily: 'Kiddosy',
-                                                fontWeight: FontWeight.w400),
-                                      ),
-                                    ),
-                                    FittedBox(
-                                      fit: BoxFit.contain,
-                                      child: Text(
-                                        game['subtitle']!,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headlineSmall
-                                            ?.copyWith(
-                                                fontWeight: FontWeight.w400),
-                                      ),
-                                    )
-                                  ],
+                              child: FittedBox(
+                                fit: BoxFit.contain,
+                                child: Text(
+                                  game['GameName']!,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineMedium
+                                      ?.copyWith(
+                                          fontFamily: 'Kiddosy',
+                                          fontWeight: FontWeight.w400),
                                 ),
                               ),
                             ),
@@ -274,7 +251,7 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                               FittedBox(
                                 fit: BoxFit.contain,
                                 child: Text(
-                                  'Nasional Anthem',
+                                  'National Anthem',
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)

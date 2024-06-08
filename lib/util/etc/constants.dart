@@ -30,12 +30,6 @@ const contentKiddo = [
     'routePath': '/number-content',
     'subtitle': '(numerus)',
   },
-  // {
-  //   'imagePath': 'assets/letters.png',
-  //   'name': 'Hijaiyah',
-  //   'routePath': '/letters-content',
-  //   'subtitle': '(الحروف الهجائية)',
-  // },
   {
     'imagePath': 'assets/animals.png',
     'name': 'Animals',
@@ -93,14 +87,12 @@ List<IconData> navicon = [
 const gameList = [
   {
     'GameName': 'Memo Game',
-    'subtitle': '(ludus memorialis)',
     'imagePath': 'assets/games/memory_game.png',
     'enum': 'memo',
     'routePath': '/memo-game'
   },
   {
     'GameName': 'Quizz',
-    'subtitle': '(interrogatio)',
     'imagePath': 'assets/games/quizz.png',
     'enum': 'numbers',
     'routePath': '/main-menu-quiz'

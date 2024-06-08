@@ -79,7 +79,7 @@ class _GameButtonState extends State<GameButton> {
                       children: [
                         Text(
                           widget.title,
-                          style: Theme.of(context).textTheme.headlineLarge,
+                          style: Theme.of(context).textTheme.displayMedium,
                         ),
                         widget.isActive
                             ? const SizedBox.shrink()
@@ -96,7 +96,7 @@ class _GameButtonState extends State<GameButton> {
                                 widget.level,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headlineSmall
+                                    .displaySmall
                                     ?.apply(color: kWhite),
                               ),
                             ),
@@ -150,7 +150,7 @@ class _GameButtonState extends State<GameButton> {
                 ),
                 child: Row(
                   children: [
-                    Image.asset('assets/images/logo.png'),
+                    Image.asset('assets/icon/logo.png'),
                     const SizedBox(width: 15.0),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -158,7 +158,7 @@ class _GameButtonState extends State<GameButton> {
                       children: [
                         Text(
                           widget.title,
-                          style: Theme.of(context).textTheme.headlineLarge,
+                          style: Theme.of(context).textTheme.displayMedium,
                         ),
                         widget.isActive
                             ? const SizedBox.shrink()
@@ -175,7 +175,7 @@ class _GameButtonState extends State<GameButton> {
                                 widget.level,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headlineMedium
+                                    .displaySmall
                                     ?.apply(color: kWhite),
                               ),
                             ),

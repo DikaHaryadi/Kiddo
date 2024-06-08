@@ -17,15 +17,16 @@ class LoginTabletScreen extends StatelessWidget {
       height: Get.height,
       padding: const EdgeInsets.only(top: 200),
       decoration: const BoxDecoration(
-          image: DecorationImage(
-              fit: BoxFit.fitHeight,
-              image: AssetImage(
-                'assets/banner_animals.png',
-              ))),
+        image: DecorationImage(
+            fit: BoxFit.fitHeight,
+            image: AssetImage(
+              'assets/banner_animals.png',
+            )),
+      ),
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 50.0),
+            padding: const EdgeInsets.only(left: 30.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -46,7 +47,7 @@ class LoginTabletScreen extends StatelessWidget {
               key: controller.loginFromKey,
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 30, horizontal: 70),
+                    const EdgeInsets.symmetric(vertical: 30, horizontal: 40),
                 child: Column(
                   children: [
                     TextFormField(
@@ -183,36 +184,18 @@ class LoginTabletScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: kGrey),
-                    borderRadius: BorderRadius.circular(100)),
-                child: IconButton(
-                  onPressed: () => controller.googleSignIn(),
-                  icon: const Image(
-                      width: 40,
-                      height: 40,
-                      image: AssetImage('assets/images/google.png')),
-                ),
-              ),
-              const SizedBox(width: 15),
-              Container(
-                decoration: BoxDecoration(
-                    border: Border.all(color: kGrey),
-                    borderRadius: BorderRadius.circular(100)),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Image(
-                      width: 40,
-                      height: 40,
-                      image: AssetImage('assets/images/fb.png')),
-                ),
-              ),
-            ],
-          )
+          Container(
+            decoration: BoxDecoration(
+                border: Border.all(color: kGrey),
+                borderRadius: BorderRadius.circular(100)),
+            child: IconButton(
+              onPressed: () => controller.googleSignIn(),
+              icon: const Image(
+                  width: 40,
+                  height: 40,
+                  image: AssetImage('assets/images/google.png')),
+            ),
+          ),
         ],
       ),
     );

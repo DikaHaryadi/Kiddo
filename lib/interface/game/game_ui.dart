@@ -160,7 +160,7 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                             children: [
                               const Icon(
                                 Iconsax.backward,
-                                size: 40,
+                                size: 30,
                                 color: kWhite,
                               ),
                               const SizedBox(width: 25.0),
@@ -168,13 +168,13 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                                 'Start Game',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headlineMedium
+                                    .displaySmall
                                     ?.apply(color: kWhite),
                               ),
                               const SizedBox(width: 25.0),
                               const Icon(
                                 Iconsax.forward,
-                                size: 40,
+                                size: 30,
                                 color: kWhite,
                               )
                             ],
@@ -263,7 +263,7 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                                 'Start Game',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .headlineMedium
+                                    .displaySmall
                                     ?.apply(color: kWhite),
                               ),
                               const SizedBox(width: 25.0),

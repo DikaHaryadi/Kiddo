@@ -9,7 +9,7 @@ class BannerAdsController extends GetxController {
   final adSize = Rx<AdSize?>(null);
   final isAdsLoaded = RxBool(false);
 
-  double get _adWidth => Get.width;
+  double get _adWidth => Get.width.toDouble();
 
   @override
   void onInit() {
@@ -60,12 +60,13 @@ class BannerAdsController extends GetxController {
     if (inlineAdaptiveAd.value != null &&
         isAdsLoaded.value &&
         adSize.value != null) {
-      return Container(
-        padding: const EdgeInsets.only(top: 30.0),
-        width: _adWidth,
-        height: adSize.value!.height.toDouble(),
-        child: AdWidget(ad: inlineAdaptiveAd.value!),
-      );
+      return StatefulBuilder(
+          builder: (context, setState) => Container(
+                padding: const EdgeInsets.only(top: 30.0),
+                width: _adWidth,
+                height: adSize.value!.height.toDouble(),
+                child: AdWidget(ad: inlineAdaptiveAd.value!),
+              ));
     }
     return const SizedBox.shrink();
   }

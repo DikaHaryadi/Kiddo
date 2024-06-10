@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:textspeech/controllers/kidsong_controller.dart';
 import 'package:textspeech/interface/homepage.dart';
 import 'package:textspeech/interface/mobile/kidsong_mobile_screen.dart';
+import 'package:textspeech/interface/tablet/kidsong_tablet_screen.dart';
 import 'package:textspeech/util/etc/responsive.dart';
 
 class KidSong extends StatefulWidget {
@@ -64,9 +65,9 @@ class _KidSongState extends State<KidSong> {
           if (isDesktop(context))
             // Conditional rendering of AnimalTabletScreen
             Obx(() {
-              final selectedAnimals = controller.selectedAnimal.value;
-              if (selectedAnimals != null) {
-                return Text('Nanti disini buat tablet');
+              final selectedKidSong = controller.selectedKidSong.value;
+              if (selectedKidSong != null) {
+                return KidSongTabletScreen(model: selectedKidSong);
               } else {
                 return const SizedBox.shrink();
               }

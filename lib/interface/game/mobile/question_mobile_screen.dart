@@ -138,6 +138,7 @@ class QuestionMobileScreen extends StatelessWidget {
                                                   context;
                                               return DraggableScrollableSheet(
                                                 expand: false,
+                                                key: UniqueKey(),
                                                 initialChildSize: 0.5,
                                                 snap: true,
                                                 snapSizes: const [0.5, 1.0],
@@ -212,10 +213,14 @@ class QuestionMobileScreen extends StatelessWidget {
                                                                 child:
                                                                     OutlinedButton(
                                                                   onPressed:
-                                                                      controller
-                                                                          .navigateToHome,
+                                                                      () {
+                                                                    debugPrint(
+                                                                        'Ouuut');
+                                                                  },
+                                                                  // controller
+                                                                  //     .navigateToHome,
                                                                   child: const Text(
-                                                                      'Keluar'),
+                                                                      'Keluarrrr'),
                                                                 ),
                                                               ),
                                                               const SizedBox(
@@ -230,7 +235,7 @@ class QuestionMobileScreen extends StatelessWidget {
                                                                         controller
                                                                             .complete,
                                                                     child: const Text(
-                                                                        'Complete'),
+                                                                        'Completeee'),
                                                                   ),
                                                                 ),
                                                               ),
@@ -248,7 +253,7 @@ class QuestionMobileScreen extends StatelessWidget {
                                   },
                                   child: Text(
                                     controller.isLastQuestion
-                                        ? 'Complete'
+                                        ? 'Completeeee'
                                         : 'Next',
                                     style:
                                         Theme.of(context).textTheme.titleLarge,

@@ -76,183 +76,194 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      color: Colors.blue,
+      color: const Color(0xFFead8c8),
       child: Row(
         children: [
           Expanded(
               flex: 1,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Scrollbar(
-                      scrollbarOrientation: ScrollbarOrientation.left,
-                      thickness: 5,
-                      child: Container(
-                        color: Colors.red,
-                        child: AnimationLimiter(
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            physics: const AlwaysScrollableScrollPhysics(),
-                            itemCount: widget.controller.animalModels.length,
-                            itemBuilder: (context, index) {
-                              final animal =
-                                  widget.controller.animalModels[index];
-                              return AnimationConfiguration.staggeredList(
-                                position: index,
-                                delay: const Duration(milliseconds: 250),
-                                duration: const Duration(milliseconds: 1000),
-                                child: SlideAnimation(
-                                  verticalOffset: 44.0,
-                                  child: FadeInAnimation(
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        widget.controller.selectedAnimal.value =
-                                            animal;
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                          vertical: 15.0,
-                                          horizontal: 15.0,
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(10.0),
-                                              ),
-                                              child: CachedNetworkImage(
-                                                imageUrl: animal.imageContent,
-                                                fit: BoxFit.cover,
-                                                width: 60,
-                                                height: 60,
-                                                placeholder: (context, url) =>
-                                                    Container(
-                                                  alignment: Alignment.center,
-                                                  child:
-                                                      const CircularProgressIndicator(),
+              child: Container(
+                decoration: const BoxDecoration(
+                    border: Border(
+                        right: BorderSide(
+                  width: 1,
+                  style: BorderStyle.solid,
+                  color: Color(0xFF337ba7),
+                ))),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Scrollbar(
+                        scrollbarOrientation: ScrollbarOrientation.left,
+                        thickness: 5,
+                        child: Container(
+                          color: const Color(0xFF468499),
+                          child: AnimationLimiter(
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              itemCount: widget.controller.animalModels.length,
+                              itemBuilder: (context, index) {
+                                final animal =
+                                    widget.controller.animalModels[index];
+                                return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  delay: const Duration(milliseconds: 250),
+                                  duration: const Duration(milliseconds: 1000),
+                                  child: SlideAnimation(
+                                    verticalOffset: 44.0,
+                                    child: FadeInAnimation(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          widget.controller.selectedAnimal
+                                              .value = animal;
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 15.0,
+                                            horizontal: 15.0,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(10.0),
                                                 ),
-                                                errorWidget: (context, url,
-                                                        error) =>
-                                                    Image.asset(
-                                                        'assets/images/Logo_color1.png'),
-                                              ),
-                                            ),
-                                            const SizedBox(width: 15.0),
-                                            Expanded(
-                                              child: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  AutoSizeText(
-                                                    toTitleCase(
-                                                        animal.titleAnimal),
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .titleLarge
-                                                        ?.apply(color: kWhite),
+                                                child: CachedNetworkImage(
+                                                  imageUrl: animal.imageContent,
+                                                  fit: BoxFit.cover,
+                                                  width: 60,
+                                                  height: 60,
+                                                  placeholder: (context, url) =>
+                                                      Container(
+                                                    alignment: Alignment.center,
+                                                    child:
+                                                        const CircularProgressIndicator(),
                                                   ),
-                                                  AutoSizeText(
-                                                    toTitleCase(
-                                                        '${animal.kategori}  |  ${animal.jenisMakanan}'),
-                                                    style: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium
-                                                        ?.apply(color: kWhite),
-                                                  ),
-                                                ],
+                                                  errorWidget: (context, url,
+                                                          error) =>
+                                                      Image.asset(
+                                                          'assets/images/Logo_color1.png'),
+                                                ),
                                               ),
-                                            ),
-                                          ],
+                                              const SizedBox(width: 15.0),
+                                              Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    AutoSizeText(
+                                                      toTitleCase(
+                                                          animal.titleAnimal),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .titleLarge
+                                                          ?.apply(
+                                                              color: kWhite),
+                                                    ),
+                                                    AutoSizeText(
+                                                      toTitleCase(
+                                                          '${animal.kategori}  |  ${animal.jenisMakanan}'),
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .bodyMedium
+                                                          ?.apply(
+                                                              color: kWhite),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                  Container(
-                    height: 300,
-                    margin: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 15.0),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0),
-                      color: Colors.white,
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 20.0, horizontal: 15.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                decoration: const BoxDecoration(
-                                  color: Colors.yellow,
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(10.0),
-                                  ),
-                                ),
-                                child: IconButton(
-                                  onPressed: () {
-                                    Get.offNamed('/home');
-                                  },
-                                  icon: const Icon(
-                                    Icons.arrow_back_ios_new,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 35.0),
-                                child: AutoSizeText(
-                                  'Today',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.copyWith(fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        AutoSizeText(
-                          DateFormat('EEEE, MMM d').format(DateTime.now()),
-                          maxFontSize: 30,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                        Expanded(
-                          child: Image.asset(
-                            'assets/images/Logo_color1.png',
-                            width: 210,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ).animate(delay: const Duration(milliseconds: 250)).slideY(
-                        begin: 2.5,
-                        end: 0,
-                        duration: const Duration(milliseconds: 700),
+                    Container(
+                      height: 300,
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 15.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.transparent,
                       ),
-                ],
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 20.0, horizontal: 15.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xFF468499),
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(10.0),
+                                    ),
+                                  ),
+                                  child: IconButton(
+                                    onPressed: () {
+                                      Get.offNamed('/home');
+                                    },
+                                    icon: const Icon(
+                                      Icons.arrow_back_ios_new,
+                                      color: kWhite,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 35.0),
+                                  child: AutoSizeText(
+                                    'Today',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.copyWith(fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          AutoSizeText(
+                            DateFormat('EEEE, MMM d').format(DateTime.now()),
+                            maxFontSize: 30,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall
+                                ?.copyWith(fontWeight: FontWeight.bold),
+                          ),
+                          Expanded(
+                            child: Image.asset(
+                              'assets/icon/logo.png',
+                              width: 210,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ).animate(delay: const Duration(milliseconds: 250)).slideY(
+                          begin: 2.5,
+                          end: 0,
+                          duration: const Duration(milliseconds: 700),
+                        ),
+                  ],
+                ),
               )),
           Expanded(
             flex: 2,
             child: Container(
-              color: Colors.white,
+              color: const Color(0xFFead8c8),
               child: Stack(
                 fit: StackFit.passthrough,
                 children: [
@@ -261,7 +272,7 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                     child: Container(
                       width: double.infinity,
                       height: MediaQuery.of(context).size.height,
-                      color: const Color(0xFFfab800),
+                      color: const Color(0xFF67c6e3),
                     ),
                   ),
                   Positioned(
@@ -269,10 +280,8 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                     left: 30,
                     child: Text(
                       toTitleCase(widget.model.titleAnimal),
-                      style: Theme.of(context)
-                          .textTheme
-                          .headlineLarge
-                          ?.apply(color: kWhite),
+                      style: Theme.of(context).textTheme.headlineLarge?.apply(
+                          color: const Color.fromARGB(255, 91, 103, 104)),
                     ).animate(delay: const Duration(milliseconds: 250)).fadeIn(
                           duration: const Duration(milliseconds: 600),
                           curve: Curves.easeInOutBack,
@@ -286,7 +295,7 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                       toTitleCase(
                           '${widget.model.kategori} | ${widget.model.jenisMakanan}'),
                       style: Theme.of(context).textTheme.headlineLarge?.apply(
-                            color: const Color(0xFFa35e3e),
+                            color: const Color(0xFF337ba7),
                           ),
                     ).animate(delay: const Duration(milliseconds: 250)).fadeIn(
                           duration: const Duration(milliseconds: 600),
@@ -305,7 +314,7 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                         height: 85,
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Color(0xFFa35e3e),
+                          color: Color(0xFF337ba7),
                         ),
                         child: Center(
                           child: Icon(

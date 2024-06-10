@@ -13,11 +13,11 @@ class Game {
   }
 
   final int gridSize;
-
   List<CardItem> cards = [];
   bool isGameOver = false;
   Set<IconData> icons = {};
   late AudioPlayer player;
+  bool isProcessing = false; // New flag to check if a pair is being processed
 
   void dispose() {
     player.dispose();
@@ -50,24 +50,38 @@ class Game {
   void resetGame() {
     generateCards();
     isGameOver = false;
+    isProcessing = false; // Reset the processing flag
   }
 
   void onCardPressed(int index) {
+    if (isProcessing ||
+        cards[index].state == CardState.guessed ||
+        cards[index].state == CardState.visible) {
+      return; // Ignore click if a pair is being processed or the card is already guessed/visible
+    }
+
     cards[index].state = CardState.visible;
     final List<int> visibleCardIndexes = _getVisibleCardIndexes();
+
     if (visibleCardIndexes.length == 2) {
+      isProcessing = true; // Set the processing flag
       final CardItem card1 = cards[visibleCardIndexes[0]];
       final CardItem card2 = cards[visibleCardIndexes[1]];
+
       if (card1.value == card2.value) {
-        // masukin audio nya disini
+        // Play correct sound
         player.play(AssetSource('voices/Correct_1.mp3'));
         card1.state = CardState.guessed;
         card2.state = CardState.guessed;
+        isProcessing =
+            false; // Reset the processing flag immediately as the cards are guessed
         isGameOver = _isGameOver();
       } else {
-        Future.delayed(const Duration(milliseconds: 1000), () {
+        // Delay hiding the cards for 500 milliseconds to speed up the game
+        Future.delayed(const Duration(milliseconds: 800), () {
           card1.state = CardState.hidden;
           card2.state = CardState.hidden;
+          isProcessing = false; // Reset the processing flag after the delay
         });
       }
     }

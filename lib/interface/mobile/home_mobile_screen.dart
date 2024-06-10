@@ -128,18 +128,16 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                               ),
                             ),
                             Expanded(
-                              flex: 3,
-                              child: Center(
-                                child: Text(
-                                  game['GameName']!,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium
-                                      ?.copyWith(
-                                          fontFamily: 'Kiddosy',
-                                          fontWeight: FontWeight.w400),
-                                ),
+                              flex: 2,
+                              child: Text(
+                                game['GameName']!,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium
+                                    ?.copyWith(
+                                        fontFamily: 'Kiddosy',
+                                        fontWeight: FontWeight.w400),
                               ),
                             ),
                           ],
@@ -179,33 +177,16 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                         ),
                         Expanded(
                           flex: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              FittedBox(
-                                fit: BoxFit.contain,
-                                child: Text(
-                                  'Kid Song',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium
-                                      ?.copyWith(
-                                          fontFamily: 'Kiddosy',
-                                          fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                              FittedBox(
-                                fit: BoxFit.contain,
-                                child: Text('Subtitle kid song disini',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge),
-                              )
-                            ],
+                          child: Text(
+                            'Kid Song',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(
+                                    fontFamily: 'Kiddosy',
+                                    fontWeight: FontWeight.w400),
                           ),
                         ),
                       ],
@@ -242,33 +223,16 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                         ),
                         Expanded(
                           flex: 4,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              FittedBox(
-                                fit: BoxFit.contain,
-                                child: Text(
-                                  'National Anthem',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headlineMedium
-                                      ?.copyWith(
-                                          fontFamily: 'Kiddosy',
-                                          fontWeight: FontWeight.w400),
-                                ),
-                              ),
-                              FittedBox(
-                                fit: BoxFit.contain,
-                                child: Text('Subtitle kid song disini',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style:
-                                        Theme.of(context).textTheme.bodyLarge),
-                              )
-                            ],
+                          child: Text(
+                            'National Anthem',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineMedium
+                                ?.copyWith(
+                                    fontFamily: 'Kiddosy',
+                                    fontWeight: FontWeight.w400),
                           ),
                         ),
                       ],
@@ -337,9 +301,16 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                                 },
                               ),
                             ),
-                            AutoSizeText('${content['name']}',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.bodyLarge)
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              child: AutoSizeText('${content['name']}',
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displaySmall
+                                      ?.copyWith(fontSize: 16)),
+                            )
                           ],
                         ),
                       ),

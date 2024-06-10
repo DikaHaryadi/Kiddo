@@ -68,10 +68,6 @@ class AnimalCardScreen extends StatelessWidget {
                     TextSpan(
                         text: toTitleCase(
                             '${model.kategori} | ${model.jenisMakanan}')),
-                    style: GoogleFonts.robotoSlab(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.orangeAccent,
-                    ),
                   )
                 ],
               ),

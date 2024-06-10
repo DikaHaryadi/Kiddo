@@ -28,25 +28,21 @@ const contentKiddo = [
     'imagePath': 'assets/banner_numbers.png',
     'name': 'Numbers',
     'routePath': '/number-content',
-    'subtitle': '(numerus)',
   },
   {
     'imagePath': 'assets/animals.png',
     'name': 'Animals',
     'routePath': '/animals-content',
-    'subtitle': '(animalia)',
   },
   {
     'imagePath': 'assets/family.png',
     'name': 'Family',
     'routePath': '/family-content',
-    'subtitle': '(familia)',
   },
   {
     'imagePath': 'assets/dino.png',
     'name': 'Dinosaurus',
     'routePath': '/dino',
-    'subtitle': '(animalia)',
   },
 ];
 
@@ -60,11 +56,11 @@ List<Widget> openContent = const [
 // Navbar
 const navbarOpsion = [
   {
-    'title': 'RateUs',
+    'title': 'Rate Us',
     'routePath': '',
   },
   {
-    'title': 'ContactUs',
+    'title': 'Contact\nUs',
     'routePath': '',
   },
   {

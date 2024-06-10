@@ -14,6 +14,7 @@ class NumberTabletScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int currentIndex = 0;
     final ttsController = Get.put(TtsController());
     return Row(
       children: [

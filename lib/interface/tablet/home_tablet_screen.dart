@@ -8,7 +8,7 @@ import 'package:iconsax/iconsax.dart';
 
 import '../../auth/controller/auth_controller.dart';
 import '../../auth/controller/user/user_controller.dart';
-import '../../controllers/anchor_ads_controller.dart';
+import '../../controllers/banner_ads_controller.dart';
 import '../../controllers/time_by_sun_position_controller.dart';
 import '../../util/etc/app_colors.dart';
 import '../../util/etc/constants.dart';
@@ -24,7 +24,7 @@ class HomeTabletScreen extends StatefulWidget {
 class _HomeTabletScreenState extends State<HomeTabletScreen> {
   final controller = Get.put(UserController());
   final timeSunPosition = Get.put(TimeSunPosition());
-  final adsController = Get.put(AnchorAdsController());
+  final bannerAdsController = Get.put(BannerAdsController());
 
   bool showAll = false;
   List<bool> longPressStates = List.generate(contentKiddo.length, (_) => false);
@@ -51,6 +51,20 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 20.0),
                             decoration: const BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: kGrey,
+                                      offset: Offset(0, 1),
+                                      blurRadius: 3,
+                                      spreadRadius: 2,
+                                      blurStyle: BlurStyle.normal),
+                                  BoxShadow(
+                                      color: kGrey,
+                                      offset: Offset(-4, 0),
+                                      blurRadius: 3,
+                                      spreadRadius: 2,
+                                      blurStyle: BlurStyle.normal),
+                                ],
                                 borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(15.0),
                                     bottomRight: Radius.circular(15.0)),
@@ -75,11 +89,6 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                                                       child: widget),
                                                 ),
                                             children: [
-                                          Image.asset(
-                                            'assets/images/Logo_color1.png',
-                                            width: 200,
-                                          ),
-                                          const SizedBox(height: 20),
                                           AutoSizeText(
                                             'Learning App\nFor Kids',
                                             maxFontSize: 20.0,
@@ -88,7 +97,11 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                                             style: GoogleFonts.roboto(
                                                 fontWeight: FontWeight.bold,
                                                 color: Colors.white),
-                                          )
+                                          ),
+                                          Image.asset(
+                                            'assets/icon/logo.png',
+                                            width: 110,
+                                          ),
                                         ]))))
                         .animate(delay: const Duration(milliseconds: 200))
                         .slideY(
@@ -124,7 +137,10 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                                         verticalOffset: 44.0,
                                         child: FadeInAnimation(
                                           child: ListTile(
-                                            leading: Icon(navicon[index]),
+                                            leading: Icon(
+                                              navicon[index],
+                                              color: kWhite,
+                                            ),
                                             title: Text(
                                               navbar['title']!,
                                               style: Theme.of(context)
@@ -149,7 +165,10 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                                     onTap: () => AuthenticationRepository
                                         .instance
                                         .logOut(),
-                                    leading: const Icon(Iconsax.logout),
+                                    leading: const Icon(
+                                      Iconsax.logout,
+                                      color: kWhite,
+                                    ),
                                     title: AutoSizeText(
                                       'LogOut',
                                       style: Theme.of(context)
@@ -172,6 +191,7 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
               flex: 3,
               child: Container(
                 padding: const EdgeInsets.only(right: 10.0, left: 10.0),
+                margin: const EdgeInsets.only(left: 8.0),
                 color: const Color(0xFFfaf5f1),
                 child: Column(
                   children: [
@@ -311,36 +331,13 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                                 ),
                                 Expanded(
                                   flex: 3,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      FittedBox(
-                                        fit: BoxFit.contain,
-                                        child: Text(
-                                          'Kid Song',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .displaySmall,
-                                        ),
-                                      ),
-                                      FittedBox(
-                                        fit: BoxFit.contain,
-                                        child: Text(
-                                          'Subtitle kid song disini',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineSmall
-                                              ?.copyWith(
-                                                  fontWeight: FontWeight.w400),
-                                        ),
-                                      )
-                                    ],
+                                  child: Text(
+                                    'Kid Song',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall,
                                   ),
                                 ),
                               ],
@@ -385,36 +382,13 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                                 ),
                                 Expanded(
                                   flex: 3,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      FittedBox(
-                                        fit: BoxFit.contain,
-                                        child: Text(
-                                          'National Anthem',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .displaySmall,
-                                        ),
-                                      ),
-                                      FittedBox(
-                                        fit: BoxFit.contain,
-                                        child: Text(
-                                          'Subtitle kid song disini',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineSmall
-                                              ?.copyWith(
-                                                  fontWeight: FontWeight.w400),
-                                        ),
-                                      )
-                                    ],
+                                  child: Text(
+                                    'National Anthem',
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall,
                                   ),
                                 ),
                               ],
@@ -520,26 +494,18 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                                                   flex: 3,
                                                   child: Stack(
                                                     children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(20.0),
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      5.0),
-                                                          child: Image.asset(
-                                                            contentKiddo[index]
-                                                                ['imagePath']!,
-                                                            fit: BoxFit
-                                                                .fitHeight,
-                                                            height:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .size
-                                                                    .height,
-                                                          ),
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(5.0),
+                                                        child: Image.asset(
+                                                          contentKiddo[index]
+                                                              ['imagePath']!,
+                                                          fit: BoxFit.fitHeight,
+                                                          height: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .height,
                                                         ),
                                                       ),
                                                       longPressStates[index]
@@ -590,47 +556,26 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                                                     ],
                                                   ),
                                                 ),
-                                                Expanded(
-                                                    flex: 1,
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                                left: 20.0),
-                                                        child: Column(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            AutoSizeText(
-                                                              contentKiddo[
-                                                                      index]
-                                                                  ['name']!,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyLarge
-                                                                  ?.copyWith(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold),
-                                                            ),
-                                                            AutoSizeText(
-                                                              contentKiddo[
-                                                                      index]
-                                                                  ['subtitle']!,
-                                                              style: Theme.of(
-                                                                      context)
-                                                                  .textTheme
-                                                                  .bodyMedium,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    )),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          bottom: 8.0),
+                                                  child: Align(
+                                                    alignment: Alignment.center,
+                                                    child: AutoSizeText(
+                                                      contentKiddo[index]
+                                                          ['name']!,
+                                                      style: Theme.of(context)
+                                                          .textTheme
+                                                          .displaySmall
+                                                          ?.copyWith(
+                                                              fontSize: 24,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold),
+                                                    ),
+                                                  ),
+                                                ),
                                               ],
                                             ),
                                           ),
@@ -641,7 +586,7 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                         ),
                       ),
                     ),
-                    adsController.getAdWidget()
+                    bannerAdsController.getAdWidget()
                   ],
                 ),
               )),

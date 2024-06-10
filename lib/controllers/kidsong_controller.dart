@@ -4,7 +4,7 @@ import 'package:textspeech/repository/kid_song_repo.dart';
 
 class KidSongController extends GetxController {
   RxList<KidSongModel> kidSongModel = <KidSongModel>[].obs;
-  final Rx<KidSongModel?> selectedAnimal = Rx<KidSongModel?>(null);
+  final Rx<KidSongModel?> selectedKidSong = Rx<KidSongModel?>(null);
   final kidSongRepo = Get.put(KidSongRepository());
   final isLoadingAnimal = RxBool(false);
 
@@ -21,7 +21,7 @@ class KidSongController extends GetxController {
       kidSongModel.assignAll(kidSong); // Use assignAll to update RxList
 
       if (kidSongModel.isNotEmpty) {
-        selectedAnimal.value = kidSongModel[0];
+        selectedKidSong.value = kidSongModel[0];
       }
     } catch (e) {
       kidSongModel.assignAll([]); // Use assignAll to update RxList

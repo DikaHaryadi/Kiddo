@@ -263,7 +263,7 @@ class _DetailLaguNasionalState extends State<DetailLaguNasional> {
                   SliderTheme(
                     data: SliderTheme.of(context).copyWith(
                         thumbShape:
-                            const RoundSliderThumbShape(enabledThumbRadius: 0)),
+                            const RoundSliderThumbShape(enabledThumbRadius: 5)),
                     child: Slider(
                       value: _position.inSeconds.toDouble(),
                       onChanged: (double value) async {

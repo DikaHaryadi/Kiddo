@@ -1,6 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -21,6 +23,7 @@ class DetailAnimals extends StatefulWidget {
 class _DetailAnimalsState extends State<DetailAnimals> {
   final ttsController = Get.put(TtsController());
   bool isPlaying = false;
+  bool isShaking = false;
   late final AudioPlayer player;
   late final UrlSource path;
 
@@ -106,6 +109,21 @@ class _DetailAnimalsState extends State<DetailAnimals> {
     setState(() {});
   }
 
+  void _handleTap() {
+    setState(() {
+      isShaking = true;
+    });
+
+    ttsController.textToSpeech(widget.model.titleAnimal, 'en-US');
+
+    // Menghentikan animasi shake setelah beberapa waktu
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() {
+        isShaking = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -149,8 +167,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                     ),
                     child: Center(
                         child: TextButton(
-                      onPressed: () => ttsController.textToSpeech(
-                          widget.model.titleAnimal, 'en-US'),
+                      onPressed: _handleTap,
                       child: Text(
                         widget.model.titleAnimal,
                         style: Theme.of(context).textTheme.displaySmall,
@@ -177,22 +194,18 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                            Colors.white.withOpacity(0.15),
-                            Colors.white.withOpacity(0.05),
+                            Colors.white.withOpacity(0.7),
+                            Colors.white.withOpacity(0.5),
                           ],
                         ),
                       ),
-                      child: InkWell(
-                        onTap: () => ttsController.textToSpeech(
-                            widget.model.deskripsiAnimal, 'en-US'),
-                        child: Text(
-                          widget.model.deskripsiAnimal,
-                          textAlign: TextAlign.justify,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.apply(color: kBlack),
-                        ),
+                      child: Text(
+                        widget.model.deskripsiAnimal,
+                        textAlign: TextAlign.justify,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.apply(color: kBlack),
                       ),
                     ),
                     Positioned(
@@ -223,9 +236,24 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                           ],
                         ),
                         child: Center(
-                          child: Text(
-                            'Description',
-                            style: Theme.of(context).textTheme.displaySmall,
+                          child: Row(
+                            children: [
+                              Text(
+                                'Description',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displaySmall
+                                    ?.apply(color: kWhite),
+                              ),
+                              const SizedBox(width: 8.0),
+                              InkWell(
+                                  onTap: () => ttsController.textToSpeech(
+                                      widget.model.deskripsiAnimal, 'en-US'),
+                                  child: const Icon(
+                                    Iconsax.play_circle,
+                                    color: kWhite,
+                                  )),
+                            ],
                           ),
                         ),
                       ),
@@ -240,7 +268,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                   Container(
                       width: Get.width / 1.5,
                       padding: const EdgeInsets.only(
-                          top: 25.0, left: 16.0, right: 16.0, bottom: 16.0),
+                          top: 25.0, left: 45.0, right: 16.0, bottom: 16.0),
                       margin: const EdgeInsets.only(left: 56.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
@@ -250,8 +278,8 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
                           colors: [
-                            Colors.white.withOpacity(0.15),
-                            Colors.white.withOpacity(0.05),
+                            Colors.white.withOpacity(0.7),
+                            Colors.white.withOpacity(0.5),
                           ],
                         ),
                       ),
@@ -284,7 +312,7 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                         ],
                       )),
                   Positioned(
-                      left: -50.0,
+                      left: -45.0,
                       top: -35.0,
                       child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -309,16 +337,19 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                     blurStyle: BlurStyle.normal,
                                     blurRadius: 1),
                               ]),
-                          child: Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                    image: NetworkImage(
-                                      widget.model.imageContent,
-                                    ),
-                                    fit: BoxFit.fitWidth)),
+                          child: GestureDetector(
+                            onTap: _handleTap,
+                            child: Container(
+                              width: 60,
+                              height: 60,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                        widget.model.imageContent,
+                                      ),
+                                      fit: BoxFit.fitWidth)),
+                            ).animate().shake(duration: 1000.ms),
                           )))
                 ],
               ),

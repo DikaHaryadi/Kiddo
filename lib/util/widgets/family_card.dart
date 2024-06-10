@@ -64,10 +64,6 @@ class FamilyCardScreen extends StatelessWidget {
                     model.subtitle,
                     maxFontSize: 14,
                     minFontSize: 12,
-                    style: GoogleFonts.montserrat(
-                      fontWeight: FontWeight.bold,
-                      color: Colors.orangeAccent,
-                    ),
                   ),
                 ],
               ),

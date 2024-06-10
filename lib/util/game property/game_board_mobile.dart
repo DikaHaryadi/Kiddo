@@ -11,6 +11,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:info_popup/info_popup.dart';
+import 'package:intl/intl.dart';
 import 'package:textspeech/auth/controller/auth_controller.dart';
 import 'package:textspeech/controllers/anchor_ads_controller.dart';
 import 'package:textspeech/firebase/references.dart';
@@ -90,7 +91,9 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
       onAdDismissedFullScreenContent: (RewardedAd ad) {
         ad.dispose();
         _createRewardedAd();
-        saveGameStatus(bestTime);
+        saveGameStatus(
+          duration.toString().split('.').first.padLeft(8, "0"),
+        );
         Get.offNamed('/memo-game'); // Navigasi ke /home
       },
       onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
@@ -126,15 +129,31 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     checkGameStatus();
   }
 
-  void saveGameStatus(int bestTime) async {
+  void saveGameStatus(String bestTime) async {
+    var date = DateTime.now(); //timeStamp = 1630506255982
+//  var d12 = DateFormat('MM/dd/yyyy, HH:mm:ss a').format(date); // 12/31/2021, 10:10:10 PM
+
+    var dt2 = (date.toUtc().millisecondsSinceEpoch ~/ 1000).toInt();
+
+    /// Converts back the base [DateTime] value to [int].
+    print(dt2);
     print('loaded save best score');
     var batch = fireStore.batch();
+    String level = '';
     final memoUser = fireStore.collection('Users');
     User? user = AuthenticationRepository.instance.authUser;
+    setState(() {
+      level = widget.gameLevel == 4
+          ? 'Easy'
+          : widget.gameLevel == 6
+              ? 'Medium'
+              : 'Hard';
+    });
     if (user == null) return;
     batch
         .set(memoUser.doc(user.email).collection('memory_game').doc(user.uid), {
-      'Tingkat Kesulitan': widget.gameLevel.toString(), //disini
+      'id': dt2,
+      'Tingkat Kesulitan': level, //disini
       'score': bestTime
     });
     print('berhasil ke save memory game ke firebase');

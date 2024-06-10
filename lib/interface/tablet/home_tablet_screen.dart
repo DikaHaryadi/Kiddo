@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -47,7 +49,7 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                   children: [
                     Container(
                             width: double.infinity,
-                            height: 200,
+                            height: Get.height / 5.5,
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15.0, vertical: 20.0),
                             decoration: const BoxDecoration(
@@ -100,7 +102,7 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                                           ),
                                           Image.asset(
                                             'assets/icon/logo.png',
-                                            width: 110,
+                                            height: 115,
                                           ),
                                         ]))))
                         .animate(delay: const Duration(milliseconds: 200))
@@ -515,11 +517,10 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                                                               child:
                                                                   GestureDetector(
                                                                 onTap: () {
-                                                                  Get.offNamed(
-                                                                      contentKiddo[
-                                                                              index]
-                                                                          [
-                                                                          'routePath']!);
+                                                                  Get.toNamed(contentKiddo[
+                                                                          index]
+                                                                      [
+                                                                      'routePath']!);
                                                                 },
                                                                 child:
                                                                     Container(

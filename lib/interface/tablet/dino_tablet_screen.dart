@@ -1,5 +1,8 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -8,7 +11,7 @@ import 'package:textspeech/controllers/tts_controller.dart';
 import 'package:textspeech/models/dino_model.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
 
-class DinoTabletScreen extends StatelessWidget {
+class DinoTabletScreen extends StatefulWidget {
   final DinoController controller;
   final DinoModel model;
 
@@ -17,13 +20,124 @@ class DinoTabletScreen extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<DinoTabletScreen> createState() => _DinoTabletScreenState();
+}
+
+class _DinoTabletScreenState extends State<DinoTabletScreen> {
+  late bool isPlayingTitleVoice;
+  late bool isPlayingDeskripsiVoice;
+  late bool isPlayingSong;
+
+  late final AudioPlayer player;
+  late UrlSource pathTitleVoice;
+  late UrlSource pathDeskripsiVoice;
+  late UrlSource pathSong;
+
+  @override
+  void initState() {
+    super.initState();
+    player = AudioPlayer();
+    pathTitleVoice = UrlSource(widget.model.titleVoice);
+    pathDeskripsiVoice = UrlSource(widget.model.deskripsiVoice);
+    pathSong = UrlSource(widget.model.song);
+    isPlayingTitleVoice = false;
+    isPlayingDeskripsiVoice = false;
+    isPlayingSong = false;
+    player.onPlayerStateChanged.listen((PlayerState state) {
+      if (state == PlayerState.completed) {
+        setState(() {
+          isPlayingTitleVoice = false;
+          isPlayingDeskripsiVoice = false;
+          isPlayingSong = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+
+  void playPauseTitleVoice() async {
+    if (isPlayingTitleVoice && player.state == PlayerState.playing) {
+      await player.pause();
+    } else {
+      // Stop any other playing audio before starting the new one
+      if (isPlayingDeskripsiVoice || isPlayingSong) {
+        await player.stop();
+        isPlayingDeskripsiVoice = false;
+        isPlayingSong = false;
+      }
+      await player.play(pathTitleVoice);
+    }
+    setState(() {
+      isPlayingTitleVoice = !isPlayingTitleVoice;
+    });
+  }
+
+  void playPauseDeskripsiVoice() async {
+    if (isPlayingDeskripsiVoice && player.state == PlayerState.playing) {
+      await player.pause();
+    } else {
+      // Stop any other playing audio before starting the new one
+      if (isPlayingTitleVoice || isPlayingSong) {
+        await player.stop();
+        isPlayingTitleVoice = false;
+        isPlayingSong = false;
+      }
+      await player.play(pathDeskripsiVoice);
+    }
+    setState(() {
+      isPlayingDeskripsiVoice = !isPlayingDeskripsiVoice;
+    });
+  }
+
+  void playPauseSong() async {
+    if (isPlayingSong && player.state == PlayerState.playing) {
+      await player.pause();
+    } else {
+      // Stop any other playing audio before starting the new one
+      if (isPlayingTitleVoice || isPlayingDeskripsiVoice) {
+        await player.stop();
+        isPlayingTitleVoice = false;
+        isPlayingDeskripsiVoice = false;
+      }
+      await player.play(pathSong);
+    }
+    setState(() {
+      isPlayingSong = !isPlayingSong;
+    });
+  }
+
+  void stopAudio() {
+    player.stop();
+    isPlayingTitleVoice = false;
+    isPlayingDeskripsiVoice = false;
+    isPlayingSong = false;
+    setState(() {});
+  }
+
+  @override
+  void didUpdateWidget(covariant DinoTabletScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Update pathTitleVoice when widget.model changes
+    if (widget.model != oldWidget.model) {
+      pathTitleVoice = UrlSource(widget.model.titleVoice);
+      pathDeskripsiVoice = UrlSource(widget.model.deskripsiVoice);
+      pathSong = UrlSource(widget.model.song);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final ttsController = Get.put(TtsController());
 
     return GestureDetector(
       onTap: () {
-        if (controller.collapse.value) {
-          controller.toggleCollapse();
+        if (widget.controller.collapse.value) {
+          widget.controller.toggleCollapse();
         }
       },
       child: Stack(
@@ -31,7 +145,7 @@ class DinoTabletScreen extends StatelessWidget {
           // CachedNetworkImage with conditional positioning
           Positioned.fill(
             child: CachedNetworkImage(
-              imageUrl: model.imageContent,
+              imageUrl: widget.model.imageContent,
               fit: BoxFit.fill,
               placeholder: (context, url) =>
                   const Center(child: CircularProgressIndicator()),
@@ -41,7 +155,7 @@ class DinoTabletScreen extends StatelessWidget {
           ),
           // Expanded content when collapsed
           Obx(() {
-            if (!controller.collapse.value) {
+            if (!widget.controller.collapse.value) {
               return Positioned(
                 left: 0,
                 top: 16,
@@ -67,9 +181,9 @@ class DinoTabletScreen extends StatelessWidget {
                     scrollbarOrientation: ScrollbarOrientation.left,
                     thickness: 5,
                     child: ListView.builder(
-                      itemCount: controller.dinoModel.length,
+                      itemCount: widget.controller.dinoModel.length,
                       itemBuilder: (context, index) {
-                        final dino = controller.dinoModel[index];
+                        final dino = widget.controller.dinoModel[index];
                         return AnimationConfiguration.staggeredList(
                           position: index,
                           delay: const Duration(milliseconds: 250),
@@ -79,7 +193,8 @@ class DinoTabletScreen extends StatelessWidget {
                             child: FadeInAnimation(
                               child: GestureDetector(
                                 onTap: () {
-                                  controller.selectedDino.value = dino;
+                                  stopAudio();
+                                  widget.controller.selectedDino.value = dino;
                                 },
                                 child: ListTile(
                                   contentPadding: const EdgeInsets.symmetric(
@@ -131,7 +246,7 @@ class DinoTabletScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     IconButton(
-                      onPressed: () => controller.toggleCollapse(),
+                      onPressed: () => widget.controller.toggleCollapse(),
                       icon: const Icon(
                         Iconsax.eye,
                         color: kWhite,
@@ -153,7 +268,7 @@ class DinoTabletScreen extends StatelessWidget {
           }),
           // Additional content at the bottom
           Obx(() {
-            if (!controller.collapse.value) {
+            if (!widget.controller.collapse.value) {
               return Stack(
                 children: [
                   Positioned(
@@ -177,25 +292,65 @@ class DinoTabletScreen extends StatelessWidget {
                         ),
                       ),
                       child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          InkWell(
-                            onTap: () => ttsController.textToSpeech(
-                                model.title, "en-US"),
-                            child: Text(
-                              model.title,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displaySmall
-                                  ?.apply(color: kWhite),
-                            ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                onTap: playPauseSong,
+                                child: Icon(
+                                  isPlayingSong
+                                      ? Iconsax.musicnote1
+                                      : Iconsax.musicnote,
+                                  color: kWhite,
+                                  size: 40,
+                                ),
+                              ),
+                              const SizedBox(width: 64.0),
+                              Expanded(
+                                flex: 3,
+                                child: Text(
+                                  widget.model.title,
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displaySmall
+                                      ?.apply(color: kWhite),
+                                ),
+                              ),
+                              Row(
+                                children: [
+                                  InkWell(
+                                    onTap: playPauseTitleVoice,
+                                    child: Icon(
+                                      isPlayingTitleVoice
+                                          ? Iconsax.pause
+                                          : Iconsax.play_circle,
+                                      color: kWhite,
+                                      size: 40,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16.0),
+                                  InkWell(
+                                    onTap: playPauseDeskripsiVoice,
+                                    child: Icon(
+                                      isPlayingDeskripsiVoice
+                                          ? Iconsax.pause
+                                          : Iconsax.play_circle,
+                                      color: kWhite,
+                                      size: 40,
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
                           ),
                           const SizedBox(height: 8.0),
                           InkWell(
                             onTap: () => ttsController.textToSpeech(
-                                model.jenisMakanan, "en-US"),
+                                widget.model.jenisMakanan, "en-US"),
                             child: Text(
-                              model.jenisMakanan,
+                              widget.model.jenisMakanan,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
@@ -203,80 +358,13 @@ class DinoTabletScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 5.0),
-                          InkWell(
-                            onTap: () => ttsController.textToSpeech(
-                                model.deskripsi, "en-US"),
-                            child: Text(
-                              model.deskripsi,
-                              textAlign: TextAlign.justify,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.apply(color: kWhite),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 20.0,
-                    left: 24.0,
-                    right: 24.0,
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 16.0),
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        border:
-                            Border.all(color: Colors.white.withOpacity(0.13)),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            kBlack.withOpacity(0.15),
-                            kBlack.withOpacity(0.05),
-                          ],
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () => ttsController.textToSpeech(
-                                model.title, "en-US"),
-                            child: Text(
-                              model.title,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displaySmall
-                                  ?.apply(color: kWhite),
-                            ),
-                          ),
-                          const SizedBox(height: 8.0),
-                          InkWell(
-                            onTap: () => ttsController.textToSpeech(
-                                model.jenisMakanan, "en-US"),
-                            child: Text(
-                              model.jenisMakanan,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.apply(color: kWhite),
-                            ),
-                          ),
-                          const SizedBox(height: 5.0),
-                          InkWell(
-                            onTap: () => ttsController.textToSpeech(
-                                model.deskripsi, "en-US"),
-                            child: Text(
-                              model.deskripsi,
-                              textAlign: TextAlign.justify,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.apply(color: kWhite),
-                            ),
+                          Text(
+                            widget.model.deskripsi,
+                            textAlign: TextAlign.justify,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.apply(color: kWhite),
                           ),
                         ],
                       ),
@@ -291,7 +379,7 @@ class DinoTabletScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         IconButton(
-                          onPressed: () => controller.toggleCollapse(),
+                          onPressed: () => widget.controller.toggleCollapse(),
                           icon: const Icon(
                             Iconsax.eye,
                             color: kWhite,
@@ -316,7 +404,7 @@ class DinoTabletScreen extends StatelessWidget {
                 children: [
                   Positioned.fill(
                     child: CachedNetworkImage(
-                      imageUrl: model.imageContent,
+                      imageUrl: widget.model.imageContent,
                       fit: BoxFit.fill,
                       placeholder: (context, url) =>
                           const Center(child: CircularProgressIndicator()),
@@ -333,9 +421,9 @@ class DinoTabletScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         IconButton(
-                          onPressed: () => controller.toggleCollapse(),
+                          onPressed: () => widget.controller.toggleCollapse(),
                           icon: Icon(
-                            !controller.collapse.value
+                            !widget.controller.collapse.value
                                 ? Iconsax.eye
                                 : Iconsax.eye_slash,
                             color: kWhite,

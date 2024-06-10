@@ -6,6 +6,9 @@ class DinoModel {
   final String jenisMakanan;
   final String imageContent;
   final String deskripsi;
+  final String titleVoice;
+  final String deskripsiVoice;
+  final String song;
 
   DinoModel({
     required this.id,
@@ -13,11 +16,21 @@ class DinoModel {
     required this.jenisMakanan,
     required this.imageContent,
     required this.deskripsi,
+    required this.titleVoice,
+    required this.deskripsiVoice,
+    required this.song,
   });
 
   // Factory method to create an empty DinoModel
   factory DinoModel.empty() => DinoModel(
-      id: '', title: '', jenisMakanan: '', imageContent: '', deskripsi: '');
+      id: '',
+      title: '',
+      jenisMakanan: '',
+      imageContent: '',
+      deskripsi: '',
+      titleVoice: '',
+      deskripsiVoice: '',
+      song: '');
 
   // Convert DinoModel to JSON structure for storing data in Firestore
   Map<String, dynamic> toJson() {
@@ -26,6 +39,9 @@ class DinoModel {
       'Jenis_Makanan': jenisMakanan,
       'ImageContent': imageContent,
       'Deskripsi': deskripsi,
+      'Title_Voice': titleVoice,
+      'Deskripsi_Voice': deskripsiVoice,
+      'Song': song
     };
   }
 
@@ -35,12 +51,14 @@ class DinoModel {
     final data = document.data();
     if (data != null) {
       return DinoModel(
-        id: document.id,
-        title: data['Title'] ?? '',
-        jenisMakanan: data['Jenis_Makanan'] ?? '',
-        imageContent: data['ImageContent'] ?? '',
-        deskripsi: data['Deskripsi'] ?? '',
-      );
+          id: document.id,
+          title: data['Title'] ?? '',
+          jenisMakanan: data['Jenis_Makanan'] ?? '',
+          imageContent: data['ImageContent'] ?? '',
+          deskripsi: data['Deskripsi'] ?? '',
+          titleVoice: data['Title_Voice'] ?? '',
+          deskripsiVoice: data['Deskripsi_Voice'] ?? '',
+          song: data['Song'] ?? '');
     } else {
       return DinoModel.empty();
     }

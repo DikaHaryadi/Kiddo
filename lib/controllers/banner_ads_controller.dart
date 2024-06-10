@@ -61,8 +61,7 @@ class BannerAdsController extends GetxController {
         isAdsLoaded.value &&
         adSize.value != null) {
       return StatefulBuilder(
-          builder: (context, setState) => Container(
-                padding: const EdgeInsets.only(top: 30.0),
+          builder: (context, setState) => SizedBox(
                 width: _adWidth,
                 height: adSize.value!.height.toDouble(),
                 child: AdWidget(ad: inlineAdaptiveAd.value!),

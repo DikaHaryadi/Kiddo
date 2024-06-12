@@ -22,12 +22,13 @@ class LoginMobileScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 12),
               AutoSizeText(
-                'Welcome back',
+                'Welcome back'.tr,
                 style: Theme.of(context).textTheme.displayMedium,
               ),
               const SizedBox(height: 15),
               AutoSizeText(
-                  'Come on in and explore the world of fun learning with us! Please login before playing',
+                  'Come on in and explore the world of fun learning with us! Please login before playing'
+                      .tr,
                   style: GoogleFonts.aBeeZee(
                       color: kDark, fontWeight: FontWeight.w400)),
             ],
@@ -42,14 +43,14 @@ class LoginMobileScreen extends StatelessWidget {
                       controller: controller.email,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Email is required.';
+                          return 'Email is required.'.tr;
                         }
 
                         final emailRegExp =
                             RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
 
                         if (!emailRegExp.hasMatch(value)) {
-                          return 'Invalid email address.';
+                          return 'Invalid email address.'.tr;
                         }
                         return null;
                       },
@@ -65,14 +66,14 @@ class LoginMobileScreen extends StatelessWidget {
                         obscureText: controller.hidePassword.value,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Password is required';
+                            return 'Password is required'.tr;
                           }
 
                           return null;
                         },
                         decoration: InputDecoration(
                           prefixIcon: const Icon(Iconsax.password_check),
-                          labelText: 'Password',
+                          labelText: 'Password'.tr,
                           suffixIcon: IconButton(
                               onPressed: () => controller.hidePassword.value =
                                   !controller.hidePassword.value,
@@ -102,7 +103,7 @@ class LoginMobileScreen extends StatelessWidget {
                               ),
                             ),
                             AutoSizeText(
-                              'Remember Me',
+                              'Remember Me'.tr,
                               style: Theme.of(context).textTheme.bodyMedium,
                             )
                           ],
@@ -113,7 +114,7 @@ class LoginMobileScreen extends StatelessWidget {
                             onPressed: () =>
                                 Get.to(() => const ForgetPassword()),
                             child: AutoSizeText(
-                              'Forgot Password?',
+                              'Forgot Password?'.tr,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
@@ -129,9 +130,9 @@ class LoginMobileScreen extends StatelessWidget {
                           style: const ButtonStyle(
                               backgroundColor:
                                   MaterialStatePropertyAll(Colors.blueAccent)),
-                          child: const AutoSizeText(
-                            'Sign In',
-                            style: TextStyle(color: Colors.white),
+                          child: AutoSizeText(
+                            'Sign In'.tr,
+                            style: const TextStyle(color: Colors.white),
                           )),
                     ),
                     const SizedBox(height: 10),
@@ -139,7 +140,7 @@ class LoginMobileScreen extends StatelessWidget {
                       width: double.infinity,
                       child: OutlinedButton(
                           onPressed: () => Get.toNamed('/signup'),
-                          child: const AutoSizeText('Create Account')),
+                          child: AutoSizeText('Create Account'.tr)),
                     ),
                   ],
                 ),
@@ -156,7 +157,7 @@ class LoginMobileScreen extends StatelessWidget {
                 endIndent: 5,
               )),
               AutoSizeText(
-                'or sign in with',
+                'or sign in with'.tr,
                 style: Theme.of(context)
                     .textTheme
                     .labelMedium!

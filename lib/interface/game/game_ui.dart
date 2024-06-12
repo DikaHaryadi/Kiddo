@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -43,7 +41,7 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
     } else {
       // Tampilkan pesan atau indikator bahwa level harus dipilih terlebih dahulu
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please select a game level first.')),
+        SnackBar(content: Text('Please select a game level first...'.tr)),
       );
     }
   }
@@ -51,52 +49,6 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: isMobile(context)
-      //     ? AppBar(
-      //         backgroundColor: const Color(0xFFFEF8F2),
-      //         automaticallyImplyLeading: false,
-      //         leading: IconButton(
-      //             onPressed: () => Get.offNamed('/home'),
-      //             icon: const Icon(
-      //               Icons.arrow_back_ios,
-      //               color: Color(0xFFFE9081),
-      //             ).animate(delay: const Duration(milliseconds: 250)).slideX(
-      //                 begin: -2,
-      //                 end: 0,
-      //                 duration: const Duration(milliseconds: 800))),
-      //         title: Text(
-      //           'Memory Game',
-      //           style: Theme.of(context).textTheme.headlineMedium!.apply(
-      //                 color: const Color(0xFFFE9081),
-      //               ),
-      //         )
-      //             .animate(delay: const Duration(milliseconds: 250))
-      //             .fadeIn(duration: const Duration(milliseconds: 800)),
-      //         centerTitle: true,
-      //       )
-      //     : AppBar(
-      //         backgroundColor: const Color(0xFFFEF8F2),
-      //         automaticallyImplyLeading: false,
-      // leading: IconButton(
-      //   onPressed: () => Get.offNamed('/home'),
-      //   padding: const EdgeInsets.only(left: 24.0),
-      //   icon: const Icon(
-      //     Icons.arrow_back_ios,
-      //     color: Color(0xFFFE9081),
-      //   ).animate(delay: const Duration(milliseconds: 250)).fadeIn(
-      //       duration: const Duration(milliseconds: 500),
-      //       curve: Curves.easeInOutCubic),
-      // ),
-      //         title: Text(
-      //           'Memory Game',
-      //           style: Theme.of(context).textTheme.headlineMedium!.apply(
-      //                 color: const Color(0xFFFE9081),
-      //               ),
-      //         ).animate(delay: const Duration(milliseconds: 250)).fadeIn(
-      //             duration: const Duration(milliseconds: 500),
-      //             curve: Curves.easeInOutCubic),
-      //         centerTitle: true,
-      //       ),
       body: isMobile(context)
           ? SizedBox(
               width: Get.width,
@@ -107,14 +59,70 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                     image: DecorationImage(
                         image: AssetImage('assets/games/bg_memory_game.png'),
                         fit: BoxFit.fill)),
-                child: Column(children: [
-                  InkWell(
-                    onTap: () => Get.offNamed('/home'),
-                    child: Container(
-                            margin: const EdgeInsets.only(left: 24.0),
-                            padding: const EdgeInsets.all(12.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () => Get.offNamed('/home'),
+                        child: Container(
+                                margin: const EdgeInsets.only(left: 24.0),
+                                padding: const EdgeInsets.all(12.0),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: [
+                                      Colors.white.withOpacity(0.7),
+                                      Colors.white.withOpacity(0.5),
+                                    ],
+                                  ),
+                                ),
+                                child: const Icon(
+                                  Icons.arrow_back_ios,
+                                  color: Color(0xFFFE9081),
+                                  size: 30,
+                                ))
+                            .animate(delay: const Duration(milliseconds: 250))
+                            .fadeIn(
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.easeInOutCubic),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 24.0, right: 24.0, top: 10.0),
+                        child: Text(
+                          "In this game you'll be honing your memory in choosing the same card, the shorter the time it takes you to complete the chosen level, the better!"
+                              .tr,
+                        )
+                            .animate(delay: const Duration(milliseconds: 250))
+                            .fadeIn(
+                                duration: const Duration(milliseconds: 800)),
+                      ),
+                      const SizedBox(height: 8.0),
+                      GameOptions(
+                        onLevelSelected: _onLevelSelected,
+                      )
+                          .animate(
+                            delay: const Duration(milliseconds: 500),
+                          )
+                          .slideY(
+                            begin: 5,
+                            end: 0,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.bounceInOut,
+                          ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: GestureDetector(
+                          onTap: _startGame,
+                          child: Container(
+                            width: 270,
+                            height: 60,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(30.0),
+                              border: Border.all(
+                                  color: Colors.white.withOpacity(0.13)),
                               gradient: LinearGradient(
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
@@ -124,86 +132,34 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                                 ],
                               ),
                             ),
-                            child: const Icon(
-                              Icons.arrow_back_ios,
-                              color: Color(0xFFFE9081),
-                              size: 30,
-                            ))
-                        .animate(delay: const Duration(milliseconds: 250))
-                        .fadeIn(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeInOutCubic),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 24.0, right: 24.0, top: 10.0),
-                    child: const Text(
-                      "In this game you'll be honing your memory in choosing the same card, the shorter the time it takes you to complete the chosen level, the better!",
-                    )
-                        .animate(delay: const Duration(milliseconds: 250))
-                        .fadeIn(duration: const Duration(milliseconds: 800)),
-                  ),
-                  const SizedBox(height: 8.0),
-                  GameOptions(
-                    onLevelSelected: _onLevelSelected,
-                  )
-                      .animate(
-                        delay: const Duration(milliseconds: 500),
-                      )
-                      .slideY(
-                        begin: 5,
-                        end: 0,
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.bounceInOut,
-                      ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: GestureDetector(
-                      onTap: _startGame,
-                      child: Container(
-                        width: 270,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30.0),
-                          border:
-                              Border.all(color: Colors.white.withOpacity(0.13)),
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              Colors.white.withOpacity(0.7),
-                              Colors.white.withOpacity(0.5),
-                            ],
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Iconsax.backward,
+                                  size: 30,
+                                  color: kWhite,
+                                ),
+                                const SizedBox(width: 25.0),
+                                Text(
+                                  'Start Game'.tr,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displaySmall
+                                      ?.apply(color: kWhite),
+                                ),
+                                const SizedBox(width: 25.0),
+                                const Icon(
+                                  Iconsax.forward,
+                                  size: 30,
+                                  color: kWhite,
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(
-                              Iconsax.backward,
-                              size: 30,
-                              color: kWhite,
-                            ),
-                            const SizedBox(width: 25.0),
-                            Text(
-                              'Start Game',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displaySmall
-                                  ?.apply(color: kWhite),
-                            ),
-                            const SizedBox(width: 25.0),
-                            const Icon(
-                              Iconsax.forward,
-                              size: 30,
-                              color: kWhite,
-                            )
-                          ],
-                        ),
                       ),
-                    ),
-                  ),
-                ]),
+                    ]),
               ),
             )
           : SizedBox(
@@ -248,7 +204,8 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                       padding: const EdgeInsets.only(
                           left: 24.0, right: 24.0, top: 20.0),
                       child: Text(
-                        "In this game you'll be honing your memory in choosing the same card, the shorter the time it takes you to complete the chosen level, the better!",
+                        "In this game you'll be honing your memory in choosing the same card, the shorter the time it takes you to complete the chosen level, the better!"
+                            .tr,
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium
@@ -302,7 +259,7 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                               ),
                               const SizedBox(width: 25.0),
                               Text(
-                                'Start Game',
+                                'Start Game'.tr,
                                 style: Theme.of(context).textTheme.displaySmall,
                               ),
                               const SizedBox(width: 25.0),

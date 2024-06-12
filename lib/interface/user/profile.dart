@@ -4,18 +4,26 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/auth/controller/user/user_controller.dart';
 import 'package:textspeech/auth/controller/auth_controller.dart';
+import 'package:textspeech/controllers/language_controller.dart';
 import 'package:textspeech/interface/user/edit_profile.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:textspeech/util/etc/curved_edges.dart';
+import 'package:textspeech/util/etc/dep_lang.dart';
 import 'package:textspeech/util/etc/responsive.dart';
 import 'package:textspeech/util/shimmer/shimmer.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(UserController());
+
+    final List<String> items = [
+      'assets/images/indonesia.jpg',
+      'assets/images/english.png',
+    ];
+
     return Scaffold(
       backgroundColor: const Color(0xFFfab800),
       appBar: isMobile(context)
@@ -24,17 +32,18 @@ class ProfileScreen extends StatelessWidget {
               automaticallyImplyLeading: false,
               backgroundColor: Colors.blueAccent,
               leading: IconButton(
-                  onPressed: () {
-                    Future.delayed(const Duration(milliseconds: 250), () {
-                      Get.offNamed('/home');
-                    });
-                  },
-                  icon: const Icon(
-                    Icons.arrow_back_ios,
-                    color: kWhite,
-                  )
-                      .animate(delay: const Duration(milliseconds: 250))
-                      .slideX(begin: -2, end: 0)),
+                onPressed: () {
+                  Future.delayed(const Duration(milliseconds: 250), () {
+                    Get.offNamed('/home');
+                  });
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: kWhite,
+                )
+                    .animate(delay: const Duration(milliseconds: 250))
+                    .slideX(begin: -2, end: 0),
+              ),
             )
           : AppBar(),
       body: isMobile(context)
@@ -42,136 +51,130 @@ class ProfileScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ClipPath(
-                    clipper: TCustomCurvedEdges(),
-                    child: Container(
-                      color: Colors.blueAccent,
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 24.0, vertical: 12.0),
-                        child: Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Obx(() {
-                                  final networkImage =
-                                      controller.user.value.profilePicture;
-                                  final image = networkImage.isNotEmpty
-                                      ? networkImage
-                                      : 'assets/images/cat.png';
-                                  return controller.imageUploading.value
-                                      ? const DShimmerEffect(
-                                          width: 80, height: 80, radius: 80)
-                                      : CircularImage(
-                                          image: image,
-                                          widht: 70,
-                                          height: 70,
-                                          isNetworkImage:
-                                              networkImage.isNotEmpty,
-                                        );
-                                }),
-                                const SizedBox(width: 16.0),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Obx(() {
-                                      if (controller.profileLoading.value) {
-                                        return const DShimmerEffect(
-                                          width: 80,
-                                          height: 15,
-                                        );
-                                      } else {
-                                        return Text(
-                                          controller.user.value.fullName,
+                  clipper: TCustomCurvedEdges(),
+                  child: Container(
+                    color: Colors.blueAccent,
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24.0, vertical: 12.0),
+                      child: Column(
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Obx(() {
+                                final networkImage =
+                                    controller.user.value.profilePicture;
+                                final image = networkImage.isNotEmpty
+                                    ? networkImage
+                                    : 'assets/images/cat.png';
+                                return controller.imageUploading.value
+                                    ? const DShimmerEffect(
+                                        width: 80, height: 80, radius: 80)
+                                    : CircularImage(
+                                        image: image,
+                                        widht: 70,
+                                        height: 70,
+                                        isNetworkImage: networkImage.isNotEmpty,
+                                      );
+                              }),
+                              const SizedBox(width: 16.0),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Obx(() {
+                                    if (controller.profileLoading.value) {
+                                      return const DShimmerEffect(
+                                          width: 80, height: 15);
+                                    } else {
+                                      return Text(
+                                        controller.user.value.fullName,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall!
+                                            .apply(color: Colors.red),
+                                      );
+                                    }
+                                  }),
+                                  const SizedBox(height: 8.0),
+                                  Obx(() {
+                                    if (controller.profileLoading.value) {
+                                      return const DShimmerEffect(
+                                          width: 80, height: 15);
+                                    } else {
+                                      return Text(
+                                        controller.user.value.email,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headlineSmall!
+                                            .apply(color: Colors.red),
+                                      );
+                                    }
+                                  }),
+                                ],
+                              )
+                            ],
+                          ),
+                          const SizedBox(height: 12.0),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: GestureDetector(
+                                  onTap: () => Get.toNamed('/edit-profile'),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: kWhite),
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: Center(
+                                      child: TextButton(
+                                        onPressed: () =>
+                                            Get.toNamed('/edit-profile'),
+                                        child: Text(
+                                          'Edit Profile'.tr,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .headlineSmall!
-                                              .apply(color: Colors.red),
-                                        );
-                                      }
-                                    }),
-                                    const SizedBox(height: 8.0),
-                                    Obx(() {
-                                      if (controller.profileLoading.value) {
-                                        return const DShimmerEffect(
-                                          width: 80,
-                                          height: 15,
-                                        );
-                                      } else {
-                                        return Text(
-                                          controller.user.value.email,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineSmall!
-                                              .apply(color: Colors.red),
-                                        );
-                                      }
-                                    }),
-                                  ],
-                                )
-                              ],
-                            ),
-                            const SizedBox(height: 12.0),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () => Get.toNamed('/edit-profile'),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          border: Border.all(color: kWhite),
-                                          borderRadius:
-                                              BorderRadius.circular(5.0)),
-                                      child: Center(
-                                        child: TextButton(
-                                          onPressed: () =>
-                                              Get.toNamed('/edit-profile'),
-                                          child: Text(
-                                            'Edit Profile',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleMedium
-                                                ?.apply(color: kWhite),
-                                          ),
+                                              .titleMedium
+                                              ?.apply(color: kWhite),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                                const SizedBox(width: 5.0),
-                                Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: kWhite),
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
-                                    child: IconButton(
-                                        onPressed: () =>
-                                            Get.toNamed('/info-app'),
-                                        icon: const Icon(
-                                          Iconsax.info_circle,
-                                          color: kWhite,
-                                        ))),
-                                const SizedBox(width: 5.0),
-                                Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(color: kWhite),
-                                        borderRadius:
-                                            BorderRadius.circular(5.0)),
-                                    child: IconButton(
-                                        onPressed: () =>
-                                            AuthenticationRepository.instance
-                                                .logOut(),
-                                        icon: const Icon(
-                                          Iconsax.logout,
-                                          color: kWhite,
-                                        ))),
-                              ],
-                            )
-                          ],
-                        ),
+                              ),
+                              const SizedBox(width: 5.0),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: kWhite),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                child: IconButton(
+                                  onPressed: () => Get.toNamed('/info-app'),
+                                  icon: const Icon(Iconsax.info_circle,
+                                      color: kWhite),
+                                ),
+                              ),
+                              const SizedBox(width: 5.0),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: kWhite),
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                                child: IconButton(
+                                  onPressed: () => AuthenticationRepository
+                                      .instance
+                                      .logOut(),
+                                  icon: const Icon(Icons.logout, color: kWhite),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
                       ),
-                    )),
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
                   child: Column(
@@ -197,6 +200,76 @@ class ProfileScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
+                // Dropdown Bahasa
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Ganti Bahasa :',
+                      style: Theme.of(context).textTheme.bodyMedium,
+                    ),
+                    SizedBox(
+                      width: 140,
+                      height: 40,
+                      child: DropdownButtonHideUnderline(
+                        child: GetBuilder<LocalizationController>(
+                          builder: (controller) {
+                            return DropdownButton<String>(
+                              isExpanded: true,
+                              value: items[controller.selectedIndex],
+                              onChanged: (String? value) {
+                                int index = items.indexOf(value!);
+                                controller.setLanguage(Locale(
+                                    AppLanguageConstant
+                                        .languages[index].languageCode,
+                                    AppLanguageConstant
+                                        .languages[index].countryCode));
+                                controller.setSelectIndex(index);
+                              },
+                              icon: const Icon(Icons.arrow_drop_down),
+                              selectedItemBuilder: (BuildContext context) {
+                                return items.map<Widget>((String item) {
+                                  return Row(
+                                    children: [
+                                      Image.asset(
+                                        item,
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(item == items[0]
+                                          ? 'Indonesia'
+                                          : 'English'),
+                                    ],
+                                  );
+                                }).toList();
+                              },
+                              items: items
+                                  .map<DropdownMenuItem<String>>((String item) {
+                                return DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        item,
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                      const SizedBox(width: 8),
+                                      Text(item == items[0]
+                                          ? 'Indonesia'
+                                          : 'English'),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                            );
+                          },
+                        ),
+                      ),
+                    )
+                  ],
                 )
               ],
             )

@@ -28,12 +28,13 @@ class ForgetPassword extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AutoSizeText(
-              "Forget password",
+              "Forget password".tr,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 16.0),
             AutoSizeText(
-                "Don't worry sometimes people can forget too. enter your email and we will send you a password reset link",
+                "Don't worry sometimes people can forget too. enter your email and we will send you a password reset link"
+                    .tr,
                 style: GoogleFonts.aBeeZee(
                     color: kGrey, fontWeight: FontWeight.w400)),
             const SizedBox(height: 16.0),
@@ -43,14 +44,14 @@ class ForgetPassword extends StatelessWidget {
                 controller: controller.email,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Email is required.';
+                    return 'Email is required.'.tr;
                   }
 
                   final emailRegExp =
                       RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
 
                   if (!emailRegExp.hasMatch(value)) {
-                    return 'Invalid email address.';
+                    return 'Invalid email address.'.tr;
                   }
                   return null;
                 },
@@ -78,7 +79,7 @@ class ForgetPassword extends StatelessWidget {
                         MaterialStatePropertyAll(Colors.blueAccent)),
                 onPressed: () => controller.sendPasswordResetEmail(),
                 child: AutoSizeText(
-                  'Submit',
+                  'Submit'.tr,
                   style: GoogleFonts.archivoBlack(color: Colors.white),
                 ),
               ),

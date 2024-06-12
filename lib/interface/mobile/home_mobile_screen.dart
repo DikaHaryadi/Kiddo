@@ -59,7 +59,8 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                               children: [
                                 Obx(
                                   () => AutoSizeText(
-                                    'Good ${timeSunPosition.timeOfDay.value}',
+                                    'Good ${timeSunPosition.timeOfDay.value}'
+                                        .tr,
                                     style: Theme.of(context)
                                         .textTheme
                                         .displayMedium
@@ -169,7 +170,7 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                                     height: MediaQuery.of(context).size.height,
                                   ),
                                   Text(
-                                    'Kid Song',
+                                    'Kid Song'.tr,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context)
@@ -211,7 +212,7 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                                     'assets/games/nationalsong.png',
                                   ),
                                   Text(
-                                    'National Anthem',
+                                    'National Anthem'.tr,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context)

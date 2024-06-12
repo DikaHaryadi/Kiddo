@@ -35,7 +35,7 @@ class VerifyEmailScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16.0),
                 AutoSizeText(
-                  'Verify your email address!',
+                  'Verify your email address!'.tr,
                   textAlign: TextAlign.center,
                   minFontSize: 20,
                   maxFontSize: 22,
@@ -51,7 +51,8 @@ class VerifyEmailScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 16.0),
                 AutoSizeText(
-                  'Congratulations! Your Account Awaits: Verify Your Email to Start Learning with us',
+                  'Congratulations! Your Account Awaits: Verify Your Email to Start Learning with us'
+                      .tr,
                   textAlign: TextAlign.center,
                   minFontSize: 14,
                   maxFontSize: 16,
@@ -66,7 +67,7 @@ class VerifyEmailScreen extends StatelessWidget {
                             MaterialStatePropertyAll(Colors.blueAccent)),
                     onPressed: () => controller.checkEmailVerificationStatus(),
                     child: AutoSizeText(
-                      'Continue',
+                      'Continue'.tr,
                       style: GoogleFonts.archivoBlack(color: Colors.white),
                     ),
                   ),
@@ -76,7 +77,7 @@ class VerifyEmailScreen extends StatelessWidget {
                   child: TextButton(
                       onPressed: () => controller.sendEmailVerification(),
                       child: AutoSizeText(
-                        'Resend Email',
+                        'Resend Email'.tr,
                         style: GoogleFonts.archivoBlack(color: kGrey),
                       )),
                 )

@@ -25,29 +25,32 @@ class SplashScreen extends StatelessWidget {
                     children: [
                       OnBoardingPage(
                         image: 'assets/animations/animation1.json',
-                        title: 'Welcome to the World of Knowledge!',
+                        title: 'Welcome to the World of Knowledge!'.tr,
                         titleTextStyle:
                             Theme.of(context).textTheme.headlineMedium,
                         subtitle:
-                            'KiddieLearn Embark on a learning adventure with us. Discover a world of interesting and exciting knowledge!',
+                            'KiddieLearn Embark on a learning adventure with us. Discover a world of interesting and exciting knowledge!'
+                                .tr,
                         bodyTextStyle: Theme.of(context).textTheme.bodyMedium,
                       ),
                       OnBoardingPage(
                           image: 'assets/animations/animation2.json',
-                          title: 'Explore your potential with us!',
+                          title: 'Explore your potential with us!'.tr,
                           titleTextStyle:
                               Theme.of(context).textTheme.headlineMedium,
                           subtitle:
-                              "At KiddieLearn, we believe that every child has tremendous potential. Let's explore interesting topics, and develop your creativity and skills!",
+                              "At KiddieLearn, we believe that every child has tremendous potential. Let's explore interesting topics, and develop your creativity and skills!"
+                                  .tr,
                           bodyTextStyle:
                               Theme.of(context).textTheme.bodyMedium),
                       OnBoardingPage(
                           image: 'assets/animations/animation3.json',
-                          title: 'Learning is Fun with KiddieLearn!',
+                          title: 'Learning is Fun with KiddieLearn!'.tr,
                           titleTextStyle:
                               Theme.of(context).textTheme.headlineMedium,
                           subtitle:
-                              "With KiddieLearn, learning has never been so much fun! Discover learning resources that are interactive, challenging, and tailored to your needs. Let's get started!",
+                              "With KiddieLearn, learning has never been so much fun! Discover learning resources that are interactive, challenging, and tailored to your needs. Let's get started!"
+                                  .tr,
                           bodyTextStyle: Theme.of(context).textTheme.bodyMedium)
                     ],
                   ),
@@ -56,7 +59,7 @@ class SplashScreen extends StatelessWidget {
                       right: 24.0,
                       child: TextButton(
                         onPressed: () => controller.skipPage(),
-                        child: const AutoSizeText('Skip'),
+                        child: AutoSizeText('Skip'.tr),
                       )),
                   Positioned(
                       bottom: kBottomNavigationBarHeight - 20,
@@ -89,29 +92,32 @@ class SplashScreen extends StatelessWidget {
                     children: [
                       OnBoardingPage(
                         image: 'assets/animations/animation1.json',
-                        title: 'Welcome to the World of Knowledge!',
+                        title: 'Welcome to the World of Knowledge!'.tr,
                         titleTextStyle:
                             Theme.of(context).textTheme.headlineLarge,
                         subtitle:
-                            'KiddieLearn Embark on a learning adventure with us. Discover a world of interesting and exciting knowledge!',
+                            'KiddieLearn Embark on a learning adventure with us. Discover a world of interesting and exciting knowledge!'
+                                .tr,
                         bodyTextStyle: Theme.of(context).textTheme.titleLarge,
                       ),
                       OnBoardingPage(
                         image: 'assets/animations/animation2.json',
-                        title: 'Explore your potential with us!',
+                        title: 'Explore your potential with us!'.tr,
                         titleTextStyle:
                             Theme.of(context).textTheme.headlineLarge,
                         subtitle:
-                            "At KiddieLearn, we believe that every child has tremendous potential. Let's explore interesting topics, and develop your creativity and skills!",
+                            "At KiddieLearn, we believe that every child has tremendous potential. Let's explore interesting topics, and develop your creativity and skills!"
+                                .tr,
                         bodyTextStyle: Theme.of(context).textTheme.titleLarge,
                       ),
                       OnBoardingPage(
                         image: 'assets/animations/animation3.json',
-                        title: 'Learning is Fun with KiddieLearn!',
+                        title: 'Learning is Fun with KiddieLearn!'.tr,
                         titleTextStyle:
                             Theme.of(context).textTheme.headlineLarge,
                         subtitle:
-                            "With KiddieLearn, learning has never been so much fun! Discover learning resources that are interactive, challenging, and tailored to your needs. Let's get started!",
+                            "With KiddieLearn, learning has never been so much fun! Discover learning resources that are interactive, challenging, and tailored to your needs. Let's get started!"
+                                .tr,
                         bodyTextStyle: Theme.of(context).textTheme.titleLarge,
                       )
                     ],
@@ -122,7 +128,7 @@ class SplashScreen extends StatelessWidget {
                       child: TextButton(
                         onPressed: () => controller.skipPage(),
                         child: AutoSizeText(
-                          'Skip',
+                          'Skip'.tr,
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                       )),
@@ -155,18 +161,19 @@ class SplashScreen extends StatelessWidget {
 }
 
 class OnBoardingPage extends StatelessWidget {
-  const OnBoardingPage({
-    super.key,
-    required this.image,
-    required this.title,
-    required this.subtitle,
-    this.titleTextStyle,
-    this.bodyTextStyle,
-  });
+  const OnBoardingPage(
+      {super.key,
+      required this.image,
+      required this.title,
+      required this.subtitle,
+      this.titleTextStyle,
+      this.bodyTextStyle,
+      this.language});
 
   final String image, title, subtitle;
   final TextStyle? titleTextStyle;
   final TextStyle? bodyTextStyle;
+  final Widget? language;
 
   @override
   Widget build(BuildContext context) {
@@ -190,6 +197,7 @@ class OnBoardingPage extends StatelessWidget {
             textAlign: TextAlign.center,
             style: bodyTextStyle,
           ),
+          language ?? const SizedBox.shrink()
         ],
       ),
     );

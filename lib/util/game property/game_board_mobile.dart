@@ -339,7 +339,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                             child: Column(
                               children: [
                                 Text(
-                                  'Exit from the game?',
+                                  'Exit from the game?'.tr,
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16),
@@ -353,7 +353,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                                         Get.offAllNamed('/home');
                                       },
                                       child: Text(
-                                        'Exit',
+                                        'Exit'.tr,
                                         style: GoogleFonts.aBeeZee(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 14),
@@ -365,7 +365,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                                         Get.back(result: false);
                                       },
                                       child: Text(
-                                        'Continue',
+                                        'Continue'.tr,
                                         style: GoogleFonts.aBeeZee(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 14),
@@ -395,7 +395,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
               child: Container(
                   width: Get.width,
                   height: Get.height,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                       image: DecorationImage(
                           image: AssetImage('assets/games/bg_board_memo.png'),
                           fit: BoxFit.fill)),
@@ -747,10 +747,10 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            'Game Over',
+            'Game Over'.tr,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          content: const Text('Congratulations! You have completed the game.'),
+          content: Text('Congratulations! You have completed the game...'.tr),
           actions: <Widget>[
             TextButton(
               onPressed: () {

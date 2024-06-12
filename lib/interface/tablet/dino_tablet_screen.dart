@@ -153,124 +153,145 @@ class _DinoTabletScreenState extends State<DinoTabletScreen> {
                   Image.asset('assets/images/Logo_color1.png'),
             ),
           ),
+          Positioned(
+            top: 24.0,
+            left: 24.0,
+            right: 24.0,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Obx(
+                  () => IconButton(
+                    onPressed: () => widget.controller.toggleCollapse(),
+                    icon: Icon(
+                      !widget.controller.collapse.value
+                          ? Iconsax.eye
+                          : Iconsax.eye_slash,
+                      color: kWhite,
+                      size: 40,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 8.0),
+                InkWell(
+                  onTap: playPauseSong,
+                  child: Icon(
+                    isPlayingSong ? Iconsax.pause : Iconsax.musicnote,
+                    color: kWhite,
+                    size: 40,
+                  ),
+                ),
+                const SizedBox(width: 8.0),
+                InkWell(
+                  onTap: playPauseDeskripsiVoice,
+                  child: Icon(
+                    isPlayingDeskripsiVoice
+                        ? Iconsax.pause
+                        : Iconsax.play_circle,
+                    color: kWhite,
+                    size: 40,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () => Get.offNamed('/home'),
+                  icon: const Icon(
+                    Iconsax.back_square,
+                    color: kWhite,
+                    size: 40,
+                  ),
+                ),
+              ],
+            ),
+          ),
           // Expanded content when collapsed
-          Obx(() {
-            if (!widget.controller.collapse.value) {
-              return Positioned(
-                left: 0,
-                top: 16,
-                bottom: Get.height / 3.5,
-                width: Get.width / 3,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                      topRight: Radius.circular(30.0),
-                      bottomRight: Radius.circular(30.0),
-                    ),
-                    border: Border.all(color: kBlack.withOpacity(0.13)),
-                    gradient: LinearGradient(
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                      colors: [
-                        Colors.white.withOpacity(0.5),
-                        Colors.white.withOpacity(0.3),
-                      ],
-                    ),
-                  ),
-                  child: Scrollbar(
-                    scrollbarOrientation: ScrollbarOrientation.left,
-                    thickness: 5,
-                    child: ListView.builder(
-                      itemCount: widget.controller.dinoModel.length,
-                      itemBuilder: (context, index) {
-                        final dino = widget.controller.dinoModel[index];
-                        return AnimationConfiguration.staggeredList(
-                          position: index,
-                          delay: const Duration(milliseconds: 250),
-                          duration: const Duration(milliseconds: 1000),
-                          child: SlideAnimation(
-                            verticalOffset: 44.0,
-                            child: FadeInAnimation(
-                              child: GestureDetector(
-                                onTap: () {
-                                  stopAudio();
-                                  widget.controller.selectedDino.value = dino;
-                                },
-                                child: ListTile(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    vertical: 15.0,
-                                    horizontal: 20.0,
-                                  ),
-                                  leading: ClipRRect(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    child: CachedNetworkImage(
-                                      imageUrl: dino.imageContent,
-                                      fit: BoxFit.cover,
-                                      width: 60,
-                                      height: 60,
-                                      placeholder: (context, url) => Container(
-                                        alignment: Alignment.center,
-                                        child:
-                                            const CircularProgressIndicator(),
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          Image.asset(
-                                              'assets/images/Logo_color1.png'),
-                                    ),
-                                  ),
-                                  title: Text(
-                                    dino.title,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall
-                                        ?.apply(color: kBlack),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              );
-            } else {
-              // Default view or expanded content
-              return Positioned(
-                top: 24.0,
-                left: 24.0,
-                right: 24.0,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      onPressed: () => widget.controller.toggleCollapse(),
-                      icon: const Icon(
-                        Iconsax.eye,
-                        color: kWhite,
-                        size: 40,
-                      ),
-                    ),
-                    IconButton(
-                      onPressed: () => Get.offNamed('/home'),
-                      icon: const Icon(
-                        Iconsax.back_square,
-                        color: kWhite,
-                        size: 40,
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            }
-          }),
-          // Additional content at the bottom
           Obx(() {
             if (!widget.controller.collapse.value) {
               return Stack(
                 children: [
+                  Positioned(
+                    left: 0,
+                    top: 16,
+                    bottom: Get.height / 3.5,
+                    width: Get.width / 3,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topRight: Radius.circular(30.0),
+                          bottomRight: Radius.circular(30.0),
+                        ),
+                        border: Border.all(color: kBlack.withOpacity(0.13)),
+                        gradient: LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: [
+                            Colors.white.withOpacity(0.5),
+                            Colors.white.withOpacity(0.3),
+                          ],
+                        ),
+                      ),
+                      child: Scrollbar(
+                        scrollbarOrientation: ScrollbarOrientation.left,
+                        thickness: 5,
+                        child: ListView.builder(
+                          itemCount: widget.controller.dinoModel.length,
+                          itemBuilder: (context, index) {
+                            final dino = widget.controller.dinoModel[index];
+                            return AnimationConfiguration.staggeredList(
+                              position: index,
+                              delay: const Duration(milliseconds: 250),
+                              duration: const Duration(milliseconds: 1000),
+                              child: SlideAnimation(
+                                verticalOffset: 44.0,
+                                child: FadeInAnimation(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      stopAudio();
+                                      widget.controller.selectedDino.value =
+                                          dino;
+                                    },
+                                    child: ListTile(
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                        vertical: 15.0,
+                                        horizontal: 20.0,
+                                      ),
+                                      leading: ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                        child: CachedNetworkImage(
+                                          imageUrl: dino.imageContent,
+                                          fit: BoxFit.cover,
+                                          width: 60,
+                                          height: 60,
+                                          placeholder: (context, url) =>
+                                              Container(
+                                            alignment: Alignment.center,
+                                            child:
+                                                const CircularProgressIndicator(),
+                                          ),
+                                          errorWidget: (context, url, error) =>
+                                              Image.asset(
+                                                  'assets/images/Logo_color1.png'),
+                                        ),
+                                      ),
+                                      title: Text(
+                                        dino.title,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall
+                                            ?.apply(color: kBlack),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
                   Positioned(
                     bottom: 20.0,
                     left: 24.0,
@@ -294,18 +315,9 @@ class _DinoTabletScreenState extends State<DinoTabletScreen> {
                       child: Column(
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              InkWell(
-                                onTap: playPauseSong,
-                                child: Icon(
-                                  isPlayingSong
-                                      ? Iconsax.musicnote1
-                                      : Iconsax.musicnote,
-                                  color: kWhite,
-                                  size: 40,
-                                ),
-                              ),
+                              Expanded(child: Container()),
                               const SizedBox(width: 64.0),
                               Expanded(
                                 flex: 3,
@@ -318,31 +330,17 @@ class _DinoTabletScreenState extends State<DinoTabletScreen> {
                                       ?.apply(color: kWhite),
                                 ),
                               ),
-                              Row(
-                                children: [
-                                  InkWell(
-                                    onTap: playPauseTitleVoice,
-                                    child: Icon(
-                                      isPlayingTitleVoice
-                                          ? Iconsax.pause
-                                          : Iconsax.play_circle,
-                                      color: kWhite,
-                                      size: 40,
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16.0),
-                                  InkWell(
-                                    onTap: playPauseDeskripsiVoice,
-                                    child: Icon(
-                                      isPlayingDeskripsiVoice
-                                          ? Iconsax.pause
-                                          : Iconsax.play_circle,
-                                      color: kWhite,
-                                      size: 40,
-                                    ),
-                                  )
-                                ],
-                              )
+                              Expanded(child: Container()),
+                              IconButton(
+                                onPressed: playPauseTitleVoice,
+                                icon: Icon(
+                                  isPlayingTitleVoice
+                                      ? Iconsax.pause
+                                      : Iconsax.play_circle,
+                                  color: kWhite,
+                                  size: 40,
+                                ),
+                              ),
                             ],
                           ),
                           const SizedBox(height: 8.0),
@@ -370,81 +368,63 @@ class _DinoTabletScreenState extends State<DinoTabletScreen> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: 24.0,
-                    left: 24.0,
-                    right: 24.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () => widget.controller.toggleCollapse(),
-                          icon: const Icon(
-                            Iconsax.eye,
-                            color: kWhite,
-                            size: 40,
-                          ),
-                        ),
-                        IconButton(
-                          onPressed: () => Get.offNamed('/home'),
-                          icon: const Icon(
-                            Iconsax.back_square,
-                            color: kWhite,
-                            size: 40,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
                 ],
               );
             } else {
-              return Stack(
-                children: [
-                  Positioned.fill(
-                    child: CachedNetworkImage(
-                      imageUrl: widget.model.imageContent,
-                      fit: BoxFit.fill,
-                      placeholder: (context, url) =>
-                          const Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) =>
-                          Image.asset('assets/images/Logo_color1.png'),
-                    ),
-                  ),
-                  Positioned(
-                    top: 24.0,
-                    left: 24.0,
-                    right: 24.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          onPressed: () => widget.controller.toggleCollapse(),
-                          icon: Icon(
-                            !widget.controller.collapse.value
-                                ? Iconsax.eye
-                                : Iconsax.eye_slash,
-                            color: kWhite,
-                            size: 40,
-                          ),
+              // Default view or expanded content
+              return Positioned(
+                top: 24.0,
+                left: 24.0,
+                right: 24.0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Obx(
+                      () => IconButton(
+                        onPressed: () => widget.controller.toggleCollapse(),
+                        icon: Icon(
+                          !widget.controller.collapse.value
+                              ? Iconsax.eye
+                              : Iconsax.eye_slash,
+                          color: kWhite,
+                          size: 40,
                         ),
-                        IconButton(
-                          onPressed: () => Get.offNamed('/home'),
-                          icon: const Icon(
-                            Iconsax.back_square,
-                            color: kWhite,
-                            size: 40,
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  )
-                ],
+                    const SizedBox(width: 8.0),
+                    InkWell(
+                      onTap: playPauseSong,
+                      child: Icon(
+                        isPlayingSong ? Iconsax.pause : Iconsax.musicnote,
+                        color: kWhite,
+                        size: 40,
+                      ),
+                    ),
+                    const SizedBox(width: 8.0),
+                    InkWell(
+                      onTap: playPauseDeskripsiVoice,
+                      child: Icon(
+                        isPlayingDeskripsiVoice
+                            ? Iconsax.pause
+                            : Iconsax.play_circle,
+                        color: kWhite,
+                        size: 40,
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () => Get.offNamed('/home'),
+                      icon: const Icon(
+                        Iconsax.back_square,
+                        color: kWhite,
+                        size: 40,
+                      ),
+                    ),
+                  ],
+                ),
               );
             }
-          })
+          }),
         ],
       ),
     );

@@ -97,7 +97,7 @@ class AppBarQuizz extends StatelessWidget {
                                               slivers: [
                                                 SliverToBoxAdapter(
                                                     child: Obx(() => Text(
-                                                        '${controller.time} Remaining'))),
+                                                        '${controller.time} Remaininasdasdsg'))),
                                                 SliverGrid(
                                                   delegate:
                                                       SliverChildBuilderDelegate(
@@ -232,112 +232,219 @@ class AppBarQuizz extends StatelessWidget {
                             child: InkWell(
                               onTap: onMenuActionTap ??
                                   () {
-                                    showModalBottomSheet(
-                                      enableDrag: true,
-                                      useSafeArea: true,
-                                      clipBehavior: Clip.hardEdge,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(20),
-                                          topRight: Radius.circular(20),
-                                        ),
-                                      ),
-                                      context: context,
-                                      isScrollControlled: true,
-                                      builder: (context) {
-                                        controller.bottomSheetContext = context;
-                                        return DraggableScrollableSheet(
-                                          expand: false,
-                                          initialChildSize: 0.5,
-                                          snap: true,
-                                          snapSizes: const [0.5, 1.0],
-                                          builder: (_, scrollController) {
-                                            return CustomScrollView(
-                                              controller: scrollController,
-                                              physics:
-                                                  const ClampingScrollPhysics(),
-                                              slivers: [
-                                                SliverToBoxAdapter(
-                                                    child: Obx(() => Text(
-                                                        '${controller.time} Remaining'))),
-                                                SliverGrid(
-                                                  delegate:
-                                                      SliverChildBuilderDelegate(
-                                                    (_, index) {
-                                                      AnswerStatus?
-                                                          _answereStatus;
-                                                      if (controller
-                                                              .allQuestions[
-                                                                  index]
-                                                              .selectedAnswer !=
-                                                          null) {
-                                                        _answereStatus =
-                                                            AnswerStatus
-                                                                .answered;
-                                                      }
-                                                      return QuestionNumberCard(
-                                                          index: index + 1,
-                                                          status:
-                                                              _answereStatus,
-                                                          onTap: () => controller
-                                                              .jumpToQuestion(
-                                                                  index));
-                                                    },
-                                                    childCount: controller
-                                                        .allQuestions.length,
-                                                  ),
-                                                  gridDelegate:
-                                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount:
-                                                        (Get.width ~/ 75),
-                                                    childAspectRatio: 1,
-                                                    crossAxisSpacing: 8,
-                                                    mainAxisSpacing: 8,
+                                    isMobile(context)
+                                        ? showModalBottomSheet(
+                                            enableDrag: true,
+                                            useSafeArea: true,
+                                            clipBehavior: Clip.hardEdge,
+                                            shape: const RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20),
+                                                topRight: Radius.circular(20),
+                                              ),
+                                            ),
+                                            context: context,
+                                            isScrollControlled: true,
+                                            builder: (context) {
+                                              controller.bottomSheetContext =
+                                                  context;
+                                              return DraggableScrollableSheet(
+                                                expand: false,
+                                                initialChildSize: 0.5,
+                                                snap: true,
+                                                snapSizes: const [0.5, 1.0],
+                                                builder: (_, scrollController) {
+                                                  return CustomScrollView(
+                                                    controller:
+                                                        scrollController,
+                                                    physics:
+                                                        const ClampingScrollPhysics(),
+                                                    slivers: [
+                                                      SliverToBoxAdapter(
+                                                          child: Obx(() => Text(
+                                                              '${controller.time} asdsadsa'))),
+                                                      SliverGrid(
+                                                        delegate:
+                                                            SliverChildBuilderDelegate(
+                                                          (_, index) {
+                                                            AnswerStatus?
+                                                                _answereStatus;
+                                                            if (controller
+                                                                    .allQuestions[
+                                                                        index]
+                                                                    .selectedAnswer !=
+                                                                null) {
+                                                              _answereStatus =
+                                                                  AnswerStatus
+                                                                      .answered;
+                                                            }
+                                                            return QuestionNumberCard(
+                                                                index:
+                                                                    index + 1,
+                                                                status:
+                                                                    _answereStatus,
+                                                                onTap: () => controller
+                                                                    .jumpToQuestion(
+                                                                        index));
+                                                          },
+                                                          childCount: controller
+                                                              .allQuestions
+                                                              .length,
+                                                        ),
+                                                        gridDelegate:
+                                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                          crossAxisCount:
+                                                              (Get.width ~/ 75),
+                                                          childAspectRatio: 1,
+                                                          crossAxisSpacing: 8,
+                                                          mainAxisSpacing: 8,
+                                                        ),
+                                                      ),
+                                                      SliverToBoxAdapter(
+                                                          child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(
+                                                                bottom: 24.0,
+                                                                left: 24.0,
+                                                                right: 24.0),
+                                                        child: Row(
+                                                          children: [
+                                                            SizedBox(
+                                                              width:
+                                                                  Get.width / 3,
+                                                              child:
+                                                                  OutlinedButton(
+                                                                      onPressed:
+                                                                          controller
+                                                                              .navigateToHome,
+                                                                      child:
+                                                                          const Text(
+                                                                        'Keluar',
+                                                                      )),
+                                                            ),
+                                                            const SizedBox(
+                                                                width: 8.0),
+                                                            Expanded(
+                                                              child: SizedBox(
+                                                                  width: double
+                                                                      .infinity,
+                                                                  child: ElevatedButton(
+                                                                      onPressed: controller.complete,
+                                                                      child: const Text(
+                                                                        'Complete',
+                                                                      ))),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ))
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            },
+                                          )
+                                        : showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return AlertDialog(
+                                                content: SizedBox(
+                                                  width: double
+                                                      .maxFinite, // Ensures the AlertDialog content has a finite width
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Center(
+                                                        child: Text(
+                                                          'Check Your Answer Before Completing The Test',
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .headlineMedium,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                          height:
+                                                              20), // Add some spacing
+                                                      Flexible(
+                                                        child: GridView.builder(
+                                                          shrinkWrap: true,
+                                                          physics:
+                                                              const NeverScrollableScrollPhysics(),
+                                                          itemCount: controller
+                                                              .allQuestions
+                                                              .length,
+                                                          gridDelegate:
+                                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                            crossAxisCount: 10,
+                                                            childAspectRatio: 1,
+                                                            crossAxisSpacing: 8,
+                                                            mainAxisSpacing: 8,
+                                                          ),
+                                                          itemBuilder:
+                                                              (_, index) {
+                                                            AnswerStatus?
+                                                                _answereStatus;
+                                                            if (controller
+                                                                    .allQuestions[
+                                                                        index]
+                                                                    .selectedAnswer !=
+                                                                null) {
+                                                              _answereStatus =
+                                                                  AnswerStatus
+                                                                      .answered;
+                                                            }
+                                                            return QuestionNumberCard(
+                                                                index:
+                                                                    index + 1,
+                                                                status:
+                                                                    _answereStatus,
+                                                                onTap: () => controller
+                                                                    .jumpToQuestion(
+                                                                        index));
+                                                          },
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ),
-                                                SliverToBoxAdapter(
-                                                    child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 24.0,
-                                                          left: 24.0,
-                                                          right: 24.0),
-                                                  child: Row(
+                                                actions: [
+                                                  Row(
                                                     children: [
                                                       SizedBox(
                                                         width: Get.width / 3,
                                                         child: OutlinedButton(
-                                                            onPressed: controller
-                                                                .navigateToHome,
-                                                            child: const Text(
-                                                              'Keluar',
-                                                            )),
+                                                          onPressed: controller
+                                                              .navigateToHome,
+                                                          child: const Text(
+                                                              'Keluar'),
+                                                        ),
                                                       ),
                                                       const SizedBox(
                                                           width: 8.0),
                                                       Expanded(
                                                         child: SizedBox(
-                                                            width:
-                                                                double.infinity,
-                                                            child:
-                                                                ElevatedButton(
-                                                                    onPressed:
-                                                                        controller
-                                                                            .complete,
-                                                                    child:
-                                                                        const Text(
-                                                                      'Complete',
-                                                                    ))),
+                                                          width:
+                                                              double.infinity,
+                                                          child: ElevatedButton(
+                                                            onPressed:
+                                                                controller
+                                                                    .complete,
+                                                            child: const Text(
+                                                                'Complete'),
+                                                          ),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
-                                                ))
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      },
-                                    );
+                                                ],
+                                              );
+                                            },
+                                          );
                                   },
                               child: const Icon(
                                 Iconsax.firstline,

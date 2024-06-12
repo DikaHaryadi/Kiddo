@@ -59,7 +59,7 @@ class InfoAppScreen extends StatelessWidget {
               ),
             ),
             Positioned.fill(
-                top: Get.height * .17,
+                top: Get.height * .15,
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,

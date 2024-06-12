@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,15 @@ class CardDinoContent extends StatefulWidget {
 }
 
 class _CardDinoContentState extends State<CardDinoContent> {
+  late bool isPlayingTitleVoice;
+  late bool isPlayingDeskripsiVoice;
+  late bool isPlayingSong;
+
+  late final AudioPlayer player;
+  late UrlSource pathTitleVoice;
+  late UrlSource pathDeskripsiVoice;
+  late UrlSource pathSong;
+
   late String firstHalf;
   late String secondHalf;
 
@@ -32,6 +42,14 @@ class _CardDinoContentState extends State<CardDinoContent> {
   @override
   void initState() {
     super.initState();
+    player = AudioPlayer();
+    pathTitleVoice = UrlSource(widget.model.titleVoice);
+    pathDeskripsiVoice = UrlSource(widget.model.deskripsiVoice);
+    pathSong = UrlSource(widget.model.song);
+    isPlayingTitleVoice = false;
+    isPlayingDeskripsiVoice = false;
+    isPlayingSong = false;
+
     if (widget.model.deskripsi.length > textHeight) {
       firstHalf = widget.model.deskripsi.substring(0, textHeight.toInt());
       secondHalf = widget.model.deskripsi
@@ -39,6 +57,92 @@ class _CardDinoContentState extends State<CardDinoContent> {
     } else {
       firstHalf = widget.model.deskripsi;
       secondHalf = '';
+    }
+
+    player.onPlayerStateChanged.listen((PlayerState state) {
+      if (state == PlayerState.completed) {
+        setState(() {
+          isPlayingTitleVoice = false;
+          isPlayingDeskripsiVoice = false;
+          isPlayingSong = false;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
+
+  void playPauseTitleVoice() async {
+    if (isPlayingTitleVoice && player.state == PlayerState.playing) {
+      await player.pause();
+    } else {
+      // Stop any other playing audio before starting the new one
+      if (isPlayingDeskripsiVoice || isPlayingSong) {
+        await player.stop();
+        isPlayingDeskripsiVoice = false;
+        isPlayingSong = false;
+      }
+      await player.play(pathTitleVoice);
+    }
+    setState(() {
+      isPlayingTitleVoice = !isPlayingTitleVoice;
+    });
+  }
+
+  void playPauseDeskripsiVoice() async {
+    if (isPlayingDeskripsiVoice && player.state == PlayerState.playing) {
+      await player.pause();
+    } else {
+      // Stop any other playing audio before starting the new one
+      if (isPlayingTitleVoice || isPlayingSong) {
+        await player.stop();
+        isPlayingTitleVoice = false;
+        isPlayingSong = false;
+      }
+      await player.play(pathDeskripsiVoice);
+    }
+    setState(() {
+      isPlayingDeskripsiVoice = !isPlayingDeskripsiVoice;
+    });
+  }
+
+  void playPauseSong() async {
+    if (isPlayingSong && player.state == PlayerState.playing) {
+      await player.pause();
+    } else {
+      // Stop any other playing audio before starting the new one
+      if (isPlayingTitleVoice || isPlayingDeskripsiVoice) {
+        await player.stop();
+        isPlayingTitleVoice = false;
+        isPlayingDeskripsiVoice = false;
+      }
+      await player.play(pathSong);
+    }
+    setState(() {
+      isPlayingSong = !isPlayingSong;
+    });
+  }
+
+  void stopAudio() {
+    player.stop();
+    isPlayingTitleVoice = false;
+    isPlayingDeskripsiVoice = false;
+    isPlayingSong = false;
+    setState(() {});
+  }
+
+  @override
+  void didUpdateWidget(covariant CardDinoContent oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Update pathTitleVoice when widget.model changes
+    if (widget.model != oldWidget.model) {
+      pathTitleVoice = UrlSource(widget.model.titleVoice);
+      pathDeskripsiVoice = UrlSource(widget.model.deskripsiVoice);
+      pathSong = UrlSource(widget.model.song);
     }
   }
 
@@ -50,13 +154,51 @@ class _CardDinoContentState extends State<CardDinoContent> {
         Positioned.fill(
           child: CachedNetworkImage(
             imageUrl: widget.model.imageContent,
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
             placeholder: (context, url) => Container(
               alignment: Alignment.center,
               child: const CircularProgressIndicator(),
             ),
             errorWidget: (context, url, error) =>
                 Image.asset('assets/images/Logo_color1.png'),
+          ),
+        ),
+        Positioned(
+          top: 14.0,
+          left: 14.0,
+          right: 14.0,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                onTap: () => widget.controller.toggleCollapse(),
+                child: Icon(
+                  !widget.controller.collapse.value
+                      ? Iconsax.eye
+                      : Iconsax.eye_slash,
+                  color: kWhite,
+                  size: 30,
+                ),
+              ),
+              const SizedBox(width: 8.0),
+              InkWell(
+                onTap: playPauseSong,
+                child: const Icon(
+                  Iconsax.musicnote,
+                  color: kWhite,
+                  size: 30,
+                ),
+              ),
+              const SizedBox(width: 8.0),
+              InkWell(
+                onTap: playPauseDeskripsiVoice,
+                child: Icon(
+                  isPlayingDeskripsiVoice ? Iconsax.pause : Iconsax.play_circle,
+                  color: kWhite,
+                  size: 30,
+                ),
+              ),
+            ],
           ),
         ),
         Obx(() {
@@ -89,11 +231,9 @@ class _CardDinoContentState extends State<CardDinoContent> {
                             widget.controller.dinoModel.length, (index) {
                           return GestureDetector(
                             onTap: () {
+                              stopAudio();
                               widget.controller.selectedDino.value =
                                   widget.controller.dinoModel[index];
-                              ttsController.textToSpeech(
-                                  widget.controller.dinoModel[index].deskripsi,
-                                  'en-US');
                             },
                             child: Container(
                               width: 50,
@@ -141,16 +281,30 @@ class _CardDinoContentState extends State<CardDinoContent> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        InkWell(
-                          onTap: () => ttsController.textToSpeech(
-                              widget.model.title, "en-US"),
-                          child: Text(
-                            widget.model.title,
-                            style: Theme.of(context)
-                                .textTheme
-                                .displaySmall
-                                ?.apply(color: kWhite),
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Expanded(child: Container()),
+                            const SizedBox(width: 32.0),
+                            Text(
+                              widget.model.title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displaySmall
+                                  ?.apply(color: kWhite),
+                            ),
+                            Expanded(child: Container()),
+                            InkWell(
+                              onTap: playPauseTitleVoice,
+                              child: Icon(
+                                isPlayingTitleVoice
+                                    ? Iconsax.pause
+                                    : Iconsax.play_circle,
+                                color: kWhite,
+                                size: 30,
+                              ),
+                            ),
+                          ],
                         ),
                         const SizedBox(height: 8.0),
                         InkWell(
@@ -182,7 +336,7 @@ class _CardDinoContentState extends State<CardDinoContent> {
                                     ?.apply(color: kWhite),
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text: hiddenText ? 'See More' : '',
+                                      text: hiddenText ? 'See More...' : '',
                                       recognizer: TapGestureRecognizer()
                                         ..onTap = () {
                                           setState(() {
@@ -200,27 +354,40 @@ class _CardDinoContentState extends State<CardDinoContent> {
             );
           } else {
             return Positioned(
-              top: 24.0,
-              left: 24.0,
-              right: 24.0,
+              top: 14.0,
+              left: 14.0,
+              right: 14.0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  IconButton(
-                    onPressed: () => widget.controller.toggleCollapse(),
-                    icon: const Icon(
-                      Iconsax.eye,
+                  InkWell(
+                    onTap: () => widget.controller.toggleCollapse(),
+                    child: Icon(
+                      !widget.controller.collapse.value
+                          ? Iconsax.eye
+                          : Iconsax.eye_slash,
                       color: kWhite,
-                      size: 40,
+                      size: 30,
                     ),
                   ),
-                  IconButton(
-                    onPressed: () => Get.offNamed('/home'),
-                    icon: const Icon(
-                      Iconsax.back_square,
+                  const SizedBox(width: 8.0),
+                  InkWell(
+                    onTap: playPauseSong,
+                    child: Icon(
+                      isPlayingSong ? Iconsax.pause : Iconsax.musicnote,
                       color: kWhite,
-                      size: 40,
+                      size: 30,
+                    ),
+                  ),
+                  const SizedBox(width: 8.0),
+                  InkWell(
+                    onTap: playPauseDeskripsiVoice,
+                    child: Icon(
+                      isPlayingDeskripsiVoice
+                          ? Iconsax.pause
+                          : Iconsax.play_circle,
+                      color: kWhite,
+                      size: 30,
                     ),
                   ),
                 ],
@@ -228,95 +395,6 @@ class _CardDinoContentState extends State<CardDinoContent> {
             );
           }
         }),
-        Obx(() {
-          if (!widget.controller.collapse.value) {
-            return Positioned(
-              top: 14.0,
-              left: 14.0,
-              right: 14.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                    onPressed: () => widget.controller.toggleCollapse(),
-                    icon: const Icon(
-                      Iconsax.eye,
-                      color: kWhite,
-                      size: 30,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Iconsax.musicnote,
-                      color: kWhite,
-                      size: 30,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Iconsax.play_circle,
-                      color: kWhite,
-                      size: 30,
-                    ),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            return Stack(
-              children: [
-                Positioned.fill(
-                  child: CachedNetworkImage(
-                    imageUrl: widget.model.imageContent,
-                    fit: BoxFit.cover,
-                    placeholder: (context, url) =>
-                        const Center(child: CircularProgressIndicator()),
-                    errorWidget: (context, url, error) =>
-                        Image.asset('assets/images/Logo_color1.png'),
-                  ),
-                ),
-                Positioned(
-                  top: 14.0,
-                  left: 14.0,
-                  right: 14.0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      IconButton(
-                        onPressed: () => widget.controller.toggleCollapse(),
-                        icon: Icon(
-                          !widget.controller.collapse.value
-                              ? Iconsax.eye
-                              : Iconsax.eye_slash,
-                          color: kWhite,
-                          size: 30,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Iconsax.musicnote,
-                          color: kWhite,
-                          size: 30,
-                        ),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Iconsax.play_circle,
-                          color: kWhite,
-                          size: 30,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            );
-          }
-        })
       ],
     );
   }

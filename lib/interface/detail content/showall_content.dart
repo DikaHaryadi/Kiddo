@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/controllers/banner_ads_controller.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:textspeech/util/etc/constants.dart';
@@ -216,166 +215,102 @@ class _ShowAllContentState extends State<ShowAllContent> {
               flex: 3,
               child: Container(
                 color: const Color(0xFFfcf4f1),
-                padding: const EdgeInsets.only(bottom: 10.0),
-                child: Column(
-                  children: [
-                    // Added Expanded here to push GridView to the top
-                    Expanded(
-                      child: AnimationLimiter(
-                        child: GridView.count(
-                          shrinkWrap: true,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          childAspectRatio: 1,
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          children: List.generate(
-                            contentKiddo.length,
-                            (index) => AnimationConfiguration.staggeredGrid(
-                              columnCount: 2,
-                              position: index,
-                              duration: const Duration(milliseconds: 700),
-                              child: ScaleAnimation(
-                                scale: 0.5,
-                                child: FadeInAnimation(
-                                  child: GestureDetector(
-                                    onLongPressStart: (_) {
-                                      setState(() {
-                                        longPressStates.fillRange(
-                                            0, longPressStates.length, false);
-                                        longPressStates[index] = true;
-                                      });
-                                    },
-                                    onLongPressEnd: (_) {
-                                      setState(() {
-                                        longPressStates[index] = false;
-                                        selectedLongPressIndex = null;
-                                      });
-                                    },
-                                    onTap: () {
-                                      setState(() {
-                                        longPressStates[index] =
-                                            !longPressStates[index];
-                                        for (int i = 0;
-                                            i < longPressStates.length;
-                                            i++) {
-                                          if (i != index) {
-                                            longPressStates[i] = false;
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      AnimationLimiter(
+                        child: Expanded(
+                          child: GridView.count(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            childAspectRatio: 1.4,
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 25,
+                            crossAxisSpacing: 10,
+                            children: List.generate(
+                              contentKiddo.length,
+                              (index) => AnimationConfiguration.staggeredGrid(
+                                columnCount: 2,
+                                position: index,
+                                duration: const Duration(milliseconds: 700),
+                                child: ScaleAnimation(
+                                  scale: 0.5,
+                                  child: FadeInAnimation(
+                                    child: GestureDetector(
+                                      onLongPressStart: (_) {
+                                        setState(() {
+                                          longPressStates.fillRange(
+                                              0, longPressStates.length, false);
+                                          longPressStates[index] = true;
+                                        });
+                                      },
+                                      onLongPressEnd: (_) {
+                                        setState(() {
+                                          longPressStates[index] = false;
+                                          selectedLongPressIndex = null;
+                                        });
+                                      },
+                                      onTap: () {
+                                        setState(() {
+                                          longPressStates[index] =
+                                              !longPressStates[index];
+                                          for (int i = 0;
+                                              i < longPressStates.length;
+                                              i++) {
+                                            if (i != index) {
+                                              longPressStates[i] = false;
+                                            }
                                           }
-                                        }
-                                      });
-                                    },
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        right: 10.0,
-                                        top: 10.0,
-                                      ),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0),
-                                            color: Colors.white),
-                                        child: Column(
-                                          children: [
-                                            Expanded(
-                                              flex: 3,
-                                              child: Stack(
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            20.0),
-                                                    child: ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              5.0),
-                                                      child: Image.asset(
-                                                        contentKiddo[index]
-                                                            ['imagePath']!,
-                                                        fit: BoxFit.fitHeight,
-                                                        height: MediaQuery.of(
-                                                                context)
-                                                            .size
-                                                            .height,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  longPressStates[index]
-                                                      ? Positioned(
-                                                          right: 30.0,
-                                                          bottom: 30.0,
-                                                          child:
-                                                              GestureDetector(
-                                                            onTap: () {
-                                                              Get.toNamed(
-                                                                  contentKiddo[
-                                                                          index]
-                                                                      [
-                                                                      'routePath']!);
-                                                            },
-                                                            child: Container(
-                                                              width: 55,
-                                                              height: 55,
-                                                              decoration: const BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                  color: kGreen,
-                                                                  border: Border.fromBorderSide(BorderSide(
-                                                                      color: Colors
-                                                                          .white,
+                                        });
+                                      },
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                            child: Image.asset(
+                                              contentKiddo[index]['imagePath']!,
+                                              fit: BoxFit.contain,
+                                              height: MediaQuery.of(context)
+                                                  .size
+                                                  .height,
+                                            ),
+                                          ),
+                                          longPressStates[index]
+                                              ? Positioned(
+                                                  right: 20.0,
+                                                  bottom: 30.0,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      Get.toNamed(
+                                                          contentKiddo[index]
+                                                              ['routePath']!);
+                                                    },
+                                                    child: Container(
+                                                      width: 65,
+                                                      height: 65,
+                                                      decoration: const BoxDecoration(
+                                                          shape: BoxShape
+                                                              .circle,
+                                                          color: kGreen,
+                                                          border: Border
+                                                              .fromBorderSide(
+                                                                  BorderSide(
+                                                                      color:
+                                                                          Colors
+                                                                              .white,
                                                                       strokeAlign:
                                                                           1,
                                                                       width:
                                                                           1))),
-                                                              child: const Icon(
-                                                                Icons
-                                                                    .play_arrow,
-                                                                color: kDark,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : const SizedBox.shrink()
-                                                ],
-                                              ),
-                                            ),
-                                            Expanded(
-                                                flex: 1,
-                                                child: Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 20.0),
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                            contentKiddo[index]
-                                                                ['name']!,
-                                                            style: const TextStyle(
-                                                                color: Colors
-                                                                    .black,
-                                                                fontSize: 25,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold)),
-                                                        Text(
-                                                            contentKiddo[index]
-                                                                ['subtitle']!,
-                                                            style: GoogleFonts
-                                                                .aBeeZee(
-                                                                    fontSize:
-                                                                        18)),
-                                                      ],
+                                                      child: const Icon(
+                                                        Icons.play_arrow,
+                                                        color: kDark,
+                                                      ),
                                                     ),
                                                   ),
-                                                )),
-                                          ],
-                                        ),
+                                                )
+                                              : const SizedBox.shrink()
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -385,9 +320,9 @@ class _ShowAllContentState extends State<ShowAllContent> {
                           ),
                         ),
                       ),
-                    ),
-                    bannerAdsController.getAdWidget()
-                  ],
+                      bannerAdsController.getAdWidget()
+                    ],
+                  ),
                 ),
               ),
             ),

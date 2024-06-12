@@ -99,7 +99,7 @@ class GameControlsBottomSheet extends StatelessWidget {
             ),
             const Spacer(),
             GestureDetector(
-              onTap: () => Get.offAllNamed('/'),
+              onTap: () => Get.offAllNamed('/home'),
               child: Container(
                 width: double.infinity,
                 height: 65,

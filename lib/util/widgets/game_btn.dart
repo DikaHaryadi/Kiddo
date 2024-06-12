@@ -46,26 +46,34 @@ class _GameButtonState extends State<GameButton> {
                 width: widget.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(widget.height / 2),
-                  boxShadow: const [
-                    BoxShadow(color: Color(0xFFDFA591), offset: Offset(2, 0)),
-                    BoxShadow(color: Color(0xFFE6B6B6), offset: Offset(-2, 0)),
-                    BoxShadow(color: Color(0xFFDFB1B5), offset: Offset(0, -2)),
-                    BoxShadow(color: Color(0xFF2D396F), offset: Offset(0, 2)),
-                  ],
-                  gradient: const LinearGradient(
+                  // boxShadow: const [
+                  //   BoxShadow(color: Color(0xFFDFA591), offset: Offset(2, 0)),
+                  //   BoxShadow(color: Color(0xFFE6B6B6), offset: Offset(-2, 0)),
+                  //   BoxShadow(color: Color(0xFFDFB1B5), offset: Offset(0, -2)),
+                  //   BoxShadow(color: Color(0xFF2D396F), offset: Offset(0, 2)),
+                  // ],
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                     colors: [
-                      Color(0xFFFAF0F0),
-                      Color(0xFFF9EDEF),
-                      Color(0xFFE9E3F2),
-                      Color(0xFFEDE3EE),
-                      Color(0xFFE2DFF0),
-                      Color(0xFFE4E1F1),
-                      Color(0xFFDBDBF5)
+                      Colors.white.withOpacity(0.7),
+                      Colors.white.withOpacity(0.5),
                     ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.7],
                   ),
+                  // gradient: const LinearGradient(
+                  //   colors: [
+                  //     Color(0xFFFAF0F0),
+                  //     Color(0xFFF9EDEF),
+                  //     Color(0xFFE9E3F2),
+                  //     Color(0xFFEDE3EE),
+                  //     Color(0xFFE2DFF0),
+                  //     Color(0xFFE4E1F1),
+                  //     Color(0xFFDBDBF5)
+                  //   ],
+                  //   begin: Alignment.topCenter,
+                  //   end: Alignment.bottomCenter,
+                  //   stops: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.7],
+                  // ),
                 ),
                 child: Row(
                   children: [
@@ -127,26 +135,34 @@ class _GameButtonState extends State<GameButton> {
                 width: widget.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(widget.height / 2),
-                  boxShadow: const [
-                    BoxShadow(color: Color(0xFFDFA591), offset: Offset(2, 0)),
-                    BoxShadow(color: Color(0xFFE6B6B6), offset: Offset(-2, 0)),
-                    BoxShadow(color: Color(0xFFDFB1B5), offset: Offset(0, -2)),
-                    BoxShadow(color: Color(0xFF2D396F), offset: Offset(0, 2)),
-                  ],
-                  gradient: const LinearGradient(
+                  // boxShadow: const [
+                  //   BoxShadow(color: Color(0xFFDFA591), offset: Offset(2, 0)),
+                  //   BoxShadow(color: Color(0xFFE6B6B6), offset: Offset(-2, 0)),
+                  //   BoxShadow(color: Color(0xFFDFB1B5), offset: Offset(0, -2)),
+                  //   BoxShadow(color: Color(0xFF2D396F), offset: Offset(0, 2)),
+                  // ],
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                     colors: [
-                      Color(0xFFFAF0F0),
-                      Color(0xFFF9EDEF),
-                      Color(0xFFE9E3F2),
-                      Color(0xFFEDE3EE),
-                      Color(0xFFE2DFF0),
-                      Color(0xFFE4E1F1),
-                      Color(0xFFDBDBF5)
+                      Colors.white.withOpacity(0.7),
+                      Colors.white.withOpacity(0.5),
                     ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.7],
                   ),
+                  // gradient: const LinearGradient(
+                  //   colors: [
+                  //     Color(0xFFFAF0F0),
+                  //     Color(0xFFF9EDEF),
+                  //     Color(0xFFE9E3F2),
+                  //     Color(0xFFEDE3EE),
+                  //     Color(0xFFE2DFF0),
+                  //     Color(0xFFE4E1F1),
+                  //     Color(0xFFDBDBF5)
+                  //   ],
+                  //   begin: Alignment.topCenter,
+                  //   end: Alignment.bottomCenter,
+                  //   stops: [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.7],
+                  // ),
                 ),
                 child: Row(
                   children: [

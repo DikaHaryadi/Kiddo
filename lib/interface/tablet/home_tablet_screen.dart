@@ -1,12 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:textspeech/util/etc/curved_edges.dart';
 
 import '../../auth/controller/auth_controller.dart';
 import '../../auth/controller/user/user_controller.dart';
@@ -190,114 +189,103 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                 ),
               )),
           Expanded(
-              flex: 3,
-              child: Container(
-                padding: const EdgeInsets.only(right: 10.0, left: 10.0),
-                margin: const EdgeInsets.only(left: 8.0),
-                color: const Color(0xFFfaf5f1),
+            flex: 3,
+            child: Container(
+              padding: const EdgeInsets.only(right: 20.0, left: 10.0),
+              margin: const EdgeInsets.only(left: 8.0),
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        children: [
-                          Obx(() => AutoSizeText(
-                              'Good ${timeSunPosition.timeOfDay.value}',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displaySmall)).animate().fadeIn(
-                              curve: Curves.easeIn,
-                              duration: const Duration(milliseconds: 700)),
-                          Expanded(child: Container()),
-                          Obx(() => controller.profileLoading.value
-                              ? const DShimmerEffect(width: 100, height: 20)
-                              : Text(
-                                  controller.user.value.username,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: Theme.of(context).textTheme.titleLarge,
-                                ))
-                        ],
-                      ).animate().slideX(
-                          begin: 4,
-                          end: 0,
-                          curve: Curves.bounceIn,
-                          duration: const Duration(milliseconds: 800)),
-                    ),
-                    const SizedBox(height: 10.0),
-                    AnimationLimiter(
-                      child: GridView.count(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        childAspectRatio: 18 / 8,
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 30,
-                        crossAxisSpacing: 20,
-                        children: List.generate(
-                            gameList.length,
-                            (index) => AnimationConfiguration.staggeredGrid(
-                                  columnCount: 2,
-                                  position: index,
-                                  delay: const Duration(milliseconds: 250),
-                                  duration: const Duration(milliseconds: 500),
-                                  child: ScaleAnimation(
-                                    scale: 0.5,
-                                    child: FadeInAnimation(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Get.toNamed(
-                                              gameList[index]['routePath']!);
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                              color: Colors.white),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                  flex: 2,
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                            topLeft:
-                                                                Radius.circular(
-                                                                    20.0),
-                                                            bottomLeft:
-                                                                Radius.circular(
-                                                                    20.0)),
-                                                    child: Image.asset(
-                                                      gameList[index]
-                                                          ['imagePath']!,
-                                                      fit: BoxFit.fitHeight,
-                                                      height:
-                                                          MediaQuery.of(context)
-                                                              .size
-                                                              .height,
-                                                    ),
-                                                  )),
-                                              Expanded(
-                                                  flex: 3,
-                                                  child: AutoSizeText(
-                                                      gameList[index]
-                                                          ['GameName']!,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .displaySmall
-                                                          ?.copyWith(
-                                                              fontSize: 30.0)))
-                                            ],
+                    ClipPath(
+                      clipper: HomeMobileCurvedEdges(),
+                      child: Container(
+                        width: double.infinity,
+                        height: MediaQuery.of(context).size.height / 5,
+                        padding: const EdgeInsets.only(
+                          left: 10.0,
+                          right: 10.0,
+                        ),
+                        color: kSoftblue,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, left: 8.0, right: 8.0),
+                              child: Row(
+                                children: [
+                                  Obx(() => AutoSizeText(
+                                        'Good ${timeSunPosition.timeOfDay.value}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displaySmall,
+                                      ).animate().fadeIn(
+                                          curve: Curves.easeIn,
+                                          duration: const Duration(
+                                              milliseconds: 700))),
+                                  Expanded(child: Container()),
+                                  Obx(() => controller.profileLoading.value
+                                      ? const DShimmerEffect(
+                                          width: 100, height: 20)
+                                      : Text(
+                                          controller.user.value.username,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge,
+                                        ))
+                                ],
+                              ).animate().slideX(
+                                  begin: 4,
+                                  end: 0,
+                                  curve: Curves.bounceIn,
+                                  duration: const Duration(milliseconds: 800)),
+                            ),
+                            const SizedBox(height: 16.0),
+                            AnimationLimiter(
+                              child: GridView.count(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                childAspectRatio: 18 / 8,
+                                crossAxisCount: 2,
+                                mainAxisSpacing: 30,
+                                crossAxisSpacing: 20,
+                                children: List.generate(
+                                    gameList.length,
+                                    (index) =>
+                                        AnimationConfiguration.staggeredGrid(
+                                          columnCount: 2,
+                                          position: index,
+                                          delay:
+                                              const Duration(milliseconds: 250),
+                                          duration:
+                                              const Duration(milliseconds: 500),
+                                          child: ScaleAnimation(
+                                            scale: 0.5,
+                                            child: FadeInAnimation(
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  Get.toNamed(gameList[index]
+                                                      ['routePath']!);
+                                                },
+                                                child: Image.asset(
+                                                  gameList[index]['imagePath']!,
+                                                  fit: BoxFit.fitHeight,
+                                                  height: MediaQuery.of(context)
+                                                      .size
+                                                      .height,
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                )),
+                                        )),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 15.0),
+                    const SizedBox(height: 10.0),
                     GestureDetector(
                       onTap: () => Get.toNamed('/kid-song'),
                       child: AnimationConfiguration.staggeredGrid(
@@ -305,103 +293,106 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                         position: 0,
                         columnCount: 1,
                         child: FadeInAnimation(
-                          child: Container(
-                            height: Get.height * 0.10,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.white,
-                              border: Border.all(
-                                  width: 2, color: const Color(0xFFd1d1d1)),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: ClipRRect(
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(8.0),
-                                      bottomLeft: Radius.circular(8.0),
-                                    ),
-                                    child: Image.asset(
-                                      'assets/games/logo_musik.png',
-                                      fit: BoxFit.fitHeight,
-                                      height:
-                                          MediaQuery.of(context).size.height,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(
-                                    'Kid Song',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .displaySmall,
-                                  ),
-                                ),
+                            child: Container(
+                          height: Get.height * 0.15,
+                          width: double.infinity,
+                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  offset: const Offset(0, 4),
+                                  spreadRadius: .3,
+                                  blurStyle: BlurStyle.outer,
+                                  color: kBlack.withOpacity(.1)),
+                              BoxShadow(
+                                  offset: const Offset(4, 0),
+                                  spreadRadius: .3,
+                                  blurStyle: BlurStyle.outer,
+                                  color: kBlack.withOpacity(.1)),
+                              // BoxShadow(
+                              //   offset: const Offset(5, 0),
+                              //   color:
+                              //       Theme.of(context).scaffoldBackgroundColor,
+                              // )
+                            ],
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: const Color(0xff7DEDFF),
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomCenter,
+                              stops: [0, 0.2, 0.2, 0.4],
+                              colors: [
+                                kWhite,
+                                Color.fromARGB(255, 146, 211, 232),
+                                Color.fromARGB(255, 157, 217, 237),
+                                Color.fromARGB(255, 123, 213, 238),
                               ],
                             ),
+                            border: Border.all(
+                                width: 2, color: const Color(0xFFd1d1d1)),
                           ),
-                        ),
+                          child: Image.asset(
+                            'assets/games/musickids.png',
+                          ),
+                        )),
                       ),
                     ),
-                    const SizedBox(height: 8.0),
+                    const SizedBox(height: 13.0),
                     GestureDetector(
-                      onTap: () => Get.toNamed('/kid-song'),
+                      onTap: () => Get.toNamed('/lagu-nasional'),
                       child: AnimationConfiguration.staggeredGrid(
                         duration: const Duration(milliseconds: 1100),
                         position: 0,
                         columnCount: 1,
                         child: FadeInAnimation(
-                          child: Container(
-                            height: Get.height * 0.10,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                              color: Colors.white,
-                              border: Border.all(
-                                  width: 2, color: const Color(0xFFd1d1d1)),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  flex: 2,
-                                  child: ClipRRect(
-                                    borderRadius: const BorderRadius.only(
-                                      topLeft: Radius.circular(8.0),
-                                      bottomLeft: Radius.circular(8.0),
-                                    ),
-                                    child: Image.asset(
-                                      'assets/games/nationalsong.png',
-                                      fit: BoxFit.fitHeight,
-                                      height:
-                                          MediaQuery.of(context).size.height,
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 3,
-                                  child: Text(
-                                    'National Anthem',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .displaySmall,
-                                  ),
-                                ),
+                            child: Container(
+                          height: Get.height * 0.15,
+                          width: double.infinity,
+                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                  offset: const Offset(0, 4),
+                                  spreadRadius: .3,
+                                  blurStyle: BlurStyle.outer,
+                                  color: kBlack.withOpacity(.1)),
+                              BoxShadow(
+                                  offset: const Offset(4, 0),
+                                  spreadRadius: .3,
+                                  blurStyle: BlurStyle.outer,
+                                  color: kBlack.withOpacity(.1)),
+                              // BoxShadow(
+                              //   offset: const Offset(5, 0),
+                              //   color:
+                              //       Theme.of(context).scaffoldBackgroundColor,
+                              // )
+                            ],
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: const Color(0xff7DEDFF),
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomCenter,
+                              stops: [0, 0.2, 0.2, 0.4],
+                              colors: [
+                                kWhite,
+                                Color.fromARGB(255, 146, 211, 232),
+                                Color.fromARGB(255, 157, 217, 237),
+                                Color.fromARGB(255, 123, 213, 238),
                               ],
                             ),
+                            border: Border.all(
+                                width: 2, color: const Color(0xFFd1d1d1)),
                           ),
-                        ),
+                          child: Image.asset(
+                            'assets/games/indomusic.png',
+                            height: 200,
+                          ),
+                        )),
                       ),
                     ),
-                    const SizedBox(height: 20.0),
                     Padding(
-                      padding: const EdgeInsets.only(right: 5.0, left: 15.0),
+                      padding: const EdgeInsets.only(
+                          right: 5.0, left: 15.0, top: 20.0),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -435,162 +426,131 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                       ),
                     ),
                     const SizedBox(height: 15.0),
-                    Expanded(
-                      child: AnimationLimiter(
-                        child: GridView.count(
-                          shrinkWrap: true,
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          childAspectRatio: 1.1,
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          children: List.generate(
-                              showAll ? contentKiddo.length : 4,
-                              (index) => AnimationConfiguration.staggeredGrid(
-                                    columnCount: 2,
-                                    delay: const Duration(milliseconds: 250),
-                                    position: index,
-                                    duration: const Duration(milliseconds: 500),
-                                    child: ScaleAnimation(
-                                      scale: 0.5,
-                                      child: FadeInAnimation(
-                                        child: GestureDetector(
-                                          onLongPressStart: (_) {
-                                            setState(() {
-                                              longPressStates.fillRange(
-                                                  0,
-                                                  longPressStates.length,
-                                                  false);
-                                              longPressStates[index] = true;
-                                            });
-                                          },
-                                          onLongPressEnd: (_) {
-                                            setState(() {
-                                              longPressStates[index] = false;
-                                              selectedLongPressIndex = null;
-                                            });
-                                          },
-                                          onTap: () {
-                                            setState(() {
-                                              longPressStates[index] =
-                                                  !longPressStates[index];
-                                              for (int i = 0;
-                                                  i < longPressStates.length;
-                                                  i++) {
-                                                if (i != index) {
-                                                  longPressStates[i] = false;
-                                                }
+                    AnimationLimiter(
+                      child: GridView.count(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        childAspectRatio: 1.4,
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        children: List.generate(
+                            showAll ? contentKiddo.length : 4,
+                            (index) => AnimationConfiguration.staggeredGrid(
+                                  columnCount: 2,
+                                  delay: const Duration(milliseconds: 250),
+                                  position: index,
+                                  duration: const Duration(milliseconds: 500),
+                                  child: ScaleAnimation(
+                                    scale: 0.5,
+                                    child: FadeInAnimation(
+                                      child: GestureDetector(
+                                        onLongPressStart: (_) {
+                                          setState(() {
+                                            longPressStates.fillRange(0,
+                                                longPressStates.length, false);
+                                            longPressStates[index] = true;
+                                          });
+                                        },
+                                        onLongPressEnd: (_) {
+                                          setState(() {
+                                            longPressStates[index] = false;
+                                            selectedLongPressIndex = null;
+                                          });
+                                        },
+                                        onTap: () {
+                                          setState(() {
+                                            longPressStates[index] =
+                                                !longPressStates[index];
+                                            for (int i = 0;
+                                                i < longPressStates.length;
+                                                i++) {
+                                              if (i != index) {
+                                                longPressStates[i] = false;
                                               }
-                                            });
-                                          },
-                                          child: Container(
-                                            margin: const EdgeInsets.only(
-                                                bottom: 10.0),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                                color: Colors.white),
-                                            child: Column(
-                                              children: [
-                                                Expanded(
-                                                  flex: 3,
-                                                  child: Stack(
-                                                    children: [
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5.0),
-                                                        child: Image.asset(
-                                                          contentKiddo[index]
-                                                              ['imagePath']!,
-                                                          fit: BoxFit.fitHeight,
-                                                          height: MediaQuery.of(
-                                                                  context)
+                                            }
+                                          });
+                                        },
+                                        child: Column(
+                                          children: [
+                                            Expanded(
+                                              flex: 3,
+                                              child: Stack(
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.0),
+                                                    child: Image.asset(
+                                                      contentKiddo[index]
+                                                          ['imagePath']!,
+                                                      fit: BoxFit.fitHeight,
+                                                      height:
+                                                          MediaQuery.of(context)
                                                               .size
                                                               .height,
-                                                        ),
-                                                      ),
-                                                      longPressStates[index]
-                                                          ? Positioned(
-                                                              right: 0,
-                                                              bottom: 0,
-                                                              child:
-                                                                  GestureDetector(
-                                                                onTap: () {
-                                                                  Get.toNamed(contentKiddo[
+                                                    ),
+                                                  ),
+                                                  longPressStates[index]
+                                                      ? Positioned(
+                                                          right: 25,
+                                                          bottom: 30,
+                                                          child:
+                                                              GestureDetector(
+                                                            onTap: () {
+                                                              Get.toNamed(
+                                                                  contentKiddo[
                                                                           index]
                                                                       [
                                                                       'routePath']!);
-                                                                },
-                                                                child:
-                                                                    Container(
-                                                                  width: 55,
-                                                                  height: 55,
-                                                                  decoration:
-                                                                      const BoxDecoration(
-                                                                    shape: BoxShape
-                                                                        .circle,
-                                                                    color: Color(
-                                                                        0xFF1ed760),
-                                                                    border: Border
-                                                                        .fromBorderSide(
-                                                                            BorderSide(
-                                                                      color: Color(
-                                                                          0xFF1db954),
-                                                                      strokeAlign:
-                                                                          1,
-                                                                      width: 1,
-                                                                    )),
-                                                                  ),
-                                                                  child:
-                                                                      const Icon(
-                                                                    Icons
-                                                                        .play_arrow,
-                                                                    color: Color(
-                                                                        0xFF191414),
-                                                                  ),
-                                                                ),
+                                                            },
+                                                            child: Container(
+                                                              width: 65,
+                                                              height: 65,
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                shape: BoxShape
+                                                                    .circle,
+                                                                color: Color(
+                                                                    0xFF1ed760),
+                                                                border: Border
+                                                                    .fromBorderSide(
+                                                                        BorderSide(
+                                                                  color: Color(
+                                                                      0xFF1db954),
+                                                                  strokeAlign:
+                                                                      1,
+                                                                  width: 1,
+                                                                )),
                                                               ),
-                                                            )
-                                                          : const SizedBox
-                                                              .shrink(),
-                                                    ],
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 8.0),
-                                                  child: Align(
-                                                    alignment: Alignment.center,
-                                                    child: AutoSizeText(
-                                                      contentKiddo[index]
-                                                          ['name']!,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .displaySmall
-                                                          ?.copyWith(
-                                                              fontSize: 24,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                                              child: const Icon(
+                                                                Icons
+                                                                    .play_arrow,
+                                                                color: Color(
+                                                                    0xFF191414),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : const SizedBox.shrink(),
+                                                ],
+                                              ),
                                             ),
-                                          ),
+                                          ],
                                         ),
                                       ),
                                     ),
-                                  )),
-                        ),
+                                  ),
+                                )),
                       ),
                     ),
-                    bannerAdsController.getAdWidget()
+                    const SizedBox(height: 22.0),
+                    // bannerAdsController.getAdWidget(),
                   ],
                 ),
-              )),
+              ),
+            ),
+          ),
         ],
       ),
     );

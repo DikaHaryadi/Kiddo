@@ -240,7 +240,7 @@ class CAppBarTheme {
   //   elevation: 0,
   //   centerTitle: false,
   //   scrolledUnderElevation: 0,
-  //   backgroundColor: TColors.dark,
+  //  backgroundColor: TColors.dark,
   //   surfaceTintColor: TColors.dark,
   //   iconTheme: IconThemeData(color: Color(0xFF272727), size: 24.0),
   //   actionsIconTheme: IconThemeData(color: kWhite, size: 24.0),

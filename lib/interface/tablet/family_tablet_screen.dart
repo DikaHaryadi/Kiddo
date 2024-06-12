@@ -31,209 +31,221 @@ class FamilyTabletScreen extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      color: Colors.blue,
+      color: const Color(0xFFead8c8),
       child: Row(
         children: [
           Expanded(
             flex: 1,
-            child: Column(
-              children: [
-                Expanded(
-                  child: Container(
-                    color: Colors.red,
-                    child: AnimationLimiter(
-                        child: ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: controller.familyModel.length,
-                      itemBuilder: (context, index) {
-                        final family = controller.familyModel[index];
-                        return AnimationConfiguration.staggeredList(
-                          position: index,
-                          delay: const Duration(milliseconds: 250),
-                          duration: const Duration(milliseconds: 500),
-                          child: SlideAnimation(
-                            verticalOffset: 44.0,
-                            child: FadeInAnimation(
-                              child: GestureDetector(
-                                onTap: () {
-                                  controller.selectedFamily.value = family;
-                                },
-                                child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15.0, horizontal: 15.0),
-                                    child: Row(
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius: const BorderRadius.all(
-                                              Radius.circular(10.0)),
-                                          child: CachedNetworkImage(
-                                            imageUrl: family.imageContent,
-                                            fit: BoxFit.cover,
-                                            width: 60,
-                                            height: 60,
-                                            placeholder: (context, url) =>
-                                                Container(
-                                              alignment: Alignment.center,
-                                              child:
-                                                  const CircularProgressIndicator(),
+            child: Container(
+              decoration: const BoxDecoration(
+                  border: Border(
+                      right: BorderSide(
+                width: 1,
+                style: BorderStyle.solid,
+                color: Color(0xFF337ba7),
+              ))),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: Container(
+                      color: const Color(0xFF337ba7),
+                      child: AnimationLimiter(
+                          child: ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller.familyModel.length,
+                        itemBuilder: (context, index) {
+                          final family = controller.familyModel[index];
+                          return AnimationConfiguration.staggeredList(
+                            position: index,
+                            delay: const Duration(milliseconds: 250),
+                            duration: const Duration(milliseconds: 500),
+                            child: SlideAnimation(
+                              verticalOffset: 44.0,
+                              child: FadeInAnimation(
+                                child: GestureDetector(
+                                  onTap: () {
+                                    controller.selectedFamily.value = family;
+                                  },
+                                  child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15.0, horizontal: 15.0),
+                                      child: Row(
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(10.0)),
+                                            child: CachedNetworkImage(
+                                              imageUrl: family.imageContent,
+                                              fit: BoxFit.cover,
+                                              width: 60,
+                                              height: 60,
+                                              placeholder: (context, url) =>
+                                                  Container(
+                                                alignment: Alignment.center,
+                                                child:
+                                                    const CircularProgressIndicator(),
+                                              ),
+                                              errorWidget: (context, url,
+                                                      error) =>
+                                                  Image.asset(
+                                                      'assets/images/Logo_color1.png'),
                                             ),
-                                            errorWidget: (context, url,
-                                                    error) =>
-                                                Image.asset(
-                                                    'assets/images/Logo_color1.png'),
                                           ),
-                                        ),
-                                        const SizedBox(width: 15.0),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                toTitleCase(
-                                                    family.subjectFamily),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleLarge
-                                                    ?.apply(color: kWhite),
-                                              ),
-                                              Text(
-                                                toTitleCase(family.subtitle),
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium
-                                                    ?.apply(color: kWhite),
-                                              ),
-                                            ],
+                                          const SizedBox(width: 15.0),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  toTitleCase(
+                                                      family.subjectFamily),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge
+                                                      ?.apply(color: kWhite),
+                                                ),
+                                                Text(
+                                                  toTitleCase(family.subtitle),
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium
+                                                      ?.apply(color: kWhite),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    )),
+                                        ],
+                                      )),
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    )),
+                          );
+                        },
+                      )),
+                    ),
                   ),
-                ),
-                Container(
-                  height: 300,
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 20.0, vertical: 15.0),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20.0),
-                      color: Colors.white),
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        top: 20.0,
-                        left: 0,
-                        right: 0,
-                        child: ListTile(
-                          leading: Container(
-                            decoration: const BoxDecoration(
-                                color: Colors.yellow,
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10.0))),
-                            child: IconButton(
-                                onPressed: () {
-                                  Get.offNamed('/home');
-                                },
-                                icon: const Icon(
-                                  Icons.arrow_back_ios_new,
-                                  color: Colors.black,
-                                )),
+                  Container(
+                    height: 300,
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 15.0),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20.0),
+                        color: Colors.transparent),
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 20.0,
+                          left: 0,
+                          right: 0,
+                          child: ListTile(
+                            leading: Container(
+                              decoration: const BoxDecoration(
+                                  color: Colors.yellow,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10.0))),
+                              child: IconButton(
+                                  onPressed: () {
+                                    Get.offNamed('/home');
+                                  },
+                                  icon: const Icon(
+                                    Icons.arrow_back_ios_new,
+                                    color: Colors.black,
+                                  )),
+                            ),
+                            title: AutoSizeText(
+                              'Today',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleLarge
+                                  ?.copyWith(fontWeight: FontWeight.bold),
+                            ),
                           ),
-                          title: AutoSizeText(
-                            'Today',
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: AutoSizeText(
+                            DateFormat('EEEE, MMM d').format(DateTime.now()),
+                            maxFontSize: 30,
                             style: Theme.of(context)
                                 .textTheme
-                                .titleLarge
+                                .headlineSmall
                                 ?.copyWith(fontWeight: FontWeight.bold),
                           ),
                         ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: AutoSizeText(
-                          DateFormat('EEEE, MMM d').format(DateTime.now()),
-                          maxFontSize: 30,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall
-                              ?.copyWith(fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                      Positioned(
-                        bottom: 20.0,
-                        left: 0,
-                        right: 0,
-                        child: Column(
-                          children: [
-                            Obx(() {
-                              final networkImage =
-                                  userController.user.value.profilePicture;
-                              final image = networkImage.isNotEmpty
-                                  ? networkImage
-                                  : 'assets/images/cat.png';
-                              return CircularImage(
-                                overlayColor: kBlack,
-                                image: image,
-                                widht: 60,
-                                height: 60,
-                                isNetworkImage: networkImage.isNotEmpty,
+                        Positioned(
+                          bottom: 20.0,
+                          left: 0,
+                          right: 0,
+                          child: Column(
+                            children: [
+                              Obx(() {
+                                final networkImage =
+                                    userController.user.value.profilePicture;
+                                final image = networkImage.isNotEmpty
+                                    ? networkImage
+                                    : 'assets/images/cat.png';
+                                return CircularImage(
+                                  overlayColor: kBlack,
+                                  image: image,
+                                  widht: 60,
+                                  height: 60,
+                                  isNetworkImage: networkImage.isNotEmpty,
+                                )
+                                    .animate(
+                                        delay:
+                                            const Duration(milliseconds: 250))
+                                    .slideX(
+                                        begin: -4,
+                                        end: 0,
+                                        curve: Curves.bounceIn,
+                                        duration:
+                                            const Duration(milliseconds: 400));
+                              }),
+                              const SizedBox(width: 8),
+                              Obx(
+                                () => userController.profileLoading.value
+                                    ? const DShimmerEffect(
+                                        width: 100, height: 20)
+                                    : Text(
+                                        userController.user.value.username,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleLarge,
+                                      )
+                                        .animate(
+                                            delay: const Duration(
+                                                milliseconds: 250))
+                                        .slideX(
+                                            begin: 4,
+                                            end: 0,
+                                            curve: Curves.bounceIn,
+                                            duration: const Duration(
+                                                milliseconds: 400)),
                               )
-                                  .animate(
-                                      delay: const Duration(milliseconds: 250))
-                                  .slideX(
-                                      begin: -4,
-                                      end: 0,
-                                      curve: Curves.bounceIn,
-                                      duration:
-                                          const Duration(milliseconds: 400));
-                            }),
-                            const SizedBox(width: 8),
-                            Obx(
-                              () => userController.profileLoading.value
-                                  ? const DShimmerEffect(width: 100, height: 20)
-                                  : Text(
-                                      userController.user.value.username,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge,
-                                    )
-                                      .animate(
-                                          delay:
-                                              const Duration(milliseconds: 250))
-                                      .slideX(
-                                          begin: 4,
-                                          end: 0,
-                                          curve: Curves.bounceIn,
-                                          duration: const Duration(
-                                              milliseconds: 400)),
-                            )
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ).animate(delay: const Duration(milliseconds: 250)).slideY(
-                    begin: 2.5,
-                    end: 0,
-                    duration: const Duration(milliseconds: 700)),
-              ],
+                      ],
+                    ),
+                  ).animate(delay: const Duration(milliseconds: 250)).slideY(
+                      begin: 2.5,
+                      end: 0,
+                      duration: const Duration(milliseconds: 700)),
+                ],
+              ),
             ),
           ),
           Expanded(
             flex: 2,
             child: Container(
-                color: Colors.white,
+                color: const Color(0xFFead8c8),
                 child: Stack(
                   fit: StackFit.passthrough,
                   children: [
@@ -242,7 +254,7 @@ class FamilyTabletScreen extends StatelessWidget {
                       child: Container(
                         width: double.infinity,
                         height: MediaQuery.of(context).size.height,
-                        color: const Color(0xFFfab800),
+                        color: const Color(0xFF67c6e3),
                       ),
                     ),
                     Positioned(

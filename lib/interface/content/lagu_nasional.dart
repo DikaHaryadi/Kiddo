@@ -4,6 +4,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:textspeech/controllers/lagu_nasional.dart';
 import 'package:textspeech/interface/mobile/lagu_nasional_mobile_screen.dart';
+import 'package:textspeech/interface/tablet/lagu_nasional_screen.dart';
 
 import '../../util/etc/responsive.dart';
 import '../homepage.dart';
@@ -55,9 +56,16 @@ class LaguNasionalContent extends GetView<LaguNasionalController> {
           if (isMobile(context))
             LaguNasionalMobileScreen(controller: controller),
           if (isDesktop(context))
-            Center(
-              child: Text('Ini Lagu Nasional Tablet'),
-            )
+            Obx(() {
+              final selectedLaguNasional = controller.selectedAnimal.value;
+              if (selectedLaguNasional != null) {
+                return LaguNasionalTabletScreen(
+                  model: selectedLaguNasional,
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            })
         ],
       ),
     );

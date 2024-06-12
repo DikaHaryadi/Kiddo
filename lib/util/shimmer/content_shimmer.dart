@@ -45,11 +45,6 @@ class ContentShimmer extends StatelessWidget {
                     ),
                   ),
                 ),
-                const DShimmerEffect(
-                    width: 50,
-                    height: 50,
-                    radius: 10.0,
-                    boxShape: BoxShape.circle)
               ],
             ));
       },

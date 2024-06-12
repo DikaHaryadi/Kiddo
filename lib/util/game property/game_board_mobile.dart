@@ -11,12 +11,12 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:info_popup/info_popup.dart';
-import 'package:intl/intl.dart';
 import 'package:textspeech/auth/controller/auth_controller.dart';
 import 'package:textspeech/controllers/anchor_ads_controller.dart';
 import 'package:textspeech/firebase/references.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:textspeech/util/etc/constants.dart';
+import 'package:textspeech/util/etc/responsive.dart';
 import 'package:textspeech/util/game%20property/game.dart';
 import 'package:textspeech/util/game%20property/game_confetti.dart';
 import 'package:textspeech/util/game%20property/restart_game.dart';
@@ -310,243 +310,434 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     final aspectRatio = MediaQuery.of(context).size.aspectRatio;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        toolbarHeight: 45,
-        elevation: 0,
-        shadowColor: const Color(0xFF3F4045),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () async {
-            pauseTimer();
-            return await showDialog(
-              context: Get.overlayContext!,
-              barrierDismissible: false,
-              builder: (context) {
-                return Center(
-                  child: Container(
-                    height: MediaQuery.of(context).size.height * .45,
-                    width: MediaQuery.of(context).size.width / 1.5,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15.0, vertical: 10.0),
-                    decoration: BoxDecoration(
-                        border: const Border.fromBorderSide(
-                            BorderSide(color: kWhite)),
-                        borderRadius: BorderRadius.circular(30.0)),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: Column(
-                        children: [
-                          Text(
-                            'Exit from the game?',
-                            style: GoogleFonts.montserrat(
-                                fontWeight: FontWeight.bold, fontSize: 16),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Get.offAllNamed('/home');
-                                },
-                                child: Text(
-                                  'Exit',
-                                  style: GoogleFonts.aBeeZee(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14),
+      appBar: isMobile(context)
+          ? AppBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              toolbarHeight: 45,
+              elevation: 0,
+              shadowColor: const Color(0xFF3F4045),
+              leading: IconButton(
+                icon: const Icon(Icons.arrow_back_ios),
+                onPressed: () async {
+                  pauseTimer();
+                  return await showDialog(
+                    context: Get.overlayContext!,
+                    barrierDismissible: false,
+                    builder: (context) {
+                      return Center(
+                        child: Container(
+                          height: MediaQuery.of(context).size.height * .45,
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15.0, vertical: 10.0),
+                          decoration: BoxDecoration(
+                              border: const Border.fromBorderSide(
+                                  BorderSide(color: kWhite)),
+                              borderRadius: BorderRadius.circular(30.0)),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: Column(
+                              children: [
+                                Text(
+                                  'Exit from the game?',
+                                  style: GoogleFonts.montserrat(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
                                 ),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  startTimer();
-                                  Get.back(result: false);
-                                },
-                                child: Text(
-                                  'Continue',
-                                  style: GoogleFonts.aBeeZee(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 14),
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              },
-            );
-          },
-        ),
-        title: Text(duration.toString().split('.').first.padLeft(8, "0"),
-            style:
-                GoogleFonts.aBeeZee(fontWeight: FontWeight.w600, fontSize: 16)),
-        centerTitle: true,
-      ),
-      body: Stack(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 5.0, horizontal: 20.0),
-                    decoration: const BoxDecoration(
-                        color: Color(0xFF3675f7),
-                        borderRadius: BorderRadius.only(
-                            topRight: Radius.circular(30.0),
-                            bottomRight: Radius.circular(30.0))),
-                    child: Row(
-                      children: [
-                        Obx(() {
-                          final networkImage =
-                              controller.user.value.profilePicture;
-                          final image = networkImage.isNotEmpty
-                              ? networkImage
-                              : 'assets/images/cat.png';
-                          return CircularImage(
-                            image: image,
-                            widht: 40,
-                            height: 40,
-                            isNetworkImage: networkImage.isNotEmpty,
-                          );
-                        }),
-                        const SizedBox(width: 5.0),
-                        Obx(() => controller.profileLoading.value
-                            ? const DShimmerEffect(width: 100, height: 20)
-                            : AutoSizeText(
-                                controller.user.value.username,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ))
-                      ],
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 5.0, horizontal: 15.0),
-                    decoration: const BoxDecoration(
-                        color: Color(0xFF3675f7),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30.0),
-                            bottomLeft: Radius.circular(30.0))),
-                    child: Row(
-                      children: [
-                        RestartGame(
-                          isGameOver: game.isGameOver,
-                          pauseGame: () => pauseTimer(),
-                          restartGame: () => _resetGame(),
-                          continueGame: () => startTimer(),
-                          color: Colors.amberAccent[700]!,
-                        ),
-                        const SizedBox(width: 8.0),
-                        InfoPopupWidget(
-                          customContent: () {
-                            return Container(
-                                decoration: BoxDecoration(
-                                  color: kWhite,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Row(
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    IconButton(
-                                        onPressed: toggleMute,
-                                        icon: Icon(isMusicPlaying
-                                            ? Iconsax.volume_mute
-                                            : Iconsax.volume_cross)),
-                                    Slider(
-                                      value: isMusicPlaying ? _volume : 0.0,
-                                      min: 0.0,
-                                      max: 1.0,
-                                      onChanged: (newValue) {
-                                        setVolume(newValue);
+                                    InkWell(
+                                      onTap: () {
+                                        Get.offAllNamed('/home');
                                       },
-                                      onChangeEnd: (newValue) {
-                                        setVolume(newValue);
-                                      },
+                                      child: Text(
+                                        'Exit',
+                                        style: GoogleFonts.aBeeZee(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14),
+                                      ),
                                     ),
-                                    Text(
-                                      '${calculateVolumePercentage(isMusicPlaying ? _volume : 0.0)}%',
+                                    InkWell(
+                                      onTap: () {
+                                        startTimer();
+                                        Get.back(result: false);
+                                      },
+                                      child: Text(
+                                        'Continue',
+                                        style: GoogleFonts.aBeeZee(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14),
+                                      ),
                                     ),
                                   ],
-                                ));
-                          },
-                          arrowTheme: const InfoPopupArrowTheme(
-                            color: kWhite,
-                            arrowDirection: ArrowDirection.up,
-                          ),
-                          dismissTriggerBehavior:
-                              PopupDismissTriggerBehavior.onTapArea,
-                          areaBackgroundColor: Colors.transparent,
-                          indicatorOffset: Offset.zero,
-                          contentOffset: Offset.zero,
-                          onControllerCreated: (controller) {
-                            print('Info Popup Controller Created');
-                          },
-                          onAreaPressed: (InfoPopupController controller) {
-                            print('Area Pressed');
-                            controller.dismissInfoPopup();
-                          },
-                          infoPopupDismissed: () {
-                            print('Info Popup Dismissed');
-                          },
-                          onLayoutMounted: (Size size) {
-                            print('Info Popup Layout Mounted');
-                          },
-                          child: CircleAvatar(
-                            minRadius: 15,
-                            maxRadius: 20,
-                            backgroundColor: const Color(0xFF8dbffa),
-                            child: Icon(isMusicPlaying
-                                ? Iconsax.volume_mute
-                                : Iconsax.volume_cross),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                      ],
-                    ),
-                  )
-                ],
+                      );
+                    },
+                  );
+                },
               ),
-              const SizedBox(height: 50.0),
-              Expanded(
-                child: GridView.count(
-                  physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: game.gridSize,
-                  childAspectRatio: aspectRatio * 2,
-                  children: List.generate(game.cards.length, (index) {
-                    return MemoryCard(
-                      index: index,
-                      card: game.cards[index],
-                      onCardPressed: game.onCardPressed,
-                    );
-                  }),
+              title: Text(duration.toString().split('.').first.padLeft(8, "0"),
+                  style: GoogleFonts.aBeeZee(
+                      fontWeight: FontWeight.w600, fontSize: 16)),
+              centerTitle: true,
+            )
+          : null,
+      body: isMobile(context)
+          ? memoGameBody(aspectRatio)
+          : PopScope(
+              canPop: false,
+              child: Container(
+                  width: Get.width,
+                  height: Get.height,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('assets/games/bg_board_memo.png'),
+                          fit: BoxFit.fill)),
+                  child: tabletMemoGameBody(aspectRatio))),
+    );
+  }
+
+  Stack memoGameBody(double aspectRatio) {
+    return Stack(
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 20.0),
+                  decoration: const BoxDecoration(
+                      color: Color(0xFF3675f7),
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(30.0),
+                          bottomRight: Radius.circular(30.0))),
+                  child: Row(
+                    children: [
+                      Obx(() {
+                        final networkImage =
+                            controller.user.value.profilePicture;
+                        final image = networkImage.isNotEmpty
+                            ? networkImage
+                            : 'assets/images/cat.png';
+                        return CircularImage(
+                          image: image,
+                          widht: 40,
+                          height: 40,
+                          isNetworkImage: networkImage.isNotEmpty,
+                        );
+                      }),
+                      const SizedBox(width: 5.0),
+                      Obx(() => controller.profileLoading.value
+                          ? const DShimmerEffect(width: 100, height: 20)
+                          : AutoSizeText(
+                              controller.user.value.username,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ))
+                    ],
+                  ),
                 ),
-              ),
-              AspectRatio(
-                aspectRatio: 16 / 2.5,
-                child: Container(
-                    padding: const EdgeInsets.symmetric(vertical: 5.0),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        width: 1.0,
-                        style: BorderStyle.solid,
-                        color: Colors.black.withOpacity(.4),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 15.0),
+                  decoration: const BoxDecoration(
+                      color: Color(0xFF3675f7),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          bottomLeft: Radius.circular(30.0))),
+                  child: Row(
+                    children: [
+                      RestartGame(
+                        isGameOver: game.isGameOver,
+                        pauseGame: () => pauseTimer(),
+                        restartGame: () => _resetGame(),
+                        continueGame: () => startTimer(),
+                        color: Colors.amberAccent[700]!,
                       ),
-                    ),
-                    child: anchorAdsController.getAdWidget()),
+                      const SizedBox(width: 8.0),
+                      InfoPopupWidget(
+                        customContent: () {
+                          return Container(
+                              decoration: BoxDecoration(
+                                color: kWhite,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: toggleMute,
+                                      icon: Icon(isMusicPlaying
+                                          ? Iconsax.volume_mute
+                                          : Iconsax.volume_cross)),
+                                  Slider(
+                                    value: isMusicPlaying ? _volume : 0.0,
+                                    min: 0.0,
+                                    max: 1.0,
+                                    onChanged: (newValue) {
+                                      setVolume(newValue);
+                                    },
+                                    onChangeEnd: (newValue) {
+                                      setVolume(newValue);
+                                    },
+                                  ),
+                                  Text(
+                                    '${calculateVolumePercentage(isMusicPlaying ? _volume : 0.0)}%',
+                                  ),
+                                ],
+                              ));
+                        },
+                        arrowTheme: const InfoPopupArrowTheme(
+                          color: kWhite,
+                          arrowDirection: ArrowDirection.up,
+                        ),
+                        dismissTriggerBehavior:
+                            PopupDismissTriggerBehavior.onTapArea,
+                        areaBackgroundColor: Colors.transparent,
+                        indicatorOffset: Offset.zero,
+                        contentOffset: Offset.zero,
+                        onControllerCreated: (controller) {
+                          print('Info Popup Controller Created');
+                        },
+                        onAreaPressed: (InfoPopupController controller) {
+                          print('Area Pressed');
+                          controller.dismissInfoPopup();
+                        },
+                        infoPopupDismissed: () {
+                          print('Info Popup Dismissed');
+                        },
+                        onLayoutMounted: (Size size) {
+                          print('Info Popup Layout Mounted');
+                        },
+                        child: CircleAvatar(
+                          minRadius: 15,
+                          maxRadius: 20,
+                          backgroundColor: const Color(0xFF8dbffa),
+                          child: Icon(isMusicPlaying
+                              ? Iconsax.volume_mute
+                              : Iconsax.volume_cross),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 50.0),
+            Expanded(
+              child: GridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: game.gridSize,
+                childAspectRatio: aspectRatio * 2,
+                children: List.generate(game.cards.length, (index) {
+                  return MemoryCard(
+                    index: index,
+                    card: game.cards[index],
+                    onCardPressed: game.onCardPressed,
+                  );
+                }),
               ),
-            ],
-          ),
-          showConfetti ? const GameConfetti() : const SizedBox(),
-        ],
-      ),
+            ),
+            AspectRatio(
+              aspectRatio: 16 / 2.5,
+              child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1.0,
+                      style: BorderStyle.solid,
+                      color: Colors.black.withOpacity(.4),
+                    ),
+                  ),
+                  child: anchorAdsController.getAdWidget()),
+            ),
+          ],
+        ),
+        showConfetti ? const GameConfetti() : const SizedBox(),
+      ],
+    );
+  }
+
+  Stack tabletMemoGameBody(double aspectRatio) {
+    return Stack(
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 15.0, vertical: 8.0),
+                  decoration: const BoxDecoration(
+                      color: Colors.blueAccent,
+                      borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(15.0),
+                          bottomRight: Radius.circular(15.0))),
+                  child: Row(
+                    children: [
+                      Obx(() {
+                        final networkImage =
+                            controller.user.value.profilePicture;
+                        final image = networkImage.isNotEmpty
+                            ? networkImage
+                            : 'assets/images/cat.png';
+                        return CircularImage(
+                          image: image,
+                          widht: 40,
+                          height: 40,
+                          isNetworkImage: networkImage.isNotEmpty,
+                        );
+                      }),
+                      const SizedBox(width: 5.0),
+                      Obx(() => controller.profileLoading.value
+                          ? const DShimmerEffect(width: 100, height: 20)
+                          : AutoSizeText(
+                              controller.user.value.username,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            )),
+                      const SizedBox(width: 8.0),
+                      const Text('|'),
+                      const SizedBox(width: 8.0),
+                      Text(duration.toString().split('.').first.padLeft(8, "0"),
+                          style: GoogleFonts.aBeeZee(
+                              fontWeight: FontWeight.w600, fontSize: 16)),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 8.0, horizontal: 15.0),
+                  decoration: const BoxDecoration(
+                      color: Color(0xFF3675f7),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30.0),
+                          bottomLeft: Radius.circular(30.0))),
+                  child: Row(
+                    children: [
+                      RestartGame(
+                        isGameOver: game.isGameOver,
+                        pauseGame: () => pauseTimer(),
+                        restartGame: () => _resetGame(),
+                        continueGame: () => startTimer(),
+                        color: Colors.amberAccent[700]!,
+                      ),
+                      const SizedBox(width: 8.0),
+                      InfoPopupWidget(
+                        customContent: () {
+                          return Container(
+                              decoration: BoxDecoration(
+                                color: kWhite,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: toggleMute,
+                                      icon: Icon(isMusicPlaying
+                                          ? Iconsax.volume_mute
+                                          : Iconsax.volume_cross)),
+                                  Slider(
+                                    value: isMusicPlaying ? _volume : 0.0,
+                                    min: 0.0,
+                                    max: 1.0,
+                                    onChanged: (newValue) {
+                                      setVolume(newValue);
+                                    },
+                                    onChangeEnd: (newValue) {
+                                      setVolume(newValue);
+                                    },
+                                  ),
+                                  Text(
+                                    '${calculateVolumePercentage(isMusicPlaying ? _volume : 0.0)}%',
+                                  ),
+                                ],
+                              ));
+                        },
+                        arrowTheme: const InfoPopupArrowTheme(
+                          color: kWhite,
+                          arrowDirection: ArrowDirection.up,
+                        ),
+                        dismissTriggerBehavior:
+                            PopupDismissTriggerBehavior.onTapArea,
+                        areaBackgroundColor: Colors.transparent,
+                        indicatorOffset: Offset.zero,
+                        contentOffset: Offset.zero,
+                        onControllerCreated: (controller) {
+                          print('Info Popup Controller Created');
+                        },
+                        onAreaPressed: (InfoPopupController controller) {
+                          print('Area Pressed');
+                          controller.dismissInfoPopup();
+                        },
+                        infoPopupDismissed: () {
+                          print('Info Popup Dismissed');
+                        },
+                        onLayoutMounted: (Size size) {
+                          print('Info Popup Layout Mounted');
+                        },
+                        child: CircleAvatar(
+                          minRadius: 15,
+                          maxRadius: 20,
+                          backgroundColor: const Color(0xFF8dbffa),
+                          child: Icon(isMusicPlaying
+                              ? Iconsax.volume_mute
+                              : Iconsax.volume_cross),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 50.0),
+            Expanded(
+              child: GridView.count(
+                physics: const NeverScrollableScrollPhysics(),
+                crossAxisCount: game.gridSize,
+                childAspectRatio: aspectRatio * 2,
+                children: List.generate(game.cards.length, (index) {
+                  return MemoryCard(
+                    index: index,
+                    card: game.cards[index],
+                    onCardPressed: game.onCardPressed,
+                  );
+                }),
+              ),
+            ),
+            AspectRatio(
+              aspectRatio: 16 / 2.5,
+              child: Container(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 1.0,
+                      style: BorderStyle.solid,
+                      color: Colors.black.withOpacity(.4),
+                    ),
+                  ),
+                  child: anchorAdsController.getAdWidget()),
+            ),
+          ],
+        ),
+        showConfetti ? const GameConfetti() : const SizedBox(),
+      ],
     );
   }
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:textspeech/quiz/app_bar_quiz.dart';
-import 'package:textspeech/quiz/question_number.dart';
 import 'package:textspeech/util/shimmer/question_tablet_shimmer.dart';
 
 import '../../../controllers/question_controller.dart';
@@ -93,19 +92,19 @@ class QuestionTabletScreen extends StatelessWidget {
                         children: [
                           Visibility(
                             visible: controller.isFirstQuestion,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: ElevatedButton(
-                                  onPressed: () => controller.prevQuestion(),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: kSoftblue,
-                                    side: const BorderSide(
-                                        color: kError, width: 1),
-                                  ),
-                                  child: const Icon(
-                                    Icons.arrow_back_ios,
-                                    color: kDark,
-                                  )),
+                            child: Expanded(
+                              flex: 1,
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: ElevatedButton(
+                                    onPressed: () => controller.prevQuestion(),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: kSoftblue,
+                                      side: const BorderSide(
+                                          color: kError, width: 1),
+                                    ),
+                                    child: const Text('Back')),
+                              ),
                             ),
                           ),
                           Expanded(
@@ -115,122 +114,7 @@ class QuestionTabletScreen extends StatelessWidget {
                               child: ElevatedButton(
                                   onPressed: () {
                                     controller.isLastQuestion
-                                        ? showModalBottomSheet(
-                                            enableDrag: true,
-                                            useSafeArea: true,
-                                            clipBehavior: Clip.hardEdge,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(20),
-                                                topRight: Radius.circular(20),
-                                              ),
-                                            ),
-                                            context: context,
-                                            isScrollControlled: true,
-                                            builder: (context) {
-                                              controller.bottomSheetContext =
-                                                  context;
-                                              return DraggableScrollableSheet(
-                                                expand: false,
-                                                initialChildSize: 0.5,
-                                                snap: true,
-                                                snapSizes: const [0.5, 1.0],
-                                                builder: (_, scrollController) {
-                                                  return CustomScrollView(
-                                                    controller:
-                                                        scrollController,
-                                                    physics:
-                                                        const ClampingScrollPhysics(),
-                                                    slivers: [
-                                                      SliverToBoxAdapter(
-                                                          child: Column(
-                                                        children: [
-                                                          Obx(() => Text(
-                                                              '${controller.time} Remaining')),
-                                                          Text('sasafa')
-                                                        ],
-                                                      )),
-                                                      SliverGrid(
-                                                        delegate:
-                                                            SliverChildBuilderDelegate(
-                                                          (_, index) {
-                                                            AnswerStatus?
-                                                                _answereStatus;
-                                                            if (controller
-                                                                    .allQuestions[
-                                                                        index]
-                                                                    .selectedAnswer !=
-                                                                null) {
-                                                              _answereStatus =
-                                                                  AnswerStatus
-                                                                      .answered;
-                                                            }
-                                                            return QuestionNumberCard(
-                                                                index:
-                                                                    index + 1,
-                                                                status:
-                                                                    _answereStatus,
-                                                                onTap: () => controller
-                                                                    .jumpToQuestion(
-                                                                        index));
-                                                          },
-                                                          childCount: controller
-                                                              .allQuestions
-                                                              .length,
-                                                        ),
-                                                        gridDelegate:
-                                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                                          crossAxisCount:
-                                                              (Get.width ~/ 75),
-                                                          childAspectRatio: 1,
-                                                          crossAxisSpacing: 8,
-                                                          mainAxisSpacing: 8,
-                                                        ),
-                                                      ),
-                                                      SliverToBoxAdapter(
-                                                          child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .only(
-                                                                bottom: 24.0,
-                                                                left: 24.0,
-                                                                right: 24.0),
-                                                        child: Row(
-                                                          children: [
-                                                            SizedBox(
-                                                              width:
-                                                                  Get.width / 3,
-                                                              child:
-                                                                  OutlinedButton(
-                                                                      onPressed:
-                                                                          controller
-                                                                              .navigateToHome,
-                                                                      child:
-                                                                          const Text(
-                                                                        'Keluar',
-                                                                      )),
-                                                            ),
-                                                            const SizedBox(
-                                                                width: 8.0),
-                                                            Expanded(
-                                                              child: SizedBox(
-                                                                  width: double
-                                                                      .infinity,
-                                                                  child: ElevatedButton(
-                                                                      onPressed: controller.complete,
-                                                                      child: const Text(
-                                                                        'Complete',
-                                                                      ))),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ))
-                                                    ],
-                                                  );
-                                                },
-                                              );
-                                            },
-                                          )
+                                        ? controller.complete()
                                         : controller.nextQuestion();
                                   },
                                   child: Text(

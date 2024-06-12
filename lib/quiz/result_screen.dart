@@ -7,13 +7,14 @@ import 'package:textspeech/quiz/answer_check_screen.dart';
 import 'package:textspeech/quiz/question_number.dart';
 import 'package:textspeech/util/etc/curved_edges.dart';
 
-class ResultQuizScreen extends GetView<QuestionController> {
+class ResultQuizScreen extends StatelessWidget {
   const ResultQuizScreen({super.key});
 
   static const String routeName = '/resultscreen';
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(QuestionController());
     return PopScope(
       canPop: false,
       child: Scaffold(
@@ -39,7 +40,7 @@ class ResultQuizScreen extends GetView<QuestionController> {
                 child: Column(
                   children: [
                     Image.asset(
-                      'assets/images/logo.png',
+                      'assets/icon/logo.png',
                       width: 100,
                     ),
                     const SizedBox(height: 16.0),

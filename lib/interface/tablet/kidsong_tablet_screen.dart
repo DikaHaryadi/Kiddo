@@ -322,7 +322,7 @@ class _KidSongTabletScreenState extends State<KidSongTabletScreen> {
     return Expanded(
       flex: 2,
       child: Container(
-        color: Colors.white,
+        color: kWhite,
         child: Column(
           children: [
             _buildAdSection(),

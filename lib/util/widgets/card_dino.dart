@@ -14,10 +14,10 @@ class CardDinoContent extends StatefulWidget {
   final DinoModel model;
 
   const CardDinoContent({
-    super.key,
+    Key? key,
     required this.controller,
     required this.model,
-  });
+  }) : super(key: key);
 
   @override
   State<CardDinoContent> createState() => _CardDinoContentState();
@@ -50,15 +50,6 @@ class _CardDinoContentState extends State<CardDinoContent> {
     isPlayingDeskripsiVoice = false;
     isPlayingSong = false;
 
-    if (widget.model.deskripsi.length > textHeight) {
-      firstHalf = widget.model.deskripsi.substring(0, textHeight.toInt());
-      secondHalf = widget.model.deskripsi
-          .substring(textHeight.toInt() + 1, widget.model.deskripsi.length);
-    } else {
-      firstHalf = widget.model.deskripsi;
-      secondHalf = '';
-    }
-
     player.onPlayerStateChanged.listen((PlayerState state) {
       if (state == PlayerState.completed) {
         setState(() {
@@ -80,7 +71,6 @@ class _CardDinoContentState extends State<CardDinoContent> {
     if (isPlayingTitleVoice && player.state == PlayerState.playing) {
       await player.pause();
     } else {
-      // Stop any other playing audio before starting the new one
       if (isPlayingDeskripsiVoice || isPlayingSong) {
         await player.stop();
         isPlayingDeskripsiVoice = false;
@@ -97,7 +87,6 @@ class _CardDinoContentState extends State<CardDinoContent> {
     if (isPlayingDeskripsiVoice && player.state == PlayerState.playing) {
       await player.pause();
     } else {
-      // Stop any other playing audio before starting the new one
       if (isPlayingTitleVoice || isPlayingSong) {
         await player.stop();
         isPlayingTitleVoice = false;
@@ -114,7 +103,6 @@ class _CardDinoContentState extends State<CardDinoContent> {
     if (isPlayingSong && player.state == PlayerState.playing) {
       await player.pause();
     } else {
-      // Stop any other playing audio before starting the new one
       if (isPlayingTitleVoice || isPlayingDeskripsiVoice) {
         await player.stop();
         isPlayingTitleVoice = false;
@@ -149,6 +137,12 @@ class _CardDinoContentState extends State<CardDinoContent> {
   @override
   Widget build(BuildContext context) {
     final ttsController = Get.put(TtsController());
+
+    final List<String> items = [
+      'assets/images/indonesia.png',
+      'assets/images/english.png',
+    ];
+
     return Stack(
       children: [
         Positioned.fill(
@@ -170,6 +164,48 @@ class _CardDinoContentState extends State<CardDinoContent> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
+              SizedBox(
+                  width: 50,
+                  height: 40,
+                  child: GetBuilder<DinoController>(
+                    builder: (controller) {
+                      return DropdownButton<String>(
+                        isExpanded: true,
+                        value:
+                            widget.controller.storage.read('language') == 'id'
+                                ? items[0]
+                                : items[1],
+                        onChanged: (String? value) {
+                          int index = items.indexOf(value!);
+                          widget.controller
+                              .setActiveLanguage(index == 0 ? 'id' : 'en');
+                          widget.controller.saveLanguageDeskripsi(index);
+                        },
+                        icon: const Icon(Icons.arrow_drop_down),
+                        selectedItemBuilder: (BuildContext context) {
+                          return items.map<Widget>((String item) {
+                            return Image.asset(
+                              item,
+                              width: 24,
+                              height: 24,
+                            );
+                          }).toList();
+                        },
+                        items:
+                            items.map<DropdownMenuItem<String>>((String item) {
+                          return DropdownMenuItem<String>(
+                            value: item,
+                            child: Image.asset(
+                              item,
+                              width: 24,
+                              height: 24,
+                            ),
+                          );
+                        }).toList(),
+                      );
+                    },
+                  )),
+              Expanded(child: Container()),
               InkWell(
                 onTap: () => widget.controller.toggleCollapse(),
                 child: Icon(
@@ -183,8 +219,8 @@ class _CardDinoContentState extends State<CardDinoContent> {
               const SizedBox(width: 8.0),
               InkWell(
                 onTap: playPauseSong,
-                child: const Icon(
-                  Iconsax.musicnote,
+                child: Icon(
+                  isPlayingSong ? Iconsax.pause : Iconsax.musicnote,
                   color: kWhite,
                   size: 30,
                 ),
@@ -234,6 +270,7 @@ class _CardDinoContentState extends State<CardDinoContent> {
                               stopAudio();
                               widget.controller.selectedDino.value =
                                   widget.controller.dinoModel[index];
+                              widget.controller.saveLanguageDeskripsi(index);
                             },
                             child: Container(
                               width: 50,
@@ -308,44 +345,56 @@ class _CardDinoContentState extends State<CardDinoContent> {
                         ),
                         const SizedBox(height: 8.0),
                         InkWell(
-                            onTap: () => ttsController.textToSpeech(
-                                widget.model.jenisMakanan, "en-US"),
-                            child: Text(
-                              widget.model.jenisMakanan,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.apply(color: kWhite),
-                            )),
+                          onTap: () => ttsController.textToSpeech(
+                              widget.model.jenisMakanan, "en-US"),
+                          child: Text(
+                            widget.model.jenisMakanan,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.apply(color: kWhite),
+                          ),
+                        ),
                         const SizedBox(height: 5.0),
-                        InkWell(
-                          onTap: () {
-                            setState(() {
-                              hiddenText = !hiddenText;
-                            });
-                          },
-                          child: RichText(
-                            textAlign: TextAlign.justify,
-                            text: TextSpan(
+                        Obx(() {
+                          String deskripsi = widget.controller.deskripsiLang;
+                          if (widget.controller.storage.read('language') ==
+                              'id') {
+                            deskripsi = widget.model.deskripsi;
+                          } else {
+                            deskripsi = widget.model.deskripsiEn;
+                          }
+                          return InkWell(
+                            onTap: () {
+                              setState(() {
+                                hiddenText = !hiddenText;
+                              });
+                            },
+                            child: RichText(
+                              textAlign: TextAlign.justify,
+                              text: TextSpan(
                                 text: (hiddenText
-                                    ? ('$firstHalf...')
-                                    : (firstHalf + secondHalf)),
+                                    ? ('${deskripsi.substring(0, textHeight.toInt())}...')
+                                    : deskripsi),
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
                                     ?.apply(color: kWhite),
                                 children: <TextSpan>[
                                   TextSpan(
-                                      text: hiddenText ? 'See More...' : '',
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          setState(() {
-                                            hiddenText = !hiddenText;
-                                          });
-                                        }),
-                                ]),
-                          ),
-                        ),
+                                    text: hiddenText ? ' See More...' : '',
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        setState(() {
+                                          hiddenText = !hiddenText;
+                                        });
+                                      },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }),
                       ],
                     ),
                   ),
@@ -360,6 +409,48 @@ class _CardDinoContentState extends State<CardDinoContent> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  SizedBox(
+                      width: 50,
+                      height: 40,
+                      child: GetBuilder<DinoController>(
+                        builder: (controller) {
+                          return DropdownButton<String>(
+                            isExpanded: true,
+                            value: widget.controller.storage.read('language') ==
+                                    'id'
+                                ? items[0]
+                                : items[1],
+                            onChanged: (String? value) {
+                              int index = items.indexOf(value!);
+                              widget.controller
+                                  .setActiveLanguage(index == 0 ? 'id' : 'en');
+                              widget.controller.saveLanguageDeskripsi(index);
+                            },
+                            icon: const Icon(Icons.arrow_drop_down),
+                            selectedItemBuilder: (BuildContext context) {
+                              return items.map<Widget>((String item) {
+                                return Image.asset(
+                                  item,
+                                  width: 24,
+                                  height: 24,
+                                );
+                              }).toList();
+                            },
+                            items: items
+                                .map<DropdownMenuItem<String>>((String item) {
+                              return DropdownMenuItem<String>(
+                                value: item,
+                                child: Image.asset(
+                                  item,
+                                  width: 24,
+                                  height: 24,
+                                ),
+                              );
+                            }).toList(),
+                          );
+                        },
+                      )),
+                  Expanded(child: Container()),
                   InkWell(
                     onTap: () => widget.controller.toggleCollapse(),
                     child: Icon(

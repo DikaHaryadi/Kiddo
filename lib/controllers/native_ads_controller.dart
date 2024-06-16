@@ -30,11 +30,9 @@ class NativeAdsController extends GetxController {
       listener: NativeAdListener(
         onAdLoaded: (ad) {
           isNativeAdLoaded.value = true;
-          print("Native Ad Loaded");
         },
         onAdFailedToLoad: (ad, error) {
           isNativeAdLoaded.value = false;
-          print("Failed to load a native ad: $error");
           ad.dispose();
         },
       ),
@@ -79,11 +77,9 @@ class NativeAdsController extends GetxController {
           onAdLoaded: (ad) {
             interstitialAd = ad;
             isInterstitialAdLoaded.value = true;
-            print("Interstitial Ad Loaded");
           },
           onAdFailedToLoad: (LoadAdError error) {
             isInterstitialAdLoaded.value = false;
-            print("Failed to load an interstitial ad: $error");
           },
         ));
   }
@@ -108,9 +104,7 @@ class NativeAdsController extends GetxController {
       );
 
       interstitialAd!.show();
-    } else {
-      print('Interstitial Ad is not loaded yet');
-    }
+    } else {}
   }
 
   void closeNativeAd() {

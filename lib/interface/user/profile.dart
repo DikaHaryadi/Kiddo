@@ -4,11 +4,9 @@ import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:textspeech/auth/controller/user/user_controller.dart';
 import 'package:textspeech/auth/controller/auth_controller.dart';
-import 'package:textspeech/controllers/language_controller.dart';
 import 'package:textspeech/interface/user/edit_profile.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:textspeech/util/etc/curved_edges.dart';
-import 'package:textspeech/util/etc/dep_lang.dart';
 import 'package:textspeech/util/etc/responsive.dart';
 import 'package:textspeech/util/shimmer/shimmer.dart';
 
@@ -19,10 +17,10 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(UserController());
 
-    final List<String> items = [
-      'assets/images/indonesia.jpg',
-      'assets/images/english.png',
-    ];
+    // final List<String> items = [
+    //   'assets/images/indonesia.jpg',
+    //   'assets/images/english.png',
+    // ];
 
     return Scaffold(
       backgroundColor: const Color(0xFFfab800),
@@ -132,7 +130,7 @@ class ProfileScreen extends StatelessWidget {
                                         onPressed: () =>
                                             Get.toNamed('/edit-profile'),
                                         child: Text(
-                                          'Edit Profile'.tr,
+                                          'Ubah Profile'.tr,
                                           style: Theme.of(context)
                                               .textTheme
                                               .titleMedium
@@ -202,75 +200,16 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 // Dropdown Bahasa
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Ganti Bahasa :',
-                      style: Theme.of(context).textTheme.bodyMedium,
-                    ),
-                    SizedBox(
-                      width: 140,
-                      height: 40,
-                      child: DropdownButtonHideUnderline(
-                        child: GetBuilder<LocalizationController>(
-                          builder: (controller) {
-                            return DropdownButton<String>(
-                              isExpanded: true,
-                              value: items[controller.selectedIndex],
-                              onChanged: (String? value) {
-                                int index = items.indexOf(value!);
-                                controller.setLanguage(Locale(
-                                    AppLanguageConstant
-                                        .languages[index].languageCode,
-                                    AppLanguageConstant
-                                        .languages[index].countryCode));
-                                controller.setSelectIndex(index);
-                              },
-                              icon: const Icon(Icons.arrow_drop_down),
-                              selectedItemBuilder: (BuildContext context) {
-                                return items.map<Widget>((String item) {
-                                  return Row(
-                                    children: [
-                                      Image.asset(
-                                        item,
-                                        width: 24,
-                                        height: 24,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(item == items[0]
-                                          ? 'Indonesia'
-                                          : 'English'),
-                                    ],
-                                  );
-                                }).toList();
-                              },
-                              items: items
-                                  .map<DropdownMenuItem<String>>((String item) {
-                                return DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Row(
-                                    children: [
-                                      Image.asset(
-                                        item,
-                                        width: 24,
-                                        height: 24,
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Text(item == items[0]
-                                          ? 'Indonesia'
-                                          : 'English'),
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            );
-                          },
-                        ),
-                      ),
-                    )
-                  ],
-                )
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     Text(
+                //       'Change Language :'.tr,
+                //       style: Theme.of(context).textTheme.bodyMedium,
+                //     ),
+
+                //   ],
+                // )
               ],
             )
           : Container(

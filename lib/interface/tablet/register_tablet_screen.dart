@@ -26,7 +26,7 @@ class RegisterTabletScreen extends StatelessWidget {
               child: const Icon(Icons.arrow_back_ios),
             ),
             const SizedBox(height: 32.0),
-            Text("Let's create your account",
+            Text("Mari buat akun Anda",
                 style: Theme.of(context)
                     .textTheme
                     .displaySmall
@@ -45,13 +45,13 @@ class RegisterTabletScreen extends StatelessWidget {
                             controller: controller.firstName,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'First Name is required';
+                                return 'Nama depan harus di isi';
                               }
                               return null;
                             },
                             decoration: const InputDecoration(
                               prefixIcon: Icon(Iconsax.user),
-                              labelText: 'First Name',
+                              labelText: 'Nama depan',
                             ),
                           ),
                         ),
@@ -62,13 +62,13 @@ class RegisterTabletScreen extends StatelessWidget {
                             expands: false,
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Last Name is required';
+                                return 'Nama belakang harus di isi';
                               }
                               return null;
                             },
                             decoration: const InputDecoration(
                               prefixIcon: Icon(Iconsax.user),
-                              labelText: 'Last Name',
+                              labelText: 'Nama belakang',
                             ),
                           ),
                         )
@@ -79,13 +79,13 @@ class RegisterTabletScreen extends StatelessWidget {
                       controller: controller.userName,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Username is required';
+                          return 'Nama pengguna diperlukan';
                         }
                         return null;
                       },
                       decoration: const InputDecoration(
                         prefixIcon: Icon(Iconsax.user_edit),
-                        labelText: 'Username',
+                        labelText: 'Nama pengguna',
                       ),
                     ),
                     const SizedBox(height: 16.0),
@@ -93,14 +93,14 @@ class RegisterTabletScreen extends StatelessWidget {
                       controller: controller.email,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Email is required.';
+                          return 'Email Tidak Boleh Kosong';
                         }
 
                         final emailRegExp =
                             RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
 
                         if (!emailRegExp.hasMatch(value)) {
-                          return 'Invalid email address.';
+                          return 'Alamat email tidak valid';
                         }
                         return null;
                       },
@@ -116,21 +116,21 @@ class RegisterTabletScreen extends StatelessWidget {
                         obscureText: controller.hidePassword.value,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Password is required';
+                            return 'Kata Sandi Tidak Boleh Kosong';
                           }
 
                           if (value.length < 6) {
-                            return 'Password must be at least 6 characters long.';
+                            return 'Kata sandi harus terdiri dari minimal 6 karakter';
                           }
                           if (!value.contains(RegExp(r'[A-Z]'))) {
-                            return 'Password must contain at least one uppercase letter';
+                            return 'Kata sandi harus mengandung setidaknya satu huruf besar';
                           }
                           if (!value.contains(RegExp(r'[0-9]'))) {
-                            return 'Password must contain at least one number';
+                            return 'Kata sandi harus berisi setidaknya satu angka';
                           }
                           if (!value
                               .contains(RegExp(r'[!@#$%^&*(),.?"{}|<>]'))) {
-                            return 'Password must contain at least one special character';
+                            return 'Kata sandi harus mengandung setidaknya satu karakter khusus';
                           }
                           return null;
                         },
@@ -163,10 +163,10 @@ class RegisterTabletScreen extends StatelessWidget {
                         Expanded(
                           child: Text.rich(TextSpan(children: [
                             TextSpan(
-                                text: 'i aggree to ',
+                                text: 'saya setuju untuk ',
                                 style: Theme.of(context).textTheme.bodyMedium),
                             TextSpan(
-                                text: 'Privacy Policy',
+                                text: 'Kebijakan Privasi',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -178,7 +178,7 @@ class RegisterTabletScreen extends StatelessWidget {
                                 text: ' and ',
                                 style: Theme.of(context).textTheme.bodyMedium),
                             TextSpan(
-                                text: 'Terms of use',
+                                text: 'Ketentuan penggunaan',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium!
@@ -199,7 +199,7 @@ class RegisterTabletScreen extends StatelessWidget {
                               backgroundColor:
                                   MaterialStatePropertyAll(Colors.blueAccent)),
                           child: const AutoSizeText(
-                            'Create Account',
+                            'Buat Akun',
                           )),
                     ),
                     const SizedBox(height: 20.0),
@@ -214,7 +214,7 @@ class RegisterTabletScreen extends StatelessWidget {
                           endIndent: 10,
                         )),
                         Text(
-                          'or sign in with',
+                          'atau masuk dengan',
                           style: Theme.of(context)
                               .textTheme
                               .labelMedium!

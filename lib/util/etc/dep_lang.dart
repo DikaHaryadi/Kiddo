@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
@@ -26,20 +28,20 @@ Future<Map<String, Map<String, String>>> init() async {
   Get.lazyPut(() => LocalizationController(storage: GetStorage()));
 
   // Retrieving localized data
-  Map<String, Map<String, String>> _languages = Map();
+  Map<String, Map<String, String>> languages = {};
   for (LanguageModel languageModel in AppLanguageConstant.languages) {
     String jsonStringValues = await rootBundle
         .loadString('assets/language/${languageModel.languageCode}.json');
-    Map<String, dynamic> _mappedJson = json.decode(jsonStringValues);
-    Map<String, String> _json = Map();
+    Map<String, dynamic> mappedJson = json.decode(jsonStringValues);
+    Map<String, String> jsonData = {};
 
-    _mappedJson.forEach((key, value) {
-      _json[key] = value.toString();
+    mappedJson.forEach((key, value) {
+      jsonData[key] = value.toString();
     });
 
-    _languages['${languageModel.languageCode}_${languageModel.countryCode}'] =
-        _json;
+    languages['${languageModel.languageCode}_${languageModel.countryCode}'] =
+        jsonData;
   }
 
-  return _languages;
+  return languages;
 }

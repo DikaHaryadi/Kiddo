@@ -12,8 +12,8 @@ class TPlatformException implements Exception {
         return 'Too many requests. Please try again later.';
       case 'invalid-argument':
         return 'Invalid argument provided to the authentication method.';
-      case 'invalid-password':
-        return 'Incorrect password. Please try again.';
+      case 'invalid-Kata Sandi':
+        return 'Incorrect Kata Sandi. Please try again.';
       case 'invalid-phone-number':
         return 'The provided phone number is invalid.';
       case 'operation-not-allowed':
@@ -34,7 +34,7 @@ class TPlatformException implements Exception {
         return 'Invalid verification ID. Please request a new verification code.';
       case 'quota-exceeded':
         return 'Quota exceeded. Please try again later.';
-    // Add more cases as needed...
+      // Add more cases as needed...
       default:
         return 'An unexpected platform error occurred. Please try again.';
     }

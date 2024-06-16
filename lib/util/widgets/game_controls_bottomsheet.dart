@@ -63,7 +63,7 @@ class GameControlsBottomSheet extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30.0)),
                 child: Center(
                   child: Text(
-                    'Continue',
+                    'Selanjutnya',
                     style: GoogleFonts.aBeeZee(
                         fontWeight: FontWeight.w500, fontSize: 20),
                   ),

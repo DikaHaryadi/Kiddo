@@ -2,7 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get.dart';
 import 'package:textspeech/controllers/animal_controller.dart';
 
 import '../../util/shimmer/content_shimmer.dart';
@@ -35,7 +35,7 @@ class AnimalMobileScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 25.0),
-        AutoSizeText('Categories',
+        AutoSizeText('Kategori'.tr,
                 style: Theme.of(context).textTheme.headlineMedium)
             .animate(delay: const Duration(milliseconds: 250))
             .slideX(

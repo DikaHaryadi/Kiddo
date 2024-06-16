@@ -22,7 +22,7 @@ const AdRequest request = AdRequest(
   nonPersonalizedAds: true,
 );
 
-//CATEGORIES
+//Kategori
 const contentKiddo = [
   {
     'imagePath': 'assets/banner_numbers.png',

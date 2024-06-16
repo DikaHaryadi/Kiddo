@@ -103,20 +103,19 @@ class AppBarQuizz extends StatelessWidget {
                                                       SliverChildBuilderDelegate(
                                                     (_, index) {
                                                       AnswerStatus?
-                                                          _answereStatus;
+                                                          answereStatus;
                                                       if (controller
                                                               .allQuestions[
                                                                   index]
                                                               .selectedAnswer !=
                                                           null) {
-                                                        _answereStatus =
+                                                        answereStatus =
                                                             AnswerStatus
                                                                 .answered;
                                                       }
                                                       return QuestionNumberCard(
                                                           index: index + 1,
-                                                          status:
-                                                              _answereStatus,
+                                                          status: answereStatus,
                                                           onTap: () => controller
                                                               .jumpToQuestion(
                                                                   index));
@@ -268,13 +267,13 @@ class AppBarQuizz extends StatelessWidget {
                                                             SliverChildBuilderDelegate(
                                                           (_, index) {
                                                             AnswerStatus?
-                                                                _answereStatus;
+                                                                answereStatus;
                                                             if (controller
                                                                     .allQuestions[
                                                                         index]
                                                                     .selectedAnswer !=
                                                                 null) {
-                                                              _answereStatus =
+                                                              answereStatus =
                                                                   AnswerStatus
                                                                       .answered;
                                                             }
@@ -282,7 +281,7 @@ class AppBarQuizz extends StatelessWidget {
                                                                 index:
                                                                     index + 1,
                                                                 status:
-                                                                    _answereStatus,
+                                                                    answereStatus,
                                                                 onTap: () => controller
                                                                     .jumpToQuestion(
                                                                         index));
@@ -367,7 +366,7 @@ class AppBarQuizz extends StatelessWidget {
                                                               .headlineMedium,
                                                         ),
                                                       ),
-                                                      SizedBox(
+                                                      const SizedBox(
                                                           height:
                                                               20), // Add some spacing
                                                       Flexible(
@@ -379,7 +378,7 @@ class AppBarQuizz extends StatelessWidget {
                                                               .allQuestions
                                                               .length,
                                                           gridDelegate:
-                                                              SliverGridDelegateWithFixedCrossAxisCount(
+                                                              const SliverGridDelegateWithFixedCrossAxisCount(
                                                             crossAxisCount: 10,
                                                             childAspectRatio: 1,
                                                             crossAxisSpacing: 8,
@@ -388,13 +387,13 @@ class AppBarQuizz extends StatelessWidget {
                                                           itemBuilder:
                                                               (_, index) {
                                                             AnswerStatus?
-                                                                _answereStatus;
+                                                                answereStatus;
                                                             if (controller
                                                                     .allQuestions[
                                                                         index]
                                                                     .selectedAnswer !=
                                                                 null) {
-                                                              _answereStatus =
+                                                              answereStatus =
                                                                   AnswerStatus
                                                                       .answered;
                                                             }
@@ -402,7 +401,7 @@ class AppBarQuizz extends StatelessWidget {
                                                                 index:
                                                                     index + 1,
                                                                 status:
-                                                                    _answereStatus,
+                                                                    answereStatus,
                                                                 onTap: () => controller
                                                                     .jumpToQuestion(
                                                                         index));

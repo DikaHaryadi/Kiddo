@@ -23,10 +23,10 @@ class TFirebaseException implements Exception {
         return 'The email address provided is invalid. Please enter a valid email.';
       case 'email-already-in-use':
         return 'The email address is already registered. Please use a different email.';
-      case 'wrong-password':
-        return 'Incorrect password. Please check your password and try again.';
-      case 'weak-password':
-        return 'The password is too weak. Please choose a stronger password.';
+      case 'wrong-Kata Sandi':
+        return 'Incorrect Kata Sandi. Please check your Kata Sandi and try again.';
+      case 'weak-Kata Sandi':
+        return 'The Kata Sandi is too weak. Please choose a stronger Kata Sandi.';
       case 'provider-already-linked':
         return 'The account is already linked with another provider.';
       case 'operation-not-allowed':

@@ -32,7 +32,7 @@ class SignupController extends GetxController {
         builder: (_) => const PopScope(
           canPop: false,
           child: AnimationLoader(
-            text: 'We are processing your information..',
+            text: 'Kami sedang memproses informasi anda ...',
             animation: 'assets/animations/141594-animation-of-docer.json',
             showAction: false,
           ),
@@ -55,8 +55,8 @@ class SignupController extends GetxController {
       // Privacy policy check
       if (!privacyPolicy.value) {
         Get.snackbar(
-          'Accept Privacy Policy',
-          'In order to create an account, you must read and accept the Privacy Policy & Terms of Use',
+          'Accept Kebijakan Privasi',
+          'In order to create an account, you must read and accept the Kebijakan Privasi & Terms of Use',
           isDismissible: true,
           shouldIconPulse: true,
           colorText: Colors.white,
@@ -98,7 +98,7 @@ class SignupController extends GetxController {
       Navigator.of(Get.overlayContext!).pop();
 
       Get.snackbar(
-        'Congratulations',
+        'Selamat',
         'Your account has been created! Verify email to continue.',
         maxWidth: 600,
         isDismissible: true,
@@ -132,7 +132,6 @@ class SignupController extends GetxController {
           color: Colors.white,
         ),
       );
-      print('error$e');
     }
   }
 }
@@ -163,7 +162,7 @@ class AnimationLoader extends StatelessWidget {
                 width: MediaQuery.of(context).size.width * .8),
             const SizedBox(height: 16.0),
             AutoSizeText(
-              text,
+              text.tr,
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.bodyMedium,
             ),

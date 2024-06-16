@@ -34,12 +34,9 @@ class BannerAdsController extends GetxController {
       request: const AdManagerAdRequest(),
       listener: AdManagerBannerAdListener(
         onAdLoaded: (Ad ad) async {
-          print('Inline adaptive banner loaded: ${ad.responseInfo}');
-
           AdManagerBannerAd bannerAd = (ad as AdManagerBannerAd);
           final AdSize? size = await bannerAd.getPlatformAdSize();
           if (size == null) {
-            print('Error: getPlatformAdSize() returned null for $bannerAd');
             return;
           }
 
@@ -48,7 +45,6 @@ class BannerAdsController extends GetxController {
           adSize.value = size;
         },
         onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          print('Inline adaptive banner failedToLoad: $error');
           ad.dispose();
         },
       ),

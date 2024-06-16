@@ -15,23 +15,23 @@ class QuestionNumberCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color _bgColor = Colors.blueAccent;
+    Color bgColor = Colors.blueAccent;
     switch (status) {
       case AnswerStatus.answered:
-        _bgColor;
+        bgColor;
         break;
       case AnswerStatus.correct:
-        _bgColor = kGreen;
+        bgColor = kGreen;
         break;
       case AnswerStatus.wrong:
-        _bgColor = Colors.red;
+        bgColor = Colors.red;
         break;
       case AnswerStatus.notanswered:
-        _bgColor = kGrey;
+        bgColor = kGrey;
         break;
 
       default:
-        _bgColor = Theme.of(context).primaryColor.withOpacity(0.1);
+        bgColor = Theme.of(context).primaryColor.withOpacity(0.1);
     }
     return InkWell(
       borderRadius: BorderRadius.circular(15.0),
@@ -41,7 +41,7 @@ class QuestionNumberCard extends StatelessWidget {
         child: Ink(
           padding: const EdgeInsets.all(10.0),
           decoration: BoxDecoration(
-              color: _bgColor, borderRadius: BorderRadius.circular(15.0)),
+              color: bgColor, borderRadius: BorderRadius.circular(15.0)),
           child: Center(
             child: Text(
               '$index',

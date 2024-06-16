@@ -214,7 +214,7 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                               child: Row(
                                 children: [
                                   Obx(() => AutoSizeText(
-                                        'Good ${timeSunPosition.timeOfDay.value}',
+                                        'Selamat ${timeSunPosition.timeOfDay.value}',
                                         style: Theme.of(context)
                                             .textTheme
                                             .displaySmall,
@@ -398,7 +398,7 @@ class _HomeTabletScreenState extends State<HomeTabletScreen> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           AutoSizeText(
-                            'Categories',
+                            'Kategori'.tr,
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineMedium

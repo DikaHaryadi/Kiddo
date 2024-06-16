@@ -25,7 +25,7 @@ class ForgetPasswordController extends GetxController {
             height: double.infinity,
             color: Colors.white,
             child: const AnimationLoader(
-              text: 'Proccessing your request...',
+              text: 'Memproses permintaan Anda...',
               animation: 'assets/animations/141594-animation-of-docer.json',
               showAction: false,
             ),
@@ -83,7 +83,6 @@ class ForgetPasswordController extends GetxController {
           color: Colors.white,
         ),
       );
-      print('error$e');
     }
   }
 
@@ -100,7 +99,7 @@ class ForgetPasswordController extends GetxController {
             height: double.infinity,
             color: Colors.white,
             child: const AnimationLoader(
-              text: 'Proccessing your request...',
+              text: 'Memproses permintaan Anda...',
               animation: 'assets/animations/141594-animation-of-docer.json',
               showAction: false,
             ),
@@ -148,7 +147,6 @@ class ForgetPasswordController extends GetxController {
           color: Colors.white,
         ),
       );
-      print('error$e');
     }
   }
 }

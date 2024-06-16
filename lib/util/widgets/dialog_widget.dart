@@ -35,7 +35,7 @@ class Dialogs {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Game Over',
+            'Permainan Berakhir',
             style:
                 GoogleFonts.aBeeZee(fontSize: 25, fontWeight: FontWeight.bold),
           ),
@@ -45,8 +45,37 @@ class Dialogs {
       actions: [
         TextButton(
             onPressed: () => Get.offAllNamed('/main-menu-quiz'),
-            child: const Text('Exit')),
+            child: const Text('Keluar')),
         TextButton(onPressed: onTap, child: const Text('TryAgain?')),
+      ],
+    );
+  }
+
+  static Widget catchUpDialogue(
+      {void Function()? tryAgain,
+      void Function()? navigateBack,
+      required String title,
+      required String subtitle,
+      TextStyle? titletextStyle,
+      TextStyle? subtitleTextStyle}) {
+    return AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: titletextStyle,
+          ),
+          Text(
+            subtitle,
+            style: subtitleTextStyle,
+          )
+        ],
+      ),
+      actions: [
+        TextButton(onPressed: tryAgain, child: const Text('Coba lagi')),
+        TextButton(onPressed: navigateBack, child: const Text('Kembali?')),
       ],
     );
   }

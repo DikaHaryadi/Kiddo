@@ -24,7 +24,7 @@ class RegisterMobileScreen extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 10.0),
-        Text("Let's create your account".tr,
+        Text("Mari buat akun Anda".tr,
             style: Theme.of(context).textTheme.displayLarge),
         Form(
           key: controller.signupFormKey,
@@ -40,13 +40,13 @@ class RegisterMobileScreen extends StatelessWidget {
                         controller: controller.firstName,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'First Name is required'.tr;
+                            return 'Nama depan harus di isi'.tr;
                           }
                           return null;
                         },
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Iconsax.user),
-                          labelText: 'First Name'.tr,
+                          prefixIcon: const Icon(Iconsax.user),
+                          labelText: 'Nama depan'.tr,
                         ),
                       ),
                     ),
@@ -57,13 +57,13 @@ class RegisterMobileScreen extends StatelessWidget {
                         expands: false,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Last Name is required'.tr;
+                            return 'Nama belakang harus di isi'.tr;
                           }
                           return null;
                         },
                         decoration: InputDecoration(
-                          prefixIcon: Icon(Iconsax.user),
-                          labelText: 'Last Name'.tr,
+                          prefixIcon: const Icon(Iconsax.user),
+                          labelText: 'Nama belakang'.tr,
                         ),
                       ),
                     )
@@ -74,13 +74,13 @@ class RegisterMobileScreen extends StatelessWidget {
                   controller: controller.userName,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Username is required'.tr;
+                      return 'Nama pengguna diperlukan'.tr;
                     }
                     return null;
                   },
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Iconsax.user_edit),
-                    labelText: 'Username'.tr,
+                    prefixIcon: const Icon(Iconsax.user_edit),
+                    labelText: 'Nama pengguna'.tr,
                   ),
                 ),
                 const SizedBox(height: 16.0),
@@ -88,14 +88,14 @@ class RegisterMobileScreen extends StatelessWidget {
                   controller: controller.email,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Email is required.'.tr;
+                      return 'Email Tidak Boleh Kosong'.tr;
                     }
 
                     final emailRegExp =
                         RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
 
                     if (!emailRegExp.hasMatch(value)) {
-                      return 'Invalid email address.'.tr;
+                      return 'Alamat email tidak valid'.tr;
                     }
                     return null;
                   },
@@ -111,22 +111,23 @@ class RegisterMobileScreen extends StatelessWidget {
                     obscureText: controller.hidePassword.value,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Password is required'.tr;
+                        return 'Kata Sandi Tidak Boleh Kosong'.tr;
                       }
 
                       if (value.length < 6) {
-                        return 'Password must be at least 6 characters long.'
+                        return 'Kata sandi harus terdiri dari minimal 6 karakter'
                             .tr;
                       }
                       if (!value.contains(RegExp(r'[A-Z]'))) {
-                        return 'Password must contain at least one uppercase letter'
+                        return 'Kata sandi harus mengandung setidaknya satu huruf besar'
                             .tr;
                       }
                       if (!value.contains(RegExp(r'[0-9]'))) {
-                        return 'Password must contain at least one number'.tr;
+                        return 'Kata sandi harus berisi setidaknya satu angka'
+                            .tr;
                       }
                       if (!value.contains(RegExp(r'[!@#$%^&*(),.?"{}|<>]'))) {
-                        return 'Password must contain at least one special character'
+                        return 'Kata sandi harus mengandung setidaknya satu karakter khusus'
                             .tr;
                       }
                       return null;
@@ -160,13 +161,13 @@ class RegisterMobileScreen extends StatelessWidget {
                     Expanded(
                       child: Text.rich(TextSpan(children: [
                         TextSpan(
-                            text: 'i aggree to '.tr,
+                            text: 'saya setuju untuk '.tr,
                             style: GoogleFonts.aBeeZee(
                                 color: kGrey,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400)),
                         TextSpan(
-                            text: 'Privacy Policy'.tr,
+                            text: 'Kebijakan Privasi'.tr,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -175,13 +176,13 @@ class RegisterMobileScreen extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                     decoration: TextDecoration.underline)),
                         TextSpan(
-                            text: ' and '.tr,
+                            text: ' dan '.tr,
                             style: GoogleFonts.aBeeZee(
                                 color: kGrey,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w400)),
                         TextSpan(
-                            text: 'Terms of use'.tr,
+                            text: 'Ketentuan penggunaan'.tr,
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyMedium!
@@ -202,7 +203,7 @@ class RegisterMobileScreen extends StatelessWidget {
                           backgroundColor:
                               MaterialStatePropertyAll(Colors.blueAccent)),
                       child: Text(
-                        'Create Account'.tr,
+                        'Buat Akun'.tr,
                       )),
                 ),
                 const SizedBox(height: 16.0),
@@ -217,7 +218,7 @@ class RegisterMobileScreen extends StatelessWidget {
                       endIndent: 5,
                     )),
                     Text(
-                      'or sign up with'.tr,
+                      'atau daftar dengan'.tr,
                       style: Theme.of(context)
                           .textTheme
                           .labelMedium!

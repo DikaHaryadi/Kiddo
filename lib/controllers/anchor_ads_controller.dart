@@ -22,7 +22,6 @@ class AnchorAdsController extends GetxController {
             MediaQuery.of(Get.context!).size.width.truncate());
 
     if (size == null) {
-      print('Unable to get height of anchored banner.');
       return;
     }
 
@@ -32,12 +31,10 @@ class AnchorAdsController extends GetxController {
       request: const AdRequest(),
       listener: BannerAdListener(
         onAdLoaded: (Ad ad) {
-          print('$ad loaded: ${ad.responseInfo}');
           anchoredAdaptiveAd.value = ad as BannerAd?;
           isAdsLoaded.value = true;
         },
         onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          print('Anchored adaptive banner failedToLoad: $error');
           ad.dispose();
         },
       ),

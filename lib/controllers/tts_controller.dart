@@ -13,7 +13,6 @@ class TtsController extends GetxController {
       await flutterTts.setPitch(1);
       await flutterTts.speak(text);
     } catch (e) {
-      print("Error during text to speech: $e");
       // Handle error, show message, or do any necessary action
     }
   }

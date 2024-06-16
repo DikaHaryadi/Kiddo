@@ -121,11 +121,7 @@ class UserRepository extends GetxController {
   Future<String> uploadImage(String path, XFile image) async {
     try {
       final ref = FirebaseStorage.instance.ref(path).child(image.name);
-      print('user repository upload Image');
-      print('ini path nya: ' + path);
-      print('ini image di user repo :' + image.path.toString());
       await ref.putFile(File(image.path));
-      print('ini image.path nya :' + image.path.toString());
       final url = await ref.getDownloadURL();
       return url;
     } on FirebaseException catch (e) {

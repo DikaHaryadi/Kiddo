@@ -36,7 +36,7 @@ class UpdateNameController extends GetxController {
         builder: (_) => const PopScope(
           canPop: false,
           child: AnimationLoader(
-            text: 'Proccessing...',
+            text: 'Prosess...',
             animation: 'assets/animations/141594-animation-of-docer.json',
             showAction: false,
           ),
@@ -70,8 +70,8 @@ class UpdateNameController extends GetxController {
       Navigator.of(Get.overlayContext!).pop();
 
       Get.snackbar(
-        'Congratulations',
-        'Your name has been updated!',
+        'Selamat'.tr,
+        'Nama anda telah diperbarui!'.tr,
         maxWidth: 600,
         isDismissible: true,
         shouldIconPulse: true,

@@ -22,12 +22,12 @@ class LoginMobileScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 12),
               AutoSizeText(
-                'Welcome back'.tr,
+                'Selamat datang kembali'.tr,
                 style: Theme.of(context).textTheme.displayMedium,
               ),
               const SizedBox(height: 15),
               AutoSizeText(
-                  'Come on in and explore the world of fun learning with us! Please login before playing'
+                  'Ayo masuk dan jelajahi dunia belajar yang menyenangkan bersama kami! Silakan login sebelum bermain'
                       .tr,
                   style: GoogleFonts.aBeeZee(
                       color: kDark, fontWeight: FontWeight.w400)),
@@ -43,14 +43,14 @@ class LoginMobileScreen extends StatelessWidget {
                       controller: controller.email,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Email is required.'.tr;
+                          return 'Email Tidak Boleh Kosong'.tr;
                         }
 
                         final emailRegExp =
                             RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
 
                         if (!emailRegExp.hasMatch(value)) {
-                          return 'Invalid email address.'.tr;
+                          return 'Alamat email tidak valid'.tr;
                         }
                         return null;
                       },
@@ -66,7 +66,7 @@ class LoginMobileScreen extends StatelessWidget {
                         obscureText: controller.hidePassword.value,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Password is required'.tr;
+                            return 'Kata Sandi Tidak Boleh Kosong'.tr;
                           }
 
                           return null;
@@ -84,11 +84,11 @@ class LoginMobileScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 8.0),
-                    // Remember me & forgot pw
+                    // Ingat Saya & forgot pw
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // Remember Me
+                        // Ingat Saya
                         Row(
                           children: [
                             Obx(
@@ -103,7 +103,7 @@ class LoginMobileScreen extends StatelessWidget {
                               ),
                             ),
                             AutoSizeText(
-                              'Remember Me'.tr,
+                              'Ingat Saya'.tr,
                               style: Theme.of(context).textTheme.bodyMedium,
                             )
                           ],
@@ -114,7 +114,7 @@ class LoginMobileScreen extends StatelessWidget {
                             onPressed: () =>
                                 Get.to(() => const ForgetPassword()),
                             child: AutoSizeText(
-                              'Forgot Password?'.tr,
+                              'Lupa Kata Sandi?'.tr,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium
@@ -140,7 +140,7 @@ class LoginMobileScreen extends StatelessWidget {
                       width: double.infinity,
                       child: OutlinedButton(
                           onPressed: () => Get.toNamed('/signup'),
-                          child: AutoSizeText('Create Account'.tr)),
+                          child: AutoSizeText('Buat Akun'.tr)),
                     ),
                   ],
                 ),
@@ -157,7 +157,7 @@ class LoginMobileScreen extends StatelessWidget {
                 endIndent: 5,
               )),
               AutoSizeText(
-                'or sign in with'.tr,
+                'atau masuk dengan'.tr,
                 style: Theme.of(context)
                     .textTheme
                     .labelMedium!

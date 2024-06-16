@@ -43,7 +43,7 @@ class AnimalContent extends StatelessWidget {
                     ),
               ),
               title: AutoSizeText(
-                'Animals',
+                'Binatang'.tr,
                 style: Theme.of(context).textTheme.headlineMedium,
               )
                   .animate(delay: const Duration(milliseconds: 250))

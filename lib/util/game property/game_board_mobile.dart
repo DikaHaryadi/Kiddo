@@ -65,12 +65,10 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
         request: request,
         rewardedAdLoadCallback: RewardedAdLoadCallback(
           onAdLoaded: (RewardedAd ad) {
-            print('$ad loaded.');
             _rewardedAd = ad;
             _numRewardedLoadAttempts = 0;
           },
           onAdFailedToLoad: (LoadAdError error) {
-            print('RewardedAd failed to load: $error');
             _rewardedAd = null;
             _numRewardedLoadAttempts += 1;
             if (_numRewardedLoadAttempts < maxFailedLoadAttempts) {
@@ -82,12 +80,11 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
 
   void _showRewardedAd() {
     if (_rewardedAd == null) {
-      print('Warning: attempt to show rewarded before loaded.');
       return;
     }
     _rewardedAd!.fullScreenContentCallback = FullScreenContentCallback(
-      onAdShowedFullScreenContent: (RewardedAd ad) =>
-          print('ad onAdShowedFullScreenContent.'),
+      // onAdShowedFullScreenContent: (RewardedAd ad) =>
+      //     print('ad onAdShowedFullScreenContent.'),
       onAdDismissedFullScreenContent: (RewardedAd ad) {
         ad.dispose();
         _createRewardedAd();
@@ -131,13 +128,11 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
 
   void saveGameStatus(String bestTime) async {
     var date = DateTime.now(); //timeStamp = 1630506255982
-//  var d12 = DateFormat('MM/dd/yyyy, HH:mm:ss a').format(date); // 12/31/2021, 10:10:10 PM
+    //  var d12 = DateFormat('MM/dd/yyyy, HH:mm:ss a').format(date); // 12/31/2021, 10:10:10 PM
 
     var dt2 = (date.toUtc().millisecondsSinceEpoch ~/ 1000).toInt();
 
     /// Converts back the base [DateTime] value to [int].
-    print(dt2);
-    print('loaded save best score');
     var batch = fireStore.batch();
     String level = '';
     final memoUser = fireStore.collection('Users');
@@ -156,7 +151,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
       'Tingkat Kesulitan': level, //disini
       'score': bestTime
     });
-    print('berhasil ke save memory game ke firebase');
     batch.commit();
 
     // final box = GetStorage(); // Perubahan di sini
@@ -278,7 +272,6 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
     }
 
     final path = AssetSource('voices/clap.mp3');
-    print('ini path clap sound' + path.toString());
     await audioPlayer.play(path);
     audioPlayer.setReleaseMode(ReleaseMode.stop);
   }
@@ -339,7 +332,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                             child: Column(
                               children: [
                                 Text(
-                                  'Exit from the game?'.tr,
+                                  'Keluar dari permainan?'.tr,
                                   style: GoogleFonts.montserrat(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 16),
@@ -353,7 +346,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                                         Get.offAllNamed('/home');
                                       },
                                       child: Text(
-                                        'Exit'.tr,
+                                        'Keluar'.tr,
                                         style: GoogleFonts.aBeeZee(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 14),
@@ -365,7 +358,7 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
                                         Get.back(result: false);
                                       },
                                       child: Text(
-                                        'Continue'.tr,
+                                        'Selanjutnya'.tr,
                                         style: GoogleFonts.aBeeZee(
                                             fontWeight: FontWeight.w400,
                                             fontSize: 14),
@@ -747,10 +740,10 @@ class _GameBoardMobileState extends State<GameBoardMobile> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text(
-            'Game Over'.tr,
+            'Permainan Berakhir'.tr,
             style: Theme.of(context).textTheme.headlineMedium,
           ),
-          content: Text('Congratulations! You have completed the game...'.tr),
+          content: Text('Selamat! Anda telah menyelesaikan permainan...'.tr),
           actions: <Widget>[
             TextButton(
               onPressed: () {

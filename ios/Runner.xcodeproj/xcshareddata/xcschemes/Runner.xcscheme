@@ -38,7 +38,7 @@
       </MacroExpansion>
       <Testables>
          <TestableReference
-            skipped = "NO"
+            Lewatiped = "NO"
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"

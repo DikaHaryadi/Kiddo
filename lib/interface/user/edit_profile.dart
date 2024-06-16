@@ -64,7 +64,7 @@ class EditProfileScreen extends StatelessWidget {
                 ),
                 _profileMenu('Name', controller.user.value.fullName,
                     () => Get.toNamed('/edit-name')),
-                _profileMenu('Username', controller.user.value.username,
+                _profileMenu('Nama pengguna', controller.user.value.username,
                     () => Get.toNamed('/edit-username')),
                 const SizedBox(height: 8.0),
                 const Divider(),

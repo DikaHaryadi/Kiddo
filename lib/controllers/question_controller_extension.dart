@@ -27,16 +27,15 @@ extension QuestionsControllerExtension on QuestionController {
   Future<void> saveTestResults() async {
     var batch = fireStore.batch();
     final userRF = fireStore.collection('Users');
-    User? _user = AuthenticationRepository.instance.authUser;
-    if (_user == null) return;
+    User? user = AuthenticationRepository.instance.authUser;
+    if (user == null) return;
     batch.set(
-        userRF.doc(_user.email).collection('quizz_test').doc(questionModel.id),
-        {
-          'points': points,
-          'correct_answer': '$correctQuestionCount/${allQuestions.length}',
-          'question_id': questionModel.id,
-          'time': questionModel.timeSeconds - remainSeconds
-        });
+        userRF.doc(user.email).collection('quizz_test').doc(questionModel.id), {
+      'points': points,
+      'correct_answer': '$correctQuestionCount/${allQuestions.length}',
+      'question_id': questionModel.id,
+      'time': questionModel.timeSeconds - remainSeconds
+    });
     batch.commit();
     navigateToHome();
   }

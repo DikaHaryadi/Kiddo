@@ -34,7 +34,7 @@ class UpdateUsernameController extends GetxController {
         builder: (_) => const PopScope(
           canPop: false,
           child: AnimationLoader(
-            text: 'We are processing your information..',
+            text: 'Kami sedang memproses informasi anda ...',
             animation: 'assets/animations/141594-animation-of-docer.json',
             showAction: false,
           ),
@@ -56,7 +56,7 @@ class UpdateUsernameController extends GetxController {
 
       // update users firstname and lastname in firebase
       Map<String, dynamic> username = {
-        'Username': userName.text.trim(),
+        'Nama pengguna': userName.text.trim(),
       };
       await userRepo.updateSingleField(username);
 
@@ -66,7 +66,7 @@ class UpdateUsernameController extends GetxController {
       Navigator.of(Get.overlayContext!).pop();
 
       Get.snackbar(
-        'Congratulations',
+        'Selamat',
         'Your username has been updated!',
         maxWidth: 600,
         isDismissible: true,

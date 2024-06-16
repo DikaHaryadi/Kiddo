@@ -190,9 +190,7 @@ class _DetailKidSongState extends State<DetailKidSong> {
                     )
                   : GestureDetector(
                       onTap: () {
-                        print('iklan gak nampil');
                         if (!nativeAdsController.isNativeAdLoaded.value) {
-                          print('nampilin iklan ey');
                           nativeAdsController.loadNativeAd();
                         }
                       },

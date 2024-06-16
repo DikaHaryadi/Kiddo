@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
@@ -54,7 +55,7 @@ class SuccessVerify extends StatelessWidget {
                             MaterialStatePropertyAll(Colors.blueAccent)),
                     onPressed: onPressed,
                     child: AutoSizeText(
-                      'Continue',
+                      'Selanjutnya'.tr,
                       style: GoogleFonts.archivoBlack(color: Colors.white),
                     ),
                   ),

@@ -14,13 +14,13 @@ class TimeSunPosition extends GetxController {
     final hour = currentTime.hour;
 
     if (hour >= 4 && hour < 12) {
-      timeOfDay.value = 'Morning';
+      timeOfDay.value = 'Pagi';
     } else if (hour >= 12 && hour < 17) {
-      timeOfDay.value = 'Afternoon';
+      timeOfDay.value = 'Sore';
     } else if (hour >= 17 && hour < 20) {
       timeOfDay.value = 'Evening';
     } else {
-      timeOfDay.value = 'Night';
+      timeOfDay.value = 'Malam';
     }
   }
 }

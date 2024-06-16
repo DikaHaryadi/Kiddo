@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 import 'package:textspeech/models/dino_model.dart';
+import 'package:textspeech/util/widgets/dialog_widget.dart';
 
 class DinoRepository extends GetxController {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -16,7 +17,11 @@ class DinoRepository extends GetxController {
         return [];
       }
     } catch (err) {
-      print('Error fetching Dino content: $err');
+      Get.dialog(Dialogs.catchUpDialogue(
+          tryAgain: fetchDinoContent,
+          navigateBack: () => Get.toNamed('/home'),
+          title: 'Peringatan',
+          subtitle: err.toString()));
       return [];
     }
   }

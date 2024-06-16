@@ -39,7 +39,7 @@ class ChangeUserName extends StatelessWidget {
                       controller: controller.userName,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Username is required';
+                          return 'Nama pengguna diperlukan';
                         }
                         return null;
                       },
@@ -66,7 +66,7 @@ class ChangeUserName extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                   onPressed: () => controller.updateUserName(),
-                  child: Text('Save')),
+                  child: const Text('Save')),
             )
           ],
         ),

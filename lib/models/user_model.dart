@@ -21,7 +21,7 @@ class UserModel {
   // to get the full name
   String get fullName => '$firstName $lastName';
 
-  // to split full name into first and last name
+  // to split full name into first and Nama belakang
   static List<String> nameParts(String fullName) => fullName.split(" ");
 
   // to generate a username from the full name

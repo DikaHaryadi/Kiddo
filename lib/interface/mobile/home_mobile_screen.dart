@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
+import 'package:textspeech/controllers/language_controller.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:textspeech/util/etc/curved_edges.dart';
+import 'package:textspeech/util/etc/dep_lang.dart';
 
 import '../../auth/controller/user/user_controller.dart';
 import '../../controllers/anchor_ads_controller.dart';
@@ -27,6 +29,12 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
   final controller = Get.put(UserController());
   final timeSunPosition = Get.put(TimeSunPosition());
   final adsController = Get.put(AnchorAdsController());
+
+  final List<String> items = [
+    'assets/images/indonesia.png',
+    'assets/images/english.png',
+  ];
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -59,7 +67,7 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                               children: [
                                 Obx(
                                   () => AutoSizeText(
-                                    'Good ${timeSunPosition.timeOfDay.value}'
+                                    'Selamat ${timeSunPosition.timeOfDay.value}'
                                         .tr,
                                     style: Theme.of(context)
                                         .textTheme
@@ -91,24 +99,96 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                                         const Duration(milliseconds: 400)),
                               ],
                             ),
-                            Obx(() {
-                              final networkImage =
-                                  controller.user.value.profilePicture;
-                              final image = networkImage.isNotEmpty
-                                  ? networkImage
-                                  : 'assets/images/cat.png';
-                              return CircularImage(
-                                image: image,
-                                widht: 65,
-                                height: 65,
-                                isNetworkImage: networkImage.isNotEmpty,
-                                onTap: () => Get.toNamed('/profile'),
-                              );
-                            }).animate().slideX(
-                                begin: 4,
-                                end: 0,
-                                curve: Curves.bounceIn,
-                                duration: const Duration(milliseconds: 400)),
+                            Column(
+                              children: [
+                                Obx(() {
+                                  final networkImage =
+                                      controller.user.value.profilePicture;
+                                  final image = networkImage.isNotEmpty
+                                      ? networkImage
+                                      : 'assets/images/cat.png';
+                                  return CircularImage(
+                                    image: image,
+                                    widht: 50,
+                                    height: 50,
+                                    isNetworkImage: networkImage.isNotEmpty,
+                                    onTap: () => Get.toNamed('/profile'),
+                                  );
+                                }).animate().slideX(
+                                    begin: 4,
+                                    end: 0,
+                                    curve: Curves.bounceIn,
+                                    duration:
+                                        const Duration(milliseconds: 400)),
+                                SizedBox(
+                                  width: 140,
+                                  height: 40,
+                                  child: DropdownButtonHideUnderline(
+                                    child: GetBuilder<LocalizationController>(
+                                      builder: (controller) {
+                                        return DropdownButton<String>(
+                                          isExpanded: true,
+                                          value:
+                                              items[controller.selectedIndex],
+                                          onChanged: (String? value) {
+                                            int index = items.indexOf(value!);
+                                            controller.setLanguage(Locale(
+                                                AppLanguageConstant
+                                                    .languages[index]
+                                                    .languageCode,
+                                                AppLanguageConstant
+                                                    .languages[index]
+                                                    .countryCode));
+                                            controller.setSelectIndex(index);
+                                          },
+                                          icon:
+                                              const Icon(Icons.arrow_drop_down),
+                                          selectedItemBuilder:
+                                              (BuildContext context) {
+                                            return items
+                                                .map<Widget>((String item) {
+                                              return Row(
+                                                children: [
+                                                  Image.asset(
+                                                    item,
+                                                    width: 24,
+                                                    height: 24,
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  Text(item == items[0]
+                                                      ? 'Indonesia'
+                                                      : 'English'),
+                                                ],
+                                              );
+                                            }).toList();
+                                          },
+                                          items: items
+                                              .map<DropdownMenuItem<String>>(
+                                                  (String item) {
+                                            return DropdownMenuItem<String>(
+                                              value: item,
+                                              child: Row(
+                                                children: [
+                                                  Image.asset(
+                                                    item,
+                                                    width: 24,
+                                                    height: 24,
+                                                  ),
+                                                  const SizedBox(width: 8),
+                                                  Text(item == items[0]
+                                                      ? 'Indonesia'
+                                                      : 'English'),
+                                                ],
+                                              ),
+                                            );
+                                          }).toList(),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
                         ),
                       ),
@@ -170,7 +250,7 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                                     height: MediaQuery.of(context).size.height,
                                   ),
                                   Text(
-                                    'Kid Song'.tr,
+                                    'Lagu Anak'.tr,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context)
@@ -212,7 +292,7 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                                     'assets/games/nationalsong.png',
                                   ),
                                   Text(
-                                    'National Anthem'.tr,
+                                    'Lagu Nasional'.tr,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: Theme.of(context)

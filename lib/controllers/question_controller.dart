@@ -30,9 +30,8 @@ class QuestionController extends GetxController {
 
   @override
   void onReady() {
-    final _questionPaper = Get.arguments as QuestionModel;
-    print('...onReady...');
-    loadData(_questionPaper);
+    final questionPaper = Get.arguments as QuestionModel;
+    loadData(questionPaper);
     super.onReady();
   }
 
@@ -52,6 +51,7 @@ class QuestionController extends GetxController {
 
       questionPaper.questions = questions;
 
+      // ignore: no_leading_underscores_for_local_identifiers
       for (Questions _question in questionPaper.questions!) {
         final QuerySnapshot<Map<String, dynamic>> answersQuery =
             await questionPaperRF
@@ -77,8 +77,6 @@ class QuestionController extends GetxController {
       allQuestions.assignAll(questionPaper.questions!);
       currentQuestion.value = questionPaper.questions![0];
       _startTimer(questionPaper.timeSeconds);
-      print('...startTimer...');
-      print(questionPaper.questions![0].question);
       loadingStatus.value = LoadingStatus.completed;
     } else {
       loadingStatus.value = LoadingStatus.error;
@@ -173,11 +171,10 @@ class QuestionController extends GetxController {
 
     // Handle navigation or reloading questions
     if (Get.arguments != null && Get.arguments is QuestionModel) {
-      final _questionPaper = Get.arguments as QuestionModel;
-      loadData(_questionPaper);
+      final questionPaper = Get.arguments as QuestionModel;
+      loadData(questionPaper);
     } else {
       // Handle the case where Get.arguments is null or not of expected type
-      print('Error: Invalid or null QuestionModel argument');
     }
   }
 

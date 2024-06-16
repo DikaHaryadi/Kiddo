@@ -83,30 +83,29 @@ class UserController extends GetxController {
         margin: const EdgeInsets.all(20),
         icon: const Icon(Iconsax.warning_2, color: Colors.white),
       );
-      print('google acc error$e');
     }
   }
 
-  // delete account warning popup
+  // Hapus Akun warning popup
   void deleteAccountWarningPopUp() {
     Get.defaultDialog(
         contentPadding: const EdgeInsets.all(16.0),
-        title: 'Delete Account',
+        title: 'Hapus Akun'.tr,
         middleText:
-            'Are you sure, you want to delete your account permanently? This action is not reversible and all of your data will be removed permanently',
+            'Apakah Anda yakin ingin menghapus akun Anda secara permanen? Tindakan ini tidak dapat dibatalkan dan semua data Anda akan dihapus secara permanen',
         confirm: ElevatedButton(
           onPressed: () async => deleUserAccount(),
           style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
               side: const BorderSide(color: Colors.red)),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.0),
-            child: Text('Delete'),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Text('Hapus'.tr),
           ),
         ),
         cancel: OutlinedButton(
             onPressed: () => Navigator.of(Get.overlayContext!).pop(),
-            child: const Text('Cancel')));
+            child: Text('Cancel'.tr)));
   }
 
   // delete user account
@@ -115,10 +114,10 @@ class UserController extends GetxController {
       showDialog(
         context: Get.overlayContext!,
         barrierDismissible: false,
-        builder: (_) => const PopScope(
+        builder: (_) => PopScope(
           canPop: false,
           child: AnimationLoader(
-            text: 'Proccessing...',
+            text: 'Prosess...'.tr,
             animation: 'assets/animations/141594-animation-of-docer.json',
             showAction: false,
           ),
@@ -182,7 +181,7 @@ class UserController extends GetxController {
         builder: (_) => const PopScope(
           canPop: false,
           child: AnimationLoader(
-            text: 'Proccessing...',
+            text: 'Prosess...',
             animation: 'assets/animations/141594-animation-of-docer.json',
             showAction: false,
           ),
@@ -267,7 +266,7 @@ class UserController extends GetxController {
           user.value.profilePicture = imageUrl;
           await userRepo.setLastProfileUpdateTimestamp(DateTime.now());
           Get.snackbar(
-            'Congratulations',
+            'Selamat',
             'Your Profile Image has been updated!',
             maxWidth: 600,
             isDismissible: true,
@@ -317,7 +316,6 @@ class UserController extends GetxController {
           color: Colors.white,
         ),
       );
-      print('Error storing image: $e');
     } finally {
       imageUploading.value = false;
     }

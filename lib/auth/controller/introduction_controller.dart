@@ -34,7 +34,7 @@ class IntroductionController extends GetxController {
         builder: (context) => const PopScope(
             canPop: false,
             child: AnimationLoader(
-                text: 'Logging you in...',
+                text: 'Mohon ditunggu...',
                 animation: 'assets/animations/141594-animation-of-docer.json',
                 showAction: false)),
       );
@@ -46,7 +46,7 @@ class IntroductionController extends GetxController {
         return;
       }
 
-      // save data if remember me is selected
+      // save data if Ingat Saya is selected
       if (rememberMe.value) {
         localStorage.write('REMEMBER_ME_EMAIL', email.text.trim());
         localStorage.write('REMEMBER_ME_PASSWORD', password.text.trim());
@@ -87,7 +87,7 @@ class IntroductionController extends GetxController {
         builder: (context) => const PopScope(
             canPop: false,
             child: AnimationLoader(
-                text: 'Logging you in...',
+                text: 'Mohon ditunggu...',
                 animation: 'assets/animations/141594-animation-of-docer.json',
                 showAction: false)),
       );
@@ -105,7 +105,6 @@ class IntroductionController extends GetxController {
 
       // save user data
       await userController.saveUserRecord(userCredentials, token);
-      print('user credential$userCredentials');
       Navigator.of(Get.overlayContext!).pop();
       // navigate
       AuthenticationRepository.instance.navigateToIntroduction();

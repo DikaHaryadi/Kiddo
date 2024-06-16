@@ -7,7 +7,6 @@ import 'package:textspeech/interface/content/dino.dart';
 import 'package:textspeech/interface/content/info_app.dart';
 import 'package:textspeech/interface/content/kid_song.dart';
 import 'package:textspeech/interface/content/lagu_nasional.dart';
-import 'package:textspeech/interface/content/vehicle.dart';
 import 'package:textspeech/quiz/answer_check_screen.dart';
 import 'package:textspeech/quiz/result_screen.dart';
 import 'package:textspeech/interface/content/animal.dart';
@@ -80,7 +79,6 @@ class AppRoutes {
         GetPage(name: '/animals-content', page: () => const AnimalContent()),
         GetPage(name: '/kid-song', page: () => const KidSong()),
         GetPage(name: '/family-content', page: () => const FamilyContent()),
-        GetPage(name: '/vehicle-content', page: () => const VehicleContent()),
         GetPage(name: '/dino', page: () => const DinoSaurusScreens()),
 
         GetPage(

@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:textspeech/auth/controller/auth_controller.dart';
 import 'package:textspeech/firebase/references.dart';
 import 'package:textspeech/quiz/question_model.dart';
@@ -32,7 +34,13 @@ class QuestionPaperController extends GetxController {
 
       allPapers.assignAll(paperList);
     } catch (e) {
-      print('question_paper_controller error :' + e.toString());
+      Get.dialog(Dialogs.catchUpDialogue(
+          tryAgain: getAllpapers,
+          navigateBack: () => Get.toNamed('/home'),
+          title: 'Peringatan',
+          subtitle: 'Ada yang salah saat memuat data',
+          titletextStyle:
+              GoogleFonts.aBeeZee(fontSize: 25, fontWeight: FontWeight.bold)));
     } finally {
       isLoadingLetter.value = false;
     }
@@ -50,7 +58,6 @@ class QuestionPaperController extends GetxController {
         Get.toNamed(QuestionScreen.routeName, arguments: paper);
       }
     } else {
-      print('The title is ${paper.title}');
       Get.dialog(Dialogs.questionStartDialogue(
         onTap: () {
           Get.back();

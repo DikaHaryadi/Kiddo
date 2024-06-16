@@ -27,14 +27,14 @@ class ReAuthForm extends StatelessWidget {
                   controller: controller.verifyEmail,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Email is required.';
+                      return 'Email Tidak Boleh Kosong';
                     }
 
                     final emailRegExp =
                         RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
 
                     if (!emailRegExp.hasMatch(value)) {
-                      return 'Invalid email address.';
+                      return 'Alamat email tidak valid';
                     }
                     return null;
                   },
@@ -59,14 +59,14 @@ class ReAuthForm extends StatelessWidget {
                     obscureText: controller.hidePassword.value,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Password is required';
+                        return 'Kata Sandi Tidak Boleh Kosong';
                       }
 
                       if (value.length < 6) {
-                        return 'Password must be at least 6 characters long.';
+                        return 'Kata sandi harus terdiri dari minimal 6 karakter';
                       }
                       if (!value.contains(RegExp(r'[A-Z]'))) {
-                        return 'Password must contain at least one uppercase letter';
+                        return 'Kata sandi harus mengandung setidaknya satu huruf besar';
                       }
                       if (!value.contains(RegExp(r'[0-9]'))) {
                         return 'Password must contain at least one number';
@@ -109,7 +109,7 @@ class ReAuthForm extends StatelessWidget {
                           backgroundColor:
                               MaterialStatePropertyAll(Colors.blueAccent)),
                       child: Text(
-                        'Create Account',
+                        'Buat Akun',
                         style: GoogleFonts.archivoBlack(color: Colors.white),
                       )),
                 ),

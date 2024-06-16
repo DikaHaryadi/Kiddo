@@ -201,8 +201,8 @@ class AuthenticationRepository extends GetxController {
           await googleSignIn.signOut();
           Get.offAllNamed('/introduction');
           Get.snackbar(
-            'Congratulations!',
-            'You have successfully exited',
+            'Selamat!'.tr,
+            'Anda telah berhasil keluar'.tr,
             maxWidth: 600,
             isDismissible: true,
             shouldIconPulse: true,
@@ -217,8 +217,8 @@ class AuthenticationRepository extends GetxController {
           await FirebaseAuth.instance.signOut();
           Get.offAllNamed('/introduction');
           Get.snackbar(
-            'Congratulations!',
-            'You have successfully exited',
+            'Selamat!'.tr,
+            'Anda telah berhasil keluar'.tr,
             maxWidth: 600,
             isDismissible: true,
             shouldIconPulse: true,

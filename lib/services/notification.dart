@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:get/get.dart';
+import 'package:textspeech/util/widgets/dialog_widget.dart';
 
 import '../models/user_model.dart';
 
@@ -56,13 +57,13 @@ class FirebaseNotification extends GetxController {
       if (token != null) {
         mToken.value = token;
         update(); // Update the UI if necessary
-        print('My Token: $token');
         saveTokenToFirestore();
       } else {
-        print('Failed to get FCM token');
+        Get.snackbar('Peringatan', 'Gagal mengambil FCM token');
       }
     } catch (e) {
-      print('Error fetching FCM token: $e');
+      Get.dialog(
+          Dialogs.catchUpDialogue(title: 'Peringatan', subtitle: e.toString()));
     }
   }
 
@@ -104,11 +105,7 @@ class FirebaseNotification extends GetxController {
   void setupInteractedMessage() {
     // Handle when the app is in the foreground
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print('Got a message whilst in the foreground!');
-      print('Message data: ${message.data}');
-
       if (message.notification != null) {
-        print('Message also contained a notification: ${message.notification}');
         showNotification(message);
       }
     });
@@ -116,7 +113,6 @@ class FirebaseNotification extends GetxController {
     // Handle when the app is opened from terminated state or background
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       if (message.notification != null) {
-        print('Notification tapped while app was in background or terminated');
         navigatorKey.currentState!.pushNamed('/message', arguments: message);
       }
     });
@@ -128,7 +124,6 @@ class FirebaseNotification extends GetxController {
   static Future<void> firebaseMessagingBackgroundHandler(
       RemoteMessage message) async {
     await Firebase.initializeApp();
-    print("Handling a background message: ${message.messageId}");
     // Handle background message here
   }
 

@@ -39,7 +39,7 @@ class ChangeName extends StatelessWidget {
                       controller: controller.firstName,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'First Name is required';
+                          return 'Nama depan harus di isi';
                         }
                         return null;
                       },
@@ -53,7 +53,7 @@ class ChangeName extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.0),
                               borderSide:
                                   const BorderSide(width: 1, color: kGrey)),
-                          labelText: 'First Name',
+                          labelText: 'Nama depan',
                           labelStyle: GoogleFonts.aBeeZee(
                               color: kGrey,
                               fontSize: 14,
@@ -64,7 +64,7 @@ class ChangeName extends StatelessWidget {
                       controller: controller.lastName,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Last Name is required';
+                          return 'Nama belakang harus di isi';
                         }
                         return null;
                       },
@@ -78,7 +78,7 @@ class ChangeName extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10.0),
                               borderSide:
                                   const BorderSide(width: 1, color: kGrey)),
-                          labelText: 'Last Name',
+                          labelText: 'Nama belakang',
                           labelStyle: GoogleFonts.aBeeZee(
                               color: kGrey,
                               fontSize: 14,

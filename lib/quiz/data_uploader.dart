@@ -30,7 +30,6 @@ class DataUploader extends GetxController {
     for (var paper in papersInAssets) {
       String stringPaperContent = await rootBundle.loadString(paper);
       questionModel.add(QuestionModel.fromJson(jsonDecode(stringPaperContent)));
-      print(stringPaperContent);
     }
     var batch = fireStore.batch();
 

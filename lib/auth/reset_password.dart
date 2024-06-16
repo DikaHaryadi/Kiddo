@@ -38,7 +38,7 @@ class ResetPassword extends StatelessWidget {
               ),
               const SizedBox(height: 16.0),
               AutoSizeText(
-                'Password Reset Email Sent'.tr,
+                'Reset password'.tr,
                 textAlign: TextAlign.center,
                 minFontSize: 20,
                 maxFontSize: 22,
@@ -46,7 +46,7 @@ class ResetPassword extends StatelessWidget {
               ),
               const SizedBox(height: 16.0),
               AutoSizeText(
-                "Your Account Security is Our Primary! We've Sent You a Secure Link to Safety Change Your Password and Keep Your Account Proctected"
+                "Keamanan Akun Anda adalah Prioritas Kami! Kami Telah Mengirimkan Tautan Aman untuk Keamanan Ubah Kata Sandi Anda dan Lindungi Akun Anda"
                     .tr,
                 textAlign: TextAlign.center,
                 minFontSize: 14,
@@ -62,7 +62,7 @@ class ResetPassword extends StatelessWidget {
                           MaterialStatePropertyAll(Colors.blueAccent)),
                   onPressed: () => Get.offAllNamed('/introduction'),
                   child: AutoSizeText(
-                    'Continue'.tr,
+                    'Selanjutnya'.tr,
                     style: GoogleFonts.archivoBlack(color: Colors.white),
                   ),
                 ),
@@ -78,7 +78,7 @@ class ResetPassword extends StatelessWidget {
                   onPressed: () => ForgetPasswordController.instance
                       .resendPasswordResetEmail(email),
                   child: AutoSizeText(
-                    'Resend Email'.tr,
+                    'Kirim ulang verifikasi email'.tr,
                     style: GoogleFonts.archivoBlack(color: Colors.white),
                   ),
                 ),

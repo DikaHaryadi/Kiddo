@@ -44,7 +44,7 @@ class ResultQuizScreen extends StatelessWidget {
                       width: 100,
                     ),
                     const SizedBox(height: 16.0),
-                    const Text('Congratulations'),
+                    const Text('Selamat'),
                     Text('You have ${controller.points} points'),
                     const SizedBox(height: 16.0),
                     Expanded(
@@ -56,20 +56,20 @@ class ResultQuizScreen extends StatelessWidget {
                             crossAxisSpacing: 8,
                             mainAxisSpacing: 8),
                         itemBuilder: (_, index) {
-                          final _question = controller.allQuestions[index];
-                          AnswerStatus _status = AnswerStatus.notanswered;
-                          final _selectedAnswer = _question.selectedAnswer;
-                          final _correctAnswer = _question.correctAnswer;
-                          if (_selectedAnswer == _correctAnswer) {
-                            _status = AnswerStatus.correct;
-                          } else if (_question.selectedAnswer == null) {
-                            _status = AnswerStatus.wrong;
+                          final question = controller.allQuestions[index];
+                          AnswerStatus status = AnswerStatus.notanswered;
+                          final selectedAnswer = question.selectedAnswer;
+                          final correctAnswer = question.correctAnswer;
+                          if (selectedAnswer == correctAnswer) {
+                            status = AnswerStatus.correct;
+                          } else if (question.selectedAnswer == null) {
+                            status = AnswerStatus.wrong;
                           } else {
-                            _status = AnswerStatus.wrong;
+                            status = AnswerStatus.wrong;
                           }
                           return QuestionNumberCard(
                             index: index + 1,
-                            status: _status,
+                            status: status,
                             onTap: () {
                               controller.jumpToQuestion(index, isGoBack: false);
                               Get.toNamed(AnswereCheckScreen.routeName);

@@ -18,10 +18,8 @@ class FirebaseStorageService extends GetxController {
     try {
       var urlRef = firebaseStorage.child(path).child(imgName.toLowerCase());
       var imgUrl = await urlRef.getDownloadURL();
-      print('ini image question paper model: ' + imgUrl.toString());
       return imgUrl;
     } catch (e) {
-      print('ini error image paper image:' + e.toString());
       return null;
     }
   }

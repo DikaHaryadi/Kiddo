@@ -26,7 +26,7 @@ class AnimalInfoAppBar extends SliverPersistentHeaderDelegate {
             AutoSizeText.rich(
               maxFontSize: 14,
               minFontSize: 12,
-              TextSpan(text: 'Single Replay | $count categories'),
+              TextSpan(text: 'Single Replay | $count Kategori'),
               style: GoogleFonts.robotoSlab(
                 fontWeight: FontWeight.bold,
                 color: Colors.grey,
@@ -72,7 +72,7 @@ class QuestionInforAppBar extends SliverPersistentHeaderDelegate {
             AutoSizeText.rich(
               maxFontSize: 14,
               minFontSize: 12,
-              TextSpan(text: 'Single Replay | $title categories'),
+              TextSpan(text: 'Single Replay | $title Kategori'),
               style: GoogleFonts.robotoSlab(
                 fontWeight: FontWeight.bold,
                 color: Colors.grey,

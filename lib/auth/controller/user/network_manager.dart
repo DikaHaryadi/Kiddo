@@ -22,12 +22,12 @@ class NetworkManager extends GetxController {
         _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
   }
 
-  /// Update the connection status based on changes in connectivity and show a relevant popup for no internet connection.
+  /// Update the connection status based on changes in connectivity and show a relevant popup for Tidak Ada Koneksi Internet.
   Future<void> _updateConnectionStatus(ConnectivityResult result) async {
     _connectionStatus.value = result;
     if (_connectionStatus.value == ConnectivityResult.none) {
       Get.snackbar(
-        'No Internet Connection',
+        'Tidak Ada Koneksi Internet'.tr,
         '',
         isDismissible: true,
         shouldIconPulse: true,

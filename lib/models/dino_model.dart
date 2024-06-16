@@ -6,6 +6,7 @@ class DinoModel {
   final String jenisMakanan;
   final String imageContent;
   final String deskripsi;
+  final String deskripsiEn;
   final String titleVoice;
   final String deskripsiVoice;
   final String song;
@@ -16,6 +17,7 @@ class DinoModel {
     required this.jenisMakanan,
     required this.imageContent,
     required this.deskripsi,
+    required this.deskripsiEn,
     required this.titleVoice,
     required this.deskripsiVoice,
     required this.song,
@@ -28,6 +30,7 @@ class DinoModel {
       jenisMakanan: '',
       imageContent: '',
       deskripsi: '',
+      deskripsiEn: '',
       titleVoice: '',
       deskripsiVoice: '',
       song: '');
@@ -39,6 +42,7 @@ class DinoModel {
       'Jenis_Makanan': jenisMakanan,
       'ImageContent': imageContent,
       'Deskripsi': deskripsi,
+      'Deskripsi_En': deskripsiEn,
       'Title_Voice': titleVoice,
       'Deskripsi_Voice': deskripsiVoice,
       'Song': song
@@ -56,6 +60,7 @@ class DinoModel {
           jenisMakanan: data['Jenis_Makanan'] ?? '',
           imageContent: data['ImageContent'] ?? '',
           deskripsi: data['Deskripsi'] ?? '',
+          deskripsiEn: data['Deskripsi_En'] ?? '',
           titleVoice: data['Title_Voice'] ?? '',
           deskripsiVoice: data['Deskripsi_Voice'] ?? '',
           song: data['Song'] ?? '');

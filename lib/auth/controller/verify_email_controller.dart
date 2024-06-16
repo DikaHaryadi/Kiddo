@@ -21,7 +21,7 @@ class VerifyEmailController extends GetxController {
       await AuthenticationRepository.instance.sendEmailVerification();
       Get.snackbar(
         'Email Sent',
-        'Please check your inbox and verify your email.',
+        'Silakan periksa kotak masuk dan verifikasi email Anda'.tr,
         maxWidth: 600,
         isDismissible: true,
         shouldIconPulse: true,

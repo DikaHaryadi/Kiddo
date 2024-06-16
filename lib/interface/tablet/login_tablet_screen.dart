@@ -25,12 +25,12 @@ class LoginTabletScreen extends StatelessWidget {
                 children: [
                   const SizedBox(height: 12),
                   Text(
-                    'Welcome back',
+                    'Selamat datang kembali',
                     style: Theme.of(context).textTheme.displayMedium,
                   ),
                   const SizedBox(height: 15),
                   Text(
-                    'Come on in and explore the world of fun learning with us! Please login before playing',
+                    'Ayo masuk dan jelajahi dunia belajar yang menyenangkan bersama kami! Silakan login sebelum bermain',
                     style: Theme.of(context).textTheme.headlineSmall,
                   ),
                 ],
@@ -47,14 +47,14 @@ class LoginTabletScreen extends StatelessWidget {
                         controller: controller.email,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Email is required.';
+                            return 'Email Tidak Boleh Kosong';
                           }
 
                           final emailRegExp =
                               RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$');
 
                           if (!emailRegExp.hasMatch(value)) {
-                            return 'Invalid email address.';
+                            return 'Alamat email tidak valid';
                           }
                           return null;
                         },
@@ -70,7 +70,7 @@ class LoginTabletScreen extends StatelessWidget {
                           obscureText: controller.hidePassword.value,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Password is required';
+                              return 'Kata Sandi Tidak Boleh Kosong';
                             }
 
                             return null;
@@ -88,11 +88,11 @@ class LoginTabletScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 8.0),
-                      // Remember me & forgot pw
+                      // Ingat Saya & forgot pw
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // Remember Me
+                          // Ingat Saya
                           Row(
                             children: [
                               Obx(
@@ -107,7 +107,7 @@ class LoginTabletScreen extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                'Remember Me',
+                                'Ingat Saya',
                                 style: Theme.of(context).textTheme.bodyMedium,
                               )
                             ],
@@ -118,7 +118,7 @@ class LoginTabletScreen extends StatelessWidget {
                               onPressed: () =>
                                   Get.to(() => const ForgetPassword()),
                               child: Text(
-                                'Forgot Password?',
+                                'Lupa Kata Sandi?',
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
@@ -145,7 +145,7 @@ class LoginTabletScreen extends StatelessWidget {
                         width: double.infinity,
                         child: OutlinedButton(
                             onPressed: () => Get.toNamed('/signup'),
-                            child: const Text('Create Account')),
+                            child: const Text('Buat Akun')),
                       ),
                     ],
                   ),
@@ -162,7 +162,7 @@ class LoginTabletScreen extends StatelessWidget {
                   endIndent: 10,
                 )),
                 Text(
-                  'or sign in with',
+                  'atau masuk dengan',
                   style: Theme.of(context)
                       .textTheme
                       .labelMedium!

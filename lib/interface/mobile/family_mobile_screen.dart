@@ -38,7 +38,7 @@ class FamilyMobileScreen extends StatelessWidget {
         ),
         const SizedBox(height: 25.0),
         AutoSizeText(
-          'Categories',
+          'Kategori'.tr,
           maxFontSize: 20,
           minFontSize: 18,
           style: GoogleFonts.aBeeZee(

@@ -73,6 +73,10 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> items = [
+      'assets/images/indonesia.png',
+      'assets/images/english.png',
+    ];
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
@@ -278,15 +282,67 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                   Positioned(
                     top: Get.height * 0.35,
                     left: 30,
-                    child: Text(
-                      toTitleCase(widget.model.titleAnimal),
-                      style: Theme.of(context).textTheme.headlineLarge?.apply(
-                          color: const Color.fromARGB(255, 91, 103, 104)),
-                    ).animate(delay: const Duration(milliseconds: 250)).fadeIn(
-                          duration: const Duration(milliseconds: 600),
-                          curve: Curves.easeInOutBack,
-                          delay: const Duration(milliseconds: 100),
-                        ),
+                    child: Row(
+                      children: [
+                        Text(
+                          toTitleCase(widget.model.titleAnimal),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineLarge
+                              ?.apply(
+                                  color:
+                                      const Color.fromARGB(255, 91, 103, 104)),
+                        )
+                            .animate(delay: const Duration(milliseconds: 250))
+                            .fadeIn(
+                              duration: const Duration(milliseconds: 600),
+                              curve: Curves.easeInOutBack,
+                              delay: const Duration(milliseconds: 100),
+                            ),
+                        SizedBox(
+                            width: 50,
+                            height: 40,
+                            child: GetBuilder<AnimalController>(
+                              builder: (controller) {
+                                return DropdownButton<String>(
+                                  isExpanded: true,
+                                  value: controller.storage
+                                              .read('language_animal') ==
+                                          'id'
+                                      ? items[0]
+                                      : items[1],
+                                  onChanged: (String? value) {
+                                    int index = items.indexOf(value!);
+                                    controller.setActiveLanguage(
+                                        index == 0 ? 'id' : 'en');
+                                    controller.saveLanguageDeskripsi(index);
+                                  },
+                                  icon: const Icon(Icons.arrow_drop_down),
+                                  selectedItemBuilder: (BuildContext context) {
+                                    return items.map<Widget>((String item) {
+                                      return Image.asset(
+                                        item,
+                                        width: 24,
+                                        height: 24,
+                                      );
+                                    }).toList();
+                                  },
+                                  items: items.map<DropdownMenuItem<String>>(
+                                      (String item) {
+                                    return DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Image.asset(
+                                        item,
+                                        width: 24,
+                                        height: 24,
+                                      ),
+                                    );
+                                  }).toList(),
+                                );
+                              },
+                            )),
+                      ],
+                    ),
                   ),
                   Positioned(
                     top: Get.height * 0.4,
@@ -340,11 +396,23 @@ class _AnimalTabletScreenState extends State<AnimalTabletScreen> {
                     right: 20,
                     left: 20,
                     child: SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: AutoSizeText(widget.model.deskripsiAnimal,
-                          textAlign: TextAlign.left,
-                          style: Theme.of(context).textTheme.bodyMedium),
-                    )
+                            scrollDirection: Axis.vertical,
+                            child: GetBuilder<AnimalController>(
+                              builder: (controller) {
+                                String deskripsi = controller.deskripsiLang;
+                                if (controller.storage
+                                        .read('language_animal') ==
+                                    'id') {
+                                  deskripsi = widget.model.deskripsiAnimal;
+                                } else {
+                                  deskripsi = widget.model.deskripsiEn;
+                                }
+                                return AutoSizeText(deskripsi,
+                                    textAlign: TextAlign.left,
+                                    style:
+                                        Theme.of(context).textTheme.bodyMedium);
+                              },
+                            ))
                         .animate(
                           delay: const Duration(milliseconds: 250),
                         )

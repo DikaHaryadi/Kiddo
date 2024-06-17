@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:get/get.dart';
@@ -52,9 +53,71 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                   color: kSoftblue,
                   child: Column(
                     children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: SizedBox(
+                          width: 140,
+                          height: 40,
+                          child: DropdownButtonHideUnderline(
+                            child: GetBuilder<LocalizationController>(
+                              builder: (controller) {
+                                return DropdownButton<String>(
+                                  isExpanded: true,
+                                  value: items[controller.selectedIndex],
+                                  onChanged: (String? value) {
+                                    int index = items.indexOf(value!);
+                                    controller.setLanguage(Locale(
+                                        AppLanguageConstant
+                                            .languages[index].languageCode,
+                                        AppLanguageConstant
+                                            .languages[index].countryCode));
+                                    controller.setSelectIndex(index);
+                                  },
+                                  icon: const Icon(Icons.arrow_drop_down),
+                                  selectedItemBuilder: (BuildContext context) {
+                                    return items.map<Widget>((String item) {
+                                      return Row(
+                                        children: [
+                                          Image.asset(
+                                            item,
+                                            width: 24,
+                                            height: 24,
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(item == items[0]
+                                              ? 'Indonesia'
+                                              : 'English'),
+                                        ],
+                                      );
+                                    }).toList();
+                                  },
+                                  items: items.map<DropdownMenuItem<String>>(
+                                      (String item) {
+                                    return DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Row(
+                                        children: [
+                                          Image.asset(
+                                            item,
+                                            width: 24,
+                                            height: 24,
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(item == items[0]
+                                              ? 'Indonesia'
+                                              : 'English'),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
                       Padding(
                         padding: EdgeInsets.only(
-                          top: Get.width * .08,
                           left: Get.width * .1,
                           right: Get.width * .1,
                         ),
@@ -99,96 +162,24 @@ class _HomeMobileScreemState extends State<HomeMobileScreem> {
                                         const Duration(milliseconds: 400)),
                               ],
                             ),
-                            Column(
-                              children: [
-                                Obx(() {
-                                  final networkImage =
-                                      controller.user.value.profilePicture;
-                                  final image = networkImage.isNotEmpty
-                                      ? networkImage
-                                      : 'assets/images/cat.png';
-                                  return CircularImage(
-                                    image: image,
-                                    widht: 50,
-                                    height: 50,
-                                    isNetworkImage: networkImage.isNotEmpty,
-                                    onTap: () => Get.toNamed('/profile'),
-                                  );
-                                }).animate().slideX(
-                                    begin: 4,
-                                    end: 0,
-                                    curve: Curves.bounceIn,
-                                    duration:
-                                        const Duration(milliseconds: 400)),
-                                SizedBox(
-                                  width: 140,
-                                  height: 40,
-                                  child: DropdownButtonHideUnderline(
-                                    child: GetBuilder<LocalizationController>(
-                                      builder: (controller) {
-                                        return DropdownButton<String>(
-                                          isExpanded: true,
-                                          value:
-                                              items[controller.selectedIndex],
-                                          onChanged: (String? value) {
-                                            int index = items.indexOf(value!);
-                                            controller.setLanguage(Locale(
-                                                AppLanguageConstant
-                                                    .languages[index]
-                                                    .languageCode,
-                                                AppLanguageConstant
-                                                    .languages[index]
-                                                    .countryCode));
-                                            controller.setSelectIndex(index);
-                                          },
-                                          icon:
-                                              const Icon(Icons.arrow_drop_down),
-                                          selectedItemBuilder:
-                                              (BuildContext context) {
-                                            return items
-                                                .map<Widget>((String item) {
-                                              return Row(
-                                                children: [
-                                                  Image.asset(
-                                                    item,
-                                                    width: 24,
-                                                    height: 24,
-                                                  ),
-                                                  const SizedBox(width: 8),
-                                                  Text(item == items[0]
-                                                      ? 'Indonesia'
-                                                      : 'English'),
-                                                ],
-                                              );
-                                            }).toList();
-                                          },
-                                          items: items
-                                              .map<DropdownMenuItem<String>>(
-                                                  (String item) {
-                                            return DropdownMenuItem<String>(
-                                              value: item,
-                                              child: Row(
-                                                children: [
-                                                  Image.asset(
-                                                    item,
-                                                    width: 24,
-                                                    height: 24,
-                                                  ),
-                                                  const SizedBox(width: 8),
-                                                  Text(item == items[0]
-                                                      ? 'Indonesia'
-                                                      : 'English'),
-                                                ],
-                                              ),
-                                            );
-                                          }).toList(),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )
+                            Obx(() {
+                              final networkImage =
+                                  controller.user.value.profilePicture;
+                              final image = networkImage.isNotEmpty
+                                  ? networkImage
+                                  : 'assets/images/cat.png';
+                              return CircularImage(
+                                image: image,
+                                widht: 50,
+                                height: 50,
+                                isNetworkImage: networkImage.isNotEmpty,
+                                onTap: () => Get.toNamed('/profile'),
+                              );
+                            }).animate().slideX(
+                                begin: 4,
+                                end: 0,
+                                curve: Curves.bounceIn,
+                                duration: const Duration(milliseconds: 400)),
                           ],
                         ),
                       ),

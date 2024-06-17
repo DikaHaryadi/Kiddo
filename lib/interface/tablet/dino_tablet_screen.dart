@@ -132,6 +132,11 @@ class _DinoTabletScreenState extends State<DinoTabletScreen> {
   Widget build(BuildContext context) {
     final ttsController = Get.put(TtsController());
 
+    final List<String> items = [
+      'assets/images/indonesia.png',
+      'assets/images/english.png',
+    ];
+
     return GestureDetector(
       onTap: () {
         if (widget.controller.collapse.value) {
@@ -159,6 +164,48 @@ class _DinoTabletScreenState extends State<DinoTabletScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(
+                    width: 50,
+                    height: 40,
+                    child: GetBuilder<DinoController>(
+                      builder: (controller) {
+                        return DropdownButton<String>(
+                          isExpanded: true,
+                          value:
+                              widget.controller.storage.read('language') == 'id'
+                                  ? items[0]
+                                  : items[1],
+                          onChanged: (String? value) {
+                            int index = items.indexOf(value!);
+                            widget.controller
+                                .setActiveLanguage(index == 0 ? 'id' : 'en');
+                            widget.controller.saveLanguageDeskripsi(index);
+                          },
+                          icon: const Icon(Icons.arrow_drop_down),
+                          selectedItemBuilder: (BuildContext context) {
+                            return items.map<Widget>((String item) {
+                              return Image.asset(
+                                item,
+                                width: 24,
+                                height: 24,
+                              );
+                            }).toList();
+                          },
+                          items: items
+                              .map<DropdownMenuItem<String>>((String item) {
+                            return DropdownMenuItem<String>(
+                              value: item,
+                              child: Image.asset(
+                                item,
+                                width: 24,
+                                height: 24,
+                              ),
+                            );
+                          }).toList(),
+                        );
+                      },
+                    )),
+                Expanded(child: Container()),
                 Obx(
                   () => IconButton(
                     onPressed: () => widget.controller.toggleCollapse(),
@@ -247,6 +294,8 @@ class _DinoTabletScreenState extends State<DinoTabletScreen> {
                                       stopAudio();
                                       widget.controller.selectedDino.value =
                                           dino;
+                                      widget.controller
+                                          .saveLanguageDeskripsi(index);
                                     },
                                     child: ListTile(
                                       contentPadding:
@@ -378,6 +427,49 @@ class _DinoTabletScreenState extends State<DinoTabletScreen> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    SizedBox(
+                        width: 50,
+                        height: 40,
+                        child: GetBuilder<DinoController>(
+                          builder: (controller) {
+                            return DropdownButton<String>(
+                              isExpanded: true,
+                              value:
+                                  widget.controller.storage.read('language') ==
+                                          'id'
+                                      ? items[0]
+                                      : items[1],
+                              onChanged: (String? value) {
+                                int index = items.indexOf(value!);
+                                widget.controller.setActiveLanguage(
+                                    index == 0 ? 'id' : 'en');
+                                widget.controller.saveLanguageDeskripsi(index);
+                              },
+                              icon: const Icon(Icons.arrow_drop_down),
+                              selectedItemBuilder: (BuildContext context) {
+                                return items.map<Widget>((String item) {
+                                  return Image.asset(
+                                    item,
+                                    width: 24,
+                                    height: 24,
+                                  );
+                                }).toList();
+                              },
+                              items: items
+                                  .map<DropdownMenuItem<String>>((String item) {
+                                return DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Image.asset(
+                                    item,
+                                    width: 24,
+                                    height: 24,
+                                  ),
+                                );
+                              }).toList(),
+                            );
+                          },
+                        )),
+                    Expanded(child: Container()),
                     Obx(
                       () => IconButton(
                         onPressed: () => widget.controller.toggleCollapse(),

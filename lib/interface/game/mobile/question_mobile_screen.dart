@@ -125,7 +125,7 @@ class QuestionMobileScreen extends StatelessWidget {
                                   },
                                   child: Text(
                                     controller.isLastQuestion
-                                        ? 'Completeeee'
+                                        ? 'Complete'
                                         : 'Next',
                                     style:
                                         Theme.of(context).textTheme.titleLarge,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:textspeech/controllers/animal_controller.dart';
 import 'package:textspeech/controllers/tts_controller.dart';
 import 'package:textspeech/util/etc/app_colors.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -126,6 +127,11 @@ class _DetailAnimalsState extends State<DetailAnimals> {
 
   @override
   Widget build(BuildContext context) {
+    final List<String> items = [
+      'assets/images/indonesia.png',
+      'assets/images/english.png',
+    ];
+
     return Scaffold(
       body: Container(
         width: Get.width,
@@ -183,31 +189,41 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                   clipBehavior: Clip.none,
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(
-                          top: 35.0, left: 16.0, right: 16.0, bottom: 5.0),
-                      margin: const EdgeInsets.only(right: 56.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        border:
-                            Border.all(color: Colors.white.withOpacity(0.13)),
-                        gradient: LinearGradient(
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                          colors: [
-                            Colors.white.withOpacity(0.7),
-                            Colors.white.withOpacity(0.5),
-                          ],
+                        padding: const EdgeInsets.only(
+                            top: 35.0, left: 16.0, right: 16.0, bottom: 5.0),
+                        margin: const EdgeInsets.only(right: 56.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border:
+                              Border.all(color: Colors.white.withOpacity(0.13)),
+                          gradient: LinearGradient(
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                            colors: [
+                              Colors.white.withOpacity(0.7),
+                              Colors.white.withOpacity(0.5),
+                            ],
+                          ),
                         ),
-                      ),
-                      child: Text(
-                        widget.model.deskripsiAnimal,
-                        textAlign: TextAlign.justify,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.apply(color: kBlack),
-                      ),
-                    ),
+                        child: GetBuilder<AnimalController>(
+                          builder: (controller) {
+                            String deskripsi = controller.deskripsiLang;
+                            if (controller.storage.read('language_animal') ==
+                                'id') {
+                              deskripsi = widget.model.deskripsiAnimal;
+                            } else {
+                              deskripsi = widget.model.deskripsiEn;
+                            }
+                            return Text(
+                              deskripsi,
+                              textAlign: TextAlign.justify,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.apply(color: kBlack),
+                            );
+                          },
+                        )),
                     Positioned(
                       right: -55.0,
                       top: -30.0,
@@ -238,6 +254,52 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                         child: Center(
                           child: Row(
                             children: [
+                              SizedBox(
+                                  width: 50,
+                                  height: 40,
+                                  child: GetBuilder<AnimalController>(
+                                    builder: (controller) {
+                                      return DropdownButton<String>(
+                                        isExpanded: true,
+                                        value: controller.storage
+                                                    .read('language_animal') ==
+                                                'id'
+                                            ? items[0]
+                                            : items[1],
+                                        onChanged: (String? value) {
+                                          int index = items.indexOf(value!);
+                                          controller.setActiveLanguage(
+                                              index == 0 ? 'id' : 'en');
+                                          controller
+                                              .saveLanguageDeskripsi(index);
+                                        },
+                                        icon: const Icon(Icons.arrow_drop_down),
+                                        selectedItemBuilder:
+                                            (BuildContext context) {
+                                          return items
+                                              .map<Widget>((String item) {
+                                            return Image.asset(
+                                              item,
+                                              width: 24,
+                                              height: 24,
+                                            );
+                                          }).toList();
+                                        },
+                                        items: items
+                                            .map<DropdownMenuItem<String>>(
+                                                (String item) {
+                                          return DropdownMenuItem<String>(
+                                            value: item,
+                                            child: Image.asset(
+                                              item,
+                                              width: 24,
+                                              height: 24,
+                                            ),
+                                          );
+                                        }).toList(),
+                                      );
+                                    },
+                                  )),
                               Text(
                                 'Description',
                                 style: Theme.of(context)
@@ -306,8 +368,10 @@ class _DetailAnimalsState extends State<DetailAnimals> {
                                 border: Border.all(color: kBlack)),
                             child: IconButton(
                                 onPressed: playPause,
-                                icon: Image.asset('assets/icon/volume.png',
-                                    width: 25, height: 25, color: kBlack)),
+                                icon: isPlaying
+                                    ? const Icon(Iconsax.pause)
+                                    : Image.asset('assets/icon/volume.png',
+                                        width: 25, height: 25, color: kBlack)),
                           ),
                         ],
                       )),

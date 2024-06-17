@@ -3,8 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class AnimalModel {
   final String id;
   String titleAnimal;
-  String deskripsiAnimal;
   String imageContent;
+  String deskripsiAnimal;
+  String deskripsiEn;
   String kategori;
   String jenisMakanan;
   String audio;
@@ -12,8 +13,9 @@ class AnimalModel {
   AnimalModel({
     required this.id,
     required this.titleAnimal,
-    required this.deskripsiAnimal,
     required this.imageContent,
+    required this.deskripsiAnimal,
+    required this.deskripsiEn,
     required this.kategori,
     required this.jenisMakanan,
     required this.audio,
@@ -25,6 +27,7 @@ class AnimalModel {
         titleAnimal: '',
         deskripsiAnimal: '',
         imageContent: '',
+        deskripsiEn: '',
         kategori: '',
         jenisMakanan: '',
         audio: '',
@@ -35,6 +38,7 @@ class AnimalModel {
     return {
       'Title': titleAnimal,
       'Deskripsi': deskripsiAnimal,
+      'Deskripsi_En': deskripsiEn,
       'ImageContent': imageContent,
       'Kategori': kategori,
       'JenisMakanan': jenisMakanan,
@@ -50,8 +54,9 @@ class AnimalModel {
       return AnimalModel(
         id: document.id,
         titleAnimal: data?['Title'] ?? '',
-        deskripsiAnimal: data?['Deskripsi'] ?? '',
         imageContent: data?['ImageContent'] ?? '',
+        deskripsiAnimal: data?['Deskripsi'] ?? '',
+        deskripsiEn: data?['Deskripsi_En'] ?? '',
         kategori: data?['Kategori'] ?? '',
         jenisMakanan: data?['JenisMakanan'] ?? '',
         audio: data?['Audio'] ?? '',

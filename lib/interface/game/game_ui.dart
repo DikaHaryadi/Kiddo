@@ -58,94 +58,97 @@ class _MemoryGameHomeState extends State<MemoryGameHome> {
                   image: DecorationImage(
                       image: AssetImage('assets/games/bg_memory_game.png'),
                       fit: BoxFit.fill)),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 24.0),
-                      child: InkWell(
-                        onTap: () => Get.offNamed('/home'),
-                        child: const Icon(
-                          Icons.arrow_back_ios,
-                          color: Color(0xFFFE9081),
+              child: SafeArea(
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 24.0),
+                        child: InkWell(
+                          onTap: () => Get.offNamed('/home'),
+                          child: const Icon(
+                            Icons.arrow_back_ios,
+                            color: Color(0xFFFE9081),
+                          )
+                              .animate(delay: const Duration(milliseconds: 250))
+                              .fadeIn(
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.easeInOutCubic),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 24.0, right: 24.0, top: 10.0),
+                        child: Text(
+                          "Dalam game ini Anda akan mengasah ingatan Anda dalam memilih kartu yang sama, semakin pendek waktu yang Anda butuhkan untuk menyelesaikan level yang dipilih, semakin baik!"
+                              .tr,
                         )
                             .animate(delay: const Duration(milliseconds: 250))
                             .fadeIn(
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.easeInOutCubic),
+                                duration: const Duration(milliseconds: 800)),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 24.0, right: 24.0, top: 10.0),
-                      child: Text(
-                        "Dalam game ini Anda akan mengasah ingatan Anda dalam memilih kartu yang sama, semakin pendek waktu yang Anda butuhkan untuk menyelesaikan level yang dipilih, semakin baik!"
-                            .tr,
+                      const SizedBox(height: 8.0),
+                      GameOptions(
+                        onLevelSelected: _onLevelSelected,
                       )
-                          .animate(delay: const Duration(milliseconds: 250))
-                          .fadeIn(duration: const Duration(milliseconds: 800)),
-                    ),
-                    const SizedBox(height: 8.0),
-                    GameOptions(
-                      onLevelSelected: _onLevelSelected,
-                    )
-                        .animate(
-                          delay: const Duration(milliseconds: 500),
-                        )
-                        .slideY(
-                          begin: 5,
-                          end: 0,
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.bounceInOut,
-                        ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: GestureDetector(
-                        onTap: _startGame,
-                        child: Container(
-                          width: 270,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30.0),
-                            border: Border.all(
-                                color: Colors.white.withOpacity(0.13)),
-                            gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                Colors.white.withOpacity(0.7),
-                                Colors.white.withOpacity(0.5),
+                          .animate(
+                            delay: const Duration(milliseconds: 500),
+                          )
+                          .slideY(
+                            begin: 5,
+                            end: 0,
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.bounceInOut,
+                          ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: GestureDetector(
+                          onTap: _startGame,
+                          child: Container(
+                            width: 270,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30.0),
+                              border:
+                                  Border.all(color: kBlack.withOpacity(0.13)),
+                              gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [
+                                  Colors.white.withOpacity(0.7),
+                                  Colors.white.withOpacity(0.5),
+                                ],
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Iconsax.backward,
+                                  size: 30,
+                                  color: kWhite,
+                                ),
+                                const SizedBox(width: 25.0),
+                                Text(
+                                  'Mulai Permainan'.tr,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displaySmall
+                                      ?.apply(color: kWhite),
+                                ),
+                                const SizedBox(width: 25.0),
+                                const Icon(
+                                  Iconsax.forward,
+                                  size: 30,
+                                  color: kWhite,
+                                )
                               ],
                             ),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Iconsax.backward,
-                                size: 30,
-                                color: kWhite,
-                              ),
-                              const SizedBox(width: 25.0),
-                              Text(
-                                'Mulai Permainan'.tr,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displaySmall
-                                    ?.apply(color: kWhite),
-                              ),
-                              const SizedBox(width: 25.0),
-                              const Icon(
-                                Iconsax.forward,
-                                size: 30,
-                                color: kWhite,
-                              )
-                            ],
-                          ),
                         ),
                       ),
-                    ),
-                  ]),
+                    ]),
+              ),
             )
           : SizedBox(
               width: Get.width,

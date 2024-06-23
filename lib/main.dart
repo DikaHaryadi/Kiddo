@@ -18,6 +18,7 @@ import 'package:textspeech/util/etc/dep_lang.dart';
 import 'package:textspeech/util/etc/message_lang.dart';
 import 'package:textspeech/util/etc/responsive.dart';
 import 'package:textspeech/util/widgets/theme.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:textspeech/util/etc/dep_lang.dart' as dep;
 
 void main() async {
@@ -46,6 +47,10 @@ void main() async {
   final navigatorKey = FirebaseNotification.instance.getNavigatorKey();
   Map<String, Map<String, String>> languages = await dep.init();
 
+  OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
+  OneSignal.initialize('bb04cd3f-351c-4762-86ec-bdcb78227a25');
+  OneSignal.Notifications.requestPermission(true);
+
   runApp(MyApp(
     navigatorKey: navigatorKey,
     languages: languages,
@@ -59,6 +64,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String? screen;
+    OneSignal.Notifications.addClickListener((event) {
+      final data = event.notification.additionalData;
+      screen = data?['screen'];
+      if (screen != null) {
+        navigatorKey.currentState?.pushNamed(screen!);
+      }
+    });
+
     return GetBuilder<LocalizationController>(
         builder: (localizationController) {
       return GetMaterialApp(

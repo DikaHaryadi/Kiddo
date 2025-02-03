@@ -123,6 +123,7 @@ class IntroductionController extends GetxController {
         margin: const EdgeInsets.all(20),
         icon: const Icon(Iconsax.warning_2, color: Colors.white),
       );
+      print('TERJADI ERROR SAAT LOGIN MENGGUNAKAN GOOGLE ACC: ${e.toString()}');
     }
   }
 }

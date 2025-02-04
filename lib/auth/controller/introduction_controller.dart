@@ -80,6 +80,37 @@ class IntroductionController extends GetxController {
 
   // Google SignIn Auth
   Future<void> googleSignIn() async {
+    showDialog(
+      context: Get.overlayContext!,
+      barrierDismissible: false,
+      builder: (context) => const PopScope(
+          canPop: false,
+          child: AnimationLoader(
+              text: 'Mohon ditunggu...',
+              animation: 'assets/animations/141594-animation-of-docer.json',
+              showAction: false)),
+    );
+
+    // check internet
+    final isConnected = await NetworkManager.instance.isConnected();
+    if (!isConnected) {
+      Navigator.of(Get.overlayContext!).pop();
+      return;
+    }
+    // google authentification
+    final userCredentials =
+        await AuthenticationRepository.instance.signInWithGoogle();
+    final token = firebaseNotification.mToken.value;
+
+    // save user data
+    await userController.saveUserRecord(userCredentials, token);
+    Navigator.of(Get.overlayContext!).pop();
+    // navigate
+    AuthenticationRepository.instance.navigateToIntroduction();
+  }
+
+  // Facebook SignIn Auth
+  Future<void> facebookSignIn() async {
     try {
       showDialog(
         context: Get.overlayContext!,
@@ -92,27 +123,42 @@ class IntroductionController extends GetxController {
                 showAction: false)),
       );
 
-      // check internet
+      // Check internet
       final isConnected = await NetworkManager.instance.isConnected();
       if (!isConnected) {
         Navigator.of(Get.overlayContext!).pop();
         return;
       }
-      // google authentification
+
+      // Facebook Authentication
       final userCredentials =
-          await AuthenticationRepository.instance.signInWithGoogle();
+          await AuthenticationRepository.instance.signInWithFacebook();
       final token = firebaseNotification.mToken.value;
 
-      // save user data
+      // Simpan data user ke database
       await userController.saveUserRecord(userCredentials, token);
       Navigator.of(Get.overlayContext!).pop();
-      // navigate
+
+      // Navigasi setelah login
       AuthenticationRepository.instance.navigateToIntroduction();
     } catch (e) {
       Navigator.of(Get.overlayContext!).pop();
+
+      String errorMessage = e.toString();
+
+      // Jika error karena pembatalan login atau token tidak valid, cukup print log tanpa snackbar
+      if (errorMessage.contains("CANCELLED") ||
+          errorMessage.contains("canceled") ||
+          errorMessage.contains("code\":190") ||
+          errorMessage.contains("Invalid OAuth access token")) {
+        print("Login Facebook dibatalkan atau token tidak valid.");
+        return;
+      }
+
+      // Jika error lain, tetap tampilkan snackbar
       Get.snackbar(
         'Oh God',
-        e.toString(),
+        errorMessage,
         maxWidth: 600,
         isDismissible: true,
         shouldIconPulse: true,
@@ -123,7 +169,8 @@ class IntroductionController extends GetxController {
         margin: const EdgeInsets.all(20),
         icon: const Icon(Iconsax.warning_2, color: Colors.white),
       );
-      print('TERJADI ERROR SAAT LOGIN MENGGUNAKAN GOOGLE ACC: ${e.toString()}');
+
+      print('TERJADI ERROR SAAT LOGIN MENGGUNAKAN FACEBOOK ACC: $errorMessage');
     }
   }
 }

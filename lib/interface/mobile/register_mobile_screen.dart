@@ -206,46 +206,6 @@ class RegisterMobileScreen extends StatelessWidget {
                         'Buat Akun'.tr,
                       )),
                 ),
-                const SizedBox(height: 16.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Flexible(
-                        child: Divider(
-                      color: kGrey,
-                      thickness: .5,
-                      indent: 60,
-                      endIndent: 5,
-                    )),
-                    Text(
-                      'atau daftar dengan'.tr,
-                      style: Theme.of(context)
-                          .textTheme
-                          .labelMedium!
-                          .copyWith(color: kGrey),
-                    ),
-                    const Flexible(
-                        child: Divider(
-                      color: kGrey,
-                      thickness: .5,
-                      indent: 5,
-                      endIndent: 60,
-                    )),
-                  ],
-                ),
-                const SizedBox(height: 16.0),
-                Container(
-                  decoration: BoxDecoration(
-                      border: Border.all(color: kGrey),
-                      borderRadius: BorderRadius.circular(100)),
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Image(
-                        width: 24,
-                        height: 24,
-                        image: AssetImage('assets/images/google.png')),
-                  ),
-                ),
               ],
             ),
           ),

@@ -1,18 +1,32 @@
 {
   "project_info": {
     "project_number": "647339687851",
+    "firebase_url": "https://kiddielearn-c19c1-default-rtdb.asia-southeast1.firebasedatabase.app",
     "project_id": "kiddielearn-c19c1",
     "storage_bucket": "kiddielearn-c19c1.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:647339687851:android:6b899a2a8f3988c8551cee",
+        "mobilesdk_app_id": "1:647339687851:android:002aab2bdd03f0f4551cee",
         "android_client_info": {
-          "package_name": "com.example.textspeech"
+          "package_name": "com.example.adminkiddie"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "647339687851-srih5pknmj2ivo02a5s5jg5ip9lcrunv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.adminkiddie",
+            "certificate_hash": "7fb1e0acf76f7fc96ed3c4a00147f1ae3b1fc1e7"
+          }
+        },
+        {
+          "client_id": "647339687851-a1gtl2m0hbdn0melijg9v67a58jpi5s2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCKgs8jk2ybRROh0EZhvyY-De1gwqF2u3c"
@@ -20,7 +34,63 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647339687851-a1gtl2m0hbdn0melijg9v67a58jpi5s2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "647339687851-7mqcakl61is4qo9eq0isph5pc2paks4f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.adminkiddie"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:647339687851:android:6b899a2a8f3988c8551cee",
+        "android_client_info": {
+          "package_name": "com.example.textspeech"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "647339687851-4n9hicoerb9rpfgfp83giehk16v1mcum.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.textspeech",
+            "certificate_hash": "ea25fe4cee524a313ab0bd28a8de89fa299da618"
+          }
+        },
+        {
+          "client_id": "647339687851-a1gtl2m0hbdn0melijg9v67a58jpi5s2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKgs8jk2ybRROh0EZhvyY-De1gwqF2u3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "647339687851-a1gtl2m0hbdn0melijg9v67a58jpi5s2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "647339687851-7mqcakl61is4qo9eq0isph5pc2paks4f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.adminkiddie"
+              }
+            }
+          ]
         }
       }
     }

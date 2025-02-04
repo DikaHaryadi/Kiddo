@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KiddieLearn</string>
+    <string name="facebook_app_id">629922566114112</string>
+    <string name="fb_login_protocol_scheme">fb629922566114112</string>
+    <string name="facebook_client_token">239764af4ab0ea777fe60f164674ab5c</string>
+</resources>

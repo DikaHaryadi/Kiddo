@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -142,8 +143,19 @@ class AuthenticationRepository extends GetxController {
     } on PlatformException catch (e) {
       throw TPlatformException(e.code).message;
     } catch (e) {
-      throw 'Something went wrong. Please try again';
+      return null;
     }
+  }
+
+  // Facebook Auth
+  Future<UserCredential> signInWithFacebook() async {
+    final LoginResult loginResult = await FacebookAuth.instance
+        .login(permissions: const ['email', 'public_profile']);
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(
+            '${loginResult.accessToken?.tokenString}');
+
+    return _auth.signInWithCredential(facebookAuthCredential);
   }
 
   // Authenticate User
@@ -190,47 +202,41 @@ class AuthenticationRepository extends GetxController {
     try {
       final auth = AuthenticationRepository.instance;
       final provider =
-          auth.authUser!.providerData.map((e) => e.providerId).first;
+          auth.authUser?.providerData.map((e) => e.providerId).first ?? '';
 
       if (provider.isNotEmpty) {
         if (provider == 'google.com') {
-          // Me-reinisialisasi GoogleSignIn
           final GoogleSignIn googleSignIn = GoogleSignIn();
-
-          // Logout dari Google SignIn
           await googleSignIn.signOut();
-          Get.offAllNamed('/introduction');
-          Get.snackbar(
-            'Selamat!'.tr,
-            'Anda telah berhasil keluar'.tr,
-            maxWidth: 600,
-            isDismissible: true,
-            shouldIconPulse: true,
-            colorText: Colors.white,
-            backgroundColor: Colors.blueAccent,
-            snackPosition: SnackPosition.BOTTOM,
-            duration: const Duration(seconds: 3),
-            margin: const EdgeInsets.all(10),
-            icon: const Icon(Iconsax.check, color: Colors.white),
-          );
-        } else if (provider == 'password') {
-          await FirebaseAuth.instance.signOut();
-          Get.offAllNamed('/introduction');
-          Get.snackbar(
-            'Selamat!'.tr,
-            'Anda telah berhasil keluar'.tr,
-            maxWidth: 600,
-            isDismissible: true,
-            shouldIconPulse: true,
-            colorText: Colors.white,
-            backgroundColor: Colors.blueAccent,
-            snackPosition: SnackPosition.BOTTOM,
-            duration: const Duration(seconds: 3),
-            margin: const EdgeInsets.all(10),
-            icon: const Icon(Iconsax.check, color: Colors.white),
-          );
+        } else if (provider == 'facebook.com') {
+          await FacebookAuth.instance.logOut();
         }
       }
+
+      // Logout dari Firebase
+      await FirebaseAuth.instance.signOut();
+
+      // Reset GetStorage jika ada data yang tersimpan
+      final storage = GetStorage();
+      await storage.erase();
+
+      // Navigasi ke halaman introduction
+      Get.offAllNamed('/introduction');
+
+      // Tampilkan snackbar
+      Get.snackbar(
+        'Selamat!'.tr,
+        'Anda telah berhasil keluar'.tr,
+        maxWidth: 600,
+        isDismissible: true,
+        shouldIconPulse: true,
+        colorText: Colors.white,
+        backgroundColor: Colors.blueAccent,
+        snackPosition: SnackPosition.BOTTOM,
+        duration: const Duration(seconds: 3),
+        margin: const EdgeInsets.all(10),
+        icon: const Icon(Iconsax.check, color: Colors.white),
+      );
     } on FirebaseAuthException catch (e) {
       throw TFirebaseAuthException(e.code);
     } on FirebaseException catch (e) {
